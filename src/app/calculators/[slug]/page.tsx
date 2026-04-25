@@ -52,7 +52,7 @@ const componentMap: Record<string, any> = {
   "rent-vs-buy-calculator": RentVsBuyCalculator,
   "income-tax-calculator": SalaryTaxCalculator,
   "sip-investment-calculator": SipCompoundCalculator,
-  "unit-converter-currency-calculator": UnitCurrencyConverter,
+  "unit-converter": UnitCurrencyConverter,
   "water-intake-sleep-calculator": WaterSleepCalculator,
   // Batch 1
   "gst-vat-tax-calculator": GstVatCalculator,

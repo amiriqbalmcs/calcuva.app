@@ -224,12 +224,12 @@ export const CALCULATORS: CalcMeta[] = [
     keywords: ["business days", "working days", "deadline", "schedule"],
   },
   {
-    slug: "unit-converter-currency-calculator",
-    title: "Unit & Currency Converter",
-    short: "Convert length, weight, temperature, volume and currencies.",
-    description: "Fast bidirectional conversion across the most common metric and imperial units, plus live-rate currency conversion.",
+    slug: "unit-converter",
+    title: "Precision Unit Converter",
+    short: "Convert length, weight, speed and volume units.",
+    description: "Fast bidirectional conversion across the most common metric and imperial units with 8-digit precision.",
     icon: "Ruler", category: "utility",
-    keywords: ["converter", "unit", "currency", "metric", "imperial"],
+    keywords: ["unit converter", "metric", "imperial", "conversion", "measurement"],
   },
   {
     slug: "scientific-calculator-online",

@@ -14,7 +14,7 @@ import { calculatorBySlug } from "@/lib/calculators";
 import { useUrlState } from "@/hooks/useUrlState";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("unit-converter-currency-calculator")!;
+const calc = calculatorBySlug("unit-converter")!;
 
 const UNITS = {
   length: { base: "Meter", units: { Millimeter: 0.001, Centimeter: 0.01, Meter: 1, Kilometer: 1000, Inch: 0.0254, Foot: 0.3048, Yard: 0.9144, Mile: 1609.344 } },
