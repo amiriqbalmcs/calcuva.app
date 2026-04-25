@@ -78,104 +78,47 @@ const UnitCurrencyConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml
       relatedArticles={relatedArticles}
       seoContent={<SeoBlock title="Precision Unit & Currency Arithmetic" intro="Convert between technical metrics or global financial values with Purchasing Power Parity insights." />}
     >
-      <div className="flex justify-between items-center mb-6">
-        <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
-          <TabsList className="grid grid-cols-2 w-[240px]">
-            <TabsTrigger value="unit">Metrics</TabsTrigger>
-            <TabsTrigger value="currency">Currency</TabsTrigger>
-          </TabsList>
-        </Tabs>
-        <button onClick={handleShare} className="p-1 px-3 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-utility hover:text-white transition flex items-center gap-2 font-mono">
-          {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-          {copied ? "COPIED" : "SHARE"}
-        </button>
+      <div className="space-y-6">
+         <div className="grid lg:grid-cols-3 gap-6">
+           <div className="lg:col-span-1 surface-card p-6 space-y-6">
+              <div><Label>Measurement Category</Label>
+                 <Select value={cat} onValueChange={(v: any) => { 
+                  const c = v as keyof typeof UNITS;
+                  setCat(c); 
+                  setFrom(Object.keys(UNITS[c].units)[0]); 
+                  setTo(Object.keys(UNITS[c].units)[1]); 
+                }}>
+                  <SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
+                  <SelectContent>{Object.keys(UNITS).map(c => <SelectItem key={c} value={c} className="capitalize">{c}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-4 pt-2 border-t border-border">
+                <div><Label>Source Unit</Label>
+                  <Select value={from} onValueChange={setFrom}><SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
+                  <SelectContent>{Object.keys((UNITS[cat] as any).units).map(u => <SelectItem key={u} value={u}>{u}</SelectItem>)}</SelectContent></Select>
+                  <Input type="number" value={val} onChange={e => setVal(Number(e.target.value) || 0)} className="mt-3 text-lg font-bold" />
+                </div>
+                <div className="flex justify-center"><Button variant="ghost" size="icon" onClick={() => { setFrom(to); setTo(from); }}><ArrowLeftRight className="size-4" /></Button></div>
+                <div><Label>Target Unit</Label>
+                  <Select value={to} onValueChange={setTo}><SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
+                  <SelectContent>{Object.keys((UNITS[cat] as any).units).map(u => <SelectItem key={u} value={u}>{u}</SelectItem>)}</SelectContent></Select>
+                </div>
+              </div>
+           </div>
+           <div className="lg:col-span-2 space-y-6">
+              <ResultGrid cols={1}>
+                <ResultStat label={`Converted ${to}`} value={Number.isFinite(unitResult) ? Number(unitResult.toPrecision(8)).toString() : "—"} sub={`From ${val} ${from}`} accent />
+              </ResultGrid>
+              <div className="p-5 rounded-xl flex gap-4 items-start border-l-4 bg-utility-soft border-utility text-utility">
+                <div className="shrink-0 mt-0.5"><Zap className="size-5" /></div>
+                <div>
+                  <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Conversion Note</h4>
+                  <p className="text-sm opacity-90 leading-relaxed font-medium">Precision: 8 significant digits. This conversion uses the standard international definition for {cat} measurements.</p>
+                </div>
+              </div>
+           </div>
+         </div>
       </div>
-
-      <Tabs value={tab}>
-        <TabsContent value="unit" className="space-y-6">
-           <div className="grid lg:grid-cols-3 gap-6">
-             <div className="lg:col-span-1 surface-card p-6 space-y-6">
-                <div><Label>Measurement Category</Label>
-                   <Select value={cat} onValueChange={(v: any) => { 
-                    const c = v as keyof typeof UNITS;
-                    setCat(c); 
-                    setFrom(Object.keys(UNITS[c].units)[0]); 
-                    setTo(Object.keys(UNITS[c].units)[1]); 
-                  }}>
-                    <SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
-                    <SelectContent>{Object.keys(UNITS).map(c => <SelectItem key={c} value={c} className="capitalize">{c}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-4 pt-2 border-t border-border">
-                  <div><Label>Source Unit</Label>
-                    <Select value={from} onValueChange={setFrom}><SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
-                    <SelectContent>{Object.keys((UNITS[cat] as any).units).map(u => <SelectItem key={u} value={u}>{u}</SelectItem>)}</SelectContent></Select>
-                    <Input type="number" value={val} onChange={e => setVal(Number(e.target.value) || 0)} className="mt-3 text-lg font-bold" />
-                  </div>
-                  <div className="flex justify-center"><Button variant="ghost" size="icon" onClick={() => { setFrom(to); setTo(from); }}><ArrowLeftRight className="size-4" /></Button></div>
-                  <div><Label>Target Unit</Label>
-                    <Select value={to} onValueChange={setTo}><SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
-                    <SelectContent>{Object.keys((UNITS[cat] as any).units).map(u => <SelectItem key={u} value={u}>{u}</SelectItem>)}</SelectContent></Select>
-                  </div>
-                </div>
-             </div>
-             <div className="lg:col-span-2 space-y-6">
-                <ResultGrid cols={1}>
-                  <ResultStat label={`Converted ${to}`} value={Number.isFinite(unitResult) ? Number(unitResult.toPrecision(8)).toString() : "—"} sub={`From ${val} ${from}`} accent />
-                </ResultGrid>
-                <div className="p-5 rounded-xl flex gap-4 items-start border-l-4 bg-utility-soft border-utility text-utility">
-                  <div className="shrink-0 mt-0.5"><Zap className="size-5" /></div>
-                  <div>
-                    <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Conversion Note</h4>
-                    <p className="text-sm opacity-90 leading-relaxed font-medium">Precision: 8 significant digits. This conversion uses the standard international definition for {cat} measurements.</p>
-                  </div>
-                </div>
-             </div>
-           </div>
-        </TabsContent>
-
-        <TabsContent value="currency" className="space-y-6">
-           <div className="grid lg:grid-cols-3 gap-6">
-             <div className="lg:col-span-1 surface-card p-6 space-y-6">
-                <div className="space-y-4">
-                  <div><Label>Selling Currency</Label>
-                    <Select value={cFrom} onValueChange={setCFrom}><SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
-                    <SelectContent>{Object.entries(CURRENCY_RATES).map(([k, v]) => <SelectItem key={k} value={k}>{k} — {v.name}</SelectItem>)}</SelectContent></Select>
-                    <Input type="number" value={cVal} onChange={e => setCVal(Number(e.target.value) || 0)} className="mt-3 text-lg font-bold" />
-                  </div>
-                  <div className="flex justify-center"><Button variant="ghost" size="icon" onClick={() => { const f = cFrom; setCFrom(cTo); setCTo(f); }}><ArrowLeftRight className="size-4" /></Button></div>
-                  <div><Label>Buying Currency</Label>
-                    <Select value={cTo} onValueChange={setCTo}><SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
-                    <SelectContent>{Object.entries(CURRENCY_RATES).map(([k, v]) => <SelectItem key={k} value={k}>{k} — {v.name}</SelectItem>)}</SelectContent></Select>
-                  </div>
-                </div>
-             </div>
-             <div className="lg:col-span-2 space-y-6">
-                <ResultGrid cols={2}>
-                  <ResultStat label={`Result in ${cTo}`} value={currencyData.raw.toLocaleString(undefined, { maximumFractionDigits: 2 })} accent />
-                  <ResultStat label="Mid-Market Rate" value={((1/CURRENCY_RATES[cFrom].rate) * CURRENCY_RATES[cTo].rate).toFixed(4)} sub="Reference Rate" />
-                </ResultGrid>
-                <div className="p-5 rounded-xl flex gap-4 items-start border-l-4 bg-utility-soft border-utility text-utility">
-                  <div className="shrink-0 mt-0.5"><Globe className="size-5" /></div>
-                  <div>
-                    <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Purchasing Power Insight</h4>
-                    <p className="text-sm opacity-90 leading-relaxed font-medium">{currencyData.insight}</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                   <div className="surface-card p-5">
-                      <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Source Value (Local Coffee)</div>
-                      <div className="text-lg font-bold">{currencyData.coffeeFrom.toFixed(1)} Cups</div>
-                   </div>
-                   <div className="surface-card p-5">
-                      <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Target Value (Local Coffee)</div>
-                      <div className="text-lg font-bold">{currencyData.coffeeTo.toFixed(1)} Cups</div>
-                   </div>
-                </div>
-             </div>
-           </div>
-        </TabsContent>
-      </Tabs>
     </CalculatorPage>
   );
 };

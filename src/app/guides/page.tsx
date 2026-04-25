@@ -72,21 +72,6 @@ export default async function GuidesPage() {
         </div>
       </div>
 
-      {/* Footer CTA */}
-      <section className="container-wide pb-24 text-center">
-        <div className="surface-card p-12 border-dashed border-2 flex flex-col items-center gap-6">
-          <div className="size-16 rounded-full bg-signal/10 flex items-center justify-center">
-            <GraduationCap className="size-8 text-signal" />
-          </div>
-          <h3 className="text-2xl font-bold">Ready to compute with precision?</h3>
-          <p className="text-muted-foreground max-w-sm mx-auto">
-            Use our expert research to inform your inputs and get the most accurate results from our 30+ tools.
-          </p>
-          <Link href="/" className="btn-signal px-8 py-3 rounded-full text-sm font-bold">
-            Back to All Tools
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

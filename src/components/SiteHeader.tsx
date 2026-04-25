@@ -110,7 +110,7 @@ export const SiteHeader = () => {
                      History
                   </button>
                    <div className="absolute right-0 top-full pt-2 w-64 opacity-0 translate-y-2 pointer-events-none group-hover/history:opacity-100 group-hover/history:translate-y-0 group-hover/history:pointer-events-auto transition-all duration-300 z-[100]">
-                      <div className="glass backdrop-blur-xl border border-border rounded-2xl shadow-xl p-2">
+                      <div className="bg-white border border-border rounded-2xl shadow-2xl p-2">
                          <div className="px-3 py-2 border-b border-border mb-1">
                             <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] flex items-center gap-1.5">
                                <Clock className="size-2.5" /> Recent Tools
