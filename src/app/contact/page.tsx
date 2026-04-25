@@ -33,10 +33,10 @@ export default function ContactPage() {
            </p>
            
            <a 
-              href="mailto:hello@calcuva.com" 
+              href="mailto:hello@calcuva.app" 
               className="inline-flex items-center gap-4 text-2xl sm:text-3xl font-bold hover:text-signal transition-colors group"
            >
-              hello@calcuva.com
+              hello@calcuva.app
               <ArrowRight className="size-8 group-hover:translate-x-2 transition-transform" />
            </a>
 

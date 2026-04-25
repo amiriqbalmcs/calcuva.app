@@ -58,7 +58,7 @@ export default function PrivacyPage() {
           <section className="pt-12 border-t border-border">
             <h2>Questions?</h2>
             <p>
-              Privacy shouldn't be complicated. If you're worried about how anything on this site works, just send us an email at <strong>hello@calcuva.com</strong>.
+              Privacy shouldn't be complicated. If you're worried about how anything on this site works, just send us an email at <strong>hello@calcuva.app</strong>.
             </p>
           </section>
 
