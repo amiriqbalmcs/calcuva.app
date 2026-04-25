@@ -88,12 +88,12 @@ const SipCompoundCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
               <TabsTrigger value="lumpsum">One-time</TabsTrigger>
             </TabsList>
             <TabsContent value="sip" className="mt-4 space-y-4">
-              <Label>Monthly contribution</Label>
+              <div className="flex justify-between items-center mb-1"><Label className="m-0">Monthly contribution</Label><span className="font-mono text-xs font-bold text-signal">{formatCurrency(monthly, currency)}</span></div>
               <Input type="number" value={monthly} onChange={(e) => setMonthly(Number(e.target.value) || 0)} className="text-lg font-bold" />
               <Slider value={[monthly]} min={50} max={10000} step={50} onValueChange={([v]) => setMonthly(v)} />
             </TabsContent>
             <TabsContent value="lumpsum" className="mt-4 space-y-4">
-              <Label>Lumpsum amount</Label>
+              <div className="flex justify-between items-center mb-1"><Label className="m-0">Lumpsum amount</Label><span className="font-mono text-xs font-bold text-signal">{formatCurrency(lumpsum, currency)}</span></div>
               <Input type="number" value={lumpsum} onChange={(e) => setLumpsum(Number(e.target.value) || 0)} className="text-lg font-bold" />
               <Slider value={[lumpsum]} min={500} max={500000} step={500} onValueChange={([v]) => setLumpsum(v)} />
             </TabsContent>

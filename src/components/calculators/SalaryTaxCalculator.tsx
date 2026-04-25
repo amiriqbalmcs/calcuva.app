@@ -130,10 +130,14 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                   <SelectContent>{(Object.keys(REGIMES) as RegimeKey[]).map(k => <SelectItem key={k} value={k}>{REGIMES[k].label}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
-              <div><Label>Annual Gross Income</Label><Input type="number" value={income} onChange={(e) => setIncome(Number(e.target.value) || 0)} className="mt-2 text-lg font-bold" /></div>
+              <div><div className="flex justify-between mb-2"><Label>Annual Gross Income</Label><span className="font-mono text-xs font-bold text-finance">{formatCurrency(income, currency)}</span></div>
+                <Input type="number" value={income} onChange={(e) => setIncome(Number(e.target.value) || 0)} className="text-lg font-bold" />
+              </div>
               
               {regime === "CUSTOM" && (
-                <div><Label>Standard Tax-Free Allowance</Label><Input type="number" value={customStandard} onChange={(e) => setCustomStandard(Number(e.target.value) || 0)} className="mt-2" /></div>
+                <div><div className="flex justify-between mb-2"><Label>Standard Tax-Free Allowance</Label><span className="font-mono text-xs font-bold">{formatCurrency(customStandard, currency)}</span></div>
+                  <Input type="number" value={customStandard} onChange={(e) => setCustomStandard(Number(e.target.value) || 0)} />
+                </div>
               )}
             </div>
           </div>

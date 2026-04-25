@@ -11,11 +11,13 @@ import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatNumber, formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("break-even-point-calculator")!;
 
 const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const { currency } = useCurrency();
   const [fixed, setFixed] = useUrlState<number>("f", 5000);
   const [variable, setVariable] = useUrlState<number>("v", 20);
   const [price, setPrice] = useUrlState<number>("p", 50);
@@ -68,16 +70,22 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
             </button>
           </div>
           <div className="space-y-4">
-            <div><Label>Fixed Costs (Monthly)</Label><Input type="number" value={fixed} onChange={(e) => setFixed(Number(e.target.value) || 0)} className="mt-2 text-lg font-bold" /></div>
-            <div><Label>Variable Cost / Unit</Label><Input type="number" value={variable} onChange={(e) => setVariable(Number(e.target.value) || 0)} className="mt-2" /></div>
-            <div><Label>Selling Price / Unit</Label><Input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value) || 0)} className="mt-2" /></div>
+            <div><div className="flex justify-between mb-2"><Label>Fixed Costs</Label><span className="font-mono text-xs font-bold">{formatCurrency(fixed, currency)}</span></div>
+              <Input type="number" value={fixed} onChange={(e) => setFixed(Number(e.target.value) || 0)} className="text-lg font-bold" />
+            </div>
+            <div><div className="flex justify-between mb-2"><Label>Variable / Unit</Label><span className="font-mono text-xs font-bold text-signal">{formatCurrency(variable, currency)}</span></div>
+              <Input type="number" value={variable} onChange={(e) => setVariable(Number(e.target.value) || 0)} />
+            </div>
+            <div><div className="flex justify-between mb-2"><Label>Price / Unit</Label><span className="font-mono text-xs font-bold text-health">{formatCurrency(price, currency)}</span></div>
+              <Input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value) || 0)} />
+            </div>
           </div>
         </div>
 
         <div className="lg:col-span-2 space-y-6">
           <ResultGrid cols={2}>
             <ResultStat label="Break-Even Units" value={formatNumber(stats.units)} accent />
-            <ResultStat label="Revenue Floor" value={formatCurrency(stats.sales)} />
+            <ResultStat label="Revenue Floor" value={formatCurrency(stats.sales, currency)} />
           </ResultGrid>
 
           {/* Business Insight */}
@@ -98,8 +106,8 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                <LineChart data={chartData}>
                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
                  <XAxis dataKey="units" axisLine={false} tickLine={false} tick={{fontSize: 10}} />
-                 <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} tickFormatter={(v) => `$${(v/1000).toFixed(0)}k`} />
-                 <Tooltip contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }} />
+                 <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} tickFormatter={(v) => `k`} />
+                 <Tooltip formatter={(v: any) => formatCurrency(v, currency)} contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }} />
                  <Line type="monotone" dataKey="costs" name="Total Cost" stroke="hsl(var(--destructive))" strokeWidth={2.5} dot={false} />
                  <Line type="monotone" dataKey="revenue" name="Total Revenue" stroke="hsl(var(--health))" strokeWidth={2.5} dot={false} />
                </LineChart>

@@ -12,11 +12,13 @@ import { Slider } from "@/components/ui/slider";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency, formatNumber } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("inflation-calculator")!;
 
 const InflationCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const { currency } = useCurrency();
   const [amount, setAmount] = useUrlState<number>("iv", 10000);
   const [rate, setRate] = useUrlState<number>("r", 5);
   const [years, setYears] = useUrlState<number>("y", 10);
@@ -39,12 +41,12 @@ const InflationCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   const resultInfo = useMemo(() => {
     const purchasingPower = amount / (multiplier || 1);
     let insight = "";
-    if (cumulative > 100) insight = `Hyper-Erosion: In ${years} years, your purchasing power will more than halve. You would need ${formatCurrency(last)} to buy what ${formatCurrency(amount)} buys today.`;
+    if (cumulative > 100) insight = `Hyper-Erosion: In ${years} years, your purchasing power will more than halve. You would need ${formatCurrency(last, currency)} to buy what ${formatCurrency(amount, currency)} buys today.`;
     else if (cumulative > 30) insight = `Significant Impact: Your money will lose about a third of its value. Consider assets that outpace inflation (stocks, real estate).`;
     else insight = `Low-Moderate Inflation: While prices are rising, the erosion is relatively slow. Revisit your savings plan annually.`;
 
     return { purchasingPower, insight };
-  }, [multiplier, amount, cumulative, last, years]);
+  }, [multiplier, amount, cumulative, last, years, currency]);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -92,8 +94,8 @@ const InflationCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
         <div className="lg:col-span-2 space-y-6">
           <ResultGrid cols={2}>
-            <ResultStat label="Future Price" value={formatCurrency(last)} accent />
-            <ResultStat label="Purchasing Power" value={formatCurrency(resultInfo.purchasingPower)} sub="Equivalent in today's money" />
+            <ResultStat label="Future Price" value={formatCurrency(last, currency)} accent />
+            <ResultStat label="Purchasing Power" value={formatCurrency(resultInfo.purchasingPower, currency)} sub="Equivalent in today's money" />
           </ResultGrid>
 
           {/* Inflation Insight */}
@@ -113,7 +115,7 @@ const InflationCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
                   <XAxis dataKey="year" fontSize={11} tickLine={false} axisLine={false} />
                   <YAxis fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => formatNumber(v)} />
-                  <Tooltip formatter={(v: any) => formatCurrency(v)} labelFormatter={(l) => `Year ${l}`} />
+                  <Tooltip formatter={(v: any) => formatCurrency(v, currency)} labelFormatter={(l) => `Year ${l}`} />
                   <Line type="monotone" dataKey="value" stroke="hsl(var(--finance))" strokeWidth={3} dot={false} />
                 </LineChart>
               </ResponsiveContainer>

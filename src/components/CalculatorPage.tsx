@@ -91,7 +91,7 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
           ]
         }}
       />
-      <div className="container-wide pt-8 sm:pt-10">
+      <div className="container-wide pt-20 sm:pt-28">
         <div className="print-header">
           <div className="flex items-center gap-2">
             <div className="size-8 rounded-md bg-black flex items-center justify-center text-white"><Calculator className="size-4" /></div>
@@ -103,7 +103,7 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
           </div>
         </div>
 
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono uppercase tracking-widest mb-6 no-print">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono uppercase tracking-widest mb-10 no-print">
           <Link href="/" className="hover:text-foreground">Home</Link>
           <ChevronRight className="size-3" />
           <Link href={`/category/${calc.category}`} className="hover:text-foreground">{cat.label}</Link>

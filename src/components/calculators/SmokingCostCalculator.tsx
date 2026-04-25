@@ -10,11 +10,13 @@ import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency, formatNumber } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("smoking-cost-calculator")!;
 
 const SmokingCostCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const { currency } = useCurrency();
   const [perDay, setPerDay] = useUrlState<number>("pd", 10);
   const [pricePerPack, setPricePerPack] = useUrlState<number>("pc", 15);
   const [packSize, setPackSize] = useUrlState<number>("ps", 20);
@@ -29,12 +31,12 @@ const SmokingCostCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
     const daysLost = totalMinutesLost / (60 * 24);
 
     let insight = "";
-    if (totalCost > 50000) insight = `Wealth Gap: You have spent ${formatCurrency(totalCost)} on smoking. If invested at 8% annually, this would be over ${formatCurrency(totalCost * 2.5)} today.`;
+    if (totalCost > 50000) insight = `Wealth Gap: You have spent ${formatCurrency(totalCost, currency)} on smoking. If invested at 8% annually, this would be over ${formatCurrency(totalCost * 2.5, currency)} today.`;
     else if (totalCost > 10000) insight = `Opportunity Cost: This habit has cost you the equivalent of a mid-range sedan or a luxury world tour.`;
     else insight = `Health Trajectory: Even at low volumes, the cumulative 11-minute-per-cig loss adds up to ${daysLost.toFixed(0)} full days of life lost.`;
 
     return { yearlyCost, totalCost, daysLost, insight };
-  }, [perDay, pricePerPack, packSize, years]);
+  }, [perDay, pricePerPack, packSize, years, currency]);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -62,7 +64,7 @@ const SmokingCostCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
           <div className="space-y-4">
             <div><Label>Cigarettes per Day</Label><Input type="number" value={perDay} onChange={(e) => setPerDay(Number(e.target.value) || 0)} className="mt-2 text-lg font-bold" /></div>
             <div className="grid grid-cols-2 gap-3">
-              <div><Label>Pack Price</Label><Input type="number" value={pricePerPack} onChange={(e) => setPricePerPack(Number(e.target.value) || 0)} className="mt-2" /></div>
+              <div><div className="flex justify-between mb-2"><Label>Pack Price</Label></div><Input type="number" value={pricePerPack} onChange={(e) => setPricePerPack(Number(e.target.value) || 0)} /></div>
               <div><Label>Pack Size</Label><Input type="number" value={packSize} onChange={(e) => setPackSize(Number(e.target.value) || 0)} className="mt-2" /></div>
             </div>
             <div><Label>Tracking Tenure (Years)</Label><Input type="number" value={years} onChange={(e) => setYears(Number(e.target.value) || 0)} className="mt-2" /></div>
@@ -71,7 +73,7 @@ const SmokingCostCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
 
         <div className="lg:col-span-2 space-y-6">
           <ResultGrid cols={2}>
-            <ResultStat label="Total Cash Drained" value={formatCurrency(stats.totalCost)} accent />
+            <ResultStat label="Total Cash Drained" value={formatCurrency(stats.totalCost, currency)} accent />
             <ResultStat label="Life Lost" value={`${formatNumber(stats.daysLost)} Days`} sub="~11m per cigarette" className="bg-destructive text-white border-destructive" />
           </ResultGrid>
 
@@ -85,7 +87,7 @@ const SmokingCostCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4">
-            <ResultStat label="Annual Expense" value={formatCurrency(stats.yearlyCost)} />
+            <ResultStat label="Annual Expense" value={formatCurrency(stats.yearlyCost, currency)} />
             <ResultStat label="Total Volume" value={formatNumber(perDay * 365 * years)} sub="Cigarettes consumed" />
           </div>
         </div>

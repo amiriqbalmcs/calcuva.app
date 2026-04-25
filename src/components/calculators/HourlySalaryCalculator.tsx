@@ -9,14 +9,17 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency, formatNumber } from "@/lib/format";
+import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 
 const calc = calculatorBySlug("hourly-to-salary-calculator")!;
 
 const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  const [hourly, setHourly] = useState(40);
-  const [hoursPerDay, setHoursPerDay] = useState(8);
-  const [daysPerWeek, setDaysPerWeek] = useState(5);
-  const [weeksPerYear, setWeeksPerYear] = useState(52);
+  const { currency } = useCurrency();
+  const [hourly, setHourly] = useUrlState<number>("h", 40);
+  const [hoursPerDay, setHoursPerDay] = useUrlState<number>("hd", 8);
+  const [daysPerWeek, setDaysPerWeek] = useUrlState<number>("dw", 5);
+  const [weeksPerYear, setWeeksPerYear] = useUrlState<number>("wy", 52);
 
   const results = useMemo(() => {
     const daily = hourly * hoursPerDay;
@@ -58,13 +61,12 @@ const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
     >
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 surface-card p-6 space-y-6">
-          <div>
-            <Label>Hourly Wage</Label>
+          <div><div className="flex justify-between mb-2"><Label>Hourly Wage</Label><span className="font-mono text-xs font-bold text-signal">{formatCurrency(hourly, currency)}</span></div>
             <Input
               type="number"
               value={hourly}
               onChange={(e) => setHourly(Number(e.target.value) || 0)}
-              className="mt-2 text-lg font-semibold"
+              className="text-lg font-semibold"
             />
             <Slider value={[hourly]} min={7} max={500} step={0.5} onValueChange={([v]) => setHourly(v)} className="mt-4" />
           </div>
@@ -98,13 +100,13 @@ const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
           <ResultGrid cols={2}>
             <ResultStat
               label="Annual Salary"
-              value={formatCurrency(results.annual)}
+              value={formatCurrency(results.annual, currency)}
               sub={`Full-time equivalent`}
               accent
             />
             <ResultStat
               label="Monthly Income"
-              value={formatCurrency(results.monthly)}
+              value={formatCurrency(results.monthly, currency)}
               sub="Before taxes"
             />
           </ResultGrid>
@@ -112,12 +114,12 @@ const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
           <div className="grid sm:grid-cols-2 gap-4">
             <ResultStat
               label="Weekly Pay"
-              value={formatCurrency(results.weekly)}
+              value={formatCurrency(results.weekly, currency)}
               sub={`${daysPerWeek} days/week`}
             />
             <ResultStat
               label="Daily Pay"
-              value={formatCurrency(results.daily)}
+              value={formatCurrency(results.daily, currency)}
               sub={`${hoursPerDay} hours/day`}
             />
           </div>
@@ -127,10 +129,10 @@ const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
               <span className="font-bold text-sm">H</span>
             </div>
             <h3 className="font-semibold mb-2">Time is Money</h3>
-            <p className="text-sm text-muted-foreground max-w-sm">
-              At your current rate, you earn <strong>{formatCurrency(hourly)}</strong> every hour. 
+            <div className="text-sm text-muted-foreground max-w-sm">
+              At your current rate, you earn <strong>{formatCurrency(hourly, currency)}</strong> every hour. 
               In a single year, you will work approximately <strong>{formatNumber(hoursPerDay * daysPerWeek * weeksPerYear)}</strong> hours.
-            </p>
+            </div>
           </div>
         </div>
       </div>

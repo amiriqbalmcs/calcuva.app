@@ -10,7 +10,7 @@ export default function AboutPage() {
         canonicalPath="/about"
       />
 
-      <header className="pt-24 pb-16 text-center border-b border-border bg-secondary/10">
+      <header className="pt-20 sm:pt-28 pb-16 text-center border-b border-border bg-secondary/10">
         <div className="container-wide max-w-3xl">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Simple tools for complex life.</h1>
           <p className="text-muted-foreground text-lg sm:text-xl leading-relaxed">

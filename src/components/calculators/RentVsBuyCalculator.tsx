@@ -12,11 +12,13 @@ import { Slider } from "@/components/ui/slider";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("rent-vs-buy-calculator")!;
 
 const RentVsBuyCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const { currency } = useCurrency();
   const [homePrice, setHomePrice] = useUrlState<number>("hp", 400000);
   const [downPct, setDownPct] = useUrlState<number>("dp", 20);
   const [rate, setRate] = useUrlState<number>("rt", 7);
@@ -30,7 +32,7 @@ const RentVsBuyCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   const data = useMemo(() => {
     const downPayment = homePrice * (downPct / 100);
     const principal = homePrice - downPayment;
-    const n = years * 12;
+    const n = Math.max(1, years * 12);
     const r = rate / 100 / 12;
     const emi = r === 0 ? principal / n : (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
 
@@ -91,10 +93,14 @@ const RentVsBuyCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
             </button>
           </div>
           <div className="space-y-4">
-             <div><Label>Home Price</Label><Input type="number" value={homePrice} onChange={(e) => setHomePrice(Number(e.target.value) || 0)} className="mt-2 text-lg font-bold" /></div>
+             <div><div className="flex justify-between mb-2"><Label>Home Price</Label><span className="font-mono text-xs font-bold">{formatCurrency(homePrice, currency)}</span></div>
+              <Input type="number" value={homePrice} onChange={(e) => setHomePrice(Number(e.target.value) || 0)} className="text-lg font-bold" />
+             </div>
              <div><div className="flex justify-between"><Label>Down Payment</Label><span className="font-mono text-xs font-bold">{downPct}%</span></div><Slider value={[downPct]} min={0} max={50} step={1} onValueChange={([v]) => setDownPct(v)} className="mt-2" /></div>
              <div><div className="flex justify-between"><Label>Mortgage Rate</Label><span className="font-mono text-xs font-bold">{rate}%</span></div><Slider value={[rate]} min={1} max={15} step={0.1} onValueChange={([v]) => setRate(v)} className="mt-2" /></div>
-             <div><div className="flex justify-between"><Label>Current Rent</Label></div><Input type="number" value={rent} onChange={(e) => setRent(Number(e.target.value) || 0)} className="mt-2" /></div>
+             <div><div className="flex justify-between mb-2"><Label>Current Rent</Label><span className="font-mono text-xs font-bold">{formatCurrency(rent, currency)} / mo</span></div>
+              <Input type="number" value={rent} onChange={(e) => setRent(Number(e.target.value) || 0)} />
+             </div>
           </div>
           <div className="pt-4 border-t border-border">
              <div className="flex justify-between mb-2"><Label>Market Growth</Label><span className="font-mono text-xs">{appreciation}%</span></div>
@@ -105,7 +111,7 @@ const RentVsBuyCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
         <div className="lg:col-span-2 space-y-6">
           <ResultGrid cols={2}>
             <ResultStat label="Verdict" value={data.finalBuy < data.finalRent ? "Buy" : "Rent"} accent sub={`After ${years} years`} />
-            <ResultStat label="EMI Estimate" value={formatCurrency(data.emi)} sub="/ month" />
+            <ResultStat label="EMI Estimate" value={formatCurrency(data.emi, currency)} sub="/ month" />
           </ResultGrid>
 
           {/* Real Estate Insight */}
@@ -123,8 +129,8 @@ const RentVsBuyCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                <LineChart data={data.points}>
                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
                  <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{fontSize: 10}} />
-                 <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} tickFormatter={(v) => `$${(v/1000).toFixed(0)}k`} />
-                 <Tooltip contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }} />
+                 <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} tickFormatter={(v) => `k`} />
+                 <Tooltip formatter={(v: any) => formatCurrency(v, currency)} contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }} />
                  <Line type="monotone" dataKey="buyNet" name="Buy Cost" stroke="hsl(var(--signal))" strokeWidth={3} dot={false} />
                  <Line type="monotone" dataKey="rentNet" name="Rent Cost" stroke="hsl(var(--utility))" strokeWidth={3} dot={false} />
                </LineChart>

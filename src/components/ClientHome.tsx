@@ -49,7 +49,7 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 0H0V32' fill='none' stroke='%23666' stroke-width='1' stroke-dasharray='1 3'/%3E%3C/svg%3E")`,
           }}
         />
-        <section className="container-wide relative pt-12 sm:pt-24 pb-16 sm:pb-24">
+        <section className="container-wide relative pt-16 sm:pt-28 pb-16 sm:pb-24">
           <div className="flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-widest text-muted-foreground animate-fade-up">
             <Sparkles className="size-3.5 text-signal" />
             <span>30+ Smart Online Tools</span>

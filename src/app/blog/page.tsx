@@ -16,7 +16,7 @@ export default async function BlogPage() {
 
    return (
       <>
-         <main className="min-h-screen pt-12 pb-24">
+         <main className="min-h-screen pt-20 sm:pt-28 pb-24">
             {/* Hero */}
             <section className="container-wide mb-20 text-center sm:text-left">
                <div className="flex items-center justify-center sm:justify-start gap-2 mb-6 font-mono text-[10px] uppercase font-bold tracking-[0.2em] text-muted-foreground animate-fade-up">

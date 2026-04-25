@@ -10,11 +10,13 @@ import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("car-loan-vs-lease-calculator")!;
 
 const CarLoanLeaseCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const { currency } = useCurrency();
   const [carPrice, setCarPrice] = useUrlState<number>("cp", 35000);
   const [downPayment, setDownPayment] = useUrlState<number>("dp", 5000);
   const [loanRate, setLoanRate] = useUrlState<number>("lr", 5.5);
@@ -85,8 +87,8 @@ const CarLoanLeaseCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
 
         <div className="space-y-6">
           <ResultGrid cols={2}>
-            <ResultStat label="Loan Monthly" value={formatCurrency(stats.loanMonthly)} accent />
-            <ResultStat label="Lease Monthly" value={formatCurrency(leasePayment)} className="bg-business text-white border-business" />
+            <ResultStat label="Loan Monthly" value={formatCurrency(stats.loanMonthly, currency)} accent />
+            <ResultStat label="Lease Monthly" value={formatCurrency(leasePayment, currency)} className="bg-business text-white border-business" />
           </ResultGrid>
           
           <div className="p-5 rounded-xl flex gap-4 items-start border-l-4 bg-signal-soft border-signal text-signal">
@@ -98,8 +100,8 @@ const CarLoanLeaseCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4">
-            <ResultStat label="Total Payable (Loan)" value={formatCurrency(stats.totalLoanCost)} />
-            <ResultStat label="Total Payable (Lease)" value={formatCurrency(stats.totalLeaseCost)} />
+            <ResultStat label="Total Payable (Loan)" value={formatCurrency(stats.totalLoanCost, currency)} />
+            <ResultStat label="Total Payable (Lease)" value={formatCurrency(stats.totalLeaseCost, currency)} />
           </div>
         </div>
       </div>

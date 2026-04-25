@@ -23,7 +23,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ key: 
   const items = CALCULATORS.filter((c) => c.category === catKey);
 
   return (
-    <div className="container-wide pt-10">
+    <div className="container-wide pt-20 sm:pt-28">
       <Seo
         title={`${cat.label} Calculators — Calcuva`}
         description={`${cat.description} Browse ${items.length} free, instant ${cat.label.toLowerCase()} calculators on Calcuva.`}

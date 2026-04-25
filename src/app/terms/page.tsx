@@ -10,7 +10,7 @@ export default function TermsPage() {
         canonicalPath="/terms"
       />
 
-      <header className="pt-24 pb-16 border-b border-border bg-secondary/10">
+      <header className="pt-20 sm:pt-28 pb-16 border-b border-border bg-secondary/10">
         <div className="container-wide max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-signal/10 border border-signal/20 text-signal text-[10px] font-bold uppercase tracking-widest mb-6">
             <Gavel className="size-3" /> The Rules

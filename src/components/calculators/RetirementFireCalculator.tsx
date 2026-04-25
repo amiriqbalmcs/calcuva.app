@@ -11,11 +11,13 @@ import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency, formatCompact } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("retirement-fire-calculator")!;
 
 const RetirementFireCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const { currency } = useCurrency();
   const [currentAge, setCurrentAge] = useUrlState<number>("age", 30);
   const [retireAge, setRetireAge] = useUrlState<number>("ret", 60);
   const [currentSavings, setCurrentSavings] = useUrlState<number>("sav", 50000);
@@ -100,8 +102,12 @@ const RetirementFireCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
               <div><Label>Current Age</Label><Input type="number" value={currentAge} onChange={(e) => setCurrentAge(Number(e.target.value) || 0)} className="mt-2" /></div>
               <div><Label>Retire Age</Label><Input type="number" value={retireAge} onChange={(e) => setRetireAge(Number(e.target.value) || 0)} className="mt-2" /></div>
             </div>
-            <div><Label>Current Savings</Label><Input type="number" value={currentSavings} onChange={(e) => setCurrentSavings(Number(e.target.value) || 0)} className="mt-2" /></div>
-            <div><Label>Monthly Contribution</Label><Input type="number" value={monthlyContribution} onChange={(e) => setMonthlyContribution(Number(e.target.value) || 0)} className="mt-2" /></div>
+            <div><div className="flex justify-between mb-2"><Label>Current Savings</Label><span className="font-mono text-xs font-bold">{formatCurrency(currentSavings, currency)}</span></div>
+              <Input type="number" value={currentSavings} onChange={(e) => setCurrentSavings(Number(e.target.value) || 0)} />
+            </div>
+            <div><div className="flex justify-between mb-2"><Label>Monthly Contribution</Label><span className="font-mono text-xs font-bold text-signal">{formatCurrency(monthlyContribution, currency)}</span></div>
+              <Input type="number" value={monthlyContribution} onChange={(e) => setMonthlyContribution(Number(e.target.value) || 0)} />
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <div><Label>Exp. Return (%)</Label><Input type="number" value={expectedReturn} onChange={(e) => setExpectedReturn(Number(e.target.value) || 0)} className="mt-2" /></div>
               <div><Label>Target Expense/mo</Label><Input type="number" value={monthlyExpensesAtRetirement} onChange={(e) => setMonthlyExpensesAtRetirement(Number(e.target.value) || 0)} className="mt-2" /></div>
@@ -111,8 +117,8 @@ const RetirementFireCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
 
         <div className="lg:col-span-2 space-y-6">
           <ResultGrid cols={2}>
-            <ResultStat label="Estimated Corpus" value={formatCurrency(stats.totalCorpus)} sub={`At age ${retireAge}`} accent />
-            <ResultStat label="FIRE Number" value={formatCurrency(stats.fireNumber)} sub="25x annual expenses" />
+            <ResultStat label="Estimated Corpus" value={formatCurrency(stats.totalCorpus, currency)} sub={`At age ${retireAge}`} accent />
+            <ResultStat label="FIRE Number" value={formatCurrency(stats.fireNumber, currency)} sub="25x annual expenses" />
           </ResultGrid>
           
           {/* FIRE Insight */}
@@ -145,7 +151,7 @@ const RetirementFireCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
                   <XAxis dataKey="age" axisLine={false} tickLine={false} tick={{ fontSize: 11 }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11 }} tickFormatter={(v) => formatCompact(v)} />
-                  <Tooltip formatter={(v: any) => [formatCurrency(v), "Balance"]} labelFormatter={(l) => `Age ${l}`} />
+                  <Tooltip formatter={(v: any) => [formatCurrency(v, currency), "Balance"]} labelFormatter={(l) => `Age ${l}`} />
                   <Area type="monotone" dataKey="balance" stroke="hsl(var(--signal))" fillOpacity={1} fill="url(#colorBal)" strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>

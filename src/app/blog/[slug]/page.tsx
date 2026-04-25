@@ -43,7 +43,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           "category": post.category
         }}
       />
-      <main className="min-h-screen pt-8 pb-32">
+      <main className="min-h-screen pt-20 sm:pt-28 pb-32">
         <div className="container-wide">
           {/* Back Navigation */}
           <Link href="/blog" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-signal transition-colors mb-12 group">
@@ -59,7 +59,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                      <span className="flex items-center gap-1"><Calendar className="size-3" /> {new Date(post.date).toLocaleDateString()}</span>
                      <span className="flex items-center gap-1"><Clock className="size-3" /> {post.readingTime}</span>
                   </div>
-                  <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-8 leading-[1.1]">
+                  <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-8 leading-[1.1] break-words">
                      {post.title}
                   </h1>
                   <div className="flex items-center gap-4 py-6 border-y border-border">
@@ -72,7 +72,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                      </div>
                   </div>
                   {author.bio && (
-                    <div className="mt-6 text-[11px] text-muted-foreground italic leading-relaxed max-w-xl">
+                    <div className="mt-6 text-[11px] text-muted-foreground italic leading-relaxed max-w-xl break-words">
                        "{author.bio}"
                     </div>
                   )}

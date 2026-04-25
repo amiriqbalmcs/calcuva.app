@@ -25,9 +25,9 @@ export default async function GuidesPage() {
       />
 
       {/* Header */}
-      <section className="bg-background border-b border-border pt-12 pb-16">
+      <section className="bg-background border-b border-border pt-20 sm:pt-28 pb-16">
         <div className="container-wide">
-          <nav className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-6">
+          <nav className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-10">
             <Link href="/" className="hover:text-foreground">Home</Link>
             <ChevronRight className="size-3" />
             <span className="text-foreground/80">Knowledge Library</span>

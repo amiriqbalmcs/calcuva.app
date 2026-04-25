@@ -10,11 +10,13 @@ import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("crypto-investment-profit-calculator")!;
 
 const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const { currency } = useCurrency();
   const [investment, setInvestment] = useUrlState<number>("iv", 1000);
   const [buyPrice, setBuyPrice] = useUrlState<number>("bp", 50000);
   const [sellPrice, setSellPrice] = useUrlState<number>("sp", 60000);
@@ -41,10 +43,13 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
       icon = ShieldCheck;
     } else if (roi < -50) {
       insight = "Systemic Risk: You are down over 50%. In crypto, assets often fail to recover from this drawdown. Re-evaluate if the project fundamentals still hold.";
+      icon = ShieldCheck;
     } else if (roi < 0) {
       insight = "Sideways Flux: You are in a drawdown. If you believe in the long-term thesis, this is often a 'DCA' (Dollar Cost Average) opportunity.";
+      icon = TrendingUp;
     } else {
       insight = "Transaction Equilibrium: You are near break-even. Exchange fees are currently the primary drain on your capital.";
+      icon = TrendingUp;
     }
 
     return { coins, finalValue, profit, roi, totalFees: initialFee + exitFee, insight, icon };
@@ -77,7 +82,9 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
           </div>
 
           <div className="space-y-4 pt-2">
-            <div><Label>Capital Contribution</Label><Input type="number" value={investment} onChange={(e) => setInvestment(Number(e.target.value) || 0)} className="mt-2 text-lg font-bold" /></div>
+            <div><div className="flex justify-between mb-2"><Label>Capital Contribution</Label><span className="font-mono text-xs font-bold">{formatCurrency(investment, currency)}</span></div>
+              <Input type="number" value={investment} onChange={(e) => setInvestment(Number(e.target.value) || 0)} className="text-lg font-bold" />
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <div><Label>Entry Price</Label><Input type="number" value={buyPrice} onChange={(e) => setBuyPrice(Number(e.target.value) || 0)} className="mt-2" /></div>
               <div><Label>Exit Price</Label><Input type="number" value={sellPrice} onChange={(e) => setSellPrice(Number(e.target.value) || 0)} className="mt-2" /></div>
@@ -88,8 +95,8 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
 
         <div className="lg:col-span-2 space-y-6">
           <ResultGrid cols={2}>
-            <ResultStat label="Final Payout (Net)" value={formatCurrency(result.finalValue)} accent className={result.profit >= 0 ? "bg-health border-health" : "bg-destructive border-destructive"} />
-            <ResultStat label="Total Profit" value={formatCurrency(result.profit)} sub={result.profit >= 0 ? "Realized Gain" : "Floating Loss"} />
+            <ResultStat label="Final Payout (Net)" value={formatCurrency(result.finalValue, currency)} accent className={result.profit >= 0 ? "bg-health text-white border-health" : "bg-destructive text-white border-destructive"} />
+            <ResultStat label="Total Profit" value={formatCurrency(result.profit, currency)} sub={result.profit >= 0 ? "Realized Gain" : "Floating Loss"} />
           </ResultGrid>
           
           <div className={cn("p-5 rounded-xl flex gap-4 items-start border-l-4", 
@@ -113,7 +120,7 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
              </div>
              <div className="surface-card p-5">
                 <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Fees</div>
-                <div className="text-lg font-bold text-muted-foreground">{formatCurrency(result.totalFees)}</div>
+                <div className="text-lg font-bold text-muted-foreground">{formatCurrency(result.totalFees, currency)}</div>
              </div>
           </div>
 
@@ -126,8 +133,8 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
                  return (
                    <div key={p} className="flex items-center justify-between p-3 rounded-lg bg-secondary/30 border border-border/50">
                       <div className="text-xs font-bold text-muted-foreground">+{p}% TARGET</div>
-                      <div className="text-sm font-mono font-bold text-health">{formatCurrency(price)}</div>
-                      <div className="text-[10px] text-muted-foreground font-semibold">PROFIT: {formatCurrency(gain)}</div>
+                      <div className="text-sm font-mono font-bold text-health">{formatCurrency(price, currency)}</div>
+                      <div className="text-[10px] text-muted-foreground font-semibold">PROFIT: {formatCurrency(gain, currency)}</div>
                    </div>
                  );
                })}

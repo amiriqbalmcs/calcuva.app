@@ -11,11 +11,13 @@ import { Slider } from "@/components/ui/slider";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("profit-margin-calculator")!;
 
 const ProfitMarginCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const { currency } = useCurrency();
   const [cost, setCost] = useUrlState<number>("c", 60);
   const [revenue, setRevenue] = useUrlState<number>("rv", 100);
   const [copied, setCopied] = useState(false);
@@ -59,17 +61,19 @@ const ProfitMarginCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
         <div className="lg:col-span-1 surface-card p-6 space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-widest">Pricing Model</h3>
-            <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-business hover:text-white transition flex items-center gap-1">
+            <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-business hover:text-white transition flex items-center gap-1 font-mono">
               {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
               {copied ? "COPIED" : "SHARE"}
             </button>
           </div>
 
           <div className="space-y-6">
-            <div><Label>Unit Cost</Label><Input type="number" value={cost} onChange={(e) => setCost(Number(e.target.value) || 0)} className="mt-2" />
+            <div><div className="flex justify-between mb-2"><Label>Unit Cost</Label><span className="font-mono text-xs font-bold">{formatCurrency(cost, currency)}</span></div>
+              <Input type="number" value={cost} onChange={(e) => setCost(Number(e.target.value) || 0)} />
               <Slider value={[cost]} min={1} max={10000} step={1} onValueChange={([v]) => setCost(v)} className="mt-4" />
             </div>
-            <div><Label>Selling Price</Label><Input type="number" value={revenue} onChange={(e) => setRevenue(Number(e.target.value) || 0)} className="mt-2" />
+            <div><div className="flex justify-between mb-2"><Label>Selling Price</Label><span className="font-mono text-xs font-bold text-business">{formatCurrency(revenue, currency)}</span></div>
+              <Input type="number" value={revenue} onChange={(e) => setRevenue(Number(e.target.value) || 0)} />
               <Slider value={[revenue]} min={1} max={20000} step={1} onValueChange={([v]) => setRevenue(v)} className="mt-4" />
             </div>
           </div>
@@ -78,7 +82,7 @@ const ProfitMarginCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
         <div className="lg:col-span-2 space-y-6">
           <ResultGrid cols={2}>
             <ResultStat label="Gross Margin" value={`${result.margin.toFixed(1)}%`} accent />
-            <ResultStat label="Gross Profit" value={formatCurrency(result.profit)} />
+            <ResultStat label="Gross Profit" value={formatCurrency(result.profit, currency)} />
           </ResultGrid>
 
           {/* Business Insight */}
