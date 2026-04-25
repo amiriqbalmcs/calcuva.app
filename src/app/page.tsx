@@ -6,7 +6,7 @@ export default async function IndexPage() {
   // Fetch guides on the server for maximum authority and SEO
   const guides = await getSortedPostsData("guides");
   const posts = await getSortedPostsData("blog");
-  
+
   // Pick a diverse set of guides for the homepage (Finance, Health, Business)
   const homeGuides = [
     guides.find(g => g.slug === "loan-emi-calculator"),
@@ -26,10 +26,10 @@ export default async function IndexPage() {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Calcuva",
-          url: "https://calcuva.com",
+          url: "https://calcuva.app",
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://calcuva.com/?q={query}",
+            target: "https://calcuva.app/?q={query}",
             "query-input": "required name=query",
           },
         }}

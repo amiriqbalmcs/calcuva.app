@@ -56,10 +56,10 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
   const cat = CATEGORIES[calc.category];
   const Icon = ICONS[calc.icon] || Landmark;
   const now = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  const baseUrl = "https://calcuva.com"; // Ensure consistency
+  const baseUrl = "https://calcuva.app"; // Ensure consistency
 
   // Intelligent lateral discovery logic
-  const relatedTools = calc.relatedSlugs 
+  const relatedTools = calc.relatedSlugs
     ? calc.relatedSlugs.map(s => CALCULATORS.find(c => c.slug === s)).filter(Boolean) as CalcMeta[]
     : CALCULATORS.filter(c => c.category === calc.category && c.slug !== calc.slug).slice(0, 3);
 
@@ -124,22 +124,22 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
           </div>
           <div className="no-print flex items-center gap-3">
             {(calc.category === "finance" || calc.category === "business") && (
-               <div className="flex items-center gap-2 pr-3 border-r border-border mr-1">
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest hidden sm:block">Currency</span>
-                  <Select value={currency} onValueChange={(v) => setCurrency(v as CurrencyCode)}>
-                    <SelectTrigger className="w-[85px] h-9 text-xs font-bold bg-secondary/50 border-none focus:ring-0">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="USD">USD ($)</SelectItem>
-                      <SelectItem value="EUR">EUR (€)</SelectItem>
-                      <SelectItem value="GBP">GBP (£)</SelectItem>
-                      <SelectItem value="INR">INR (₹)</SelectItem>
-                      <SelectItem value="JPY">JPY (¥)</SelectItem>
-                      <SelectItem value="AED">AED (د.إ)</SelectItem>
-                    </SelectContent>
-                  </Select>
-               </div>
+              <div className="flex items-center gap-2 pr-3 border-r border-border mr-1">
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest hidden sm:block">Currency</span>
+                <Select value={currency} onValueChange={(v) => setCurrency(v as CurrencyCode)}>
+                  <SelectTrigger className="w-[85px] h-9 text-xs font-bold bg-secondary/50 border-none focus:ring-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="USD">USD ($)</SelectItem>
+                    <SelectItem value="EUR">EUR (€)</SelectItem>
+                    <SelectItem value="GBP">GBP (£)</SelectItem>
+                    <SelectItem value="INR">INR (₹)</SelectItem>
+                    <SelectItem value="JPY">JPY (¥)</SelectItem>
+                    <SelectItem value="AED">AED (د.إ)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             )}
             <ExportButton title={calc.title} />
           </div>
@@ -153,11 +153,11 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
               <GraduationCap className="size-4" />
               <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Theory & Expert Strategy</h3>
             </div>
-            <div 
+            <div
               className="prose prose-slate dark:prose-invert max-w-none 
                 prose-h3:text-lg prose-h3:font-bold prose-h3:mb-4
                 prose-p:text-sm prose-p:text-muted-foreground prose-p:leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: guideHtml }} 
+              dangerouslySetInnerHTML={{ __html: guideHtml }}
             />
 
             {faqs && faqs.length > 0 && (
@@ -171,7 +171,7 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
                     <p className="text-[10px] text-muted-foreground mt-0.5 uppercase font-mono tracking-widest font-bold">Expert Q&A</p>
                   </div>
                 </div>
-                
+
                 <Accordion type="single" collapsible className="space-y-3">
                   {faqs.map((f, i) => (
                     <AccordionItem key={i} value={`item-${i}`} className="border-none bg-background rounded-xl px-4 py-1 shadow-sm overflow-hidden">
@@ -196,51 +196,51 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
               <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Related Research & Analysis</h3>
             </div>
             <div className="grid sm:grid-cols-2 gap-6">
-               {relatedArticles.map(article => (
-                 <Link 
-                   key={article.slug}
-                   href={`/blog/${article.slug}`}
-                   className="surface-card p-6 glass-hover group flex flex-col gap-3"
-                 >
-                    <div className="text-[10px] font-mono font-bold text-muted-foreground uppercase">{article.category} · {new Date(article.date).toLocaleDateString()}</div>
-                    <h4 className="font-bold group-hover:text-signal transition-colors">{article.title}</h4>
-                    <p className="text-xs text-muted-foreground line-clamp-2">{article.excerpt}</p>
-                 </Link>
-               ))}
+              {relatedArticles.map(article => (
+                <Link
+                  key={article.slug}
+                  href={`/blog/${article.slug}`}
+                  className="surface-card p-6 glass-hover group flex flex-col gap-3"
+                >
+                  <div className="text-[10px] font-mono font-bold text-muted-foreground uppercase">{article.category} · {new Date(article.date).toLocaleDateString()}</div>
+                  <h4 className="font-bold group-hover:text-signal transition-colors">{article.title}</h4>
+                  <p className="text-xs text-muted-foreground line-clamp-2">{article.excerpt}</p>
+                </Link>
+              ))}
             </div>
           </section>
         )}
 
         {/* Smart Discovery Section */}
         <section className="mt-20 sm:mt-24 border-t border-border pt-12 no-print">
-           <div className="flex items-center gap-2 mb-8 text-signal">
-              <Lightbulb className="size-4" />
-              <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Expand Your Analysis</h3>
-           </div>
-           
-           <div className="grid sm:grid-cols-3 gap-6">
-              {relatedTools.map((t) => {
-                const RelatedIcon = ICONS[t.icon] || Landmark;
-                return (
-                  <Link 
-                    key={t.slug} 
-                    href={`/calculators/${t.slug}`}
-                    className="surface-card p-6 glass-hover transition-all duration-300 flex flex-col gap-4 group"
-                  >
-                    <div className={cn("size-10 rounded-lg flex items-center justify-center shrink-0", categoryStyles[t.category])}>
-                      <RelatedIcon className="size-5" />
-                    </div>
-                    <div>
-                       <h4 className="text-sm font-bold mb-1 group-hover:text-signal transition-colors">{t.title}</h4>
-                       <p className="text-xs text-muted-foreground line-clamp-2">{t.short}</p>
-                    </div>
-                    <div className="mt-auto flex items-center text-[10px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-signal transition-colors pt-2">
-                       Try This Tool <ArrowRight className="size-3 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                );
-              })}
-           </div>
+          <div className="flex items-center gap-2 mb-8 text-signal">
+            <Lightbulb className="size-4" />
+            <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Expand Your Analysis</h3>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-6">
+            {relatedTools.map((t) => {
+              const RelatedIcon = ICONS[t.icon] || Landmark;
+              return (
+                <Link
+                  key={t.slug}
+                  href={`/calculators/${t.slug}`}
+                  className="surface-card p-6 glass-hover transition-all duration-300 flex flex-col gap-4 group"
+                >
+                  <div className={cn("size-10 rounded-lg flex items-center justify-center shrink-0", categoryStyles[t.category])}>
+                    <RelatedIcon className="size-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold mb-1 group-hover:text-signal transition-colors">{t.title}</h4>
+                    <p className="text-xs text-muted-foreground line-clamp-2">{t.short}</p>
+                  </div>
+                  <div className="mt-auto flex items-center text-[10px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-signal transition-colors pt-2">
+                    Try This Tool <ArrowRight className="size-3 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </section>
 
         {/* Legacy SEO Content fallback — only shown if no specialized Markdown guide exists */}
