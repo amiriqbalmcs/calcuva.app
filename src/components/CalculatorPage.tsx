@@ -154,9 +154,10 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
               <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Theory & Expert Strategy</h3>
             </div>
             <div
-              className="prose prose-slate dark:prose-invert max-w-none 
+              className="prose prose-sm sm:prose-base prose-slate dark:prose-invert max-w-none 
                 prose-h3:text-lg prose-h3:font-bold prose-h3:mb-4
-                prose-p:text-sm prose-p:text-muted-foreground prose-p:leading-relaxed"
+                prose-p:text-sm prose-p:text-muted-foreground prose-p:leading-relaxed
+                overflow-hidden break-words"
               dangerouslySetInnerHTML={{ __html: guideHtml }}
             />
 
