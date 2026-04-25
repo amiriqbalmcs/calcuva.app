@@ -2,13 +2,11 @@
   "Admin": {
     "name": "Admin",
     "role": "Site Administrator",
-    "bio": "The editorial and technical team behind Calcuva. We specialize in providing accurate, research-backed calculators and strategy guides for finance, health, and business.",
-    "avatar": "/authors/admin.jpg"
+    "bio": "The editorial and technical team behind Calcuva. We specialize in providing accurate, research-backed calculators and strategy guides for finance, health, and business."
   },
   "Amir Iqbal": {
     "name": "Amir Iqbal",
     "role": "Web Architect",
-    "bio": "Lead engineer and financial math enthusiast. Focused on building high-performance diagnostic tools that simplify complex global metrics.",
-    "avatar": "/authors/amir.jpg"
+    "bio": "Lead engineer and financial math enthusiast. Focused on building high-performance diagnostic tools that simplify complex global metrics."
   }
 }

@@ -63,8 +63,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                      {post.title}
                   </h1>
                   <div className="flex items-center gap-4 py-6 border-y border-border">
-                     <div className="size-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground font-bold overflow-hidden">
-                        {author.avatar ? <img src={author.avatar} alt={author.name} /> : author.name.charAt(0)}
+                     <div className="size-10 rounded-full bg-signal/10 flex items-center justify-center text-signal">
+                        <UserRound className="size-5" />
                      </div>
                      <div>
                         <div className="text-xs font-bold">{author.name}</div>
