@@ -9,6 +9,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 export const metadata: Metadata = {
   title: "Calcuva | Premium Online Tools & Calculators",
   description: "Fast, accurate and free online calculators for finance, health, and academic needs. No signups required.",
+  verification: {
+    google: "gnvne988yEMr2dq7e3E0egt2XeA4e3H7DuLWZ8ui5js",
+  },
 };
 
 export default function RootLayout({
