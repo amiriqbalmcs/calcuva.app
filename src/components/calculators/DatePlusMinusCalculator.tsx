@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 const calc = calculatorBySlug("date-plus-minus-calculator")!;
 
 const DatePlusMinusCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  const [date, setDate] = useUrlState<string>("sd", "2024-01-01");
+  const [date, setDate] = useUrlState<string>("sd", "2026-01-01");
   const [amount, setAmount] = useUrlState<number>("n", 30);
   const [mode, setMode] = useUrlState<"add" | "sub">("m", "add");
   const [skipWeekends, setSkipWeekends] = useState(false);

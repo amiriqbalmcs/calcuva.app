@@ -16,7 +16,7 @@ const calc = calculatorBySlug("age-calculator-date-of-birth")!;
 
 const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
   const [birth, setBirth] = useUrlState<string>("b", "1995-06-15");
-  const [target, setTarget] = useUrlState<string>("t", "2024-01-01");
+  const [target, setTarget] = useUrlState<string>("t", "2026-01-01");
   const [now, setNow] = useState(new Date());
   const [copied, setCopied] = useState(false);
 

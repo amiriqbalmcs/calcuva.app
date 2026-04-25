@@ -15,8 +15,8 @@ import { cn } from "@/lib/utils";
 const calc = calculatorBySlug("business-working-days-calculator")!;
 
 const WorkingDaysCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  const [start, setStart] = useUrlState<string>("sd", "2024-01-01");
-  const [end, setEnd] = useUrlState<string>("ed", "2024-02-01");
+  const [start, setStart] = useUrlState<string>("sd", "2026-01-01");
+  const [end, setEnd] = useUrlState<string>("ed", "2026-02-01");
   const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {

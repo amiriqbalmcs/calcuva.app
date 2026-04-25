@@ -1,17 +1,13 @@
 {
-  "Calcuva Expert Team": {
-    "name": "Calcuva Expert Team",
-    "role": "Senior Research Analysts",
-    "bio": "A multi-disciplinary collective of financial advisors, health researchers, and software engineers dedicated to mathematical precision and decision-making clarity.",
-    "avatar": "/authors/team.jpg",
-    "links": {
-      "twitter": "https://twitter.com/calcuva",
-      "linkedin": "https://linkedin.com/company/calcuva"
-    }
+  "Admin": {
+    "name": "Admin",
+    "role": "Site Administrator",
+    "bio": "The editorial and technical team behind Calcuva. We specialize in providing accurate, research-backed calculators and strategy guides for finance, health, and business.",
+    "avatar": "/authors/admin.jpg"
   },
   "Amir Iqbal": {
     "name": "Amir Iqbal",
-    "role": "Chief Architect",
+    "role": "Web Architect",
     "bio": "Lead engineer and financial math enthusiast. Focused on building high-performance diagnostic tools that simplify complex global metrics.",
     "avatar": "/authors/amir.jpg"
   }

@@ -15,7 +15,7 @@ const calc = calculatorBySlug("pregnancy-ovulation-calculator")!;
 const fmtDate = (d: Date) => d.toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "long", day: "numeric" });
 
 const PregnancyCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  const [lmp, setLmp] = useUrlState<string>("d", "2024-01-01");
+  const [lmp, setLmp] = useUrlState<string>("d", "2026-01-01");
   const [cycle, setCycle] = useUrlState<number>("cy", 28);
   const [copied, setCopied] = useState(false);
 

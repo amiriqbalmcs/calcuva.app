@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPostData("blog", slug);
-  const author = authors[post.author] || authors["Calcuva Expert Team"];
+  const author = authors[post.author] || authors["Admin"];
 
   // Intent-based tool discovery: Find a tool that matches the post's category
   const activeTool = CALCULATORS.find(c => c.category === post.category);
