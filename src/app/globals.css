@@ -1,26 +1,359 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-signal: hsl(var(--signal));
+  --color-signal-soft: hsl(var(--signal-soft));
+
+  --color-finance: hsl(var(--finance));
+  --color-finance-soft: hsl(var(--finance-soft));
+  --color-health: hsl(var(--health));
+  --color-health-soft: hsl(var(--health-soft));
+  --color-education: hsl(var(--education));
+  --color-education-soft: hsl(var(--education-soft));
+  --color-utility: hsl(var(--utility));
+  --color-utility-soft: hsl(var(--utility-soft));
+  --color-business: hsl(var(--business));
+  --color-business-soft: hsl(var(--business-soft));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-fade-up: fade-up 0.4s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 214 32% 94%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 214 32% 94%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 217 91% 50%;
+    --accent-foreground: 0 0% 100%;
+    --signal: 217 91% 50%;
+    --signal-soft: 217 91% 95%;
+    --finance: 217 91% 50%;
+    --finance-soft: 217 91% 95%;
+    --health: 152 69% 38%;
+    --health-soft: 152 69% 94%;
+    --education: 38 92% 50%;
+    --education-soft: 38 92% 94%;
+    --utility: 262 73% 57%;
+    --utility-soft: 262 73% 95%;
+    --business: 239 84% 60%;
+    --business-soft: 239 84% 96%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 50%;
+    --radius: 0.875rem;
+    --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.04);
+    --shadow-md: 0 4px 12px -2px hsl(222 47% 11% / 0.06);
+    --shadow-lg: 0 10px 30px -8px hsl(222 47% 11% / 0.10);
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+    --signal: 217 91% 60%;
+    --signal-soft: 217 60% 18%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 217 91% 60%;
+    --business: 239 84% 70%;
+    --business-soft: 239 60% 18%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .surface-card {
+    @apply bg-card border border-border rounded-2xl;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .surface-card-hover {
+    @apply transition-all duration-200 hover:border-signal/40;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .surface-card-hover:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Typography Layer for Markdown Content */
+  /* Executive Grade Typography Layer */
+  .prose {
+    --tw-prose-body: hsl(var(--foreground) / 0.85);
+    --tw-prose-headings: hsl(var(--foreground));
+    --tw-prose-links: hsl(var(--signal));
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-quotes: hsl(var(--foreground));
+    --tw-prose-quote-borders: hsl(var(--signal));
+    
+    font-size: 1.125rem;
+    line-height: 1.85;
+    letter-spacing: -0.011em;
+  }
+
+  .prose h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-top: 4.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+    color: var(--tw-prose-headings);
+  }
+
+  .prose h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-top: 3.5rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.03em;
+    line-height: 1.3;
+    color: var(--tw-prose-headings);
+  }
+
+  .prose h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--tw-prose-headings);
+  }
+
+  .prose p {
+    margin-bottom: 2rem;
+    color: var(--tw-prose-body);
+  }
+
+  .prose strong {
+    font-weight: 700;
+    color: var(--tw-prose-bold);
+  }
+
+  .prose ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 2rem;
+  }
+
+  .prose ul li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 0.75rem;
+    color: var(--tw-prose-body);
+  }
+
+  .prose ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.8em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--tw-prose-quote-borders);
+  }
+
+  .prose blockquote {
+    font-style: italic;
+    border-left: 4px solid var(--tw-prose-quote-borders);
+    background: linear-gradient(to right, hsl(var(--secondary) / 0.5), transparent);
+    padding: 2rem 2.5rem;
+    border-radius: 0 1.5rem 1.5rem 0;
+    margin: 3rem 0;
+    color: var(--tw-prose-quotes);
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .prose a {
+    color: var(--tw-prose-links);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .prose a:hover {
+    color: hsl(var(--foreground));
+    text-decoration-color: transparent;
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  header,
+  nav,
+  footer,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  .container-wide {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .surface-card {
+    border: 1px solid #eee !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .animate-fade-up {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  h1 {
+    font-size: 24pt !important;
+    margin-bottom: 0.5cm !important;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: black !important;
+  }
+
+  /* Print Branding */
+  .print-header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    margin-bottom: 1cm;
+    padding-bottom: 0.5cm;
+  }
+}
+
+.print-header {
+  display: none;
 }

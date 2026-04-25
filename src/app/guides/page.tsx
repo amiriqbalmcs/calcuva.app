@@ -1,0 +1,92 @@
+import { getSortedPostsData } from "@/lib/markdown";
+import { CATEGORIES, CategoryKey } from "@/lib/calculators";
+import { GuideCard } from "@/components/GuideCard";
+import { Seo } from "@/components/Seo";
+import Link from "next/link";
+import { ChevronRight, BookOpen, GraduationCap } from "lucide-react";
+
+export default async function GuidesPage() {
+  const guides = await getSortedPostsData("guides");
+  
+  // Group guides by category
+  const groupedGuides = (Object.keys(CATEGORIES) as CategoryKey[]).map(key => {
+    return {
+      category: CATEGORIES[key],
+      guides: guides.filter(g => g.category === key)
+    };
+  }).filter(group => group.guides.length > 0);
+
+  return (
+    <div className="bg-secondary/5 min-h-screen">
+      <Seo 
+        title="Expert Strategy Guides & Insights — Calcuva Knowledge Library"
+        description="Deep-dive technical guides on finance, health math, and business strategy. Master the professional math behind our tools with over 25,000 words of expert research."
+        canonicalPath="/guides"
+      />
+
+      {/* Header */}
+      <section className="bg-background border-b border-border pt-12 pb-16">
+        <div className="container-wide">
+          <nav className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-6">
+            <Link href="/" className="hover:text-foreground">Home</Link>
+            <ChevronRight className="size-3" />
+            <span className="text-foreground/80">Knowledge Library</span>
+          </nav>
+          
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 text-signal mb-3">
+              <GraduationCap className="size-5" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] font-mono">Editorial Hub</span>
+            </div>
+            <h1 className="text-4xl sm:text-6xl font-bold tracking-tighter mb-6">
+              Expert Strategy <span className="text-signal">&</span> Technical Insights
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed">
+              We don't just provide calculators; we provide the mathematical foundations behind your most important life decisions. Explore our library of 30+ deep-dive research guides.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Library Grid */}
+      <div className="container-wide py-16">
+        <div className="space-y-20">
+          {groupedGuides.map((group) => (
+            <section key={group.category.label}>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="h-px flex-1 bg-border" />
+                <h2 className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-3">
+                  <BookOpen className="size-4" />
+                  {group.category.label} Series
+                </h2>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {group.guides.map((guide) => (
+                  <GuideCard key={guide.slug} guide={guide} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer CTA */}
+      <section className="container-wide pb-24 text-center">
+        <div className="surface-card p-12 border-dashed border-2 flex flex-col items-center gap-6">
+          <div className="size-16 rounded-full bg-signal/10 flex items-center justify-center">
+            <GraduationCap className="size-8 text-signal" />
+          </div>
+          <h3 className="text-2xl font-bold">Ready to compute with precision?</h3>
+          <p className="text-muted-foreground max-w-sm mx-auto">
+            Use our expert research to inform your inputs and get the most accurate results from our 30+ tools.
+          </p>
+          <Link href="/" className="btn-signal px-8 py-3 rounded-full text-sm font-bold">
+            Back to All Tools
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}

@@ -1,0 +1,18 @@
+{
+  "Calcuva Expert Team": {
+    "name": "Calcuva Expert Team",
+    "role": "Senior Research Analysts",
+    "bio": "A multi-disciplinary collective of financial advisors, health researchers, and software engineers dedicated to mathematical precision and decision-making clarity.",
+    "avatar": "/authors/team.jpg",
+    "links": {
+      "twitter": "https://twitter.com/calcuva",
+      "linkedin": "https://linkedin.com/company/calcuva"
+    }
+  },
+  "Amir Iqbal": {
+    "name": "Amir Iqbal",
+    "role": "Chief Architect",
+    "bio": "Lead engineer and financial math enthusiast. Focused on building high-performance diagnostic tools that simplify complex global metrics.",
+    "avatar": "/authors/amir.jpg"
+  }
+}
