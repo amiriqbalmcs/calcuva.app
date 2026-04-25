@@ -1,6 +1,6 @@
 import { getPostData, getSortedPostsData } from "@/lib/markdown";
 import { SiteHeader } from "@/components/SiteHeader";
-import { Calendar, Clock, ArrowLeft, Share, Bookmark, Calculator } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share, Bookmark, Calculator, UserRound } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CALCULATORS } from "@/lib/calculators";
