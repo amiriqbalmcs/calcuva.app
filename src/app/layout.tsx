@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Calcuva | Premium Online Tools & Calculators",
@@ -24,6 +25,7 @@ export default function RootLayout({
           </main>
           <SiteFooter />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
