@@ -50,16 +50,16 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
              <ArrowLeft className="size-3 group-hover:-translate-x-1 transition-transform" /> Back to Library
           </Link>
 
-          <div className="grid lg:grid-cols-[1fr_320px] gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-16">
             {/* Article Content */}
             <article className="max-w-3xl">
                <header className="mb-12">
-                  <div className="flex flex-wrap items-center gap-4 text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-[0.2em] mb-6">
+                  <div className="flex items-center gap-4 text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-[0.2em] mb-6">
                      <span className="px-2 py-0.5 rounded bg-secondary text-primary">{post.category}</span>
                      <span className="flex items-center gap-1"><Calendar className="size-3" /> {new Date(post.date).toLocaleDateString()}</span>
                      <span className="flex items-center gap-1"><Clock className="size-3" /> {post.readingTime}</span>
                   </div>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 leading-[1.15] sm:leading-[1.1]">
+                  <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-8 leading-[1.1]">
                      {post.title}
                   </h1>
                   <div className="flex items-center gap-4 py-6 border-y border-border">
@@ -78,11 +78,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   )}
                </header>
 
-               {/* Markdown Output - Responsive Prose */}
+               {/* Markdown Output */}
                <div 
-                 className="prose prose-sm sm:prose-base dark:prose-invert max-w-none 
-                   prose-p:leading-relaxed prose-headings:tracking-tight 
-                   overflow-hidden break-words"
+                 className="prose dark:prose-invert max-w-none"
                  dangerouslySetInnerHTML={{ __html: post.contentHtml }} 
                />
 
