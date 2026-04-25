@@ -52,15 +52,15 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
         <section className="container-wide relative pt-12 sm:pt-24 pb-16 sm:pb-24">
           <div className="flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-widest text-muted-foreground animate-fade-up">
             <Sparkles className="size-3.5 text-signal" />
-            <span>Precision decision engine · v1.2</span>
+            <span>30+ Smart Online Tools</span>
           </div>
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tighter max-w-[20ch] animate-fade-up">
-            Compute anything with{" "}
-            <span className="text-signal">absolute authority.</span>
+            Calculate anything in{" "}
+            <span className="text-signal">seconds.</span>
           </h1>
           <p className="mt-6 text-xl text-muted-foreground max-w-2xl leading-relaxed animate-fade-up" style={{ animationDelay: "100ms" }}>
-            30+ professional tools paired with high-authority technical guides.
-            Understand the mathematical truth behind your financial and health decisions.
+            Fast, free, and incredibly precise tools for your daily math.
+            From finance to health, get the results you need instantly.
           </p>
 
           {/* Search */}
