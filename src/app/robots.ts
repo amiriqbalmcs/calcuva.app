@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/_next/', '/static/'],
     },
-    sitemap: 'https://YOUR-DOMAIN.app/sitemap.xml',
+    sitemap: 'https://calcuva.app/sitemap.xml',
   };
 }

@@ -4,7 +4,7 @@ import { MetadataRoute } from "next";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://YOUR-DOMAIN.app"; // Update this to calcuva.app or calcuva.io
+  const baseUrl = "https://calcuva.app";
 
   // Home
   const routes: MetadataRoute.Sitemap = [{
