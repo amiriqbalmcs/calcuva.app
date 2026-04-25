@@ -86,11 +86,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
                {/* Tags/Footer */}
                <footer className="mt-20 pt-10 border-t border-border flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                     {post.keywords.map(k => (
-                       <span key={k} className="text-[10px] font-mono font-bold bg-secondary/50 px-2.5 py-1 rounded-md text-muted-foreground whitespace-nowrap">#{k.replace(' ', '-')}</span>
-                     ))}
-                  </div>
+                <div className="flex flex-wrap items-center gap-2">
+                   {post.keywords.map(k => (
+                     <span key={k} className="text-[10px] font-mono font-bold bg-secondary/50 px-2.5 py-1 rounded-md text-muted-foreground">#{k.replace(' ', '-')}</span>
+                   ))}
+                </div>
                </footer>
             </article>
 
