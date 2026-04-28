@@ -80,32 +80,49 @@ const SmokingCostCalculator = dynamic(() => import("@/components/calculators/Smo
 const RetirementFireCalculator = dynamic(() => import("@/components/calculators/RetirementFireCalculator"));
 const PercentageCalculator = dynamic(() => import("@/components/calculators/PercentageCalculator"));
 
+// Phase 3 Batch 1
+const CompoundInterestCalculator = dynamic(() => import("@/components/calculators/CompoundInterestCalculator"), { loading });
+const TipCalculator = dynamic(() => import("@/components/calculators/TipCalculator"), { loading });
+const DiscountCalculator = dynamic(() => import("@/components/calculators/DiscountCalculator"), { loading });
+
+// Phase 3 Batch 2
+const CalorieDeficitCalculator = dynamic(() => import("@/components/calculators/CalorieDeficitCalculator"), { loading });
+const LoveCalculator = dynamic(() => import("@/components/calculators/LoveCalculator"), { loading });
+
 const componentMap: Record<string, any> = {
-  "age-calculator-date-of-birth": AgeCalculator,
-  "bmi-tdee-calculator": BmiTdeeCalculator,
-  "gpa-to-percentage-calculator": GpaPercentageCalculator,
   "loan-emi-calculator": LoanEmiCalculator,
-  "pregnancy-ovulation-calculator": PregnancyCalculator,
-  "rent-vs-buy-calculator": RentVsBuyCalculator,
   "income-tax-calculator": SalaryTaxCalculator,
   "sip-investment-calculator": SipCompoundCalculator,
-  "unit-converter": UnitCurrencyConverter,
-  "water-intake-sleep-calculator": WaterSleepCalculator,
+  "rent-vs-buy-calculator": RentVsBuyCalculator,
+  "age-calculator": AgeCalculator,
+  "bmi-tdee-calculator": BmiTdeeCalculator,
+  "gpa-percentage-calculator": GpaPercentageCalculator,
+  "pregnancy-due-date-calculator": PregnancyCalculator,
+  "unit-currency-converter": UnitCurrencyConverter,
+  "water-sleep-calculator": WaterSleepCalculator,
+  // Phase 3 Batch 1
+  "compound-interest-calculator": CompoundInterestCalculator,
+  "tip-calculator": TipCalculator,
+  "discount-calculator": DiscountCalculator,
+  // Phase 3 Batch 2
+  "calorie-deficit-calculator": CalorieDeficitCalculator,
+  "mortgage-calculator": LoanEmiCalculator, // Alias to LoanEmiCalculator
+  "love-calculator": LoveCalculator,
   // Batch 1
   "gst-vat-tax-calculator": GstVatCalculator,
   "inflation-calculator": InflationCalculator,
-  "body-fat-percentage-calculator": BodyFatCalculator,
+  "body-fat-calculator": BodyFatCalculator,
   "profit-margin-calculator": ProfitMarginCalculator,
-  "word-character-counter-tool": WordCounterCalculator,
+  "word-character-counter": WordCounterCalculator,
   // Batch 2
-  "fixed-deposit-calculator": FdRdCalculator,
-  "crypto-investment-profit-calculator": CryptoProfitCalculator,
+  "fd-rd-calculator": FdRdCalculator,
+  "crypto-profit-calculator": CryptoProfitCalculator,
   "ideal-weight-calculator": IdealWeightCalculator,
   "macro-nutrient-calculator": MacroCalculator,
   "hourly-to-salary-calculator": HourlySalaryCalculator,
   // Batch 3
-  "break-even-point-calculator": BreakEvenCalculator,
-  "scientific-calculator-online": ScientificCalculator,
+  "break-even-calculator": BreakEvenCalculator,
+  "scientific-calculator": ScientificCalculator,
   "date-plus-minus-calculator": DatePlusMinusCalculator,
   "business-working-days-calculator": WorkingDaysCalculator,
   "intermittent-fasting-calculator": FastingCalculator,

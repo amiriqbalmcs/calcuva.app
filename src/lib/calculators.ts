@@ -20,6 +20,62 @@ export const CATEGORIES: Record<CategoryKey, { label: string; code: string; desc
 };
 
 export const CALCULATORS: CalcMeta[] = [
+  // Phase 3 - Batch 1 Expansion
+  {
+    slug: "compound-interest-calculator",
+    title: "Compound Interest Calculator",
+    short: "Calculate how your money grows over time with compounding.",
+    description: "Determine the future value of your savings or investments by projecting compound interest daily, monthly, or yearly.",
+    icon: "PiggyBank", category: "finance",
+    keywords: ["compound interest", "future value", "savings", "investment growth", "apy", "interest rate"],
+    relatedSlugs: ["sip-investment-calculator", "loan-emi-calculator", "fd-rd-calculator"],
+  },
+  {
+    slug: "tip-calculator",
+    title: "Tip Calculator & Bill Splitter",
+    short: "Quickly calculate gratuity and split the bill among friends.",
+    description: "Find the exact tip amount, total bill, and split per person instantly. Perfect for dining out or service gratuities.",
+    icon: "Banknote", category: "finance",
+    keywords: ["tip", "gratuity", "bill split", "restaurant tip", "split bill"],
+    relatedSlugs: ["discount-calculator", "gst-vat-tax-calculator", "percentage-increase-calculator"],
+  },
+  {
+    slug: "discount-calculator",
+    title: "Discount & Sale Price Calculator",
+    short: "Find the final price after a discount or coupon is applied.",
+    description: "Calculate what a product will actually cost after percent-off deals, cash back, or retail sales are factored in.",
+    icon: "Percent", category: "utility",
+    keywords: ["discount", "sale price", "coupon", "percent off", "markdown"],
+    relatedSlugs: ["tip-calculator", "profit-margin-calculator", "percentage-increase-calculator"],
+  },
+  // Phase 3 - Batch 2 Expansion
+  {
+    slug: "calorie-deficit-calculator",
+    title: "Calorie Deficit Calculator",
+    short: "Calculate the exact calories needed to reach your target weight.",
+    description: "Determine your daily calorie deficit based on your BMR, activity level, and weight loss timeline. A scientific approach to fat loss.",
+    icon: "ActivitySquare", category: "health",
+    keywords: ["calorie deficit", "weight loss calculator", "tdee calculator", "bmr", "fat loss", "how many calories to lose weight"],
+    relatedSlugs: ["bmi-tdee-calculator", "macro-nutrient-calculator", "water-sleep-calculator"],
+  },
+  {
+    slug: "mortgage-calculator",
+    title: "Mortgage Calculator",
+    short: "Plan your monthly mortgage payments with amortization.",
+    description: "Calculate full mortgage terms, monthly interest, and principal payoff schedule for your new home loan.",
+    icon: "Home", category: "finance",
+    keywords: ["mortgage", "home loan", "amortization schedule", "house payment", "mortgage emi"],
+    relatedSlugs: ["loan-emi-calculator", "rent-vs-buy-calculator", "sip-investment-calculator"],
+  },
+  {
+    slug: "love-calculator",
+    title: "Love Calculator",
+    short: "Calculate the love compatibility percentage between two names.",
+    description: "A fun, viral tool to test the compatibility between you and your crush. Enter two names and find out the match percentage!",
+    icon: "Heart", category: "utility",
+    keywords: ["love calculator", "compatibility test", "lover match", "name matching"],
+    relatedSlugs: ["age-calculator", "percentage-increase-calculator"],
+  },
   {
     slug: "loan-emi-calculator",
     title: "Worldwide Loan & EMI Calculator",

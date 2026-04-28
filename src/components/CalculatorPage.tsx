@@ -43,7 +43,7 @@ interface Props {
   calc: CalcMeta;
   children: ReactNode;
   /** Long-form SEO content shown at the bottom of the page */
-  seoContent: ReactNode;
+  seoContent?: ReactNode;
   faqs?: { q: string; a: string }[];
   guideHtml?: string;
   relatedArticles?: PostSummary[];
