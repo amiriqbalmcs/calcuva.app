@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Search, Sparkles, TrendingUp, Calculator, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { CalculatorCard } from "@/components/CalculatorCard";
@@ -39,6 +39,21 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
     });
   }, [query, active]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('home-search')?.focus();
+      }
+      if (e.key === 'Escape') {
+        document.getElementById('home-search')?.blur();
+        setQuery('');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <>
       {/* Hero Section with Premium Pattern */}
@@ -67,10 +82,11 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
           <div className="relative max-w-xl mt-12 animate-fade-up" style={{ animationDelay: "200ms" }}>
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <input
+              id="home-search"
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search tools & expert guides..."
+              placeholder="Search tools... (Press ⌘K to focus)"
               className="w-full bg-background border border-border pl-11 pr-20 py-4 rounded-2xl text-base shadow-xl focus:ring-4 focus:ring-signal/10 focus:border-signal/40 focus:outline-none transition-all"
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1 bg-secondary px-2 py-1 rounded-md">
@@ -80,8 +96,24 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
         </section>
       </div>
 
+      {/* Trending Section */}
+      {active === "all" && !query && (
+        <section className="container-wide py-12 animate-fade-up border-b border-border/50">
+           <div className="flex items-center gap-2 mb-6 text-signal">
+             <TrendingUp className="size-4" />
+             <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Trending Now</h3>
+           </div>
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+             {["loan-emi-calculator", "calorie-deficit-calculator", "compound-interest-calculator", "bmi-tdee-calculator"].map(slug => {
+                const c = CALCULATORS.find(c => c.slug === slug);
+                return c ? <CalculatorCard key={c.slug} calc={c} /> : null;
+             })}
+           </div>
+        </section>
+      )}
+
       {/* Category filter */}
-      <section className="container-wide py-12">
+      <section className="container-wide py-12 pb-4">
         <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           {(["all", ...Object.keys(CATEGORIES)] as const).map((key) => {
             const label = key === "all" ? "All Tools" : CATEGORIES[key as CategoryKey].label;
