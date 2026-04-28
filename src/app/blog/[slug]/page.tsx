@@ -51,8 +51,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const post = await getPostData("blog", slug);
   const author = authors[post.author] || authors["Admin"];
 
-  // Intent-based tool discovery: Find a tool that matches the post's category
-  const activeTool = CALCULATORS.find(c => c.category === post.category);
+  // Intent-based tool discovery: Target exact tool if provided, else fallback to category
+  const activeTool = post.calculator 
+    ? CALCULATORS.find(c => c.slug === post.calculator) 
+    : CALCULATORS.find(c => c.category === post.category);
 
   return (
     <>

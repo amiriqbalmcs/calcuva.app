@@ -18,6 +18,7 @@ export interface PostData {
   contentHtml: string;
   image?: string;
   readingTime?: string;
+  calculator?: string;
   faqs?: { q: string; a: string }[];
 }
 
