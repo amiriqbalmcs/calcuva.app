@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X, Calculator, History, Clock } from "lucide-react";
+import { Menu, X, Calculator, History, Clock, Sun, Moon } from "lucide-react";
 import { CALCULATORS, CATEGORIES, CategoryKey } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 const navItems: { label: string; href: string; key?: CategoryKey }[] = [
   { label: "Home", href: "/" },
@@ -23,6 +24,10 @@ export const SiteHeader = () => {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
 
   // Track scroll for "snapping" effect
   useEffect(() => {
@@ -110,7 +115,7 @@ export const SiteHeader = () => {
                      History
                   </button>
                    <div className="absolute right-0 top-full pt-2 w-64 opacity-0 translate-y-2 pointer-events-none group-hover/history:opacity-100 group-hover/history:translate-y-0 group-hover/history:pointer-events-auto transition-all duration-300 z-[100]">
-                      <div className="bg-white border border-border rounded-2xl shadow-2xl p-2">
+                      <div className="bg-card border border-border rounded-2xl shadow-2xl p-2">
                          <div className="px-3 py-2 border-b border-border mb-1">
                             <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] flex items-center gap-1.5">
                                <Clock className="size-2.5" /> Recent Tools
@@ -138,16 +143,35 @@ export const SiteHeader = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-             <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-30">Smart Toolkit</span>
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="size-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
+                aria-label="Toggle dark mode"
+              >
+                {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+              </button>
+            )}
           </div>
 
-          <button
-            className="md:hidden inline-flex size-9 items-center justify-center rounded-md hover:bg-secondary"
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
+          <div className="flex items-center gap-1 md:hidden">
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="size-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
+                aria-label="Toggle dark mode"
+              >
+                {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+              </button>
+            )}
+            <button
+              className="inline-flex size-9 items-center justify-center rounded-md hover:bg-secondary"
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
         </div>
       </div>
 

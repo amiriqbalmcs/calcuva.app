@@ -59,7 +59,7 @@ export default function PrivacyPage() {
           <section className="p-8 rounded-3xl bg-secondary/30 border border-border mt-20">
             <h2 className="mt-0">Ads & Cookies</h2>
             <p>
-              We use Google AdSense to show ads. This helps keep Calcuva free for everyone. Google may use "cookies" to show you ads that matches your interests. You can turn this off in your <a href="https://www.google.com/settings/ads" className="text-signal underline hover:text-signal/80">Google Ad Settings</a>.
+              We use Google AdSense to show ads. This helps keep Calcuva free for everyone. Google may use "cookies" to show you ads that matches your interests. You can turn this off in your <a href="https://www.google.com/settings/ads" rel="nofollow noopener noreferrer" target="_blank" className="text-signal underline hover:text-signal/80">Google Ad Settings</a>.
             </p>
           </section>
 

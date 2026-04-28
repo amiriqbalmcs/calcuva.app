@@ -3,6 +3,9 @@ import { CALCULATORS } from "@/lib/calculators";
 import { notFound } from "next/navigation";
 import { getPostData, getSortedPostsData } from "@/lib/markdown";
 import type { Metadata } from "next";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { CalculatorSkeleton } from "@/components/CalculatorSkeleton";
+
 
 const BASE_URL = "https://calcuva.app";
 
@@ -36,17 +39,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-// Lazy load calculators
-const AgeCalculator = dynamic(() => import("@/components/calculators/AgeCalculator"));
-const BmiTdeeCalculator = dynamic(() => import("@/components/calculators/BmiTdeeCalculator"));
-const GpaPercentageCalculator = dynamic(() => import("@/components/calculators/GpaPercentageCalculator"));
-const LoanEmiCalculator = dynamic(() => import("@/components/calculators/LoanEmiCalculator"));
-const PregnancyCalculator = dynamic(() => import("@/components/calculators/PregnancyCalculator"));
-const RentVsBuyCalculator = dynamic(() => import("@/components/calculators/RentVsBuyCalculator"));
-const SalaryTaxCalculator = dynamic(() => import("@/components/calculators/SalaryTaxCalculator"));
-const SipCompoundCalculator = dynamic(() => import("@/components/calculators/SipCompoundCalculator"));
-const UnitCurrencyConverter = dynamic(() => import("@/components/calculators/UnitCurrencyConverter"));
-const WaterSleepCalculator = dynamic(() => import("@/components/calculators/WaterSleepCalculator"));
+// Lazy load calculators with skeleton loading state
+const loading = () => <CalculatorSkeleton />;
+const AgeCalculator = dynamic(() => import("@/components/calculators/AgeCalculator"), { loading });
+const BmiTdeeCalculator = dynamic(() => import("@/components/calculators/BmiTdeeCalculator"), { loading });
+const GpaPercentageCalculator = dynamic(() => import("@/components/calculators/GpaPercentageCalculator"), { loading });
+const LoanEmiCalculator = dynamic(() => import("@/components/calculators/LoanEmiCalculator"), { loading });
+const PregnancyCalculator = dynamic(() => import("@/components/calculators/PregnancyCalculator"), { loading });
+const RentVsBuyCalculator = dynamic(() => import("@/components/calculators/RentVsBuyCalculator"), { loading });
+const SalaryTaxCalculator = dynamic(() => import("@/components/calculators/SalaryTaxCalculator"), { loading });
+const SipCompoundCalculator = dynamic(() => import("@/components/calculators/SipCompoundCalculator"), { loading });
+const UnitCurrencyConverter = dynamic(() => import("@/components/calculators/UnitCurrencyConverter"), { loading });
+const WaterSleepCalculator = dynamic(() => import("@/components/calculators/WaterSleepCalculator"), { loading });
 
 // Batch 1 Expansion
 const GstVatCalculator = dynamic(() => import("@/components/calculators/GstVatCalculator"));
@@ -145,5 +149,9 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
     .filter(p => p && p.category && meta.category && p.category === meta.category)
     .slice(0, 2);
 
-  return <Calculator guideHtml={guideHtml} faqs={guideFaqs} relatedArticles={relatedArticles} />;
+  return (
+    <ErrorBoundary>
+      <Calculator guideHtml={guideHtml} faqs={guideFaqs} relatedArticles={relatedArticles} />
+    </ErrorBoundary>
+  );
 }
