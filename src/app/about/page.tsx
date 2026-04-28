@@ -1,5 +1,13 @@
 import { Seo } from "@/components/Seo";
 import { Calculator, Shield, Zap, Heart } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us — Why We Built Calcuva | Free Calculator Tools",
+  description: "Learn about Calcuva, our mission to provide fast, free, and private calculators for finance, health, and business decisions for everyone.",
+  alternates: { canonical: "https://calcuva.app/about" },
+  openGraph: { title: "About Calcuva", description: "Fast, free and private calculator tools for everyday decisions.", url: "https://calcuva.app/about", siteName: "Calcuva", images: [{ url: "https://calcuva.app/og-image.png", width: 1200, height: 630 }] },
+};
 
 export default function AboutPage() {
   return (

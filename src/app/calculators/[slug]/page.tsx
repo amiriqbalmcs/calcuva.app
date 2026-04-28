@@ -2,6 +2,39 @@ import dynamic from "next/dynamic";
 import { CALCULATORS } from "@/lib/calculators";
 import { notFound } from "next/navigation";
 import { getPostData, getSortedPostsData } from "@/lib/markdown";
+import type { Metadata } from "next";
+
+const BASE_URL = "https://calcuva.app";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const calc = CALCULATORS.find(c => c.slug === slug);
+  if (!calc) return {};
+
+  const title = `${calc.title} — Free Online Tool | Calcuva`;
+  const description = calc.description;
+  const url = `${BASE_URL}/calculators/${calc.slug}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Calcuva",
+      type: "website",
+      images: [{ url: `${BASE_URL}/og-image.png`, width: 1200, height: 630, alt: calc.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${BASE_URL}/og-image.png`],
+    },
+  };
+}
 
 // Lazy load calculators
 const AgeCalculator = dynamic(() => import("@/components/calculators/AgeCalculator"));

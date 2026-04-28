@@ -4,11 +4,37 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { CalculatorCard } from "@/components/CalculatorCard";
 import { Seo } from "@/components/Seo";
+import type { Metadata } from "next";
+
+const BASE_URL = "https://calcuva.app";
 
 export async function generateStaticParams() {
   return Object.keys(CATEGORIES).map((key) => ({
     key,
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ key: string }> }): Promise<Metadata> {
+  const { key } = await params;
+  if (!(key in CATEGORIES)) return {};
+  const cat = CATEGORIES[key as CategoryKey];
+  const items = CALCULATORS.filter(c => c.category === key);
+  const title = `${cat.label} Calculators — Free Online Tools | Calcuva`;
+  const description = `${cat.description} Browse ${items.length} free, instant ${cat.label.toLowerCase()} calculators on Calcuva.`;
+  const url = `${BASE_URL}/category/${key}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Calcuva",
+      images: [{ url: `${BASE_URL}/og-image.png`, width: 1200, height: 630 }],
+    },
+    twitter: { card: "summary_large_image", title, description, images: [`${BASE_URL}/og-image.png`] },
+  };
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ key: string }> }) {

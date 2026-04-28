@@ -4,6 +4,23 @@ import { GuideCard } from "@/components/GuideCard";
 import { Seo } from "@/components/Seo";
 import Link from "next/link";
 import { ChevronRight, BookOpen, GraduationCap } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Expert Strategy Guides & Insights — Calcuva Knowledge Library",
+  description: "Deep-dive technical guides on finance, health math, and business strategy. Master the professional math behind our tools with 30+ expert research guides.",
+  alternates: { canonical: "https://calcuva.app/guides" },
+  openGraph: {
+    title: "Expert Strategy Guides | Calcuva",
+    description: "Deep-dive technical guides on finance, health math, and business strategy.",
+    url: "https://calcuva.app/guides",
+    siteName: "Calcuva",
+    images: [{ url: "https://calcuva.app/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: { card: "summary_large_image", images: ["https://calcuva.app/og-image.png"] },
+};
+
+
 
 export default async function GuidesPage() {
   const guides = await getSortedPostsData("guides");

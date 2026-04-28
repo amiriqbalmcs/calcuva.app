@@ -1,5 +1,13 @@
 import { Seo } from "@/components/Seo";
 import { AlertCircle, Landmark, Activity } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Disclaimer — Important Information | Calcuva",
+  description: "Important information about using our calculators responsibly. Our tools are estimates and not a replacement for professional financial or medical advice.",
+  alternates: { canonical: "https://calcuva.app/disclaimer" },
+  openGraph: { title: "Disclaimer | Calcuva", description: "Our tools are estimates and not a replacement for professional advice.", url: "https://calcuva.app/disclaimer", siteName: "Calcuva", images: [{ url: "https://calcuva.app/og-image.png", width: 1200, height: 630 }] },
+};
 
 export default function DisclaimerPage() {
   return (

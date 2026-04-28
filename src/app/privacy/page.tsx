@@ -1,5 +1,13 @@
 import { Seo } from "@/components/Seo";
 import { Lock, EyeOff, ShieldCheck } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy — Your Data is Safe | Calcuva",
+  description: "Calcuva is fully private. All calculations run inside your browser. We never see, store, or sell your data. Learn how we protect your privacy.",
+  alternates: { canonical: "https://calcuva.app/privacy" },
+  openGraph: { title: "Privacy Policy | Calcuva", description: "All calculations run inside your browser. We never see your data.", url: "https://calcuva.app/privacy", siteName: "Calcuva", images: [{ url: "https://calcuva.app/og-image.png", width: 1200, height: 630 }] },
+};
 
 export default function PrivacyPage() {
   return (

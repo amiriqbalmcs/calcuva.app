@@ -6,14 +6,44 @@ import { cn } from "@/lib/utils";
 import { CALCULATORS } from "@/lib/calculators";
 import { Seo } from "@/components/Seo";
 import authorsData from "@/content/authors.json";
+import type { Metadata } from "next";
 
 const authors = authorsData as Record<string, { name: string; role: string; bio: string; avatar?: string }>;
+const BASE_URL = "https://calcuva.app";
 
 export async function generateStaticParams() {
   const posts = await getSortedPostsData("blog");
   return posts.map((post) => ({
     slug: post.slug,
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostData("blog", slug);
+  const title = `${post.title} | Calcuva Research`;
+  const description = post.excerpt || post.title;
+  const url = `${BASE_URL}/blog/${slug}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Calcuva",
+      type: "article",
+      publishedTime: post.date,
+      images: [{ url: `${BASE_URL}/og-image.png`, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${BASE_URL}/og-image.png`],
+    },
+  };
 }
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
@@ -34,13 +64,24 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           "@type": "Article",
           "headline": post.title,
           "description": post.excerpt,
+          "url": `https://calcuva.app/blog/${post.slug}`,
+          "image": "https://calcuva.app/og-image.png",
           "author": {
             "@type": "Person",
             "name": author.name,
-            "jobTitle": author.role
+            "jobTitle": author.role,
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Calcuva",
+            "url": "https://calcuva.app",
+            "logo": { "@type": "ImageObject", "url": "https://calcuva.app/logo.png" }
           },
           "datePublished": post.date,
-          "category": post.category
+          "dateModified": post.date,
+          "keywords": post.keywords?.join(", "),
+          "articleSection": post.category,
+          "inLanguage": "en-US",
         }}
       />
       <main className="min-h-screen pt-20 sm:pt-28 pb-32">

@@ -1,5 +1,13 @@
 import { Seo } from "@/components/Seo";
 import { Gavel, CheckCircle } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service — Our Agreement | Calcuva",
+  description: "The simple rules for using Calcuva. Understand your rights and our role as a free, private calculator tool provider.",
+  alternates: { canonical: "https://calcuva.app/terms" },
+  openGraph: { title: "Terms of Service | Calcuva", description: "Simple, transparent terms for using our free calculator tools.", url: "https://calcuva.app/terms", siteName: "Calcuva", images: [{ url: "https://calcuva.app/og-image.png", width: 1200, height: 630 }] },
+};
 
 export default function TermsPage() {
   return (
