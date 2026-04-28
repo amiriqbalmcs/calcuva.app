@@ -85,9 +85,18 @@ const CompoundInterestCalculator = dynamic(() => import("@/components/calculator
 const TipCalculator = dynamic(() => import("@/components/calculators/TipCalculator"), { loading });
 const DiscountCalculator = dynamic(() => import("@/components/calculators/DiscountCalculator"), { loading });
 
-// Phase 3 Batch 2
-const CalorieDeficitCalculator = dynamic(() => import("@/components/calculators/CalorieDeficitCalculator"), { loading });
 const LoveCalculator = dynamic(() => import("@/components/calculators/LoveCalculator"), { loading });
+const CreditCardPayoffCalculator = dynamic(() => import("@/components/calculators/CreditCardPayoffCalculator"), { loading });
+const CalorieDeficitCalculator = dynamic(() => import("@/components/calculators/CalorieDeficitCalculator"), { loading });
+
+// Phase 6
+const OneRepMaxCalculator = dynamic(() => import("@/components/calculators/OneRepMaxCalculator"), { loading });
+const FreelanceRateCalculator = dynamic(() => import("@/components/calculators/FreelanceRateCalculator"), { loading });
+const QrCodeGenerator = dynamic(() => import("@/components/calculators/QrCodeGenerator"), { loading });
+const RunningPaceCalculator = dynamic(() => import("@/components/calculators/RunningPaceCalculator"), { loading });
+const PasswordGenerator = dynamic(() => import("@/components/calculators/PasswordGenerator"), { loading });
+const TaxBracketCalculator = dynamic(() => import("@/components/calculators/TaxBracketCalculator"), { loading });
+const PregnancyWeekCalculator = dynamic(() => import("@/components/calculators/PregnancyWeekCalculator"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -125,6 +134,14 @@ const componentMap: Record<string, any> = {
   "scientific-calculator": ScientificCalculator,
   "date-plus-minus-calculator": DatePlusMinusCalculator,
   "business-working-days-calculator": WorkingDaysCalculator,
+  "credit-card-payoff-calculator": CreditCardPayoffCalculator,
+  "one-rep-max-calculator": OneRepMaxCalculator,
+  "freelance-rate-calculator": FreelanceRateCalculator,
+  "qr-code-generator": QrCodeGenerator,
+  "running-pace-calculator": RunningPaceCalculator,
+  "password-generator": PasswordGenerator,
+  "tax-bracket-calculator": TaxBracketCalculator,
+  "pregnancy-week-calculator": PregnancyWeekCalculator,
   "intermittent-fasting-calculator": FastingCalculator,
   // Batch 4
   "car-loan-vs-lease-calculator": CarLoanLeaseCalculator,
