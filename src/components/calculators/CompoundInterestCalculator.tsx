@@ -102,7 +102,7 @@ const CompoundInterestCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
                     />
                     <Wallet className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/40" />
                   </div>
-                  <Slider value={[principal]} min={0} max={250000} step={1000} onValueChange={([v]) => setPrincipal(v)} />
+                  <Slider aria-label="Initial Deposit" value={[principal]} min={0} max={250000} step={1000} onValueChange={([v]) => setPrincipal(v)} />
                 </div>
 
                 {/* Monthly Contribution */}
@@ -120,7 +120,7 @@ const CompoundInterestCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
                     />
                     <TrendingUp className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/40" />
                   </div>
-                  <Slider value={[addition]} min={0} max={10000} step={100} onValueChange={([v]) => setAddition(v)} />
+                  <Slider aria-label="Monthly Addition" value={[addition]} min={0} max={10000} step={100} onValueChange={([v]) => setAddition(v)} />
                 </div>
 
                 {/* APR and Years */}

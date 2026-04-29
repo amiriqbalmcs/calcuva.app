@@ -85,7 +85,7 @@ const BacCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
                   <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Body Weight (kg)</Label>
                   <span className="text-[10px] font-bold text-health">{weight} kg</span>
                 </div>
-                <Slider value={[weight]} min={40} max={200} step={1} onValueChange={([v]) => setWeight(v)} />
+                <Slider aria-label="Your Weight" value={[weight]} min={40} max={200} step={1} onValueChange={([v]) => setWeight(v)} />
               </div>
 
               {/* Sex Selection */}
@@ -108,7 +108,7 @@ const BacCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
                   <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Standard Drinks</Label>
                   <span className="text-[10px] font-bold text-health">{drinks} Units</span>
                 </div>
-                <Slider value={[drinks]} min={0} max={15} step={1} onValueChange={([v]) => setDrinks(v)} />
+                <Slider aria-label="Number of Drinks" value={[drinks]} min={0} max={15} step={1} onValueChange={([v]) => setDrinks(v)} />
               </div>
 
               {/* Time */}
@@ -117,7 +117,7 @@ const BacCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
                   <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Duration (hrs)</Label>
                   <span className="text-[10px] font-bold text-health">{hours} h</span>
                 </div>
-                <Slider value={[hours]} min={0} max={24} step={0.5} onValueChange={([v]) => setHours(v)} />
+                <Slider aria-label="Hours Since First Drink" value={[hours]} min={0} max={24} step={0.5} onValueChange={([v]) => setHours(v)} />
               </div>
             </div>
           </div>

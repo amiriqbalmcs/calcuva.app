@@ -24,6 +24,8 @@ export const CurrencySwitcher = ({ className }: { className?: string }) => {
     <div className={cn("relative inline-block text-left", className)} ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
+        aria-label="Select Currency"
+        aria-expanded={open}
         className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-background hover:bg-secondary border border-border/60 hover:border-foreground/10 transition-all text-xs font-bold uppercase tracking-widest text-foreground shadow-sm group active:scale-95"
       >
         <span className="opacity-60 font-mono text-[9px]">{currency.code}</span>

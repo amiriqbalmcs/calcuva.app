@@ -192,6 +192,7 @@ export const ExportButton = ({ title }: Props) => {
         <DropdownMenuTrigger asChild>
           <button 
             disabled={loading}
+            aria-label="Download Report"
             className={cn(
               "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all shadow-lg active:scale-95",
               loading 
