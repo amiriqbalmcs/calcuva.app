@@ -1,10 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Share, CheckCircle2, Receipt, Info, Plus, Trash2 } from "lucide-react";
+import { 
+  Share, CheckCircle2, Receipt, Info, Plus, Trash2, Globe, 
+  History, Landmark, Target, Activity, Zap, Ruler, Gauge, 
+  Sparkles, LayoutDashboard, Calculator, Wallet, TrendingDown,
+  Settings2, Copy, Banknote, BarChart as BarChartIcon, ChevronRight,
+  ShieldCheck, ArrowDownRight, Fingerprint
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { ResultGrid, ResultStat } from "@/components/ResultStat";
-import { SeoBlock } from "@/components/SeoBlock";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -13,21 +17,22 @@ import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-
 import { useCurrency } from "@/context/CurrencyContext";
+import { SITE_DOMAIN } from "@/lib/constants";
 
-const calc = calculatorBySlug("income-tax-calculator")!;
+const calc = calculatorBySlug("income-tax-calculator");
 
 const REGIMES = {
   US: { label: "United States (Federal)", standard: 14600, brackets: [{ upTo: 11600, rate: 0.10 }, { upTo: 47150, rate: 0.12 }, { upTo: 100525, rate: 0.22 }, { upTo: 191950, rate: 0.24 }, { upTo: 243725, rate: 0.32 }, { upTo: 609350, rate: 0.35 }, { upTo: Infinity, rate: 0.37 }] },
   UK: { label: "United Kingdom", standard: 12570, brackets: [{ upTo: 37700, rate: 0.20 }, { upTo: 125140, rate: 0.40 }, { upTo: Infinity, rate: 0.45 }] },
-  IN: { label: "India (New Regime)", standard: 75000, brackets: [{ upTo: 300000, rate: 0 }, { upTo: 700000, rate: 0.05 }, { upTo: 1000000, rate: 0.10 }, { upTo: 1200000, rate: 0.15 }, { upTo: 1500000, rate: 0.20 }, { upTo: Infinity, rate: 0.30 }] },
-  CUSTOM: { label: "Universal / Custom", standard: 0, brackets: [] }
+  IN: { label: "India (FY 2024-25)", standard: 75000, brackets: [{ upTo: 300000, rate: 0 }, { upTo: 700000, rate: 0.05 }, { upTo: 1000000, rate: 0.10 }, { upTo: 1200000, rate: 0.15 }, { upTo: 1500000, rate: 0.20 }, { upTo: Infinity, rate: 0.30 }] },
+  CUSTOM: { label: "Universal / Manual Config", standard: 0, brackets: [] }
 };
 
 type RegimeKey = keyof typeof REGIMES;
 
 const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  if (!calc) return null;
   const { currency } = useCurrency();
   const [regime, setRegime] = useUrlState<RegimeKey>("rg", "US");
   const [income, setIncome] = useUrlState<number>("inc", 85000);
@@ -72,11 +77,19 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
     const effective = income > 0 ? (tax / income) * 100 : 0;
     
     let insight = "";
-    if (effective > 30) insight = "Global High-Tax: Your effective rate is over 30%. This is typical for high earners in developed nations. Seek localized tax advice for legal deductions.";
-    else if (effective > 15) insight = "Progressive Average: You are in the mid-tier of global tax brackets. Your contributions support public infrastructure and services.";
-    else insight = "Optimized / Low-Rate: Your tax burden is low relative to income, common in emerging markets or through effective standard deductions.";
+    let status: "optimal" | "warning" | "critical" = "optimal";
+    if (effective > 35) {
+      status = "critical";
+      insight = "High Tax Rate: You are paying a high percentage of your income in taxes. You may want to look into tax-saving investments or deductions.";
+    } else if (effective > 20) {
+      status = "warning";
+      insight = "Average Tax Rate: Your tax rate is fairly standard for your income level.";
+    } else {
+      status = "optimal";
+      insight = "Low Tax Rate: You are keeping most of your money! Your tax rate is very efficient.";
+    }
 
-    return { taxable, tax, net, effective, breakdown, monthly: net / 12, insight };
+    return { taxable, tax, net, effective, breakdown, monthly: net / 12, insight, status };
   }, [income, regime, otherDeductions, customStandard, customBrackets]);
 
   const updateBracket = (idx: number, patch: any) => {
@@ -88,116 +101,282 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   const addBracket = () => setCustomBracketsStr(JSON.stringify([...customBrackets, { upTo: Infinity, rate: 0.25 }]));
   const removeBracket = (idx: number) => setCustomBracketsStr(JSON.stringify(customBrackets.filter((_: any, i: number) => i !== idx)));
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleCopy = () => {
+    const resultText = `Fiscal Audit: ${result.effective.toFixed(1)}% Effective Tax | Net ${formatCurrency(result.net, currency.code)}. Plan your taxes at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={
-        <SeoBlock 
-          title="Universal Income Tax Planning" 
-          intro="Calculate net salary for any country using manual or regional tax brackets." 
-          faqs={[
-            { q: "What is Net Salary?", a: "Net salary, also known as take-home pay, is the amount of income an employee receives after all mandatory taxes, social security contributions, and other deductions are subtracted from the gross salary." },
-            { q: "What is a Progressive Tax System?", a: "A progressive tax system is one where the tax rate increases as the taxable amount increases. This is usually implemented through 'tax brackets' where higher slices of income are taxed at higher percentages." },
-            { q: "How do deductions reduce my tax?", a: "Deductions are specific expenses or allowances that you can subtract from your gross income. This lowers your 'Taxable Income,' which can sometimes push you into a lower tax bracket and always reduces the total tax owed." }
-          ]}
-        />
-      }
-    >
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 space-y-6">
-          <div className="surface-card p-6 space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Global Settings</h3>
-              <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-finance hover:text-white transition flex items-center gap-1">
-                {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-                {copied ? "COPIED" : "SHARE"}
-              </button>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Input Side */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Tax Details</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Info</p>
             </div>
 
-            <div className="space-y-4">
-              <div><Label>Country / Regime</Label>
+            <div className="space-y-8 relative z-10">
+              {/* Jurisdiction */}
+              <div className="space-y-3">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Your Location</Label>
                 <Select value={regime} onValueChange={(v) => setRegime(v as RegimeKey)}>
-                  <SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
-                  <SelectContent>{(Object.keys(REGIMES) as RegimeKey[]).map(k => <SelectItem key={k} value={k}>{REGIMES[k].label}</SelectItem>)}</SelectContent>
+                  <SelectTrigger className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-[10px] uppercase tracking-widest rounded-xl shadow-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-xl border-border/40">
+                    {(Object.keys(REGIMES) as RegimeKey[]).map(k => (
+                      <SelectItem key={k} value={k} className="text-[10px] font-bold uppercase tracking-widest">
+                        {REGIMES[k].label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </div>
-              <div><div className="flex justify-between mb-2"><Label>Annual Gross Income</Label><span className="font-mono text-xs font-bold text-finance">{formatCurrency(income, currency)}</span></div>
-                <Input type="number" value={income} onChange={(e) => setIncome(Number(e.target.value) || 0)} className="text-lg font-bold" />
+
+              {/* Annual Income */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Yearly Income</Label>
+                </div>
+                <div className="relative group">
+                  <Input 
+                    type="number" 
+                    value={income} 
+                    onChange={(e) => setIncome(Number(e.target.value) || 0)} 
+                    className="h-12 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-lg rounded-xl pr-12 shadow-sm"
+                  />
+                  <Banknote className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
+                </div>
               </div>
-              
+
+              {/* Deductions */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Deductions</Label>
+                </div>
+                <div className="relative group">
+                  <Input 
+                    type="number" 
+                    value={otherDeductions} 
+                    onChange={(e) => setOtherDeductions(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg shadow-sm pr-12"
+                  />
+                  <ArrowDownRight className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
+                </div>
+              </div>
+
               {regime === "CUSTOM" && (
-                <div><div className="flex justify-between mb-2"><Label>Standard Tax-Free Allowance</Label><span className="font-mono text-xs font-bold">{formatCurrency(customStandard, currency)}</span></div>
-                  <Input type="number" value={customStandard} onChange={(e) => setCustomStandard(Number(e.target.value) || 0)} />
+                <div className="space-y-3 pt-2">
+                  <div className="flex justify-between items-center">
+                    <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Standard Deduction</Label>
+                  </div>
+                  <Input 
+                    type="number" 
+                    value={customStandard} 
+                    onChange={(e) => setCustomStandard(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg"
+                  />
                 </div>
               )}
             </div>
           </div>
 
           {regime === "CUSTOM" && (
-            <div className="surface-card p-6 space-y-4">
-               <div className="flex items-center justify-between">
-                 <h3 className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Custom Brackets</h3>
-                 <Button size="sm" variant="ghost" className="h-6 text-[10px]" onClick={addBracket}><Plus className="size-3 mr-1" /> Add</Button>
+            <div className="surface-card p-6 md:p-8 space-y-6 bg-background border-border/30 relative overflow-hidden group">
+               <Fingerprint className="absolute -top-4 -right-4 size-20 text-muted-foreground/5 -rotate-12" />
+               <div className="flex items-center justify-between relative z-10">
+                 <h3 className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Custom Tax Rates</h3>
+                 <button onClick={addBracket} className="size-8 rounded-lg bg-foreground text-background flex items-center justify-center hover:scale-105 transition-transform shadow-lg">
+                    <Plus className="size-4" />
+                 </button>
                </div>
-               <div className="space-y-3">
+               <div className="space-y-3 relative z-10">
                  {customBrackets.map((b: any, i: number) => (
-                   <div key={i} className="flex gap-2 items-center">
-                     <div className="flex-1"><Label className="text-[9px] uppercase opacity-50">Up To</Label><Input type="number" value={b.upTo === Infinity ? "" : b.upTo} placeholder="∞" onChange={(e) => updateBracket(i, { upTo: e.target.value === "" ? Infinity : Number(e.target.value) })} className="h-8 text-xs" /></div>
-                     <div className="w-16"><Label className="text-[9px] uppercase opacity-50">Rate %</Label><Input type="number" value={Math.round(b.rate * 100)} onChange={(e) => updateBracket(i, { rate: Number(e.target.value) / 100 })} className="h-8 text-xs" /></div>
-                     <Button variant="ghost" size="icon" className="h-8 w-8 mt-4" onClick={() => removeBracket(i)}><Trash2 className="size-3 text-destructive" /></Button>
+                   <div key={i} className="flex gap-2 items-center p-3 rounded-xl bg-secondary/20 border border-border/40 relative group/row hover:border-foreground/20 transition-colors">
+                     <div className="flex-1">
+                        <Input 
+                          type="number" 
+                          value={b.upTo === Infinity ? "" : b.upTo} 
+                          placeholder="Upper Bound (∞)" 
+                          onChange={(e) => updateBracket(i, { upTo: e.target.value === "" ? Infinity : Number(e.target.value) })} 
+                          className="h-9 text-[10px] font-bold bg-background border-border/40 rounded-lg pr-8" 
+                        />
+                     </div>
+                     <div className="w-20 relative">
+                        <Input 
+                          type="number" 
+                          value={Math.round(b.rate * 100)} 
+                          onChange={(e) => updateBracket(i, { rate: Number(e.target.value) / 100 })} 
+                          className="h-9 text-[10px] font-bold bg-background border-border/40 text-center rounded-lg pr-6" 
+                        />
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold text-muted-foreground">%</span>
+                     </div>
+                     <button onClick={() => removeBracket(i)} className="size-6 text-muted-foreground/30 hover:text-destructive transition-colors">
+                        <Trash2 className="size-3" />
+                     </button>
                    </div>
                  ))}
                </div>
             </div>
           )}
+
+          {/* Fiscal Insight */}
+          <div className={cn(
+            "surface-card p-6 border-border/30 relative overflow-hidden group",
+            result.status === "critical" ? "bg-destructive/5 text-destructive" : result.status === "warning" ? "bg-amber-500/5 text-amber-500" : "bg-health/5 text-health"
+          )}>
+            <ShieldCheck className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1">
+                <Receipt className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Tax Analysis</h4>
+                <p className="text-xs opacity-80 leading-relaxed font-medium">
+                  {result.insight}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <ResultGrid cols={2}>
-            <ResultStat label="Net Salary (Year)" value={formatCurrency(result.net, currency)} accent />
-            <ResultStat label="Effective Tax rate" value={`${result.effective.toFixed(1)}%`} />
-          </ResultGrid>
-
-          {/* Tax Insight */}
-          <div className="p-5 rounded-xl flex gap-4 items-start border-l-4 bg-finance-soft border-finance text-finance">
-            <div className="shrink-0 mt-0.5"><Receipt className="size-5" /></div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Fiscal Insight</h4>
-              <p className="text-sm opacity-90 leading-relaxed font-medium">{result.insight}</p>
+        {/* Results Side */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <Calculator className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Take-Home Pay</span>
+                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
+                    {formatCurrency(result.net, currency.code)}
+                  </div>
+                </div>
+                <button 
+                  onClick={handleCopy} 
+                  className={cn(
+                    "p-3 rounded-xl transition-all border shadow-sm",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                  title="Copy Results"
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-border/40">
+                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
+                  <Gauge className="size-3" />
+                  <span>Effective Tax Rate: {result.effective.toFixed(1)}%</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
+                  Total Tax Paid: {formatCurrency(result.tax, currency.code)}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="surface-card overflow-hidden">
-             <div className="p-5 border-b border-border bg-secondary/20 flex justify-between items-center">
-               <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Progression Breakdown</h3>
-               <span className="text-[10px] font-mono opacity-50">MONTHLY: {formatCurrency(result.monthly, currency)}</span>
+          {/* Progression Matrix */}
+          <div className="surface-card overflow-hidden bg-secondary/5 border-border/30 relative group shadow-sm">
+            <div className="p-8 border-b border-border/40 flex items-center justify-between bg-background/40 backdrop-blur-sm relative overflow-hidden">
+               <BarChartIcon className="absolute -top-4 -right-4 size-24 text-muted-foreground/5 -rotate-12" />
+               <div className="space-y-1 relative z-10">
+                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Tax Breakdown</h4>
+                  <p className="text-sm font-bold tracking-tight">How Your Tax Is Calculated</p>
+               </div>
+               <div className="text-right relative z-10">
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1 opacity-40">Monthly Take-Home</span>
+                  <div className="text-xl font-mono font-medium text-foreground">{formatCurrency(result.monthly, currency.code)}</div>
+               </div>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="bg-background/20 text-[9px] uppercase font-bold text-muted-foreground border-b border-border/40">
+                  <tr>
+                    <th className="px-8 py-5">Income Bracket ({currency.code})</th>
+                    <th className="px-8 py-5 text-center">Tax Rate</th>
+                    <th className="px-8 py-5 text-right">Tax Paid</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/20">
+                  {result.breakdown.map((b, i) => (
+                    <tr key={i} className="hover:bg-foreground/[0.02] transition-colors group/row">
+                      <td className="px-8 py-5 text-xs font-mono font-medium opacity-60 group-hover/row:opacity-100 transition-opacity italic">{b.range}</td>
+                      <td className="px-8 py-5 text-center">
+                        <span className="px-3 py-1 rounded-full bg-secondary text-[10px] font-bold tabular-nums border border-border/40">
+                          {(b.rate * 100).toFixed(0)}%
+                        </span>
+                      </td>
+                      <td className="px-8 py-5 text-right tabular-nums text-sm font-medium font-mono">
+                        {formatCurrency(b.tax, currency.code)}
+                      </td>
+                    </tr>
+                  ))}
+                  <tr className="bg-foreground/[0.03]">
+                    <td colSpan={2} className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em]">Total Tax</td>
+                    <td className="px-8 py-6 text-right tabular-nums text-xl font-mono font-bold text-foreground">{formatCurrency(result.tax, currency.code)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Detailed Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "Taxable Income", v: formatCurrency(result.taxable, currency.code), i: Activity },
+               { l: "Daily Tax Cost", v: formatCurrency(result.tax / 365, currency.code), i: Zap },
+               { l: "Income Kept", v: (100 - result.effective).toFixed(1), i: Target, unit: "%" },
+               { l: "Status", v: "Class A", i: Landmark }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                 </div>
+                 <div className="text-lg font-mono font-medium tabular-nums leading-tight">
+                    {item.v}
+                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                 </div>
+               </div>
+             ))}
+          </div>
+
+          {/* Expert Insights */}
+          <div className="grid md:grid-cols-2 gap-6 pt-4">
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <Globe className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Where You Pay Taxes</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
+                  You usually pay taxes where you live and work. If you work remotely in different countries, check local tax rules to avoid being taxed twice.
+                </p>
              </div>
-             <div className="overflow-x-auto">
-               <table className="w-full text-sm">
-                 <thead className="bg-secondary/10 text-[9px] uppercase font-bold text-muted-foreground">
-                   <tr><th className="text-left px-6 py-3">Income Slice</th><th className="text-right px-6 py-3">Rate</th><th className="text-right px-6 py-3">Tax Amount</th></tr>
-                 </thead>
-                 <tbody className="divide-y divide-border">
-                   {result.breakdown.map((b, i) => (
-                     <tr key={i} className="hover:bg-secondary/5 transition">
-                       <td className="px-6 py-3 font-mono text-xs">{b.range}</td>
-                       <td className="px-6 py-3 text-right font-bold">{(b.rate * 100).toFixed(0)}%</td>
-                       <td className="px-6 py-3 text-right tabular-nums">{formatCurrency(b.tax, currency)}</td>
-                     </tr>
-                   ))}
-                 </tbody>
-               </table>
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+                <TrendingDown className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <ShieldCheck className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Saving on Taxes</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
+                  Putting money into retirement accounts (like a 401k or ISA) is one of the best ways to lower your tax bill and save for the future.
+                </p>
              </div>
           </div>
+
         </div>
       </div>
     </CalculatorPage>

@@ -1,27 +1,31 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Share, CheckCircle2, AlertCircle, Info, Target, Scale } from "lucide-react";
+import { 
+  Share, CheckCircle2, AlertCircle, Info, Target, Scale, Zap, 
+  Activity, Flame, TrendingUp, User as UserIcon, History, Landmark, 
+  Globe, Ruler, Gauge, Sparkles, LayoutDashboard, Settings2, Copy,
+  Dna, HeartPulse, ChevronRight, Weight
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { ResultGrid, ResultStat } from "@/components/ResultStat";
-import { SeoBlock } from "@/components/SeoBlock";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatNumber } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("bmi-tdee-calculator")!;
 
 const ACTIVITY = {
-  sedentary: { label: "Sedentary (little/no exercise)", mult: 1.2 },
-  light: { label: "Light (1–3 days/week)", mult: 1.375 },
-  moderate: { label: "Moderate (3–5 days/week)", mult: 1.55 },
-  active: { label: "Active (6–7 days/week)", mult: 1.725 },
-  athlete: { label: "Athlete (2x/day)", mult: 1.9 },
+  sedentary: { label: "Little to no exercise", mult: 1.2 },
+  light: { label: "Light exercise (1–3 days/week)", mult: 1.375 },
+  moderate: { label: "Moderate exercise (3–5 days/week)", mult: 1.55 },
+  active: { label: "Hard exercise (6–7 days/week)", mult: 1.725 },
+  athlete: { label: "Very hard exercise (twice a day)", mult: 1.9 },
 };
 
 const BmiTdeeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
@@ -45,7 +49,6 @@ const BmiTdeeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
       : 10 * w + 6.25 * h - 5 * age - 161;
     const tdee = bmr * ACTIVITY[activity].mult;
     
-    // Ideal range calculation (18.5 - 25)
     const minIdealWeight = 18.5 * Math.pow(h / 100, 2);
     const maxIdealWeight = 25 * Math.pow(h / 100, 2);
     
@@ -56,161 +59,273 @@ const BmiTdeeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
     
     if (bmi < 18.5) { 
       category = "Underweight"; 
-      categoryColor = "text-utility"; 
+      categoryColor = "text-amber-500"; 
       const diff = minIdealWeight - w;
-      goalText = `Gain ${units === "metric" ? `${diff.toFixed(1)}kg` : `${(diff * 2.20462).toFixed(1)}lb`} for healthy range.`;
-      insight = `You are currently below the healthy range. Focusing on a ${formatNumber(tdee + 300)}kcal 'lean bulk' diet with consistent resistance training is recommended.`;
+      goalText = `You should aim to gain around ${units === "metric" ? `${diff.toFixed(1)}kg` : `${(diff * 2.20462).toFixed(1)}lb`} to reach a healthy weight range.`;
+      insight = `Try eating more healthy calories (${formatNumber(tdee + 300)} kcal) and doing some light strength training.`;
     }
     else if (bmi < 25) { 
-      category = "Normal"; 
+      category = "Healthy"; 
       categoryColor = "text-health"; 
-      goalText = "You are currently in the healthy weight range.";
-      insight = "Excellent metabolic balance. Maintaining current activity and caloric intake will keep your biomarkers optimized.";
+      goalText = "Your weight is in a healthy range for your height.";
+      insight = "Maintain your current weight by eating a balanced diet and staying active.";
     }
     else if (bmi < 30) { 
       category = "Overweight"; 
-      categoryColor = "text-education"; 
+      categoryColor = "text-amber-500"; 
       const diff = w - maxIdealWeight;
-      goalText = `Lose ${units === "metric" ? `${diff.toFixed(1)}kg` : `${(diff * 2.20462).toFixed(1)}lb`} for healthy range.`;
-      insight = `You are in the overweight category. A sustainable calorie target of ${formatNumber(tdee - 500)}kcal will help you lose ~0.5kg per week.`;
+      goalText = `You should aim to lose around ${units === "metric" ? `${diff.toFixed(1)}kg` : `${(diff * 2.20462).toFixed(1)}lb`} to reach your healthy weight.`;
+      insight = `Try to eat around ${formatNumber(tdee - 500)} kcal per day to help lose fat at a steady pace.`;
     }
     else { 
       category = "Obese"; 
       categoryColor = "text-destructive"; 
       const diff = w - maxIdealWeight;
-      goalText = `Minimum loss of ${units === "metric" ? `${diff.toFixed(1)}kg` : `${(diff * 2.20462).toFixed(1)}lb`} needed.`;
-      insight = "Higher metabolic risk detected. Consistent deficit and consulting with a healthcare professional for a tailored plan is advised.";
+      goalText = `A weight loss of ${units === "metric" ? `${diff.toFixed(1)}kg` : `${(diff * 2.20462).toFixed(1)}lb`} is recommended for better health.`;
+      insight = "We recommend speaking with a health professional to create a safe and effective plan.";
     }
     
     return { bmi, bmr, tdee, category, categoryColor, insight, goalText, minIdealWeight, maxIdealWeight };
   }, [units, age, sex, heightCm, weightKg, heightFt, heightIn, weightLb, activity]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleCopy = () => {
+    const resultText = `Body Stats: BMI ${result.bmi.toFixed(1)} (${result.category}) | Calories needed: ${formatNumber(result.tdee)} kcal. Track at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={
-        <SeoBlock 
-          title="Biological Performance Tuning" 
-          intro="Calculate your metabolic baseline and daily sustainable calorie targets." 
-          faqs={[
-            { q: "What is BMR?", a: "BMR stands for Basal Metabolic Rate. It is the number of calories your body needs to maintain basic life functions (breathing, circulation) while at complete rest." },
-            { q: "How is TDEE different from BMR?", a: "TDEE (Total Daily Energy Expenditure) is your BMR plus the calories you burn through physical activity throughout the day. It is the total number of calories you burn daily." },
-            { q: "Is BMI an accurate measure of health?", a: "BMI is a useful screening tool for the general population to identify potential weight issues. However, it does not distinguish between muscle and fat mass, meaning athletes may have a high BMI despite low body fat." }
-          ]}
-        />
-      }
-    >
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 surface-card p-6 space-y-6">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Biometrics</h3>
-            <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-health hover:text-white transition flex items-center gap-1 font-mono">
-              {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-              {copied ? "COPIED" : "SHARE"}
-            </button>
-          </div>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Input Panel */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Your Details</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Body Measurements</p>
+            </div>
 
-          <Tabs value={units} onValueChange={(v) => setUnits(v as any)}>
-            <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger value="metric">Metric</TabsTrigger>
-              <TabsTrigger value="imperial">Imperial</TabsTrigger>
-            </TabsList>
-          </Tabs>
+            <div className="space-y-8 relative z-10">
+              {/* Unit Switcher */}
+              <div className="flex bg-background border border-border/60 p-1 rounded-xl h-11">
+                <button onClick={() => setUnits("metric")} className={cn("flex-1 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all", units === 'metric' ? "bg-foreground text-background" : "text-muted-foreground hover:bg-secondary/40")}>Metric</button>
+                <button onClick={() => setUnits("imperial")} className={cn("flex-1 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all", units === 'imperial' ? "bg-foreground text-background" : "text-muted-foreground hover:bg-secondary/40")}>Imperial</button>
+              </div>
 
-          <div className="space-y-4 pt-2">
-            <div className="grid grid-cols-2 gap-3">
-              <div><Label>Age</Label><Input type="number" value={age} onChange={(e) => setAge(Number(e.target.value) || 0)} className="mt-2" /></div>
-              <div><Label>Sex</Label>
-                <Select value={sex} onValueChange={(v) => setSex(v as any)}>
-                  <SelectTrigger className="mt-2 text-sm"><SelectValue /></SelectTrigger>
-                  <SelectContent><SelectItem value="male">Male</SelectItem><SelectItem value="female">Female</SelectItem></SelectContent>
+              {/* Age & Sex */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Age</Label>
+                  <Input type="number" value={age} onChange={(e) => setAge(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm" />
+                </div>
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Sex</Label>
+                  <Select value={sex} onValueChange={(v) => setSex(v as any)}>
+                    <SelectTrigger className="h-11 bg-background border-border/60 font-bold text-[10px] uppercase tracking-widest rounded-xl shadow-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-xl border-border/40">
+                      <SelectItem value="male" className="text-[10px] font-bold uppercase">Male</SelectItem>
+                      <SelectItem value="female" className="text-[10px] font-bold uppercase">Female</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Height & Weight */}
+              {units === "metric" ? (
+                <div className="space-y-8">
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Height (cm)</Label>
+                      <span className="text-[10px] font-bold text-health">{heightCm}</span>
+                    </div>
+                    <div className="relative group">
+                      <Input type="number" value={heightCm} onChange={(e) => setHeightCm(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12" />
+                      <Ruler className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/40" />
+                    </div>
+                    <Slider value={[heightCm]} min={100} max={250} step={1} onValueChange={([v]) => setHeightCm(v)} />
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Weight (kg)</Label>
+                      <span className="text-[10px] font-bold text-health">{weightKg}</span>
+                    </div>
+                    <div className="relative group">
+                      <Input type="number" value={weightKg} onChange={(e) => setWeightKg(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12" />
+                      <Weight className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/40" />
+                    </div>
+                    <Slider value={[weightKg]} min={30} max={250} step={1} onValueChange={([v]) => setWeightKg(v)} />
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-bold text-muted-foreground uppercase">Feet</Label>
+                      <Input type="number" value={heightFt} onChange={(e) => setHeightFt(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-bold text-muted-foreground uppercase">Inches</Label>
+                      <Input type="number" value={heightIn} onChange={(e) => setHeightIn(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm" />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Weight (lb)</Label>
+                      <span className="text-[10px] font-bold text-health">{weightLb}</span>
+                    </div>
+                    <Input type="number" value={weightLb} onChange={(e) => setWeightLb(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12" />
+                    <Slider value={[weightLb]} min={50} max={600} step={1} onValueChange={([v]) => setWeightLb(v)} />
+                  </div>
+                </div>
+              )}
+
+              {/* Activity */}
+              <div className="space-y-3 pt-2 border-t border-border/40">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Activity Level</Label>
+                <Select value={activity} onValueChange={(v) => setActivity(v as any)}>
+                  <SelectTrigger className="h-11 bg-background border-border/60 font-bold text-[10px] uppercase tracking-widest rounded-xl shadow-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-xl border-border/40">
+                    {Object.entries(ACTIVITY).map(([k, v]) => (
+                      <SelectItem key={k} value={k} className="text-[10px] font-bold uppercase tracking-widest">
+                        {v.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </div>
             </div>
+          </div>
 
-            {units === "metric" ? (
-              <div className="grid grid-cols-2 gap-3">
-                <div><Label>Height (cm)</Label><Input type="number" value={heightCm} onChange={(e) => setHeightCm(Number(e.target.value) || 0)} className="mt-2" /></div>
-                <div><Label>Weight (kg)</Label><Input type="number" value={weightKg} onChange={(e) => setWeightKg(Number(e.target.value) || 0)} className="mt-2" /></div>
+          <div className="surface-card p-6 border-border/30 bg-health/5 relative overflow-hidden group">
+            <HeartPulse className="absolute -bottom-4 -right-4 size-20 text-health/5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1 text-health">
+                <Dna className="size-5" />
               </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div><Label>Height (ft)</Label><Input type="number" value={heightFt} onChange={(e) => setHeightFt(Number(e.target.value) || 0)} className="mt-2" /></div>
-                  <div><Label>(in)</Label><Input type="number" value={heightIn} onChange={(e) => setHeightIn(Number(e.target.value) || 0)} className="mt-2" /></div>
-                </div>
-                <div><Label>Weight (lb)</Label><Input type="number" value={weightLb} onChange={(e) => setWeightLb(Number(e.target.value) || 0)} className="mt-2" /></div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Health Tip</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                  {result.goalText} {result.insight}
+                </p>
               </div>
-            )}
-
-            <div><Label>Activity Level</Label>
-              <Select value={activity} onValueChange={(v) => setActivity(v as any)}>
-                <SelectTrigger className="mt-2 text-xs"><SelectValue /></SelectTrigger>
-                <SelectContent>{Object.entries(ACTIVITY).map(([k, v]) => <SelectItem key={k} value={k}>{v.label}</SelectItem>)}</SelectContent>
-              </Select>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <ResultGrid cols={3}>
-            <ResultStat label="Body Mass Index" value={result.bmi.toFixed(1)} sub={result.category} accent />
-            <ResultStat label="Resting BMR" value={`${formatNumber(result.bmr)}`} sub="kcal/day" />
-            <ResultStat label="Maintenance" value={`${formatNumber(result.tdee)}`} sub="kcal/day" />
-          </ResultGrid>
-
-          <div className={cn("p-5 rounded-xl flex gap-4 items-start border-l-4", 
-            result.bmi < 18.5 && "bg-utility-soft border-utility text-utility",
-            result.bmi >= 18.5 && result.bmi < 25 && "bg-health-soft border-health text-health",
-            result.bmi >= 25 && result.bmi < 30 && "bg-amber-500/10 border-amber-500 text-amber-500",
-            result.bmi >= 30 && "bg-destructive-soft border-destructive text-destructive"
-          )}>
-            <div className="shrink-0 mt-0.5"><Scale className="size-5" /></div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Health Milestone</h4>
-              <p className="text-sm opacity-90 leading-relaxed font-medium">{result.goalText} {result.insight}</p>
-            </div>
-          </div>
-
-          <div className="surface-card p-6">
-            <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest font-mono mb-6">Calorie Target Stratification</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { label: "Extreme Cut", v: result.tdee - 800, color: "text-destructive" },
-                { label: "Fat Loss", v: result.tdee - 500, color: "text-amber-500" },
-                { label: "Maintenance", v: result.tdee, color: "text-health" },
-                { label: "Muscle Bulk", v: result.tdee + 300, color: "text-utility" },
-              ].map((t) => (
-                <div key={t.label} className="bg-secondary/50 rounded-xl p-4 border border-border/50">
-                  <div className="text-[9px] uppercase font-bold text-muted-foreground mb-1">{t.label}</div>
-                  <div className={cn("text-xl font-mono font-bold", t.color)}>{formatNumber(t.v)}</div>
-                  <div className="text-[10px] opacity-60">kcal / day</div>
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <UserIcon className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Body Mass Index (BMI)</span>
+                  <div className={cn("text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums", result.categoryColor)}>
+                    {result.bmi.toFixed(1)}
+                  </div>
                 </div>
-              ))}
+                <button 
+                  onClick={handleCopy} 
+                  className={cn(
+                    "p-3 rounded-xl transition-all border",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
+                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight">
+                  <Zap className="size-3" />
+                  <span>Your body burns: {formatNumber(result.bmr)} kcal at rest</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  To maintain weight: {formatNumber(result.tdee)} kcal
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="surface-card p-6">
-            <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest font-mono mb-4">BMI Clinical Spectrum</h3>
-            <div className="relative h-2.5 rounded-full bg-gradient-to-r from-utility via-health to-destructive">
+          {/* Calorie Goals */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "Fast Weight Loss", v: result.tdee - 800, i: Ruler, unit: "kcal", color: "text-destructive" },
+               { l: "Steady Weight Loss", v: result.tdee - 500, i: Flame, unit: "kcal", color: "text-amber-500" },
+               { l: "Maintain Weight", v: result.tdee, i: Activity, unit: "kcal", color: "text-health" },
+               { l: "Gain Weight", v: result.tdee + 300, i: Zap, unit: "kcal", color: "text-signal" }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className={cn("size-3", item.color)} />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                 </div>
+                 <div className="text-xl font-mono font-medium tabular-nums leading-tight">
+                    {formatNumber(item.v)}
+                    <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                 </div>
+               </div>
+             ))}
+          </div>
+
+          {/* BMI Chart */}
+          <div className="surface-card p-10 bg-secondary/5 border-border/30 relative overflow-hidden group">
+            <LayoutDashboard className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+            <div className="flex items-center justify-between mb-12 relative z-10">
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">BMI Chart</h4>
+              <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-40">Health Standards</span>
+            </div>
+            
+            <div className="relative h-2 rounded-full bg-gradient-to-r from-amber-400 via-health to-destructive relative z-10">
               <div
-                className="absolute -top-1.5 size-5 rounded-full bg-foreground border-2 border-background shadow-xl"
+                className="absolute -top-3 size-8 rounded-full bg-foreground border-4 border-background shadow-xl transition-all duration-1000 ease-out"
                 style={{ left: `${Math.min(100, Math.max(0, ((result.bmi - 15) / 25) * 100))}%`, transform: "translateX(-50%)" }}
               />
             </div>
-            <div className="flex justify-between text-[10px] text-muted-foreground font-mono mt-3 uppercase tracking-tighter">
-              <span>15 (Under)</span><span>18.5 (Normal)</span><span>25 (Overweight)</span><span>30 (Obese)</span>
+            
+            <div className="flex justify-between mt-6 relative z-10">
+               {[15, 18.5, 25, 30, 40].map((v) => (
+                 <div key={v} className="flex flex-col items-center gap-1">
+                   <div className="h-1.5 w-0.5 bg-border/60" />
+                   <span className="text-[9px] font-bold font-mono text-muted-foreground opacity-40">{v.toFixed(1)}</span>
+                 </div>
+               ))}
             </div>
           </div>
+
+          {/* Expert Insights */}
+          <div className="grid md:grid-cols-2 gap-6 pt-2">
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+                <Target className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                <div className="flex items-center gap-2 relative z-10">
+                  <UserIcon className="size-3 text-health" /> Body Weight Changes
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Your calorie needs change as your weight changes. Check back every few weeks to keep your progress on track and adjust your goals.
+                </p>
+             </div>
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+                <Flame className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                <div className="flex items-center gap-2 relative z-10">
+                  <Activity className="size-3 text-health" /> Moving More
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Even small movements like walking or standing help burn calories throughout the day. Every little bit of activity helps you reach your target.
+                </p>
+             </div>
+          </div>
+
         </div>
       </div>
     </CalculatorPage>

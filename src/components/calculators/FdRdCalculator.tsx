@@ -1,12 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Share, CheckCircle2, PiggyBank, Info } from "lucide-react";
+import { 
+  Share, CheckCircle2, PiggyBank, Info, Settings2, Copy, 
+  TrendingUp, Wallet, Landmark, Zap, Target, Activity, 
+  ArrowUpRight, Sparkles, History, Banknote
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { ResultGrid, ResultStat } from "@/components/ResultStat";
-import { SeoBlock } from "@/components/SeoBlock";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { calculatorBySlug } from "@/lib/calculators";
@@ -14,14 +17,15 @@ import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
 import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
+import { SITE_DOMAIN } from "@/lib/constants";
 
 const calc = calculatorBySlug("fixed-deposit-calculator")!;
 
 const COMPOUND_PERIODS = [
-  { label: "Monthly", value: 12 },
-  { label: "Quarterly", value: 4 },
-  { label: "Half-Yearly", value: 2 },
-  { label: "Yearly", value: 1 },
+  { label: "Monthly Compounding", value: 12 },
+  { label: "Quarterly Compounding", value: 4 },
+  { label: "Half-Yearly Compounding", value: 2 },
+  { label: "Yearly Compounding", value: 1 },
 ];
 
 const FdRdCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
@@ -42,9 +46,9 @@ const FdRdCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
       const maturity = amount * Math.pow(1 + r / n, n * t);
       const interest = maturity - amount;
       let insight = "";
-      if (interest > amount) insight = "Yield Mastery: Your earned interest exceeds your original principal. This only happens with high discipline and long-term time deposits.";
-      else if (interest > amount * 0.3) insight = "Portfolio Boost: Your savings have grown by over 30%. Maintaining this rate will significantly outperform standard inflation.";
-      else insight = "Capital Safety: Your principal is protected while generating guaranteed yield. Consider extending the tenure to cross the 50% growth mark.";
+      if (interest > amount) insight = "Yield Mastery: Your interest exceeds your principal. This indicates high discipline and long-term deposit strategy.";
+      else if (interest > amount * 0.3) insight = "Portfolio Boost: Your savings have grown by over 30%. This rate significantly outperforms standard inflation.";
+      else insight = "Capital Safety: Your principal is protected while generating guaranteed yield. Consider extending tenure for higher growth.";
       return { maturity, interest, invested: amount, insight };
     } else {
       let maturity = 0;
@@ -56,82 +60,189 @@ const FdRdCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
       const invested = amount * totalMonths;
       const interest = maturity - invested;
       let insight = "";
-      if (interest > invested * 0.4) insight = "Habit-Driven Wealth: Your recurring deposits are generating massive leverage. This automated saving style is the most reliable way to build a corpus.";
+      if (interest > invested * 0.4) insight = "Habit-Driven Wealth: Recurring deposits are generating massive leverage. This is the most reliable way to build a corpus.";
       else insight = "Consistent Saver: Regular contributions are creating a guaranteed safety net. You are successfully automating your future wealth.";
       return { maturity, interest, invested, insight };
     }
   }, [mode, amount, rate, years, compounding]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleCopy = () => {
+    const resultText = `Savings Maturity: ${formatCurrency(result.maturity, currency.code)} in ${years} years. Model your deposit at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={<SeoBlock title="Guaranteed Yield Savings" intro="Plan time deposits or recurring savings plans with accurate compounding arithmetic." />}
-    >
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 surface-card p-6 space-y-6">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Savings Type</h3>
-            <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-health hover:text-white transition flex items-center gap-1 font-mono">
-              {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-              {copied ? "COPIED" : "SHARE"}
-            </button>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Input Panel */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Savings Architecture</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Yield Configuration</p>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              <Tabs value={mode} onValueChange={(v) => setMode(v as any)}>
+                <TabsList className="grid grid-cols-2 w-full h-11 bg-background border border-border/60 p-1 rounded-xl">
+                  <TabsTrigger value="fd" className="rounded-lg text-[10px] font-bold uppercase tracking-widest data-[state=active]:bg-foreground data-[state=active]:text-background transition-all">Lump Sum</TabsTrigger>
+                  <TabsTrigger value="rd" className="rounded-lg text-[10px] font-bold uppercase tracking-widest data-[state=active]:bg-foreground data-[state=active]:text-background transition-all">Recurring</TabsTrigger>
+                </TabsList>
+              </Tabs>
+
+              {/* Deposit Amount */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{mode === "fd" ? "Initial Deposit" : "Monthly Installment"}</Label>
+                  <span className="text-[10px] font-bold text-health">{formatCurrency(amount, currency.code)}</span>
+                </div>
+                <div className="relative group">
+                  <Input 
+                    type="number" 
+                    value={amount} 
+                    onChange={(e) => setAmount(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12"
+                  />
+                  <Wallet className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/40" />
+                </div>
+                <Slider value={[amount]} min={mode === "fd" ? 1000 : 100} max={mode === "fd" ? 1000000 : 50000} step={mode === "fd" ? 1000 : 100} onValueChange={([v]) => setAmount(v)} />
+              </div>
+
+              {/* Rate and Tenure */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Return (%)</Label>
+                  <Input type="number" step="0.1" value={rate} onChange={(e) => setRate(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm" />
+                </div>
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tenure (Yrs)</Label>
+                  <Input type="number" value={years} onChange={(e) => setYears(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm" />
+                </div>
+              </div>
+
+              {/* Compounding */}
+              <div className="space-y-3 pt-2 border-t border-border/40">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Yield Compounding</Label>
+                <Select value={compounding.toString()} onValueChange={(v) => setCompounding(Number(v))}>
+                  <SelectTrigger className="h-11 bg-background border-border/60 font-bold text-[10px] uppercase tracking-widest rounded-xl shadow-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-xl border-border/40">
+                    {COMPOUND_PERIODS.map((p) => (
+                      <SelectItem key={p.value} value={p.value.toString()} className="text-[10px] font-bold uppercase tracking-widest">
+                        {p.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
 
-          <Tabs value={mode} onValueChange={(v) => setMode(v as any)}>
-            <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger value="fd">Fixed</TabsTrigger>
-              <TabsTrigger value="rd">Recurring</TabsTrigger>
-            </TabsList>
-          </Tabs>
-
-          <div className="space-y-4 pt-2">
-            <div><Label>{mode === "fd" ? "Initial Deposit" : "Monthly Installment"}</Label><Input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value) || 0)} className="mt-2 text-lg font-bold" /></div>
-            <div><Label>Interest Rate (% p.a.)</Label><Input type="number" value={rate} onChange={(e) => setRate(Number(e.target.value) || 0)} className="mt-2" /></div>
-            <div className="grid grid-cols-2 gap-3">
-              <div><Label>Tenure (Years)</Label><Input type="number" value={years} onChange={(e) => setYears(Number(e.target.value) || 0)} className="mt-2" /></div>
-              <div><Label>Compounding</Label>
-                <Select value={compounding.toString()} onValueChange={(v) => setCompounding(Number(v))}>
-                  <SelectTrigger className="mt-2 text-sm"><SelectValue /></SelectTrigger>
-                  <SelectContent>{COMPOUND_PERIODS.map((p) => <SelectItem key={p.value} value={p.value.toString()}>{p.label}</SelectItem>)}</SelectContent>
-                </Select>
+          <div className="surface-card p-6 border-border/30 bg-health/5 relative overflow-hidden group">
+            <Sparkles className="absolute -bottom-4 -right-4 size-20 text-health/5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1 text-health">
+                <PiggyBank className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Yield Insight</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                  {result.insight}
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <ResultGrid cols={2}>
-            <ResultStat label="Maturity Value" value={formatCurrency(result.maturity, currency)} accent />
-            <ResultStat label="Total Interest" value={formatCurrency(result.interest, currency)} />
-          </ResultGrid>
-
-          <div className="p-5 rounded-xl flex gap-4 items-start border-l-4 bg-health-soft border-health text-health">
-            <div className="shrink-0 mt-0.5"><PiggyBank className="size-5" /></div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Savings Insight</h4>
-              <p className="text-sm opacity-90 leading-relaxed font-medium">{result.insight}</p>
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <TrendingUp className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Projected Maturity Valuation</span>
+                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
+                    {formatCurrency(result.maturity, currency.code)}
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={handleCopy} 
+                    className={cn(
+                      "p-3 rounded-xl transition-all border",
+                      copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                    )}
+                  >
+                    {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
+                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight">
+                  <ArrowUpRight className="size-3" />
+                  <span>Est. Interest: {formatCurrency(result.interest, currency.code)}</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  Total Contributions: {formatCurrency(result.invested, currency.code)}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-             <div className="surface-card p-5">
-               <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Total Contributions</div>
-               <div className="text-lg font-bold">{formatCurrency(result.invested, currency)}</div>
+          {/* Performance Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "Multiplier", v: (result.maturity / result.invested).toFixed(2), i: Activity, unit: "x" },
+               { l: "Time Horizon", v: years, i: History, unit: "yrs" },
+               { l: "Interest Weight", v: ((result.interest / result.maturity) * 100).toFixed(1), i: Target, unit: "%" },
+               { l: "Monthly Accrual", v: (result.interest / (years * 12)).toFixed(0), i: Zap, unit: currency.code }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                 </div>
+                 <div className="text-xl font-mono font-medium tabular-nums leading-tight">
+                    {item.v}
+                    <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                 </div>
+               </div>
+             ))}
+          </div>
+
+          {/* Expert Insights */}
+          <div className="grid md:grid-cols-2 gap-6 pt-2">
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                <div className="flex items-center gap-2 relative z-10">
+                  <History className="size-3 text-health" /> Capital Preservation
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Fixed deposits are the cornerstone of a low-risk portfolio, providing a guaranteed rate of return that is immune to equity market volatility.
+                </p>
              </div>
-             <div className="surface-card p-5">
-               <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Interest Weight</div>
-               <div className="text-lg font-bold">{((result.interest / result.maturity) * 100).toFixed(1)}%</div>
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+                <Zap className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                <div className="flex items-center gap-2 relative z-10">
+                  <TrendingUp className="size-3 text-health" /> Compounding Velocity
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  The frequency of compounding plays a critical role in effective annual yield. Shorter intervals (monthly) maximize your total interest accrual.
+                </p>
              </div>
           </div>
+
         </div>
       </div>
     </CalculatorPage>

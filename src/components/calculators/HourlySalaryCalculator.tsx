@@ -1,9 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { 
+  Share, CheckCircle2, TrendingUp, Info, Wallet, Landmark, 
+  Clock, Calendar, Briefcase, Timer, History, Zap, Copy, 
+  LayoutDashboard, Calculator, Settings2, Banknote, 
+  ShieldCheck, ChevronRight, Target, Activity, Ruler, Sparkles
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { ResultGrid, ResultStat } from "@/components/ResultStat";
-import { SeoBlock } from "@/components/SeoBlock";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -11,129 +15,208 @@ import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency, formatNumber } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
 import { useCurrency } from "@/context/CurrencyContext";
+import { SITE_DOMAIN } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("hourly-to-salary-calculator")!;
+const calc = calculatorBySlug("hourly-to-salary-calculator");
 
 const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  if (!calc) return null;
   const { currency } = useCurrency();
   const [hourly, setHourly] = useUrlState<number>("h", 40);
   const [hoursPerDay, setHoursPerDay] = useUrlState<number>("hd", 8);
   const [daysPerWeek, setDaysPerWeek] = useUrlState<number>("dw", 5);
   const [weeksPerYear, setWeeksPerYear] = useUrlState<number>("wy", 52);
+  const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => {
     const daily = hourly * hoursPerDay;
     const weekly = daily * daysPerWeek;
     const monthly = (weekly * weeksPerYear) / 12;
     const annual = weekly * weeksPerYear;
+    const totalHours = hoursPerDay * daysPerWeek * weeksPerYear;
 
-    return { daily, weekly, monthly, annual };
+    return { daily, weekly, monthly, annual, totalHours };
   }, [hourly, hoursPerDay, daysPerWeek, weeksPerYear]);
 
+  const handleCopy = () => {
+    let text = `Annual Salary Equivalent: ${formatCurrency(results.annual, currency.code)} (${formatCurrency(hourly, currency.code)}/hr). Audit at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={
-        <SeoBlock
-          title="Comparing Hourly Wages and Salaried Income"
-          intro="Understanding your true compensation requires looking beyond the hourly rate. Converting to annual or monthly benchmarks helps you compare job offers and plan your cost of living more effectively."
-          sections={[
-            {
-              heading: "The Standard Year",
-              icon: "info",
-              body: <p>A standard full-time work year is typically considered 2,080 hours (40 hours per week × 52 weeks). However, if you take 2 weeks of unpaid vacation, your actual annual income will be based on 2,000 hours.</p>,
-            },
-            {
-              heading: "Gross vs. Net Pay",
-              icon: "book",
-              body: <p>Important: This calculator provides <strong>Gross Income</strong> (income before taxes). Your actual take-home pay will be lower after federal, state, and local taxes, insurance premiums, and retirement contributions are deducted.</p>,
-            },
-          ]}
-          faqs={[
-            { q: "What is a living wage?", a: "A living wage is the minimum income necessary for a worker to meet their basic needs, which varies significantly by city and family size." },
-            { q: "Are holidays paid?", a: "This depends on your employment contract. Some hourly roles pay only for hours worked, while 'Salaried-Exempt' roles provide a fixed annual sum regardless of minor hour fluctuations." },
-          ]}
-        />
-      }
-    >
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 surface-card p-6 space-y-6">
-          <div><div className="flex justify-between mb-2"><Label>Hourly Wage</Label><span className="font-mono text-xs font-bold text-signal">{formatCurrency(hourly, currency)}</span></div>
-            <Input
-              type="number"
-              value={hourly}
-              onChange={(e) => setHourly(Number(e.target.value) || 0)}
-              className="text-lg font-semibold"
-            />
-            <Slider value={[hourly]} min={7} max={500} step={0.5} onValueChange={([v]) => setHourly(v)} className="mt-4" />
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Input Panel */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Work Schedule</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Working Hours</p>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Hourly Rate */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Hourly Rate</Label>
+                  <span className="text-[10px] font-bold text-finance">{formatCurrency(hourly, currency.code)}</span>
+                </div>
+                <div className="relative group">
+                  <Input 
+                    type="number" 
+                    value={hourly} 
+                    onChange={(e) => setHourly(Number(e.target.value) || 0)} 
+                    className="h-12 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-lg rounded-xl pr-12 shadow-sm"
+                  />
+                  <Banknote className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
+                </div>
+                <Slider value={[hourly]} min={7} max={1000} step={0.5} onValueChange={([v]) => setHourly(v)} />
+              </div>
+
+              {/* Grid Inputs */}
+              <div className="space-y-6 pt-4 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    <span>Hours per Day</span>
+                    <span className="text-foreground">{hoursPerDay}h</span>
+                  </div>
+                  <Slider value={[hoursPerDay]} min={1} max={24} step={0.5} onValueChange={([v]) => setHoursPerDay(v)} />
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    <span>Days per Week</span>
+                    <span className="text-foreground">{daysPerWeek}d</span>
+                  </div>
+                  <Slider value={[daysPerWeek]} min={1} max={7} step={1} onValueChange={([v]) => setDaysPerWeek(v)} />
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    <span>Weeks per Year</span>
+                    <span className="text-foreground">{weeksPerYear}w</span>
+                  </div>
+                  <Slider value={[weeksPerYear]} min={1} max={52} step={1} onValueChange={([v]) => setWeeksPerYear(v)} />
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-4 pt-4 border-t">
-            <div>
-              <div className="flex justify-between items-baseline mb-2">
-                <Label>Hours per Day</Label>
-                <span className="font-mono text-xs font-bold text-signal">{hoursPerDay}h</span>
+          {/* Insight Panel */}
+          <div className="surface-card p-6 border-border/30 bg-health/5 text-health relative overflow-hidden group">
+            <ShieldCheck className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1">
+                <Clock className="size-5" />
               </div>
-              <Slider value={[hoursPerDay]} min={1} max={24} step={0.5} onValueChange={([v]) => setHoursPerDay(v)} />
-            </div>
-            <div>
-              <div className="flex justify-between items-baseline mb-2">
-                <Label>Days per Week</Label>
-                <span className="font-mono text-xs font-bold text-signal">{daysPerWeek}d</span>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Pay Summary</h4>
+                <p className="text-xs opacity-80 leading-relaxed font-medium">
+                  At {formatCurrency(hourly, currency.code)}/hr, you earn {formatCurrency(results.daily, currency.code)} per day. 
+                  Your total annual commitment is {formatNumber(results.totalHours)} hours of work.
+                </p>
               </div>
-              <Slider value={[daysPerWeek]} min={1} max={7} step={1} onValueChange={([v]) => setDaysPerWeek(v)} />
-            </div>
-            <div>
-              <div className="flex justify-between items-baseline mb-2">
-                <Label>Weeks per Year</Label>
-                <span className="font-mono text-xs font-bold text-signal">{weeksPerYear}w</span>
-              </div>
-              <Slider value={[weeksPerYear]} min={1} max={52} step={1} onValueChange={([v]) => setWeeksPerYear(v)} />
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <ResultGrid cols={2}>
-            <ResultStat
-              label="Annual Salary"
-              value={formatCurrency(results.annual, currency)}
-              sub={`Full-time equivalent`}
-              accent
-            />
-            <ResultStat
-              label="Monthly Income"
-              value={formatCurrency(results.monthly, currency)}
-              sub="Before taxes"
-            />
-          </ResultGrid>
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8">
           
-          <div className="grid sm:grid-cols-2 gap-4">
-            <ResultStat
-              label="Weekly Pay"
-              value={formatCurrency(results.weekly, currency)}
-              sub={`${daysPerWeek} days/week`}
-            />
-            <ResultStat
-              label="Daily Pay"
-              value={formatCurrency(results.daily, currency)}
-              sub={`${hoursPerDay} hours/day`}
-            />
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <Briefcase className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Your Annual Salary</span>
+                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
+                    {formatCurrency(results.annual, currency.code)}
+                  </div>
+                </div>
+                <button 
+                  onClick={handleCopy} 
+                  className={cn(
+                    "p-3 rounded-xl transition-all border shadow-sm",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
+                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
+                  <Wallet className="size-3" />
+                  <span>Monthly Pay: {formatCurrency(results.monthly, currency.code)}</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
+                  Weekly Pay: {formatCurrency(results.weekly, currency.code)}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="surface-card p-6 flex flex-col items-center text-center">
-            <div className="size-12 rounded-full bg-business-soft text-business flex items-center justify-center mb-4">
-              <span className="font-bold text-sm">H</span>
+          {/* Integration Matrix */}
+          <div className="surface-card p-10 bg-secondary/5 border-border/30 relative overflow-hidden group shadow-sm">
+             <Sparkles className="absolute -top-4 -right-4 size-48 text-muted-foreground/5 opacity-40 group-hover:rotate-12 transition-transform duration-1000" />
+             <div className="flex items-center gap-3 mb-10 relative z-10">
+               <div className="size-8 rounded-lg bg-foreground text-background flex items-center justify-center shadow-lg">
+                 <LayoutDashboard className="size-4" />
+               </div>
+               <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Estimated Earnings</h3>
             </div>
-            <h3 className="font-semibold mb-2">Time is Money</h3>
-            <div className="text-sm text-muted-foreground max-w-sm">
-              At your current rate, you earn <strong>{formatCurrency(hourly, currency)}</strong> every hour. 
-              In a single year, you will work approximately <strong>{formatNumber(hoursPerDay * daysPerWeek * weeksPerYear)}</strong> hours.
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+               {[
+                 { l: "Daily (8h)", v: results.daily, i: Timer },
+                 { l: "Bi-Weekly", v: results.weekly * 2, i: Calendar },
+                 { l: "Total Hours", v: results.totalHours, i: History, unit: "h" },
+                 { l: "Full-Time %", v: ((hoursPerDay * daysPerWeek) / 40 * 100).toFixed(1), i: Activity, unit: "%" }
+               ].map((item, idx) => (
+                 <div key={idx} className="bg-background border border-border/40 p-6 rounded-2xl group/item hover:border-foreground/20 transition-all shadow-sm">
+                   <div className="flex items-center gap-2 mb-3">
+                      <item.i className="size-3 text-muted-foreground group-hover/item:text-foreground transition-colors" />
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
+                   </div>
+                   <div className="text-lg font-mono font-bold tabular-nums leading-tight">
+                      {typeof item.v === 'number' && item.unit !== '%' && item.unit !== 'h' ? formatCurrency(item.v, currency.code) : item.v}
+                      {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                   </div>
+                 </div>
+               ))}
             </div>
           </div>
+
+          {/* Professional Contexts */}
+          <div className="grid md:grid-cols-2 gap-6 pt-4">
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <ShieldCheck className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Note on Taxes</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
+                  This is your gross income before taxes and fees. Your actual take-home pay will vary based on your local tax rate.
+                </p>
+             </div>
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+                <Calendar className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <Timer className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Holidays & Vacations</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
+                  To account for unpaid leave or public holidays, adjust "Weeks per Year" to 50 (standard 2-week vacation) for a more realistic annual projection.
+                </p>
+             </div>
+          </div>
+
         </div>
       </div>
     </CalculatorPage>

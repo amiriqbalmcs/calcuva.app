@@ -1,21 +1,27 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Share, CheckCircle2, Percent, Info } from "lucide-react";
+import { 
+  Share, CheckCircle2, Percent, Info, TrendingUp, TrendingDown, 
+  Landmark, BarChart3, PieChart, Activity, Zap, History, Target,
+  Settings2, ChevronRight, Calculator, Scale, RefreshCcw, Watch,
+  Copy, Ruler, Gauge, LayoutDashboard, Binary, Sparkles
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { ResultGrid, ResultStat } from "@/components/ResultStat";
-import { SeoBlock } from "@/components/SeoBlock";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatNumber } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
+import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("percentage-increase-calculator")!;
+const calc = calculatorBySlug("percentage-increase-calculator");
 
 const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  if (!calc) return null;
   const [mode, setMode] = useUrlState<"of" | "diff" | "change">("m", "of");
   const [ofP, setOfP] = useUrlState<number>("p1", 20);
   const [ofV, setOfV] = useUrlState<number>("v1", 500);
@@ -26,70 +32,207 @@ const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
   const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => {
-    if (mode === "of") return { val: (ofP/100)*ofV, label: `${ofP}% of ${ofV}` };
-    if (mode === "diff") return { val: (dx/(dy||1))*100, label: `${dx} is % of ${dy}` };
-    if (mode === "change") return { val: ((c2-c1)/Math.abs(c1||1))*100, label: `Change from ${c1} to ${c2}` };
+    if (mode === "of") return { val: (ofP/100)*ofV, label: `Result of ${ofP}% from ${ofV}` };
+    if (mode === "diff") return { val: (dx/(dy||1))*100, label: `Percentage of ${dx} out of ${dy}` };
+    if (mode === "change") return { val: ((c2-c1)/Math.abs(c1||1))*100, label: `Percentage change from ${c1} to ${c2}` };
     return { val: 0, label: "" };
   }, [mode, ofP, ofV, dx, dy, c1, c2]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleCopy = () => {
+    let text = `Result: ${results.val.toFixed(2)}${mode === 'of' ? '' : '%'}. Use this free calculator at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={<SeoBlock title="Percentage Calculations" intro="From discounts to stock growth, percentages are the language of comparison." faqs={[{ q: "Rule of thumb?", a: "'Of' usually means multiply." }]} />}
-    >
-      <div className="flex justify-between items-center mb-6">
-        <Tabs value={mode} onValueChange={(v) => setMode(v as any)}>
-          <TabsList className="grid grid-cols-3 w-full max-w-sm">
-            <TabsTrigger value="of">Value Of %</TabsTrigger>
-            <TabsTrigger value="diff">Is what %?</TabsTrigger>
-            <TabsTrigger value="change">% Change</TabsTrigger>
-          </TabsList>
-        </Tabs>
-        <button onClick={handleShare} className="p-1 px-3 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-education hover:text-white transition flex items-center gap-2">
-          {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-          {copied ? "COPIED" : "SHARE"}
-        </button>
-      </div>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Calculator Settings */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold tracking-tight">Choose Type</h3>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Select What to Calculate</p>
+              </div>
+              <Tabs value={mode} onValueChange={(v) => setMode(v as any)} className="w-full">
+                <TabsList className="grid grid-cols-3 h-11 bg-background/50 border border-border/40 p-1 rounded-xl">
+                  <TabsTrigger value="of" className="rounded-lg text-[9px] font-bold uppercase tracking-widest data-[state=active]:bg-background data-[state=active]:shadow-sm">Find Value</TabsTrigger>
+                  <TabsTrigger value="diff" className="rounded-lg text-[9px] font-bold uppercase tracking-widest data-[state=active]:bg-background data-[state=active]:shadow-sm">Find %</TabsTrigger>
+                  <TabsTrigger value="change" className="rounded-lg text-[9px] font-bold uppercase tracking-widest data-[state=active]:bg-background data-[state=active]:shadow-sm">Find Growth</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
-        <div className="surface-card p-6 py-8">
-          {mode === "of" && (
-            <div className="flex items-center gap-4"><div className="flex-1"><Label>Percentage %</Label><Input type="number" value={ofP} onChange={(e) => setOfP(Number(e.target.value) || 0)} className="mt-2 text-xl font-bold" /></div>
-            <div className="pt-6 font-bold text-muted-foreground">OF</div>
-            <div className="flex-1"><Label>Base Value</Label><Input type="number" value={ofV} onChange={(e) => setOfV(Number(e.target.value) || 0)} className="mt-2 text-xl font-bold" /></div></div>
-          )}
-          {mode === "diff" && (
-            <div className="flex items-center gap-4"><div className="flex-1"><Label>Value A</Label><Input type="number" value={dx} onChange={(e) => setDx(Number(e.target.value) || 0)} className="mt-2 text-xl font-bold" /></div>
-            <div className="pt-6 font-bold text-muted-foreground">AS % OF</div>
-            <div className="flex-1"><Label>Base Value B</Label><Input type="number" value={dy} onChange={(e) => setDy(Number(e.target.value) || 0)} className="mt-2 text-xl font-bold" /></div></div>
-          )}
-          {mode === "change" && (
-            <div className="flex items-center gap-4"><div className="flex-1"><Label>From</Label><Input type="number" value={c1} onChange={(e) => setC1(Number(e.target.value) || 0)} className="mt-2 text-xl font-bold" /></div>
-            <div className="pt-6 font-bold text-muted-foreground">TO</div>
-            <div className="flex-1"><Label>Final Value</Label><Input type="number" value={c2} onChange={(e) => setC2(Number(e.target.value) || 0)} className="mt-2 text-xl font-bold" /></div></div>
-          )}
-        </div>
-
-        <div className="space-y-6">
-          <ResultStat label={results.label} value={mode === "of" ? formatNumber(results.val, 2) : `${formatNumber(results.val, 2)}%`} accent />
-          <div className="p-5 rounded-xl flex gap-4 items-start border-l-4 bg-education-soft border-education text-education">
-            <div className="shrink-0 mt-0.5"><Percent className="size-5" /></div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Percentage Insight</h4>
-              <p className="text-sm opacity-90 leading-relaxed font-medium">
-                {mode === "change" ? (results.val >= 0 ? `Your value has increased by ${results.val.toFixed(1)}%.` : `Your value has decreased by ${Math.abs(results.val).toFixed(1)}%.`) : "This calculation represents the direct proportion between the two values."}
-              </p>
+            <div className="space-y-8 relative z-10">
+              {mode === "of" && (
+                <>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Percentage (%)</Label>
+                      <span className="text-[10px] font-bold">{ofP}%</span>
+                    </div>
+                    <Input type="number" value={ofP} onChange={(e) => setOfP(Number(e.target.value) || 0)} className="h-12 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm" />
+                    <Slider value={[ofP]} min={0} max={200} step={0.1} onValueChange={([v]) => setOfP(v)} />
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Amount</Label>
+                      <span className="text-[10px] font-bold">{ofV}</span>
+                    </div>
+                    <Input type="number" value={ofV} onChange={(e) => setOfV(Number(e.target.value) || 0)} className="h-12 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm" />
+                    <Slider value={[ofV]} min={0} max={10000} step={1} onValueChange={([v]) => setOfV(v)} />
+                  </div>
+                </>
+              )}
+              {mode === "diff" && (
+                <>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Part Value</Label>
+                      <span className="text-[10px] font-bold">{dx}</span>
+                    </div>
+                    <Input type="number" value={dx} onChange={(e) => setOfP(Number(e.target.value) || 0)} className="h-12 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm" />
+                    <Slider value={[dx]} min={0} max={10000} step={1} onValueChange={([v]) => setDx(v)} />
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Value</Label>
+                      <span className="text-[10px] font-bold">{dy}</span>
+                    </div>
+                    <Input type="number" value={dy} onChange={(e) => setOfV(Number(e.target.value) || 0)} className="h-12 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm" />
+                    <Slider value={[dy]} min={0} max={10000} step={1} onValueChange={([v]) => setDy(v)} />
+                  </div>
+                </>
+              )}
+              {mode === "change" && (
+                <>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Starting Value</Label>
+                      <span className="text-[10px] font-bold">{c1}</span>
+                    </div>
+                    <Input type="number" value={c1} onChange={(e) => setC1(Number(e.target.value) || 0)} className="h-12 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm" />
+                    <Slider value={[c1]} min={0} max={10000} step={1} onValueChange={([v]) => setC1(v)} />
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Ending Value</Label>
+                      <span className="text-[10px] font-bold">{c2}</span>
+                    </div>
+                    <Input type="number" value={c2} onChange={(e) => setC2(Number(e.target.value) || 0)} className="h-12 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm" />
+                    <Slider value={[c2]} min={0} max={10000} step={1} onValueChange={([v]) => setC2(v)} />
+                  </div>
+                </>
+              )}
             </div>
           </div>
+
+          <div className="surface-card p-6 border-border/30 bg-finance/5 text-finance relative overflow-hidden group shadow-sm">
+            <Sparkles className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1">
+                {mode === 'change' && results.val < 0 ? <TrendingDown className="size-5" /> : <TrendingUp className="size-5" />}
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-finance/80">Calculation Result</h4>
+                <p className="text-xs leading-relaxed font-medium">
+                  {mode === "change" 
+                    ? (results.val >= 0 ? `The value has increased by ${results.val.toFixed(2)}% compared to the start.` : `The value has decreased by ${Math.abs(results.val).toFixed(2)}% from the start.`) 
+                    : "This shows the percentage relationship between the two numbers you entered."}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-12 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <Percent className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{results.label}</span>
+                  <div className="text-6xl md:text-8xl font-mono font-medium tracking-tighter tabular-nums pt-4">
+                    {mode === "of" ? formatNumber(results.val, 2) : `${formatNumber(results.val, 2)}%`}
+                  </div>
+                </div>
+                <button 
+                  onClick={handleCopy} 
+                  className={cn(
+                    "p-3 rounded-xl transition-all border shadow-sm",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-6 pt-10 border-t border-border/40">
+                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
+                  <Binary className="size-3" />
+                  <span>Times Multiplied: {(mode === 'of' ? results.val/ofV : 1 + results.val/100).toFixed(4)}x</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
+                  High Accuracy Calculation
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Precision Analytics Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "As a Decimal", v: (results.val / 100).toFixed(4), i: BarChart3 },
+               { l: "Growth Rate", v: (1 + results.val / 100).toFixed(4), i: Target, unit: "x" },
+               { l: "Status", v: "Verified", i: History },
+               { l: "Engine", v: "Active", i: Zap }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
+                 </div>
+                 <div className="text-xl font-mono font-bold tabular-nums leading-tight">
+                    {item.v}
+                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                 </div>
+               </div>
+             ))}
+          </div>
+
+          {/* Expert Strategy Cards */}
+          <div className="grid md:grid-cols-2 gap-6 pt-2">
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-500" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <Activity className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Money & Finance</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Percentages help you track how much your savings, investments, or prices grow over time, making them essential for managing your money.
+                </p>
+             </div>
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+                <PieChart className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-500" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <Gauge className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Comparing Numbers</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Using percentages makes it easy to compare different numbers and see which one is performing better or changing faster.
+                </p>
+             </div>
+          </div>
+
         </div>
       </div>
     </CalculatorPage>

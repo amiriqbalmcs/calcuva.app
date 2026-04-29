@@ -5,9 +5,10 @@ import { getPostData, getSortedPostsData } from "@/lib/markdown";
 import type { Metadata } from "next";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { CalculatorSkeleton } from "@/components/CalculatorSkeleton";
+import { Suspense } from "react";
+import { SITE_URL } from "@/lib/constants";
 
-
-const BASE_URL = "https://calcuva.app";
+const BASE_URL = SITE_URL;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -44,12 +45,13 @@ const loading = () => <CalculatorSkeleton />;
 const AgeCalculator = dynamic(() => import("@/components/calculators/AgeCalculator"), { loading });
 const BmiTdeeCalculator = dynamic(() => import("@/components/calculators/BmiTdeeCalculator"), { loading });
 const GpaPercentageCalculator = dynamic(() => import("@/components/calculators/GpaPercentageCalculator"), { loading });
+const RunningPaceCalculator = dynamic(() => import("@/components/calculators/RunningPaceCalculator"), { loading });
 const LoanEmiCalculator = dynamic(() => import("@/components/calculators/LoanEmiCalculator"), { loading });
 const PregnancyCalculator = dynamic(() => import("@/components/calculators/PregnancyCalculator"), { loading });
 const RentVsBuyCalculator = dynamic(() => import("@/components/calculators/RentVsBuyCalculator"), { loading });
 const SalaryTaxCalculator = dynamic(() => import("@/components/calculators/SalaryTaxCalculator"), { loading });
 const SipCompoundCalculator = dynamic(() => import("@/components/calculators/SipCompoundCalculator"), { loading });
-const UnitCurrencyConverter = dynamic(() => import("@/components/calculators/UnitCurrencyConverter"), { loading });
+const UnitConverter = dynamic(() => import("@/components/calculators/UnitConverter"), { loading });
 const WaterSleepCalculator = dynamic(() => import("@/components/calculators/WaterSleepCalculator"), { loading });
 
 // Batch 1 Expansion
@@ -93,7 +95,6 @@ const CalorieDeficitCalculator = dynamic(() => import("@/components/calculators/
 const OneRepMaxCalculator = dynamic(() => import("@/components/calculators/OneRepMaxCalculator"), { loading });
 const FreelanceRateCalculator = dynamic(() => import("@/components/calculators/FreelanceRateCalculator"), { loading });
 const QrCodeGenerator = dynamic(() => import("@/components/calculators/QrCodeGenerator"), { loading });
-const RunningPaceCalculator = dynamic(() => import("@/components/calculators/RunningPaceCalculator"), { loading });
 const PasswordGenerator = dynamic(() => import("@/components/calculators/PasswordGenerator"), { loading });
 const TaxBracketCalculator = dynamic(() => import("@/components/calculators/TaxBracketCalculator"), { loading });
 const PregnancyWeekCalculator = dynamic(() => import("@/components/calculators/PregnancyWeekCalculator"), { loading });
@@ -105,10 +106,10 @@ const componentMap: Record<string, any> = {
   "rent-vs-buy-calculator": RentVsBuyCalculator,
   "age-calculator": AgeCalculator,
   "bmi-tdee-calculator": BmiTdeeCalculator,
-  "gpa-percentage-calculator": GpaPercentageCalculator,
-  "pregnancy-due-date-calculator": PregnancyCalculator,
-  "unit-currency-converter": UnitCurrencyConverter,
-  "water-sleep-calculator": WaterSleepCalculator,
+  "gpa-to-percentage-calculator": GpaPercentageCalculator,
+  "pregnancy-ovulation-calculator": PregnancyCalculator,
+  "unit-converter": UnitConverter,
+  "water-intake-sleep-calculator": WaterSleepCalculator,
   // Phase 3 Batch 1
   "compound-interest-calculator": CompoundInterestCalculator,
   "tip-calculator": TipCalculator,
@@ -120,18 +121,18 @@ const componentMap: Record<string, any> = {
   // Batch 1
   "gst-vat-tax-calculator": GstVatCalculator,
   "inflation-calculator": InflationCalculator,
-  "body-fat-calculator": BodyFatCalculator,
+  "body-fat-percentage-calculator": BodyFatCalculator,
   "profit-margin-calculator": ProfitMarginCalculator,
-  "word-character-counter": WordCounterCalculator,
+  "word-character-counter-tool": WordCounterCalculator,
   // Batch 2
-  "fd-rd-calculator": FdRdCalculator,
-  "crypto-profit-calculator": CryptoProfitCalculator,
+  "fixed-deposit-calculator": FdRdCalculator,
+  "crypto-investment-profit-calculator": CryptoProfitCalculator,
   "ideal-weight-calculator": IdealWeightCalculator,
   "macro-nutrient-calculator": MacroCalculator,
   "hourly-to-salary-calculator": HourlySalaryCalculator,
   // Batch 3
-  "break-even-calculator": BreakEvenCalculator,
-  "scientific-calculator": ScientificCalculator,
+  "break-even-point-calculator": BreakEvenCalculator,
+  "scientific-calculator-online": ScientificCalculator,
   "date-plus-minus-calculator": DatePlusMinusCalculator,
   "business-working-days-calculator": WorkingDaysCalculator,
   "credit-card-payoff-calculator": CreditCardPayoffCalculator,
@@ -185,7 +186,9 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
 
   return (
     <ErrorBoundary>
-      <Calculator guideHtml={guideHtml} faqs={guideFaqs} relatedArticles={relatedArticles} />
+      <Suspense fallback={<CalculatorSkeleton />}>
+        <Calculator calc={meta} guideHtml={guideHtml} faqs={guideFaqs} relatedArticles={relatedArticles} />
+      </Suspense>
     </ErrorBoundary>
   );
 }

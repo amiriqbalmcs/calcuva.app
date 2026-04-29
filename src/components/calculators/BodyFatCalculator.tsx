@@ -1,16 +1,20 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Share, CheckCircle2, UserRound, Info } from "lucide-react";
+import { 
+  Share, CheckCircle2, UserRound, Info, Activity, Scale, Ruler, 
+  Dumbbell, Target, Heart, History, Zap, Globe, Landmark, Gauge, 
+  Sparkles, LayoutDashboard, Settings2, Copy, Ruler as RulerIcon,
+  ChevronRight, HeartPulse, Waves, User, Fingerprint, Crosshair
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { ResultGrid, ResultStat } from "@/components/ResultStat";
-import { SeoBlock } from "@/components/SeoBlock";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { calculatorBySlug } from "@/lib/calculators";
 import { useUrlState } from "@/hooks/useUrlState";
+import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("body-fat-percentage-calculator")!;
@@ -50,112 +54,244 @@ const BodyFatCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
     let insight = "";
     
     if (sex === "male") {
-      if (bf < 6) { category = "Essential"; color = "text-signal"; insight = "Warning: Extremely low body fat. Essential fat is required for hormone regulation and organ protection."; }
-      else if (bf < 14) { category = "Athletic"; color = "text-health"; insight = "Elite Level: Your composition is optimized for performance. Focus on nutrient intake to sustain this level."; }
-      else if (bf < 25) { category = "Healthy"; color = "text-health"; insight = "Standard Range: You are within the medically advised range for long-term health and wellness."; }
-      else { category = "High Risk"; color = "text-destructive"; insight = "Focus Area: High body fat is linked to metabolic risk. Focus on resistance training and a high-protein diet."; }
+      if (bf < 6) { category = "Essential"; color = "text-signal"; insight = "Very Low: Your body fat is very low. Some fat is necessary for your body to function properly and stay healthy."; }
+      else if (bf < 14) { category = "Athletic"; color = "text-health"; insight = "Very Lean: You are very lean and fit. Keep up your healthy lifestyle to stay at this level."; }
+      else if (bf < 25) { category = "Healthy"; color = "text-health"; insight = "Healthy Range: You are in a healthy range for long-term health and energy."; }
+      else { category = "High Fat"; color = "text-destructive"; insight = "High Fat Level: A higher body fat level can be hard on your body. Focus on strength training to build muscle."; }
     } else {
-      if (bf < 14) { category = "Essential"; color = "text-signal"; insight = "Warning: Below healthy levels for females. This may impact menstrual health and bone density."; }
-      else if (bf < 21) { category = "Athletic"; color = "text-health"; insight = "Athletic Range: Exceptional muscle definition and low adipose tissue."; }
-      else if (bf < 32) { category = "Healthy"; color = "text-health"; insight = "Optimal: Your body fat level is within the healthy demographic average."; }
-      else { category = "High Risk"; color = "text-destructive"; insight = "Action Recommended: Excess fat mass can increase inflammation. Prioritize satiety-focused nutrition."; }
+      if (bf < 14) { category = "Essential"; color = "text-signal"; insight = "Very Low: Your body fat is below the healthy range. This can affect your hormones and bone health."; }
+      else if (bf < 21) { category = "Athletic"; color = "text-health"; insight = "Very Lean & Fit: You have a lot of muscle and very little fat. Your body is working very efficiently."; }
+      else if (bf < 32) { category = "Healthy"; color = "text-health"; insight = "Healthy Range: You are in the healthy range for your age and sex."; }
+      else { category = "High Fat"; color = "text-destructive"; insight = "High Fat Level: Carrying extra fat can be hard on your body. Focus on eating filling, healthy foods to manage your weight."; }
     }
 
     return { bf, fatMass, leanMass, category, color, wt, insight };
   }, [units, sex, height, neck, waist, hip, weight]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleCopy = () => {
+    const resultText = `Body Check: ${result.bf.toFixed(1)}% Body Fat (${result.category}) | Muscle Mass: ${result.leanMass.toFixed(1)}kg. Created on ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={
-        <SeoBlock
-          title="Understanding Body Composition"
-          intro="Body fat percentage is a better indicator of health than weight alone. It distinguishes between your fat mass and your lean mass."
-          sections={[{ heading: "U.S. Navy Method", icon: "book", body: <p>Widely used by the military for accuracy without expensive scans.</p> }]}
-          faqs={[{ q: "Is BMI or Body Fat better?", a: "Body fat is superior for athletes as it accounts for muscle density." }]}
-        />
-      }
-    >
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 surface-card p-6 space-y-5">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-widest">Entry Stats</h3>
-            <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-health hover:text-white transition flex items-center gap-1">
-              {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-              {copied ? "COPIED" : "SHARE"}
-            </button>
-          </div>
-
-          <Tabs value={units} onValueChange={(v) => setUnits(v as typeof units)}>
-            <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger value="metric">Metric</TabsTrigger>
-              <TabsTrigger value="imperial">Imperial</TabsTrigger>
-            </TabsList>
-          </Tabs>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div><Label>Sex</Label>
-              <Select value={sex} onValueChange={(v) => setSex(v as typeof sex)}>
-                <SelectTrigger className="mt-2 text-sm"><SelectValue /></SelectTrigger>
-                <SelectContent><SelectItem value="male">Male</SelectItem><SelectItem value="female">Female</SelectItem></SelectContent>
-              </Select>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Input Panel */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Body Details</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Set Your Body Measurements</p>
             </div>
-            <div><Label>Age</Label><Input type="number" value={age} onChange={(e) => setAge(Number(e.target.value) || 0)} className="mt-2" /></div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Unit Switcher */}
+              <div className="flex bg-background border border-border/60 p-1 rounded-xl h-11">
+                <button onClick={() => setUnits("metric")} className={cn("flex-1 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all", units === 'metric' ? "bg-foreground text-background" : "text-muted-foreground hover:bg-secondary/40")}>Metric</button>
+                <button onClick={() => setUnits("imperial")} className={cn("flex-1 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all", units === 'imperial' ? "bg-foreground text-background" : "text-muted-foreground hover:bg-secondary/40")}>Imperial</button>
+              </div>
+
+              {/* Sex & Age */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Sex</Label>
+                  <Select value={sex} onValueChange={(v) => setSex(v as any)}>
+                    <SelectTrigger className="h-11 bg-background border-border/60 font-bold text-[10px] uppercase tracking-widest rounded-xl shadow-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-xl border-border/40">
+                      <SelectItem value="male" className="text-[10px] font-bold uppercase">Male</SelectItem>
+                      <SelectItem value="female" className="text-[10px] font-bold uppercase">Female</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Age</Label>
+                  <Input type="number" value={age} onChange={(e) => setAge(Number(e.target.value) || 0)} className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm" />
+                </div>
+              </div>
+
+              {/* Height & Weight */}
+              <div className="space-y-8 pt-2 border-t border-border/40">
+                <div className="space-y-4 pt-4">
+                  <div className="flex justify-between items-center">
+                    <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Height ({units === "metric" ? "cm" : "in"})</Label>
+                    <span className="text-[10px] font-bold text-health">{height}</span>
+                  </div>
+                  <Slider value={[height]} min={units === "metric" ? 100 : 40} max={units === "metric" ? 250 : 100} step={1} onValueChange={([v]) => setHeight(v)} />
+                </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Weight ({units === "metric" ? "kg" : "lb"})</Label>
+                    <span className="text-[10px] font-bold text-health">{weight}</span>
+                  </div>
+                  <Slider value={[weight]} min={units === "metric" ? 30 : 70} max={units === "metric" ? 200 : 450} step={1} onValueChange={([v]) => setWeight(v)} />
+                </div>
+              </div>
+
+              {/* Measurements */}
+              <div className="space-y-8 pt-6 border-t border-border/40">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Neck Size ({units === "metric" ? "cm" : "in"})</Label>
+                    <span className="text-[10px] font-bold text-health">{neck}</span>
+                  </div>
+                  <Slider value={[neck]} min={units === "metric" ? 20 : 8} max={units === "metric" ? 60 : 24} step={0.5} onValueChange={([v]) => setNeck(v)} />
+                </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Waist Size ({units === "metric" ? "cm" : "in"})</Label>
+                    <span className="text-[10px] font-bold text-health">{waist}</span>
+                  </div>
+                  <Slider value={[waist]} min={units === "metric" ? 40 : 16} max={units === "metric" ? 160 : 64} step={0.5} onValueChange={([v]) => setWaist(v)} />
+                </div>
+                {sex === "female" && (
+                  <div className="space-y-4">
+                     <div className="flex justify-between items-center">
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Hip Size ({units === "metric" ? "cm" : "in"})</Label>
+                      <span className="text-[10px] font-bold text-health">{hip}</span>
+                    </div>
+                    <Slider value={[hip]} min={units === "metric" ? 40 : 16} max={units === "metric" ? 160 : 64} step={0.5} onValueChange={([v]) => setHip(v)} />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div><Label>Height ({units === "metric" ? "cm" : "in"})</Label><Input type="number" value={height} onChange={(e) => setHeight(Number(e.target.value) || 0)} className="mt-2" /></div>
-            <div><Label>Weight ({units === "metric" ? "kg" : "lb"})</Label><Input type="number" value={weight} onChange={(e) => setWeight(Number(e.target.value) || 0)} className="mt-2" /></div>
-          </div>
-
-          <div className="space-y-4 pt-4 border-t">
-            <div><Label>Neck</Label><Input type="number" value={neck} onChange={(e) => setNeck(Number(e.target.value) || 0)} className="mt-2" /></div>
-            <div><Label>Waist</Label><Input type="number" value={waist} onChange={(e) => setWaist(Number(e.target.value) || 0)} className="mt-2" /></div>
-            {sex === "female" && <div><Label>Hip</Label><Input type="number" value={hip} onChange={(e) => setHip(Number(e.target.value) || 0)} className="mt-2" /></div>}
+          <div className="surface-card p-6 border-border/30 bg-health/5 relative overflow-hidden group">
+            <Fingerprint className="absolute -bottom-4 -right-4 size-20 text-health/5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1 text-health">
+                <Crosshair className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">What This Means</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                  {result.insight}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <ResultGrid cols={2}>
-            <ResultStat label="Body Fat %" value={`${result.bf.toFixed(1)}%`} sub={<span className={cn("font-bold uppercase tracking-wider text-[10px]", result.color)}>{result.category}</span>} accent />
-            <ResultStat label="Lean Body Mass" value={`${result.leanMass.toFixed(1)} ${units === "metric" ? "kg" : "lb"}`} />
-          </ResultGrid>
-
-          {/* Fitness Insight */}
-          <div className={cn(
-            "p-5 rounded-xl flex gap-4 items-start border-l-4",
-            result.category === "High Risk" ? "bg-destructive/5 border-destructive text-destructive" : "bg-health/5 border-health text-health"
-          )}>
-            <div className="shrink-0 mt-0.5"><UserRound className="size-5" /></div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Composition Insight</h4>
-              <p className="text-sm opacity-90 leading-relaxed font-medium">{result.insight}</p>
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <Waves className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Your Body Fat Percentage</span>
+                  <div className={cn("text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums", result.color)}>
+                    {result.bf.toFixed(1)}%
+                  </div>
+                </div>
+                <button 
+                  onClick={handleCopy} 
+                  className={cn(
+                    "p-3 rounded-xl transition-all border",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
+                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-sm">
+                  <Scale className="size-3" />
+                  <span>Total Fat: {result.fatMass.toFixed(1)} {units === "metric" ? "kg" : "lb"}</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  Muscle & Bone Mass: {result.leanMass.toFixed(1)} {units === "metric" ? "kg" : "lb"}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="surface-card p-6">
-            <h3 className="text-sm font-semibold mb-4 text-muted-foreground uppercase tracking-widest font-mono">Composition Scale</h3>
-            <div className="relative h-2.5 rounded-full bg-gradient-to-r from-signal via-health via-education to-destructive">
-               {result.bf > 0 && (
-                <div
-                  className="absolute -top-1.5 size-5 rounded-full bg-foreground border-2 border-background shadow-xl"
-                  style={{ left: `${Math.min(100, Math.max(0, ((result.bf - 5) / 30) * 100))}%`, transform: "translateX(-50%)" }}
-                />
-              )}
+          {/* Composition Spectrograph */}
+          <div className="surface-card p-8 md:p-10 bg-secondary/5 border-border/30 relative overflow-hidden group">
+            <LayoutDashboard className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+            <div className="flex items-center justify-between mb-12 relative z-10">
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Body Fat Scale</h4>
+              <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-40">U.S. Navy Standard</span>
             </div>
-            <div className="flex justify-between text-[10px] font-mono text-muted-foreground mt-4 uppercase tracking-tighter">
-              <span>Essential</span><span>Athetic</span><span>Fitness</span><span>Average</span><span>Obese</span>
+            
+            <div className="relative h-4 rounded-full bg-gradient-to-r from-signal via-health via-education to-destructive shadow-inner mb-12 relative z-10 overflow-visible">
+               <div
+                 className="absolute -top-3 size-10 rounded-full bg-background border-4 border-foreground shadow-2xl transition-all duration-1000 ease-out flex items-center justify-center z-20 group/pin"
+                 style={{ left: `${Math.min(100, Math.max(0, ((result.bf - 2) / 40) * 100))}%`, transform: "translateX(-50%)" }}
+               >
+                  <Target className="size-4 text-foreground group-hover/pin:scale-110 transition-transform" />
+               </div>
+            </div>
+            
+            <div className="grid grid-cols-5 gap-2 text-center relative z-10">
+               {[
+                 { l: "Very Low", c: "text-signal" },
+                 { l: "Athletic", c: "text-health" },
+                 { l: "Healthy", c: "text-health" },
+                 { l: "Standard", c: "text-education" },
+                 { l: "High", c: "text-destructive" }
+               ].map((item, idx) => (
+                 <div key={idx} className="space-y-2">
+                    <div className={cn("text-[10px] font-bold uppercase tracking-widest leading-tight opacity-50", item.c)}>{item.l}</div>
+                 </div>
+               ))}
             </div>
           </div>
+
+          {/* Performance stats grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "Daily Resting Calories", v: (21.6 * result.leanMass + 370).toFixed(0), i: Zap, unit: "kcal" },
+               { l: "Daily Protein Goal", v: (result.leanMass * 2.2).toFixed(0), i: Dumbbell, unit: "g" },
+               { l: "Muscle to Fat Ratio", v: (result.leanMass / result.fatMass).toFixed(1), i: Crosshair, unit: "x" },
+               { l: "Result", v: result.category.split(' ')[0], i: HeartPulse, unit: "" }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                 </div>
+                 <div className="text-xl font-mono font-medium tabular-nums leading-tight">
+                    {item.v}
+                    <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                 </div>
+               </div>
+             ))}
+          </div>
+
+          {/* Expert Insights */}
+          <div className="grid md:grid-cols-2 gap-6 pt-2">
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group">
+                <RulerIcon className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                <div className="flex items-center gap-2 relative z-10">
+                  <History className="size-3 text-health" /> How it works
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Using measurements like your neck and waist is a proven way to estimate your body fat without expensive scans. It correlates strongly with professional scans in clinical settings.
+                </p>
+             </div>
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group">
+                <HeartPulse className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                <div className="flex items-center gap-2 relative z-10">
+                  <History className="size-3 text-health" /> Track Your Progress
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Your weight changes every day. Tracking your body fat percentage is the best way to see if you're losing fat and gaining muscle over time.
+                </p>
+             </div>
+          </div>
+
         </div>
       </div>
     </CalculatorPage>

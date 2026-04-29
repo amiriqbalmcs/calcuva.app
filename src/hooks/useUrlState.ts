@@ -23,7 +23,8 @@ export function useUrlState<T extends string | number>(
     const val = params.get(key);
     if (val !== null) {
       if (typeof defaultValue === "number") {
-        setState(Number(val) as T);
+        const num = Number(val);
+        setState((isNaN(num) ? defaultValue : num) as T);
       } else {
         setState(val as T);
       }

@@ -1,10 +1,11 @@
 import { MetadataRoute } from 'next'
+import { SITE_NAME, SITE_DESCRIPTION } from '@/lib/constants'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Calcuva | The Digital Calculator Registry',
-    short_name: 'Calcuva',
-    description: 'A suite of 50+ beautiful, lightning-fast technical calculators built for finance, health, and mathematics.',
+    name: `${SITE_NAME} | The Digital Calculator Registry`,
+    short_name: SITE_NAME,
+    description: SITE_DESCRIPTION,
     start_url: '/',
     display: 'standalone',
     background_color: '#09090b', // zinc-950 (dark mode default)

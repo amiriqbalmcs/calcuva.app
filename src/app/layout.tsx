@@ -5,9 +5,10 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://calcuva.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Calcuva — Free Online Calculators for Finance, Health & Business",
     template: "%s | Calcuva",

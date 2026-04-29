@@ -1,6 +1,7 @@
 import { getSortedPostsData } from "@/lib/markdown";
 import { Seo } from "@/components/Seo";
 import { ClientHome } from "@/components/ClientHome";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
 
 export default async function IndexPage() {
   // Fetch guides on the server for maximum authority and SEO
@@ -19,17 +20,17 @@ export default async function IndexPage() {
   return (
     <>
       <Seo
-        title="Calcuva — Professional Decision Engine | Finance, Health & Math"
+        title={`${SITE_NAME} — Professional Decision Engine | Finance, Health & Math`}
         description="A high-authority toolkit of free, instant calculators and expert strategy guides. Master the math of loans, taxes, metabolic health, and business strategy with total privacy."
         canonicalPath="/"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "WebSite",
-          name: "Calcuva",
-          url: "https://calcuva.app",
+          name: SITE_NAME,
+          url: SITE_URL,
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://calcuva.app/?q={query}",
+            target: `${SITE_URL}/?q={query}`,
             "query-input": "required name=query",
           },
         }}

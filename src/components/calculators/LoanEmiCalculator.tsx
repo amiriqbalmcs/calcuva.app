@@ -2,22 +2,40 @@
 
 import { useMemo, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Share, CheckCircle2, AlertCircle, Info } from "lucide-react";
+import { 
+  Share, CheckCircle2, AlertCircle, Info, Landmark, Calculator, 
+  Receipt, TrendingDown, Wallet, History, Target, Activity, 
+  Zap, Globe, Ruler, Gauge, Sparkles, LayoutDashboard, Copy, Settings2,
+  TrendingUp, Banknote, Calendar
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { ResultGrid, ResultStat } from "@/components/ResultStat";
-import { SeoBlock } from "@/components/SeoBlock";
+import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { calculatorBySlug } from "@/lib/calculators";
-import { formatCurrency, formatNumber } from "@/lib/format";
+import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
 import { useCurrency } from "@/context/CurrencyContext";
+import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("loan-emi-calculator")!;
 
-const PIE_COLORS = ["hsl(var(--signal))", "hsl(var(--muted-foreground) / 0.4)"];
+const PIE_COLORS = ["hsl(var(--foreground))", "hsl(var(--muted-foreground) / 0.15)"];
+
+// Internal icon helpers for redesign
+const PieChartIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" />
+  </svg>
+);
+
+const BarChartIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
+  </svg>
+);
 
 const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
   const { currency } = useCurrency();
@@ -56,123 +74,260 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
 
     if (interestRatio > 1.5) {
       rank = "risk";
-      text = "Critical Interest Burdon: You are paying over 1.5x your loan amount in interest alone. Consider increasing your monthly EMI or reducing the tenure to avoid wealth drain.";
+      text = "High Interest Warning: You're paying much more in interest than the actual loan amount. Try to pay off the loan faster or look for a lower rate to save money.";
     } else if (interestRatio > 0.8) {
       rank = "warning";
-      text = "High Debt Cost: Interest accounts for nearly half of your total payout. Even a 10% increase in your monthly EMI could save years of interest payments.";
+      text = "High Interest Cost: You're paying a lot in interest. Even a small extra payment each month could save you a lot of money over time.";
     } else {
-      text = "Efficient Financing: Your interest-to-principal ratio is healthy. This suggests a well-structured loan that prioritizes equity building.";
+      rank = "good";
+      text = "Good Loan Balance: You're paying off the loan amount quickly compared to the interest, which helps you own your home or car sooner.";
     }
 
     return { rank, text };
-  }, [result.interest, principal, result.emi]);
+  }, [result.interest, principal]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleCopy = () => {
+    const resultText = `Loan Details: ${formatCurrency(result.emi, currency.code)} Monthly | Total Cost ${formatCurrency(result.total, currency.code)}. Calculate yours at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const pieData = [{ name: "Principal", value: principal }, { name: "Interest", value: result.interest }];
+  const pieData = [{ name: "Loan Amount", value: principal }, { name: "Interest", value: result.interest }];
 
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={
-        <SeoBlock 
-          title="Global Loan & EMI Analysis" 
-          intro="Use the standard reducing-balance method to forecast any loan or mortgage worldwide." 
-          faqs={[
-            { q: "What is an Equated Monthly Installment (EMI)?", a: "An EMI is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. EMIs are applied to both interest and principal each month, so that over a specified number of years, the loan is paid off in full." },
-            { q: "How is loan interest calculated?", a: "Most loans use the 'Reducing Balance' method, where interest is calculated on the remaining principal amount at the end of every month. As you pay off your principal, the interest component of your EMI decreases." },
-            { q: "Does making pre-payments save money?", a: "Yes, significantly. Because interest is calculated on the outstanding balance, any extra principal payment reduces the balance immediately, preventing future interest from accruing on that amount. Early-tenure pre-payments are the most effective." },
-            { q: "What is an Amortization Schedule?", a: "An amortization schedule is a complete table of periodic loan payments, showing the amount of principal and the amount of interest that comprise each payment until the loan is paid off at the end of its term." }
-          ]}
-        />
-      }
-    >
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 surface-card p-6 space-y-6">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Loan Structure</h3>
-            <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-signal hover:text-white transition flex items-center gap-1 font-mono">
-              {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-              {copied ? "COPIED" : "SHARE"}
-            </button>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Input Side */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-20">
+              <h3 className="text-sm font-bold tracking-tight">Loan Settings</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Set Your Loan Terms</p>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Principal */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Loan Amount</Label>
+                  <span className="text-xs font-mono font-medium">{formatCurrency(principal, currency.code)}</span>
+                </div>
+                <div className="relative group">
+                  <Input 
+                    type="number" 
+                    value={principal} 
+                    onChange={(e) => setPrincipal(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-medium text-base rounded-lg shadow-sm"
+                  />
+                  <Wallet className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground opacity-20" />
+                </div>
+                <Slider 
+                  value={[principal]} 
+                  min={1000} 
+                  max={2000000} 
+                  step={5000} 
+                  onValueChange={([v]) => setPrincipal(v)} 
+                  className="pt-2"
+                />
+              </div>
+
+              {/* Rate and Tenure */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Interest Rate (%)</Label>
+                  <Input 
+                    type="number" 
+                    step="0.1" 
+                    value={rate} 
+                    onChange={(e) => setRate(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/40 focus:border-foreground/20 transition-all font-medium text-base rounded-lg"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Loan Years</Label>
+                  <Input 
+                    type="number" 
+                    value={years} 
+                    onChange={(e) => setYears(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/40 focus:border-foreground/20 transition-all font-medium text-base rounded-lg"
+                  />
+                </div>
+              </div>
+              <Slider 
+                value={[years]} 
+                min={1} 
+                max={40} 
+                step={1} 
+                onValueChange={([v]) => setYears(v)} 
+                className="pt-2"
+              />
+            </div>
           </div>
 
-          <div className="space-y-6">
-            <div><div className="flex justify-between mb-2"><Label>Loan Amount</Label><span className="font-mono text-xs font-bold">{formatCurrency(principal, currency)}</span></div>
-              <Input type="number" value={principal} onChange={(e) => setPrincipal(Number(e.target.value) || 0)} className="text-lg font-bold" />
-              <Slider value={[principal]} min={1000} max={2000000} step={1000} onValueChange={([v]) => setPrincipal(v)} className="mt-4" />
-            </div>
-            <div><div className="flex justify-between mb-2"><Label>Interest Rate (%)</Label><span className="font-mono text-xs font-bold text-signal">{rate}%</span></div>
-              <Input type="number" step="0.1" value={rate} onChange={(e) => setRate(Number(e.target.value) || 0)} />
-              <Slider value={[rate]} min={0.1} max={25} step={0.1} onValueChange={([v]) => setRate(v)} className="mt-4" />
-            </div>
-            <div><div className="flex justify-between mb-2"><Label>Tenure (Years)</Label><span className="font-mono text-xs font-bold text-signal">{years} yr</span></div>
-              <Input type="number" value={years} onChange={(e) => setYears(Number(e.target.value) || 0)} />
-              <Slider value={[years]} min={1} max={40} step={1} onValueChange={([v]) => setYears(v)} className="mt-4" />
+          {/* Quick Analysis */}
+          <div className={cn("surface-card p-6 border-border/30 relative overflow-hidden",
+            insights.rank === "good" ? "bg-health/5 border-health/20" : 
+            insights.rank === "warning" ? "bg-amber-500/5 border-amber-500/20" : 
+            "bg-signal/5 border-signal/20"
+          )}>
+            <div className="flex gap-4 items-start relative z-10">
+              <div className={cn("mt-1", 
+                insights.rank === "good" ? "text-health" : 
+                insights.rank === "warning" ? "text-amber-500" : 
+                "text-signal"
+              )}>
+                {insights.rank === "good" ? <CheckCircle2 className="size-5" /> : <AlertCircle className="size-5" />}
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Loan Tip</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                  {insights.text}
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <ResultGrid cols={2}>
-            <ResultStat label="Monthly EMI" value={formatCurrency(result.emi, currency, 2)} accent />
-            <ResultStat label="Total Interest" value={formatCurrency(result.interest, currency)} sub="Over full tenure" />
-          </ResultGrid>
-
-          <div className={cn("p-5 rounded-xl flex gap-4 items-start border-l-4",
-            insights.rank === "good" && "bg-health-soft border-health text-health",
-            insights.rank === "warning" && "bg-amber-500/10 border-amber-500 text-amber-500",
-            insights.rank === "risk" && "bg-destructive/10 border-destructive text-destructive"
-          )}>
-            <div className="shrink-0 mt-0.5">{insights.rank === "good" ? <CheckCircle2 className="size-5" /> : <AlertCircle className="size-5" />}</div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Mortgage Insight</h4>
-              <p className="text-sm opacity-90 leading-relaxed font-medium">{insights.text}</p>
+        {/* Results Side */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <TrendingUp className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Monthly Payment</span>
+                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
+                    {formatCurrency(result.emi, currency.code)}
+                  </div>
+                </div>
+                <button 
+                  onClick={handleCopy} 
+                  className={cn(
+                    "p-3 rounded-xl transition-all border",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                  title="Copy Results"
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-border/40">
+                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight">
+                  <Banknote className="size-3" />
+                  <span>Total Interest: {formatCurrency(result.interest, currency.code)}</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
+                  Total Amount to Pay: {formatCurrency(result.total, currency.code)}
+                </div>
+              </div>
             </div>
           </div>
 
+          {/* Visual Breakdown */}
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="surface-card p-6">
-              <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest font-mono mb-6">Payment Composition</h3>
-              <div className="h-[180px]"><ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie data={pieData} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} paddingAngle={4}>
-                    {pieData.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]} />)}
-                  </Pie>
-                  <Tooltip formatter={(v: any) => formatCurrency(v, currency)} />
-                </PieChart>
-              </ResponsiveContainer></div>
-              <div className="flex justify-around text-[9px] uppercase font-bold tracking-widest text-muted-foreground pt-4 border-t border-border/50">
-                <div className="flex items-center gap-1.5"><span className="size-2 rounded-full bg-signal" />Principal</div>
-                <div className="flex items-center gap-1.5"><span className="size-2 rounded-full bg-muted-foreground/40" />Interest</div>
+            <div className="surface-card p-6 bg-secondary/5 border-border/30 relative overflow-hidden group">
+              <PieChartIcon className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-6 relative z-10">Money Breakdown</h4>
+              <div className="h-[200px] relative z-10">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie data={pieData} dataKey="value" nameKey="name" innerRadius={60} outerRadius={85} paddingAngle={8} stroke="none">
+                      {pieData.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]} />)}
+                    </Pie>
+                    <Tooltip 
+                      formatter={(v: any) => formatCurrency(v, currency.code)} 
+                      contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 20px 40px -12px rgb(0 0 0 / 0.3)" }} 
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="flex gap-4 justify-center text-[9px] font-bold uppercase tracking-widest mt-4 relative z-10">
+                <div className="flex items-center gap-1.5"><div className="size-1.5 rounded-full bg-foreground" /> Loan Amount</div>
+                <div className="flex items-center gap-1.5"><div className="size-1.5 rounded-full bg-muted-foreground/20" /> Interest</div>
               </div>
             </div>
 
-            <div className="surface-card p-6">
-              <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest font-mono mb-6">Amortization Overview</h3>
-              <div className="h-[180px]"><ResponsiveContainer width="100%" height="100%">
-                <BarChart data={result.yearly}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
-                  <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 10 }} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10 }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
-                  <Tooltip formatter={(v: any) => formatCurrency(v, currency)} contentStyle={{ borderRadius: "12px", border: "none" }} />
-                  <Bar dataKey="principal" stackId="a" fill="hsl(var(--signal))" radius={[0, 0, 0, 0]} />
-                  <Bar dataKey="interest" stackId="a" fill="hsl(var(--muted-foreground) / 0.2)" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer></div>
+            <div className="surface-card p-6 bg-secondary/5 border-border/30 relative overflow-hidden group">
+              <BarChartIcon className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-6 relative z-10">Loan Progress</h4>
+              <div className="h-[200px] relative z-10">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={result.yearly.filter((_, i) => i % (years > 20 ? 3 : 1) === 0)}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} opacity={0.1} />
+                    <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 9, fontWeight: 700, opacity: 0.4 }} />
+                    <YAxis hide />
+                    <Tooltip 
+                      formatter={(v: any) => formatCurrency(v, currency.code)} 
+                      contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)" }} 
+                    />
+                    <Bar dataKey="principal" stackId="a" fill="hsl(var(--foreground))" radius={[0, 0, 0, 0]} />
+                    <Bar dataKey="interest" stackId="a" fill="hsl(var(--muted-foreground) / 0.1)" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="text-[9px] text-center text-muted-foreground uppercase font-bold tracking-widest mt-4 opacity-40 relative z-10">Yearly Principal vs Interest</div>
             </div>
           </div>
+
+          {/* Detailed Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "Total Cost Ratio", v: (result.total / principal).toFixed(2), i: Activity, unit: "x" },
+               { l: "Total Months", v: years * 12, i: History, unit: "Mth" },
+               { l: "Loan Share", v: (principal / result.total * 100).toFixed(1), i: Target, unit: "%" },
+               { l: "Cost Per Day", v: (result.emi / 30).toFixed(0), i: Zap, unit: currency.code }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                 </div>
+                 <div className="text-xl font-mono font-medium tabular-nums leading-tight">
+                    {item.v}
+                    <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                 </div>
+               </div>
+             ))}
+          </div>
+
+          {/* Expert Insights */}
+          <div className="grid md:grid-cols-2 gap-6 pt-4">
+            <div className="surface-card p-6 border-border/30 space-y-3 bg-background/50 relative overflow-hidden group">
+              <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
+              <div className="flex items-center gap-2 relative z-10">
+                <Landmark className="size-4 text-muted-foreground" />
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Monthly Budget Tip</h4>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed relative z-10">
+                Try to keep your loan payments under 40% of your monthly income to stay financially safe and handle unexpected costs.
+              </p>
+            </div>
+            <div className="surface-card p-6 border-border/30 space-y-3 bg-background/50 relative overflow-hidden group">
+              <Zap className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
+              <div className="flex items-center gap-2 relative z-10">
+                <Zap className="size-4 text-muted-foreground" />
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Pay Off Faster</h4>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed relative z-10">
+                Paying just one extra month's payment each year can cut years off your loan and save you thousands in interest.
+              </p>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </CalculatorPage>
   );
 };
+
 
 export default LoanEmiCalculator;

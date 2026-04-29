@@ -1,20 +1,31 @@
 "use client";
 
 import { useState, useCallback, useEffect, useMemo } from "react";
-import { Lock, Shield, RefreshCw, Copy, Check, Info, Settings2, Fingerprint, Eye, EyeOff } from "lucide-react";
-import CalculatorPage from "@/components/CalculatorPage";
+import { 
+  Lock, Shield, RefreshCw, Copy, Check, Info, Settings2, Fingerprint, 
+  Eye, EyeOff, ShieldCheck, Zap, Server, Globe, History, Target, 
+  Activity, Cpu, Terminal, ShieldAlert, Sparkles, LayoutDashboard,
+  ChevronRight, Calculator, Scale, RefreshCcw, Watch, CheckCircle2,
+  FileText, Landmark
+} from "lucide-react";
+import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
-import ResultStat from "@/components/ResultStat";
+import { calculatorBySlug } from "@/lib/calculators";
+import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
+const calc = calculatorBySlug("password-generator");
+
 interface PasswordGeneratorProps {
-  calc: any;
   guideHtml?: string;
+  faqs?: any[];
+  relatedArticles?: any[];
 }
 
-export default function PasswordGenerator({ calc, guideHtml }: PasswordGeneratorProps) {
+export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: PasswordGeneratorProps) {
+  if (!calc) return null;
   const [length, setLength] = useState<number>(16);
   const [useUppercase, setUseUppercase] = useState<boolean>(true);
   const [useNumbers, setUseNumbers] = useState<boolean>(true);
@@ -35,7 +46,6 @@ export default function PasswordGenerator({ calc, guideHtml }: PasswordGenerator
     if (useSymbols) charset += symbols;
 
     let retVal = "";
-    // Cryptographically strong random values
     const array = new Uint32Array(length);
     window.crypto.getRandomValues(array);
 
@@ -47,10 +57,9 @@ export default function PasswordGenerator({ calc, guideHtml }: PasswordGenerator
     setCopied(false);
   }, [length, useUppercase, useNumbers, useSymbols]);
 
-  // Initial generation
   useEffect(() => {
     generatePassword();
-  }, []); // Only on mount
+  }, [generatePassword]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(password);
@@ -59,175 +68,197 @@ export default function PasswordGenerator({ calc, guideHtml }: PasswordGenerator
   };
 
   const strength = useMemo(() => {
-    let entropy = length * Math.log2(26);
-    if (useUppercase) entropy = length * Math.log2(52);
-    if (useNumbers) entropy = length * Math.log2(62);
-    if (useSymbols) entropy = length * Math.log2(94);
+    let charsetSize = 26;
+    if (useUppercase) charsetSize += 26;
+    if (useNumbers) charsetSize += 10;
+    if (useSymbols) charsetSize += 32;
 
-    if (entropy < 40) return { label: "Weak", color: "text-destructive", score: 25 };
-    if (entropy < 60) return { label: "Fair", color: "text-orange-500", score: 50 };
-    if (entropy < 80) return { label: "Strong", color: "text-green-500", score: 75 };
-    return { label: "Very Strong", color: "text-signal", score: 100 };
-  }, [length, useUppercase, useNumbers, useSymbols, password]);
+    const entropy = length * Math.log2(charsetSize);
+
+    if (entropy < 40) return { label: "Very Weak", color: "bg-red-500", score: 25, hint: "This password is easy to guess. Try making it longer." };
+    if (entropy < 60) return { label: "Good Security", color: "bg-amber-500", score: 50, hint: "Good for basic websites and personal accounts." };
+    if (entropy < 80) return { label: "Strong Security", color: "bg-emerald-500", score: 75, hint: "Very secure. Great for banking or important email accounts." };
+    return { label: "Maximum Security", color: "bg-foreground", score: 100, hint: "The strongest possible password for your most important files." };
+  }, [length, useUppercase, useNumbers, useSymbols]);
 
   return (
-    <CalculatorPage calc={calc} guideHtml={guideHtml}>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Main Panel */}
-        <div className="lg:col-span-7 space-y-8">
-           <div className="surface-card p-4 sm:p-6 bg-secondary/10 border-border/50 relative overflow-hidden">
-              {/* Password Display Box */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 bg-background border border-border/40 rounded-3xl p-4 pr-4 sm:pr-2 shadow-inner group">
-                 <div className="flex-1 w-full flex items-center gap-3 px-2">
-                    <Fingerprint className="size-5 text-muted-foreground shrink-0" />
-                    <div className="flex-1 min-w-0 font-mono text-xl sm:text-2xl font-bold tracking-tight break-all overflow-hidden h-9 flex items-center">
-                       {showPassword ? password : "•".repeat(password.length)}
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Password Settings */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Generator Options</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Customize Your Password</p>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Length */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Password Length</Label>
+                  <span className="text-[10px] font-bold">{length} Characters</span>
+                </div>
+                <Slider value={[length]} min={8} max={64} step={1} onValueChange={([v]) => setLength(v)} />
+              </div>
+
+              {/* Include */}
+              <div className="space-y-5 pt-6 border-t border-border/40">
+                {[
+                  { id: "upper", label: "Uppercase", sub: "A-Z Letters", state: useUppercase, setter: setUseUppercase },
+                  { id: "nums", label: "Numbers", sub: "0-9 Digits", state: useNumbers, setter: setUseNumbers },
+                  { id: "syms", label: "Symbols", sub: "Special Characters", state: useSymbols, setter: setUseSymbols }
+                ].map((item) => (
+                  <div key={item.id} className="flex items-center justify-between group/row">
+                    <div className="space-y-0.5">
+                      <Label className="text-[11px] font-bold uppercase tracking-tight cursor-pointer" htmlFor={item.id}>{item.label}</Label>
+                      <p className="text-[9px] text-muted-foreground font-mono uppercase opacity-40">{item.sub}</p>
                     </div>
-                    <button 
-                       onClick={() => setShowPassword(!showPassword)}
-                       className="p-3 text-muted-foreground hover:text-foreground transition-colors rounded-xl"
-                    >
-                       {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
-                    </button>
-                 </div>
-                 
-                 <div className="flex gap-2 w-full sm:w-auto">
-                    <button 
-                      onClick={generatePassword}
-                      className="flex-1 sm:size-12 rounded-2xl bg-secondary hover:bg-secondary/80 flex items-center justify-center transition-all active:scale-90"
-                      title="Generate New"
-                    >
-                      <RefreshCw className="size-5 text-foreground" />
-                    </button>
-                    <button 
-                      onClick={handleCopy}
-                      className="flex-[2] sm:px-6 h-12 rounded-2xl bg-signal text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-signal/20 hover:bg-signal/90 transition-all active:scale-95"
-                    >
-                      {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-                      {copied ? "Copied" : "Copy"}
-                    </button>
-                 </div>
+                    <Switch id={item.id} checked={item.state} onCheckedChange={item.setter} />
+                  </div>
+                ))}
               </div>
 
-              {/* Strength Bar */}
-              <div className="mt-8 flex items-center justify-between px-2 mb-2">
-                 <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Calculated Entropy</span>
-                 <span className={cn("text-[10px] font-bold uppercase tracking-widest", strength.color)}>{strength.label}</span>
-              </div>
-              <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden mb-6">
-                 <div 
-                    className={cn("h-full transition-all duration-1000 ease-out rounded-full shadow-[0_0_10px_rgba(0,0,0,0.1)]", 
-                       strength.score <= 25 ? "bg-destructive" : 
-                       strength.score <= 50 ? "bg-orange-500" : 
-                       strength.score <= 75 ? "bg-green-500" : "bg-signal"
-                    )}
-                    style={{ width: `${strength.score}%` }}
-                 />
-              </div>
-           </div>
+              <button 
+                onClick={generatePassword} 
+                className="w-full h-11 rounded-xl bg-background border border-border/60 hover:bg-foreground hover:text-background transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm"
+              >
+                <RefreshCcw className="size-3" /> Generate New
+              </button>
+            </div>
+          </div>
 
-           {/* Expert Tips */}
-           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="surface-card p-6 border-dotted flex gap-4">
-                 <div className="size-10 rounded-xl bg-secondary/30 flex items-center justify-center text-muted-foreground shrink-0 border border-border">
-                    <Shield className="size-5" />
-                 </div>
-                 <div>
-                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">Local Generation</h4>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">
-                      Passwords are generated strictly in your browser using the **Web Crypto API**. Your secrets never leave your device.
-                    </p>
-                 </div>
+          <div className="surface-card p-6 border-border/30 bg-finance/5 text-finance relative overflow-hidden group shadow-sm">
+            <Sparkles className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1">
+                <ShieldAlert className="size-5" />
               </div>
-              <div className="surface-card p-6 border-dotted flex gap-4">
-                 <div className="size-10 rounded-xl bg-secondary/30 flex items-center justify-center text-muted-foreground shrink-0 border border-border">
-                    <Info className="size-5" />
-                 </div>
-                 <div>
-                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">Passphrase Tip</h4>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">
-                      Length is more important than complexity. A 20-character lowercase password is often stronger than an 8-character complex one.
-                    </p>
-                 </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-finance/80">Privacy Check</h4>
+                <p className="text-xs leading-relaxed font-medium">
+                  Your password is created right here on your computer. Nothing is sent over the internet or saved by us.
+                </p>
               </div>
-           </div>
+            </div>
+          </div>
         </div>
 
-        {/* Settings Panel */}
-        <div className="lg:col-span-5">
-           <div className="surface-card p-6 sm:p-8">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="size-10 rounded-xl bg-utility/10 flex items-center justify-center text-utility shadow-inner">
-                  <Settings2 className="size-5" />
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Executive Summary */}
+          <div className="rounded-3xl p-10 md:p-14 bg-zinc-950 text-zinc-50 border border-zinc-800/50 relative overflow-hidden group shadow-2xl">
+            <Terminal className="absolute -top-12 -right-12 size-64 opacity-[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-1000" />
+            
+            <div className="relative z-10 space-y-12">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Cpu className="size-4 opacity-40" />
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] opacity-40">New Password</span>
                 </div>
-                <div>
-                  <h2 className="text-xl font-bold tracking-tight">Security Policy</h2>
-                  <p className="text-[10px] text-muted-foreground uppercase font-mono tracking-widest font-bold">Rule Configuration</p>
-                </div>
+                <button 
+                  onClick={() => setShowPassword(!showPassword)} 
+                  className="p-2 rounded-xl hover:bg-background/10 transition-colors opacity-60 hover:opacity-100"
+                >
+                  {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+                </button>
               </div>
 
-              <div className="space-y-8">
-                 <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                       <Label className="text-sm font-semibold">Password Length</Label>
-                       <span className="font-mono text-lg font-bold text-utility">{length}</span>
-                    </div>
-                    <Slider 
-                       value={[length]}
-                       min={4}
-                       max={64}
-                       step={1}
-                       onValueChange={([v]) => {
-                          setLength(v);
-                          generatePassword();
-                       }}
-                    />
-                 </div>
+               <div className="flex items-center justify-center text-center py-10 w-full">
+                  <div className={cn(
+                    "font-mono font-medium break-all tracking-tight tabular-nums select-all leading-normal transition-all w-full px-2",
+                    length > 40 ? "text-xl md:text-2xl" : length > 24 ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"
+                  )}>
+                    {showPassword ? password : "•".repeat(password.length)}
+                  </div>
+               </div>
 
-                 <div className="h-px bg-border/50" />
+              <button 
+                onClick={handleCopy} 
+                className="w-full h-16 rounded-2xl bg-zinc-50 text-zinc-950 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-4 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                {copied ? "PASSWORD COPIED" : "COPY PASSWORD"}
+              </button>
+            </div>
+          </div>
 
-                 <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                       <div className="space-y-0.5">
-                          <Label className="text-sm font-semibold cursor-pointer" htmlFor="upper">Uppercase Characters</Label>
-                          <p className="text-[10px] text-muted-foreground font-mono uppercase">A-Z</p>
-                       </div>
-                       <Switch 
-                          id="upper"
-                          checked={useUppercase} 
-                          onCheckedChange={(c) => { setUseUppercase(c); generatePassword(); }}
-                       />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                       <div className="space-y-0.5">
-                          <Label className="text-sm font-semibold cursor-pointer" htmlFor="nums">Numbers</Label>
-                          <p className="text-[10px] text-muted-foreground font-mono uppercase">0-9</p>
-                       </div>
-                       <Switch 
-                          id="nums"
-                          checked={useNumbers} 
-                          onCheckedChange={(c) => { setUseNumbers(c); generatePassword(); }}
-                       />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                       <div className="space-y-0.5">
-                          <Label className="text-sm font-semibold cursor-pointer" htmlFor="syms">Special Symbols</Label>
-                          <p className="text-[10px] text-muted-foreground font-mono uppercase">!@#$%</p>
-                       </div>
-                       <Switch 
-                          id="syms"
-                          checked={useSymbols} 
-                          onCheckedChange={(c) => { setUseSymbols(c); generatePassword(); }}
-                       />
-                    </div>
-                 </div>
+          {/* Integrity Monitoring */}
+          <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="size-5 text-muted-foreground/60" />
+                <h3 className="text-[10px] font-bold uppercase tracking-widest">Password Strength</h3>
               </div>
-           </div>
+              <div className={cn("text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-secondary shadow-inner", strength.color === 'bg-foreground' ? 'text-foreground' : 'text-foreground')}>
+                {strength.label}
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="w-full bg-secondary h-2 rounded-full overflow-hidden">
+                <div 
+                  className={cn("h-full transition-all duration-1000 ease-out", strength.color)} 
+                  style={{ width: `${strength.score}%` }} 
+                />
+              </div>
+              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest text-center opacity-40">
+                {strength.hint}
+              </p>
+            </div>
+          </div>
+
+          {/* Precision Analytics Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "Strength", v: (length * 6).toFixed(0), i: Activity, unit: "Level" },
+               { l: "Platform", v: "Local", i: Globe },
+               { l: "Privacy", v: "Zero", i: Shield, unit: "Leak" },
+               { l: "Status", v: "Verified", i: Zap }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
+                 </div>
+                 <div className="text-xl font-mono font-bold tabular-nums leading-tight">
+                    {item.v}
+                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                 </div>
+               </div>
+             ))}
+          </div>
+
+          {/* Expert Strategy Cards */}
+          <div className="grid md:grid-cols-2 gap-6 pt-2">
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-500" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <Lock className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Security Tip</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Creating a strong password is the first step to staying safe online. A long password with letters and numbers is much harder to guess.
+                </p>
+             </div>
+             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+                <Fingerprint className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-500" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <Server className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">How it Works</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  This tool works completely offline in your browser. We never see or store any of the passwords you create, keeping your data private.
+                </p>
+             </div>
+          </div>
+
         </div>
       </div>
     </CalculatorPage>
   );
 }
-

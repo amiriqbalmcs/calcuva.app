@@ -2,10 +2,12 @@ import { CALCULATORS, CATEGORIES } from "@/lib/calculators";
 import { getSortedPostsData } from "@/lib/markdown";
 import { MetadataRoute } from "next";
 
+import { SITE_URL } from "@/lib/constants";
+
 export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://calcuva.app";
+  const baseUrl = SITE_URL;
   const now = new Date();
 
   const routes: MetadataRoute.Sitemap = [

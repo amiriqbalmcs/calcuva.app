@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+
 @theme {
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
@@ -142,15 +143,36 @@
     --muted-foreground: 215 20% 65%;
     --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
-    --signal: 217 91% 60%;
-    --signal-soft: 217 60% 18%;
-    --destructive: 0 63% 31%;
+
+    /* Signal / Finance (blue) */
+    --signal: 217 91% 65%;
+    --signal-soft: 217 55% 16%;
+    --finance: 217 91% 65%;
+    --finance-soft: 217 55% 16%;
+
+    /* Health (green) */
+    --health: 152 60% 50%;
+    --health-soft: 152 50% 14%;
+
+    /* Education (amber) */
+    --education: 38 90% 60%;
+    --education-soft: 38 70% 14%;
+
+    /* Utility (purple) */
+    --utility: 262 65% 68%;
+    --utility-soft: 262 55% 16%;
+
+    /* Business (indigo) */
+    --business: 239 84% 72%;
+    --business-soft: 239 55% 16%;
+
+    /* Destructive (red) — brighter for dark bg readability */
+    --destructive: 0 72% 51%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 217 33% 17%;
     --input: 217 33% 17%;
     --ring: 217 91% 60%;
-    --business: 239 84% 70%;
-    --business-soft: 239 60% 18%;
   }
 }
 
@@ -172,6 +194,60 @@
   .tabular-nums {
     font-variant-numeric: tabular-nums;
   }
+
+  /* Global Clickable Cursor */
+  a, 
+  button, 
+  [role="button"],
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  .cursor-pointer {
+    cursor: pointer !important;
+  }
+
+  /* Dark mode scrollbar refinements */
+  .dark ::-webkit-scrollbar {
+    width: 10px;
+  }
+  .dark ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: hsl(var(--secondary));
+    border-radius: 5px;
+    border: 2px solid hsl(var(--background));
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.4);
+  }
+
+  /* Logo Dark Mode Filter Utility */
+  .logo-dark-mode {
+    filter: none;
+    transition: filter 0.3s ease;
+  }
+
+  .dark .logo-dark-mode {
+    filter: brightness(0) invert(1);
+  }
+}
+
+
+/* ── Surface / Card Utilities ───────────────────── */
+.surface-card {
+  @apply bg-card border border-border rounded-2xl;
+  @apply dark:bg-card dark:border-border/70;
+  box-shadow: var(--shadow-sm);
+}
+
+.surface-card-hover {
+  @apply transition-all duration-200 hover:border-signal/40;
+  box-shadow: var(--shadow-sm);
+}
+
+.surface-card-hover:hover {
+  box-shadow: var(--shadow-md);
 }
 
 @layer components {
@@ -179,19 +255,45 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  .surface-card {
-    @apply bg-card border border-border rounded-2xl;
+  /* ── Calculator UI Tokens ─────────────────────────── */
+
+  /* Left panel input fields */
+  .calc-input {
+    @apply h-11 font-bold rounded-xl border border-border/60 bg-secondary/30 text-foreground;
+    @apply focus:ring-2 focus:ring-signal/20 focus:border-signal/40 focus:outline-none;
+    @apply dark:bg-secondary/40 dark:border-border dark:text-foreground;
+    @apply transition-all;
+  }
+
+  /* Slider label row */
+  .calc-label {
+    @apply text-[10px] font-black uppercase tracking-widest text-muted-foreground;
+  }
+
+  /* Value chip next to label */
+  .calc-value-chip {
+    @apply font-mono text-xs font-black text-signal;
+  }
+
+  /* Left panel card (inputs area) */
+  .calc-panel {
+    @apply bg-card border border-border rounded-2xl p-5 sm:p-6 space-y-6;
+    @apply dark:bg-card dark:border-border/70;
     box-shadow: var(--shadow-sm);
   }
 
-  .surface-card-hover {
-    @apply transition-all duration-200 hover:border-signal/40;
+  /* Insight / callout block */
+  .calc-insight {
+    @apply p-5 rounded-2xl flex gap-4 items-start border-l-4 shadow-sm;
+  }
+
+  /* Small metadata grid cards */
+  .calc-meta-card {
+    @apply bg-card border border-border rounded-2xl p-5 transition-colors hover:border-signal/30;
+    @apply dark:bg-card dark:border-border/70;
     box-shadow: var(--shadow-sm);
   }
 
-  .surface-card-hover:hover {
-    box-shadow: var(--shadow-md);
-  }
 
   /* Typography Layer for Markdown Content */
   /* Executive Grade Typography Layer */

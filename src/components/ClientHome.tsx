@@ -9,11 +9,11 @@ import { CALCULATORS, CATEGORIES, CategoryKey } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
 const categoryStyles: Record<CategoryKey, string> = {
-  finance: "bg-finance-soft text-finance",
-  health: "bg-health-soft text-health",
-  education: "bg-education-soft text-education",
-  utility: "bg-utility-soft text-utility",
-  business: "bg-business-soft text-business",
+  finance: "bg-finance-soft text-finance dark:bg-finance/20 dark:text-finance",
+  health: "bg-health-soft text-health dark:bg-health/20 dark:text-health",
+  education: "bg-education-soft text-education dark:bg-education/20 dark:text-education",
+  utility: "bg-utility-soft text-utility dark:bg-utility/20 dark:text-utility",
+  business: "bg-business-soft text-business dark:bg-business/20 dark:text-business",
 };
 
 interface ClientHomeProps {
@@ -59,9 +59,9 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
       {/* Hero Section with Premium Pattern */}
       <div className="relative overflow-hidden border-border bg-gradient-to-b from-background to-secondary/20">
         <div
-          className="absolute inset-0 opacity-[0.5] [mask-image:radial-gradient(ellipse_at_center,white,transparent)]"
+          className="absolute inset-0 opacity-[0.4] dark:opacity-[0.1] [mask-image:radial-gradient(ellipse_at_center,white,transparent)]"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 0H0V32' fill='none' stroke='%23666' stroke-width='1' stroke-dasharray='1 3'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 0H0V32' fill='none' stroke='currentColor' stroke-width='1' stroke-dasharray='1 3'/%3E%3C/svg%3E")`,
           }}
         />
         <section className="container-wide relative pt-16 sm:pt-28 pb-16 sm:pb-24">

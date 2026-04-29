@@ -18,11 +18,11 @@ const ICONS: Record<string, any> = {
 };
 
 const categoryStyles: Record<CalcMeta["category"], string> = {
-  finance: "bg-finance-soft text-finance",
-  health: "bg-health-soft text-health",
-  education: "bg-education-soft text-education",
-  utility: "bg-utility-soft text-utility",
-  business: "bg-business-soft text-business",
+  finance: "bg-finance-soft text-finance dark:bg-finance/20 dark:text-finance",
+  health: "bg-health-soft text-health dark:bg-health/20 dark:text-health",
+  education: "bg-education-soft text-education dark:bg-education/20 dark:text-education",
+  utility: "bg-utility-soft text-utility dark:bg-utility/20 dark:text-utility",
+  business: "bg-business-soft text-business dark:bg-business/20 dark:text-business",
 };
 
 export const CalculatorCard = ({ calc }: { calc: CalcMeta }) => {

@@ -1,11 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Line, LineChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Share, CheckCircle2, TrendingDown, Info } from "lucide-react";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { 
+  Share, CheckCircle2, TrendingDown, Info, Landmark, Calculator, 
+  Receipt, TrendingUp, Wallet, ArrowUpRight, History, Target, 
+  Activity, Zap, Globe, Ruler, Gauge, Sparkles, LayoutDashboard,
+  Settings2, Copy, Banknote, BarChart as BarChartIcon
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { ResultGrid, ResultStat } from "@/components/ResultStat";
-import { SeoBlock } from "@/components/SeoBlock";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -13,6 +16,7 @@ import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency, formatNumber } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
 import { useCurrency } from "@/context/CurrencyContext";
+import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("inflation-calculator")!;
@@ -21,7 +25,7 @@ const InflationCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   const { currency } = useCurrency();
   const [amount, setAmount] = useUrlState<number>("iv", 10000);
   const [rate, setRate] = useUrlState<number>("r", 5);
-  const [years, setYears] = useUrlState<number>("y", 10);
+  const [years, setYears] = useUrlState<number>("y", 15);
   const [copied, setCopied] = useState(false);
 
   const data = useMemo(() => {
@@ -41,86 +45,193 @@ const InflationCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   const resultInfo = useMemo(() => {
     const purchasingPower = amount / (multiplier || 1);
     let insight = "";
-    if (cumulative > 100) insight = `Hyper-Erosion: In ${years} years, your purchasing power will more than halve. You would need ${formatCurrency(last, currency)} to buy what ${formatCurrency(amount, currency)} buys today.`;
-    else if (cumulative > 30) insight = `Significant Impact: Your money will lose about a third of its value. Consider assets that outpace inflation (stocks, real estate).`;
-    else insight = `Low-Moderate Inflation: While prices are rising, the erosion is relatively slow. Revisit your savings plan annually.`;
+    if (cumulative > 100) insight = "High Inflation: Your money will buy only half as much as it does now. You'll need to earn more or invest wisely to keep your current way of life.";
+    else if (cumulative > 40) insight = "Significant Drop: Your money will lose more than 40% of its value. Standard savings accounts might not be enough to keep up with rising prices.";
+    else insight = "Slow Drop: Prices are rising slowly, which is normal. A basic savings or investment plan should help you stay ahead of inflation.";
 
     return { purchasingPower, insight };
-  }, [multiplier, amount, cumulative, last, years, currency]);
+  }, [multiplier, amount, cumulative]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleCopy = () => {
+    const resultText = `Inflation Check: In ${years} years, ${formatCurrency(amount, currency.code)} will only buy what ${formatCurrency(resultInfo.purchasingPower, currency.code)} buys today. Calculate at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={
-        <SeoBlock
-          title="Inflation and Your Future Value"
-          intro="Inflation is the erosion of purchasing power over time."
-          sections={[{ heading: "Real vs Nominal", body: <p>Nominal is face value; Real is adjusted for inflation.</p> }]}
-          faqs={[{ q: "What is CPI?", a: "The Consumer Price Index used to measure inflation." }]}
-        />
-      }
-    >
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 surface-card p-6 space-y-6">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-widest">Inflation Parameters</h3>
-            <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-finance hover:text-white transition flex items-center gap-1">
-              {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-              {copied ? "COPIED" : "SHARE"}
-            </button>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Input Side */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Inflation Settings</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Set Your Money and Rate</p>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Reference Amount */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Starting Amount</Label>
+                  <span className="text-xs font-mono font-medium">{formatCurrency(amount, currency.code)}</span>
+                </div>
+                <div className="relative group">
+                  <Input 
+                    type="number" 
+                    value={amount} 
+                    onChange={(e) => setAmount(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-medium text-base rounded-lg shadow-sm"
+                  />
+                  <Banknote className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground opacity-20" />
+                </div>
+                <Slider 
+                  value={[amount]} 
+                  min={100} 
+                  max={1000000} 
+                  step={1000} 
+                  onValueChange={([v]) => setAmount(v)} 
+                  className="pt-2"
+                />
+              </div>
+
+              {/* Rate and Years */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Annual Inflation Rate (%)</Label>
+                  <Input 
+                    type="number" 
+                    step="0.1" 
+                    value={rate} 
+                    onChange={(e) => setRate(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/40 focus:border-foreground/20 transition-all font-medium text-base rounded-lg"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Years into the future</Label>
+                  <Input 
+                    type="number" 
+                    value={years} 
+                    onChange={(e) => setYears(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/40 focus:border-foreground/20 transition-all font-medium text-base rounded-lg"
+                  />
+                </div>
+              </div>
+              <Slider value={[years]} min={1} max={50} step={1} onValueChange={([v]) => setYears(v)} />
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <div><Label>Current Value / Budget</Label><Input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value) || 0)} className="mt-2 text-lg font-bold" /></div>
-            <div>
-              <div className="flex justify-between items-baseline mb-2"><Label>Inflation Rate (%)</Label><span className="font-mono text-sm font-bold text-finance">{rate}%</span></div>
-              <Slider value={[rate]} min={0.1} max={30} step={0.1} onValueChange={([v]) => setRate(v)} />
-            </div>
-            <div>
-              <div className="flex justify-between items-baseline mb-2"><Label>Time Horizon (Years)</Label><span className="font-mono text-sm font-bold text-finance">{years} y</span></div>
-              <Slider value={[years]} min={1} max={50} step={1} onValueChange={([v]) => setYears(v)} />
+          {/* Economic Insight */}
+          <div className="surface-card p-6 border-border/30 bg-signal/5 relative overflow-hidden group">
+            <Globe className="absolute -bottom-4 -right-4 size-20 text-foreground/5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1 text-signal">
+                <TrendingDown className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Inflation Impact</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                  {resultInfo.insight}
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <ResultGrid cols={2}>
-            <ResultStat label="Future Price" value={formatCurrency(last, currency)} accent />
-            <ResultStat label="Purchasing Power" value={formatCurrency(resultInfo.purchasingPower, currency)} sub="Equivalent in today's money" />
-          </ResultGrid>
-
-          {/* Inflation Insight */}
-          <div className="p-5 rounded-xl flex gap-4 items-start border-l-4 bg-finance-soft border-finance text-finance">
-            <div className="shrink-0 mt-0.5"><TrendingDown className="size-5" /></div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Purchasing Power Insight</h4>
-              <p className="text-sm opacity-90 leading-relaxed font-medium">{resultInfo.insight}</p>
+        {/* Results Side */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <LayoutDashboard className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="space-y-4 relative z-10">
+              <div className="flex justify-between items-start">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Future Cost of Goods</span>
+                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
+                    {formatCurrency(last, currency.code)}
+                  </div>
+                </div>
+                <button 
+                  onClick={handleCopy} 
+                  className={cn(
+                    "p-3 rounded-xl transition-all border",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                  title="Copy Results"
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-border/40">
+                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight">
+                  <ArrowUpRight className="size-3" />
+                  <span>Value Lost: {cumulative.toFixed(1)}%</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
+                  Today's Equivalent: {formatCurrency(resultInfo.purchasingPower, currency.code)}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="surface-card p-6">
-            <h3 className="text-sm font-semibold mb-6 text-muted-foreground uppercase tracking-widest font-mono">Cost Projection Curve</h3>
-            <div className="h-64">
+          {/* Visual Breakdown */}
+          <div className="surface-card p-8 bg-secondary/5 border-border/30 relative overflow-hidden group">
+            <BarChartIcon className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-10 relative z-10">How Prices Rise Over Time</h4>
+            
+            <div className="h-[300px] w-full relative z-10">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
-                  <XAxis dataKey="year" fontSize={11} tickLine={false} axisLine={false} />
-                  <YAxis fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => formatNumber(v)} />
-                  <Tooltip formatter={(v: any) => formatCurrency(v, currency)} labelFormatter={(l) => `Year ${l}`} />
-                  <Line type="monotone" dataKey="value" stroke="hsl(var(--finance))" strokeWidth={3} dot={false} />
-                </LineChart>
+                <AreaChart data={data}>
+                  <defs>
+                    <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--foreground))" stopOpacity={0.1}/>
+                      <stop offset="95%" stopColor="hsl(var(--foreground))" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} opacity={0.1} />
+                  <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 9, fontWeight: 700, opacity: 0.4 }} tickFormatter={(v) => `Year ${v}`} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 9, fontWeight: 700, opacity: 0.4 }} tickFormatter={(v) => formatNumber(v)} />
+                  <Tooltip 
+                    formatter={(v: any) => formatCurrency(v, currency.code)} 
+                    labelFormatter={(l) => `Timeline: Year ${l}`}
+                    contentStyle={{ borderRadius: "16px", border: "none", backgroundColor: "hsl(var(--background))", boxShadow: "0 20px 40px -12px rgb(0 0 0 / 0.3)" }}
+                  />
+                  <Area type="monotone" dataKey="value" stroke="hsl(var(--foreground))" fill="url(#colorPrice)" strokeWidth={3} />
+                </AreaChart>
               </ResponsiveContainer>
             </div>
+            <div className="text-center mt-6 relative z-10 text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-40 italic">Estimated Future Prices</div>
           </div>
+
+          {/* Detailed Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "Multiplier", v: multiplier.toFixed(2), i: Activity, unit: "x" },
+               { l: "Years", v: years, i: History, unit: "Yrs" },
+               { l: "Value Lost/Day", v: ((last - amount) / (years * 365)).toFixed(2), i: Zap, unit: currency.code },
+               { l: "Status", v: "Active", i: Landmark }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                 </div>
+                 <div className="text-xl font-mono font-medium tabular-nums leading-tight">
+                    {item.v}
+                    <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                 </div>
+               </div>
+             ))}
+          </div>
+
+
         </div>
       </div>
     </CalculatorPage>

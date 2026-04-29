@@ -1,7 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Share, CheckCircle2, Coins, TrendingUp, ShieldCheck, Rocket } from "lucide-react";
+import { 
+  Share, CheckCircle2, Coins, TrendingUp, TrendingDown, ShieldCheck, Rocket, 
+  Settings2, Activity, Target, Zap, History, Sparkles 
+} from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { ResultGrid, ResultStat } from "@/components/ResultStat";
 import { SeoBlock } from "@/components/SeoBlock";
@@ -11,6 +14,7 @@ import { calculatorBySlug } from "@/lib/calculators";
 import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
 import { useCurrency } from "@/context/CurrencyContext";
+import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const calc = calculatorBySlug("crypto-investment-profit-calculator")!;
@@ -36,19 +40,19 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
     let insight = "";
     let icon = TrendingUp;
     if (roi > 100) {
-      insight = "House Money Status: You have exceeded a 2x return. This is an elite gain. A professional move here is to withdraw 50% (initial capital) and let the rest ride risk-free.";
+      insight = "Over 2x Profit: You've more than doubled your money! Consider taking out your initial investment so the rest is risk-free.";
       icon = Rocket;
     } else if (roi > 20) {
-      insight = "Momentum Trade: You are significantly outperforming traditional indices. Tighten your stop-loss to 15% to lock in profit.";
+      insight = "Great Trade: You're doing very well. Consider setting a stop-loss to protect your profits.";
       icon = ShieldCheck;
     } else if (roi < -50) {
-      insight = "Systemic Risk: You are down over 50%. In crypto, assets often fail to recover from this drawdown. Re-evaluate if the project fundamentals still hold.";
+      insight = "Heavy Loss: You're down over 50%. Take a step back and decide if you still believe in this project long-term.";
       icon = ShieldCheck;
     } else if (roi < 0) {
-      insight = "Sideways Flux: You are in a drawdown. If you believe in the long-term thesis, this is often a 'DCA' (Dollar Cost Average) opportunity.";
+      insight = "Down on Investment: You're currently at a loss. If you still believe in the project, this could be a chance to buy more at a lower price.";
       icon = TrendingUp;
     } else {
-      insight = "Transaction Equilibrium: You are near break-even. Exchange fees are currently the primary drain on your capital.";
+      insight = "Breaking Even: You're close to where you started. Right now, fees are your main cost.";
       icon = TrendingUp;
     }
 
@@ -56,90 +60,203 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
   }, [investment, buyPrice, sellPrice, fee]);
 
   const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const text = `Crypto Trade: ${result.roi.toFixed(1)}% ROI | ${formatCurrency(result.profit, currency.code)} Profit. Track your portfolio at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const ExitIcon = result.icon;
+  const StrategyIcon = result.icon;
 
   return (
-    <CalculatorPage
-      calc={calc}
-      guideHtml={guideHtml}
-      faqs={faqs}
-      relatedArticles={relatedArticles}
-      seoContent={<SeoBlock title="Digital Asset ROI Forecasting" intro="Calculate real-world crypto gains after exchange fees and network costs." />}
-    >
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 surface-card p-6 space-y-6">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Trade Parameters</h3>
-            <button onClick={handleShare} className="p-1 px-2 rounded-md bg-secondary text-[10px] font-bold text-muted-foreground hover:bg-business hover:text-white transition flex items-center gap-1 font-mono">
-              {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-              {copied ? "COPIED" : "SHARE"}
-            </button>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        {/* Trade Parameters */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Trade Details</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Setup</p>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Capital */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Initial Investment</Label>
+                  <span className="text-xs font-mono font-medium">{formatCurrency(investment, currency.code)}</span>
+                </div>
+                <div className="relative group">
+                  <Input 
+                    type="number" 
+                    value={investment} 
+                    onChange={(e) => setInvestment(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg shadow-sm"
+                  />
+                  <Coins className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground opacity-20" />
+                </div>
+              </div>
+
+              {/* Entry/Exit Price */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Entry Price</Label>
+                  <Input 
+                    type="number" 
+                    value={buyPrice} 
+                    onChange={(e) => setBuyPrice(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background/50 border-border/40 font-bold focus:border-foreground/20 rounded-xl"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Exit Price</Label>
+                  <Input 
+                    type="number" 
+                    value={sellPrice} 
+                    onChange={(e) => setSellPrice(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background/50 border-border/40 font-bold focus:border-foreground/20 rounded-xl"
+                  />
+                </div>
+              </div>
+
+              {/* Fees */}
+              <div className="space-y-3">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Trading Fee (%)</Label>
+                <Input 
+                  type="number" 
+                  step="0.01"
+                  value={fee} 
+                  onChange={(e) => setFee(Number(e.target.value) || 0)} 
+                  className="h-11 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm"
+                />
+              </div>
+
+              <button 
+                onClick={handleShare} 
+                className="w-full h-11 rounded-xl bg-background border border-border/60 hover:bg-foreground hover:text-background transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm"
+              >
+                {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
+                {copied ? "Link Copied" : "Share Position"}
+              </button>
+            </div>
           </div>
 
-          <div className="space-y-4 pt-2">
-            <div><div className="flex justify-between mb-2"><Label>Capital Contribution</Label><span className="font-mono text-xs font-bold">{formatCurrency(investment, currency)}</span></div>
-              <Input type="number" value={investment} onChange={(e) => setInvestment(Number(e.target.value) || 0)} className="text-lg font-bold" />
+          <div className="surface-card p-6 border-border/30 bg-business/5 text-business relative overflow-hidden group shadow-sm">
+            <Sparkles className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1">
+                <ShieldCheck className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-business/80">Fee Check</h4>
+                <p className="text-xs leading-relaxed font-medium">
+                  Your total fees (buying and selling) are {formatCurrency(result.totalFees, currency.code)}. Make sure your profit covers this!
+                </p>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div><Label>Entry Price</Label><Input type="number" value={buyPrice} onChange={(e) => setBuyPrice(Number(e.target.value) || 0)} className="mt-2" /></div>
-              <div><Label>Exit Price</Label><Input type="number" value={sellPrice} onChange={(e) => setSellPrice(Number(e.target.value) || 0)} className="mt-2" /></div>
-            </div>
-            <div><Label>Brokerage Fee (%)</Label><Input type="number" value={fee} onChange={(e) => setFee(Number(e.target.value) || 0)} className="mt-2" /></div>
           </div>
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
-          <ResultGrid cols={2}>
-            <ResultStat label="Final Payout (Net)" value={formatCurrency(result.finalValue, currency)} accent className={result.profit >= 0 ? "bg-health text-white border-health" : "bg-destructive text-white border-destructive"} />
-            <ResultStat label="Total Profit" value={formatCurrency(result.profit, currency)} sub={result.profit >= 0 ? "Realized Gain" : "Floating Loss"} />
-          </ResultGrid>
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8">
           
-          <div className={cn("p-5 rounded-xl flex gap-4 items-start border-l-4", 
-            result.roi > 0 ? "bg-health-soft border-health text-health" : "bg-destructive-soft border-destructive text-destructive"
-          )}>
-            <div className="shrink-0 mt-0.5"><ExitIcon className="size-5" /></div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wide mb-1">Portfolio Strategy</h4>
-              <p className="text-sm opacity-90 leading-relaxed font-medium">{result.insight}</p>
+          {/* Executive Summary */}
+          <div className="surface-card p-10 md:p-14 bg-background border-border/60 relative overflow-hidden group shadow-2xl">
+            <TrendingUp className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground opacity-60">Total Return</span>
+                <div className="text-6xl md:text-7xl font-mono font-bold tracking-tighter tabular-nums pt-2">
+                  {formatCurrency(result.finalValue, currency.code)}
+                </div>
+              </div>
+              <div className="shrink-0 flex flex-col items-center md:items-end gap-2">
+                <div className={cn("text-3xl md:text-4xl font-mono font-bold", result.roi >= 0 ? "text-health" : "text-destructive")}>
+                  {result.roi >= 0 ? "+" : ""}{result.roi.toFixed(1)}%
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Your Gain/Loss</div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-10 mt-10 border-t border-border/40 relative z-10">
+              <div className={cn("flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md", 
+                result.profit >= 0 ? "bg-health text-white" : "bg-destructive text-white"
+              )}>
+                {result.profit >= 0 ? <TrendingUp className="size-3" /> : <TrendingDown className="size-3" />}
+                <span>Profit: {formatCurrency(result.profit, currency.code)}</span>
+              </div>
+              <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                Total Fees: {formatCurrency(result.totalFees, currency.code)}
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
-             <div className="surface-card p-5">
-                <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">ROI</div>
-                <div className={cn("text-lg font-bold", result.roi >= 0 ? "text-health" : "text-destructive")}>{result.roi.toFixed(1)}%</div>
-             </div>
-             <div className="surface-card p-5">
-                <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Coin Vol.</div>
-                <div className="text-lg font-bold truncate">{result.coins.toFixed(4)}</div>
-             </div>
-             <div className="surface-card p-5">
-                <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Fees</div>
-                <div className="text-lg font-bold text-muted-foreground">{formatCurrency(result.totalFees, currency)}</div>
-             </div>
+          {/* Portfolio Strategy */}
+          <div className="surface-card p-8 bg-secondary/5 border-border/60 shadow-sm flex gap-6 items-start relative overflow-hidden group">
+            <div className="shrink-0 p-3 rounded-2xl bg-background border border-border/50 shadow-sm text-business">
+              <StrategyIcon className="size-6" />
+            </div>
+            <div className="space-y-1">
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Trading Plan</h4>
+              <p className="text-base font-bold leading-relaxed">{result.insight}</p>
+            </div>
           </div>
 
-          <div className="surface-card p-6">
-            <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest font-mono mb-4">Take-Profit Ladders</h3>
-            <div className="space-y-3">
+          {/* Precision Analytics Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { l: "Coins You Own", v: result.coins.toFixed(4), i: Coins, unit: "Unit" },
+               { l: "Growth Multiplier", v: (result.finalValue / investment).toFixed(2), i: Activity, unit: "x" },
+               { l: "Break-Even Price", v: (buyPrice * (1 + (fee*2)/100)).toFixed(2), i: Target, unit: currency.code },
+               { l: "Status", v: result.roi >= 0 ? "PROFIT" : "LOSS", i: Zap, unit: "" }
+             ].map((item, idx) => (
+               <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-business/20 transition-all group shadow-sm">
+                 <div className="flex items-center gap-2 mb-3">
+                    <item.i className="size-3 text-muted-foreground group-hover:text-business transition-colors" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
+                 </div>
+                 <div className="text-xl font-mono font-bold tabular-nums leading-tight">
+                    {item.v}
+                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                 </div>
+               </div>
+             ))}
+          </div>
+
+          {/* Take-Profit Ladders */}
+          <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-8 relative overflow-hidden group">
+            <History className="absolute -bottom-10 -right-10 size-48 text-muted-foreground/5 rotate-12 transition-transform group-hover:rotate-0 duration-1000" />
+            <div className="flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-3">
+                <Rocket className="size-5 text-muted-foreground/60" />
+                <h3 className="text-[10px] font-bold uppercase tracking-widest">Goal Prices</h3>
+              </div>
+              <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-40 font-mono">Selling Plan</span>
+            </div>
+            
+            <div className="grid sm:grid-cols-2 gap-4 relative z-10">
                {[25, 50, 100, 200].map(p => {
                  const price = buyPrice * (1 + p/100);
                  const gain = investment * (p/100);
                  return (
-                   <div key={p} className="flex items-center justify-between p-3 rounded-lg bg-secondary/30 border border-border/50">
-                      <div className="text-xs font-bold text-muted-foreground">+{p}% TARGET</div>
-                      <div className="text-sm font-mono font-bold text-health">{formatCurrency(price, currency)}</div>
-                      <div className="text-[10px] text-muted-foreground font-semibold">PROFIT: {formatCurrency(gain, currency)}</div>
+                   <div key={p} className="p-5 rounded-2xl bg-secondary/30 border border-border/50 hover:border-business/40 transition-all group/ladder">
+                      <div className="flex justify-between items-center mb-3">
+                        <div className="text-[10px] font-bold text-muted-foreground uppercase">Target +{p}%</div>
+                        <div className="text-[10px] font-mono font-bold text-health">Gain: {formatCurrency(gain, currency.code)}</div>
+                      </div>
+                      <div className="text-2xl font-mono font-bold tracking-tight group-hover/ladder:text-business transition-colors">
+                        {formatCurrency(price, currency.code)}
+                      </div>
                    </div>
                  );
                })}
             </div>
           </div>
+
         </div>
       </div>
     </CalculatorPage>

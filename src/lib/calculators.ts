@@ -257,11 +257,11 @@ export const CALCULATORS: CalcMeta[] = [
   },
   {
     slug: "age-calculator",
-    title: "Age Calculator",
-    short: "Exact age in years, months, days, hours and seconds.",
-    description: "Find the precise duration between two dates, your next birthday countdown and your age on any historical date.",
-    icon: "Calendar", category: "utility",
-    keywords: ["age", "date", "birthday", "duration"],
+    title: "Exact Age & Time Interval Calculator",
+    short: "Calculate your exact age in years, months, days, and seconds.",
+    description: "Precision chronological tool to find your exact age and life milestones. Accounts for leap years and different month lengths with down-to-the-second accuracy.",
+    icon: "Clock", category: "utility",
+    keywords: ["age calculator", "date of birth calculator", "chronological age", "how old am i", "age in days", "age calculator by date of birth", "birthday calculator", "exact age"],
   },
   {
     slug: "credit-card-payoff-calculator",

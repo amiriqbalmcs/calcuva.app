@@ -1,191 +1,248 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Baby, Calendar, Heart, Info, Clock, Thermometer, Footprints, Sparkles } from "lucide-react";
-import CalculatorPage from "@/components/CalculatorPage";
+import { 
+  Baby, Calendar, Heart, Info, Clock, Thermometer, 
+  Footprints, Sparkles, Share, CheckCircle2, TrendingUp, 
+  History, Activity, Zap, Ruler, Settings2, Copy, 
+  LayoutDashboard, ChevronRight, Waves, Flame, Siren, 
+  Gauge, Target, User
+} from "lucide-react";
+import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import ResultStat from "@/components/ResultStat";
+import { calculatorBySlug } from "@/lib/calculators";
+import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-interface PregnancyWeekCalculatorProps {
-  calc: any;
-  guideHtml?: string;
-}
+const calc = calculatorBySlug("pregnancy-week-calculator")!;
 
-export default function PregnancyWeekCalculator({ calc, guideHtml }: PregnancyWeekCalculatorProps) {
+const PregnancyWeekCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
   const [lmp, setLmp] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => {
     const lastPeriod = new Date(lmp);
     const today = new Date();
-    
-    // Difference in time
+    if (isNaN(lastPeriod.getTime())) return null;
+
     const diffTime = today.getTime() - lastPeriod.getTime();
-    
-    // Difference in days
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
     if (diffDays < 0 || diffDays > 300) return null;
 
     const currentWeek = Math.floor(diffDays / 7);
     const currentDays = diffDays % 7;
-    
-    // Naegele's Rule: LMP + 280 days
     const dueDate = new Date(lastPeriod.getTime() + (280 * 1000 * 60 * 60 * 24));
-    
-    // Trimester
+
     let trimester = 1;
     if (currentWeek >= 13 && currentWeek < 27) trimester = 2;
     if (currentWeek >= 27) trimester = 3;
 
-    // Millestones based on week
     const milestones = [
       { week: 4, label: "Implantation Complete" },
       { week: 8, label: "Major Organs Developing" },
       { week: 12, label: "Heartbeat Audible via Doppler" },
-      { week: 16, label: "Baby can grasp & squint" },
-      { week: 20, label: "Anatomy Scan (Midpoint)" },
-      { week: 24, label: "Viability Milestone" },
-      { week: 28, label: "Eyes open & blink" },
-      { week: 32, label: "Rapid Weight Gain" },
-      { week: 37, label: "Early Term" },
-      { week: 40, label: "Estimated Due Date" },
+      { week: 16, label: "Manual Grasp Reflex Begins" },
+      { week: 20, label: "Midpoint Anatomy Scan" },
+      { week: 24, label: "Viability Threshold" },
+      { week: 28, label: "Visual Sensory Activation" },
+      { week: 32, label: "Rapid Mass Accumulation" },
+      { week: 37, label: "Early Term Maturity" },
+      { week: 40, label: "Estimated Delivery" },
     ];
 
     const upcomingMilestone = milestones.find(m => m.week > currentWeek);
-
-    return {
-      currentWeek,
-      currentDays,
-      trimester,
-      dueDate,
-      daysToDueDate: 280 - diffDays,
-      percentComplete: (diffDays / 280) * 100,
-      upcomingMilestone
-    };
+    return { currentWeek, currentDays, trimester, dueDate, daysToDueDate: 280 - diffDays, percentComplete: (diffDays / 280) * 100, upcomingMilestone, diffDays };
   }, [lmp]);
 
-  const formatDate = (date: Date) => 
+  const formatDate = (date: Date) =>
     date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
+  const handleCopy = () => {
+    if (!results) return;
+    let text = `Current Gestational Age: ${results.currentWeek}w ${results.currentDays}d. Estimated Due Date: ${formatDate(results.dueDate)}. Track at ${SITE_DOMAIN}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <CalculatorPage calc={calc} guideHtml={guideHtml}>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
         {/* Input Panel */}
-        <div className="lg:col-span-5 space-y-8">
-          <div className="surface-card p-6 sm:p-8">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="size-10 rounded-xl bg-health/10 flex items-center justify-center text-health shadow-inner">
-                <Baby className="size-5" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold tracking-tight">Pregnancy Status</h2>
-                <p className="text-[10px] text-muted-foreground uppercase font-mono tracking-widest font-bold">Timeline Calculation</p>
-              </div>
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Baby className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Your Pregnancy</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Dates</p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-8 relative z-10">
+              {/* LMP Date */}
               <div className="space-y-3">
-                <Label htmlFor="lmp">First Day of Last Period (LMP)</Label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-                  <Input
-                    id="lmp"
-                    type="date"
-                    value={lmp}
-                    onChange={(e) => setLmp(e.target.value)}
-                    className="pl-9 h-12 bg-background border-border rounded-xl font-medium"
-                  />
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Last Period (LMP)</Label>
+                <div className="relative group">
+                   <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
+                   <Input type="date" value={lmp} onChange={(e) => setLmp(e.target.value)} className="h-11 pl-12 bg-background border-border/60 font-bold rounded-lg shadow-sm" />
                 </div>
-                <p className="text-[10px] text-muted-foreground italic">Standard dating starts from the first day of your last cycle.</p>
+                <p className="text-[10px] text-muted-foreground font-medium px-1">Used for estimated delivery window assessment.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="surface-card p-6 border-border/30 bg-health/5 relative overflow-hidden group">
+            <Info className="absolute -bottom-4 -right-4 size-20 text-health/5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1 text-health">
+                <Sparkles className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Medical Note</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                  This provides a standard estimate. Every pregnancy is different, so your actual due date may vary.
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Results Panel */}
-        <div className="lg:col-span-7 space-y-6">
-          {!results ? (
-            <div className="surface-card p-12 flex flex-col items-center justify-center text-center border-dashed opacity-50">
-               <Sparkles className="size-12 mb-4 text-muted-foreground" />
-               <p className="text-sm font-medium">Please enter a valid date within the last 9 months.</p>
-            </div>
-          ) : (
+        <div className="lg:col-span-8 space-y-8">
+          {results ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                 <ResultStat
-                   label="Current Progress"
-                   value={`${results.currentWeek} Weeks, ${results.currentDays} Days`}
-                   description={`Trimester ${results.trimester}`}
-                   className="bg-health/5 border-health/20"
-                   icon={Clock}
-                   valueClassName="text-health text-3xl"
-                 />
-                 <ResultStat
-                   label="Estimated Due Date"
-                   value={formatDate(results.dueDate)}
-                   description={`${results.daysToDueDate} Days Remaining`}
-                   className="bg-health/5 border-health/10"
-                   icon={Heart}
-                   valueClassName="text-health"
-                 />
+              {/* Executive Summary */}
+              <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+                <Waves className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+                
+                <div className="space-y-4 relative z-10">
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Current Gestational Age</span>
+                      <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums text-health">
+                        {results.currentWeek}<span className="text-2xl md:text-3xl ml-1 font-sans font-normal opacity-40 uppercase">w</span> {results.currentDays}<span className="text-2xl md:text-3xl ml-1 font-sans font-normal opacity-40 uppercase">d</span>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={handleCopy} 
+                      className={cn(
+                        "p-3 rounded-xl transition-all border",
+                        copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                      )}
+                    >
+                      {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                    </button>
+                  </div>
+                  
+                  <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
+                    <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight">
+                      <History className="size-3" />
+                      <span>{results.daysToDueDate} Days Remaining</span>
+                    </div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
+                      Due Date: {formatDate(results.dueDate)} — Trimester {results.trimester}
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="surface-card p-8 bg-gradient-to-br from-health/5 to-transparent relative overflow-hidden">
-                 <div className="absolute top-0 right-0 p-8 opacity-10">
-                    <Footprints className="size-24 text-health" />
-                 </div>
-                 
-                 <div className="flex items-center gap-3 mb-8">
-                    <TrendingUp className="size-4 text-health" />
-                    <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Pregnancy Milestone Progress</h3>
-                 </div>
+              {/* Progress Visual */}
+              <div className="space-y-4">
+                <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Pregnancy Timeline</h4>
+                <div className="surface-card p-8 bg-secondary/5 border-border/40 relative group">
+                  <div className="flex justify-between text-[9px] font-bold uppercase tracking-widest text-muted-foreground mb-4 opacity-60 font-mono">
+                    <span>Start</span><span>T1</span><span>T2</span><span>T3</span><span>Due</span>
+                  </div>
+                  <div className="h-4 w-full bg-secondary/20 rounded-full overflow-hidden border border-border/10 relative shadow-inner">
+                    <div 
+                      className="h-full bg-health/80 group-hover:bg-health transition-all duration-1000 shadow-[0_0_15px_rgba(var(--health),0.2)]"
+                      style={{ width: `${results.percentComplete}%` }}
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-between items-center px-1">
+                    <span className="text-[10px] font-bold text-foreground">{results.percentComplete.toFixed(1)}% Journey Complete</span>
+                    <span className="text-[10px] font-bold text-muted-foreground uppercase font-mono tracking-widest">40 Weeks Total</span>
+                  </div>
+                </div>
+              </div>
 
-                 <div className="space-y-6 relative z-10">
-                    <div className="flex justify-between items-end mb-2">
-                       <span className="text-sm font-bold text-foreground">{results.percentComplete.toFixed(1)}% Complete</span>
-                       <span className="text-[10px] font-bold text-muted-foreground uppercase">Target: 40 Weeks</span>
-                    </div>
-                    <div className="w-full bg-secondary h-3 rounded-full overflow-hidden">
-                       <div 
-                         className="bg-health h-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(var(--health),0.3)]"
-                         style={{ width: `${results.percentComplete}%` }}
-                       />
-                    </div>
-                    
-                    <div className="mt-10 grid grid-cols-1 gap-4">
-                       <div className="p-4 bg-background border border-border/50 rounded-2xl flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                             <div className="size-10 rounded-full bg-health/10 flex items-center justify-center text-health">
-                                <Thermometer className="size-5" />
-                             </div>
-                             <div>
-                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Next Major Phase</p>
-                                <p className="text-sm font-bold">{results.upcomingMilestone?.label || "Birth"}</p>
-                             </div>
-                          </div>
-                          <div className="text-right">
-                             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Week</p>
-                             <p className="text-sm font-mono font-bold">{results.upcomingMilestone?.week || 40}</p>
-                          </div>
-                       </div>
-                    </div>
-                 </div>
+              {/* Milestone Card */}
+              <div className="surface-card p-8 border-border/30 bg-background hover:border-health/20 transition-all group overflow-hidden relative">
+                <Sparkles className="absolute -top-4 -right-4 size-24 text-health/5 group-hover:rotate-12 transition-transform duration-700" />
+                <div className="flex items-center justify-between relative z-10">
+                   <div className="flex items-center gap-6">
+                      <div className="size-16 rounded-2xl bg-health/10 flex items-center justify-center text-health shadow-inner group-hover:scale-110 transition-transform duration-500">
+                         <Target className="size-8" />
+                      </div>
+                       <div className="space-y-1">
+                         <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Next Big Milestone</p>
+                         <p className="text-xl font-bold text-foreground">{results.upcomingMilestone?.label || "Baby arrives!"}</p>
+                      </div>
+                   </div>
+                   <div className="text-right">
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1 opacity-60">Week</p>
+                      <p className="text-3xl font-mono font-bold text-health">{results.upcomingMilestone?.week || 40}</p>
+                   </div>
+                </div>
+              </div>
+
+              {/* Vital Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                 {[
+                   { l: "Trimester", v: results.trimester, i: Activity, unit: "PHASE" },
+                   { l: "Days Pregnant", v: results.diffDays, i: History, unit: "Days" },
+                   { l: "Completion", v: results.percentComplete.toFixed(1), i: Zap, unit: "%" },
+                   { l: "Status", v: results.currentWeek >= 37 ? "Term" : "Growth", i: Baby }
+                 ].map((item, idx) => (
+                   <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                     <div className="flex items-center gap-2 mb-3">
+                        <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                     </div>
+                     <div className="text-lg font-mono font-medium tabular-nums leading-tight">
+                        {item.v}
+                        {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                     </div>
+                   </div>
+                 ))}
+              </div>
+
+              {/* Recovery Roadmap / Expert Tips */}
+              <div className="grid md:grid-cols-2 gap-6 pt-2">
+                <div className="surface-card p-8 border-border/30 bg-secondary/5 relative overflow-hidden group">
+                   <Heart className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                   <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
+                     <History className="size-3 text-health" /> Due Date Note
+                   </div>
+                   <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                     Your due date is just an estimate! Only about 5% of babies are actually born exactly on their due date.
+                   </p>
+                </div>
+                <div className="surface-card p-8 border-border/30 bg-secondary/5 relative overflow-hidden group">
+                   <Activity className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                   <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
+                     <Gauge className="size-3 text-health" /> Baby's Growth
+                   </div>
+                   <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                     Every baby grows at their own pace. Your doctor will track your baby's specific growth during your checkups.
+                   </p>
+                </div>
               </div>
             </>
+          ) : (
+            <div className="surface-card p-32 flex flex-col items-center justify-center text-center bg-secondary/5 border-dashed border-border/60">
+               <Activity className="size-12 text-muted-foreground/20 mb-6 animate-pulse" />
+               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/40 max-w-xs leading-loose">
+                 Synchronizing biological parameters... Please enter LMP.
+               </p>
+            </div>
           )}
-
-          <div className="p-4 bg-secondary/10 rounded-2xl border border-border/50">
-             <div className="flex gap-4">
-                <Info className="size-5 text-muted-foreground shrink-0 mt-0.5" />
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Calculated using **Naegele's Rule** assuming a 28-day cycle. Only 4% of babies are born on their exact due date. This tool is for informational purposes and does not replace medical advice from your OB-GYN.
-                </p>
-             </div>
-          </div>
         </div>
       </div>
     </CalculatorPage>
   );
-}
+};
+
+export default PregnancyWeekCalculator;

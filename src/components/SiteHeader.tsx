@@ -84,7 +84,7 @@ export const SiteHeader = () => {
       >
         <Link href="/" className="flex items-center group shrink-0" onClick={() => setOpen(false)}>
           <div className="relative h-9 w-auto flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
-            <img src="/logo.png" alt="Calcuva" className="h-full w-auto object-contain" />
+            <img src="/logo.png" alt="Calcuva" className="h-full w-auto object-contain logo-dark-mode" />
           </div>
         </Link>
 

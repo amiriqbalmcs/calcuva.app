@@ -1,12 +1,13 @@
 import { Seo } from "@/components/Seo";
 import { Mail, ArrowRight, MessageSquare } from "lucide-react";
 import type { Metadata } from "next";
+import { SITE_NAME, SITE_DOMAIN, SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Contact Us — Get in Touch | Calcuva",
-  description: "Have a question, bug to report, or a tool suggestion? We'd love to hear from you. Reach us at hello@calcuva.app.",
-  alternates: { canonical: "https://calcuva.app/contact" },
-  openGraph: { title: "Contact Calcuva", description: "Reach us at hello@calcuva.app — we respond within 24-48 hours.", url: "https://calcuva.app/contact", siteName: "Calcuva", images: [{ url: "https://calcuva.app/og-image.png", width: 1200, height: 630 }] },
+  title: `Contact Us — Get in Touch | ${SITE_NAME}`,
+  description: `Have a question, bug to report, or a tool suggestion? We'd love to hear from you. Reach us at hello@${SITE_DOMAIN}.`,
+  alternates: { canonical: `${SITE_URL}/contact` },
+  openGraph: { title: `Contact ${SITE_NAME}`, description: `Reach us at hello@${SITE_DOMAIN} — we respond within 24-48 hours.`, url: `${SITE_URL}/contact`, siteName: SITE_NAME, images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }] },
 };
 
 export default function ContactPage() {
@@ -41,10 +42,10 @@ export default function ContactPage() {
            </p>
            
            <a 
-              href="mailto:hello@calcuva.app" 
+              href={`mailto:hello@${SITE_DOMAIN}`} 
               className="inline-flex items-center gap-4 text-2xl sm:text-3xl font-bold hover:text-signal transition-colors group"
            >
-              hello@calcuva.app
+              hello@{SITE_DOMAIN}
               <ArrowRight className="size-8 group-hover:translate-x-2 transition-transform" />
            </a>
 
