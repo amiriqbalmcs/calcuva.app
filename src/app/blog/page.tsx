@@ -38,7 +38,7 @@ export default async function BlogPage() {
             <section className="container-wide mb-24 text-center">
                <div className="flex items-center justify-center gap-3 mb-10 font-mono text-[10px] uppercase font-black tracking-[0.4em] text-muted-foreground animate-fade-up">
                   <BookOpen className="size-4 text-foreground" />
-                  <span>Calcuva Research · Intelligence Hub</span>
+                  <span>Calcuva Blog · Expert Guides</span>
                </div>
                <h1 className="text-6xl sm:text-8xl font-bold tracking-tighter mb-10 animate-fade-up">
                   The Science of <br />

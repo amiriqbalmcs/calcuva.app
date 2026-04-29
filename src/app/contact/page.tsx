@@ -25,14 +25,14 @@ export default function ContactPage() {
         <div className="container-wide max-w-4xl relative z-10">
           <div className="flex items-center justify-center gap-3 mb-8 font-mono text-[10px] uppercase font-black tracking-[0.4em] text-muted-foreground animate-fade-up">
             <MessageSquare className="size-4 text-foreground" />
-            <span>Calcuva Comm-Link · Message Router</span>
+            <span>Calcuva Support · Contact Us</span>
           </div>
           <h1 className="text-6xl sm:text-8xl font-bold tracking-tighter text-center mb-10 animate-fade-up">
             We're here <br />
             <span className="text-foreground/40 italic">to help.</span>
           </h1>
           <p className="text-muted-foreground text-center text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto font-medium animate-fade-up" style={{ animationDelay: "100ms" }}>
-            Have a bug to report? A tool to suggest? Or just want to say hi? Our communication lines are always open.
+            Have a bug to report? A tool to suggest? Or just want to say hi? We're always here to listen.
           </p>
         </div>
       </header>
@@ -43,9 +43,9 @@ export default function ContactPage() {
            <div className="size-24 rounded-2xl bg-foreground flex items-center justify-center text-background mx-auto mb-10 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
               <Mail className="size-10" />
            </div>
-           <h2 className="text-4xl font-bold mb-6 tracking-tight">Direct Transmission</h2>
+           <h2 className="text-4xl font-bold mb-6 tracking-tight">Email us directly</h2>
            <p className="text-muted-foreground text-lg mb-12 leading-relaxed max-w-sm mx-auto font-medium">
-              We monitor our router every single day. The fastest way to reach us is via encrypted email:
+              We check our email every day. The best way to reach us is at our official address:
            </p>
            
            <a 

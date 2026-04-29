@@ -24,7 +24,7 @@ export default function AboutPage() {
         <div className="container-wide max-w-4xl relative z-10">
           <div className="flex items-center justify-center gap-2 mb-8 font-mono text-[10px] uppercase font-black tracking-[0.3em] text-muted-foreground">
             <Calculator className="size-3.5 text-foreground" />
-            <span>Calcuva Architecture · Mission Control</span>
+            <span>Calcuva Platform · About Us</span>
           </div>
           <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-center mb-8">
             Simple tools for <br />

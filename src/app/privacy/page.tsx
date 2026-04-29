@@ -24,7 +24,7 @@ export default function PrivacyPage() {
         <div className="container-wide max-w-4xl relative z-10">
           <div className="flex items-center justify-center gap-3 mb-8 font-mono text-[10px] uppercase font-black tracking-[0.4em] text-muted-foreground animate-fade-up">
             <Lock className="size-4 text-foreground" />
-            <span>Calcuva Protocol · Privacy Matrix</span>
+            <span>Calcuva Safety · Privacy Policy</span>
           </div>
           <h1 className="text-6xl sm:text-8xl font-bold tracking-tighter text-center mb-10 animate-fade-up">
             Your data is <br />
