@@ -1,16 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { 
-  Area, AreaChart, CartesianGrid, ResponsiveContainer, 
-  Tooltip, XAxis, YAxis 
+import {
+  Area, AreaChart, CartesianGrid, ResponsiveContainer,
+  Tooltip, XAxis, YAxis
 } from "recharts";
-import { 
-  Share, CheckCircle2, TrendingUp, Info, Landmark, 
-  BarChart3, PieChart, ArrowUpRight, ArrowDownRight, 
-  Tag, Wallet, ShoppingCart, Copy, LayoutDashboard, 
-  Calculator, Settings2, Banknote, ShieldCheck, 
-  ChevronRight, Target, Activity, Zap, Ruler
+import {
+  Share, CheckCircle2, TrendingUp, Info, Landmark,
+  BarChart3, PieChart, ArrowUpRight, ArrowDownRight,
+  Tag, Wallet, ShoppingCart, Copy, LayoutDashboard,
+  Calculator, Settings2, Banknote, ShieldCheck,
+  ChevronRight, Target, Activity, Zap, Ruler, Flag
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -37,7 +37,7 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
     const margin = price - variable;
     const units = margin > 0 ? fixed / margin : 0;
     const sales = units * price;
-    
+
     let status: "optimal" | "warning" | "critical" = "optimal";
     let insight = "";
     if (margin <= 0) {
@@ -74,12 +74,12 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-        
+
         {/* Input Panel */}
         <div className="lg:col-span-4 space-y-6">
           <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-            
+
             <div className="space-y-1 relative z-10">
               <h3 className="text-sm font-bold tracking-tight">Break-Even Setup</h3>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Costs and Prices</p>
@@ -93,10 +93,10 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                   <span className="text-[10px] font-bold text-finance">{formatCurrency(fixed, currency.code)}</span>
                 </div>
                 <div className="relative group">
-                  <Input 
-                    type="number" 
-                    value={fixed} 
-                    onChange={(e) => setFixed(Number(e.target.value) || 0)} 
+                  <Input
+                    type="number"
+                    value={fixed}
+                    onChange={(e) => setFixed(Number(e.target.value) || 0)}
                     className="h-12 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-lg rounded-xl pr-12 shadow-sm"
                   />
                   <Landmark className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
@@ -111,10 +111,10 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                   <span className="text-[10px] font-bold text-destructive">{formatCurrency(variable, currency.code)}</span>
                 </div>
                 <div className="relative group">
-                  <Input 
-                    type="number" 
-                    value={variable} 
-                    onChange={(e) => setVariable(Number(e.target.value) || 0)} 
+                  <Input
+                    type="number"
+                    value={variable}
+                    onChange={(e) => setVariable(Number(e.target.value) || 0)}
                     className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg shadow-sm pr-12"
                   />
                   <Activity className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
@@ -129,10 +129,10 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                   <span className="text-[10px] font-bold text-health">{formatCurrency(price, currency.code)}</span>
                 </div>
                 <div className="relative group">
-                  <Input 
-                    type="number" 
-                    value={price} 
-                    onChange={(e) => setPrice(Number(e.target.value) || 0)} 
+                  <Input
+                    type="number"
+                    value={price}
+                    onChange={(e) => setPrice(Number(e.target.value) || 0)}
                     className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg shadow-sm pr-12"
                   />
                   <Banknote className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
@@ -164,17 +164,20 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
         {/* Results Panel */}
         <div className="lg:col-span-8 space-y-8">
-          
+
           {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
-            <Calculator className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <Target className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
             
-            <div className="space-y-4 relative z-10">
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Your Break-Even Point</span>
-                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
-                    {formatNumber(stats.units)} <span className="text-xl md:text-2xl opacity-40 uppercase tracking-widest font-sans font-bold">Units</span>
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Flag className="size-3" />
+                    Your Break-Even Point
+                  </div>
+                  <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums">
+                    {formatNumber(stats.units)} <span className="text-xl md:text-2xl opacity-40 uppercase tracking-widest font-sans">Units</span>
                   </div>
                 </div>
                 <button 
@@ -188,13 +191,24 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                 </button>
               </div>
               
-              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
-                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
-                  <Wallet className="size-3" />
-                  <span>Total Sales Needed: {formatCurrency(stats.sales, currency.code)}</span>
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Banknote className="size-3" />
+                    Total Sales Needed
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {formatCurrency(stats.sales, currency.code)}
+                  </div>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
-                  Profit Per Unit: {formatCurrency(stats.margin, currency.code)}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <TrendingUp className="size-3 text-health" />
+                    Profit Per Unit
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                    {formatCurrency(stats.margin, currency.code)}
+                  </div>
                 </div>
               </div>
             </div>
@@ -202,88 +216,88 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
           {/* Projection Chart */}
           <div className="surface-card p-8 bg-secondary/5 border-border/30 relative overflow-hidden group shadow-sm">
-             <div className="flex items-center justify-between mb-10 relative z-10">
-               <div className="space-y-1">
-                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Profit Projection</h3>
-                 <p className="text-sm font-bold tracking-tight">Sales vs. Costs</p>
-               </div>
-               <div className="text-right">
-                 <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1 opacity-40">Unit Profit Margin</span>
-                 <div className="text-xl font-mono font-bold text-foreground">{((stats.margin / price) * 100).toFixed(1)}%</div>
-               </div>
-             </div>
-             
-             <div className="h-[320px] relative z-10">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={chartData}>
-                    <defs>
-                      <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--health))" stopOpacity={0.1}/>
-                        <stop offset="95%" stopColor="hsl(var(--health))" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} opacity={0.4} />
-                    <XAxis dataKey="units" axisLine={false} tickLine={false} tick={{fontSize: 10, fontWeight: "bold", fill: "hsl(var(--muted-foreground))"}} />
-                    <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10, fontWeight: "bold", fill: "hsl(var(--muted-foreground))"}} tickFormatter={(v) => `${(v/1000).toFixed(0)}k`} />
-                    <Tooltip 
-                      formatter={(v: any) => formatCurrency(v, currency.code)} 
-                      contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 20px 40px -12px rgb(0 0 0 / 0.2)", backgroundColor: "hsl(var(--background))" }} 
-                    />
-                    <Area type="monotone" dataKey="costs" name="Total Costs" stroke="hsl(var(--destructive))" strokeWidth={2.5} fill="transparent" strokeDasharray="5 5" />
-                    <Area type="monotone" dataKey="revenue" name="Revenue" stroke="hsl(var(--health))" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
-                  </AreaChart>
-                </ResponsiveContainer>
-             </div>
-             
-             <div className="flex justify-around text-[10px] font-bold uppercase tracking-widest text-muted-foreground border-t border-border/40 pt-6 mt-6">
-                <div className="flex items-center gap-2"><span className="size-2 rounded-full bg-health" /> Revenue</div>
-                <div className="flex items-center gap-2"><span className="size-2 rounded-full bg-destructive" /> Total Costs</div>
-             </div>
+            <div className="flex items-center justify-between mb-10 relative z-10">
+              <div className="space-y-1">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Profit Projection</h3>
+                <p className="text-sm font-bold tracking-tight">Sales vs. Costs</p>
+              </div>
+              <div className="text-right">
+                <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1 opacity-40">Unit Profit Margin</span>
+                <div className="text-xl font-mono font-bold text-foreground">{((stats.margin / price) * 100).toFixed(1)}%</div>
+              </div>
+            </div>
+
+            <div className="h-[320px] relative z-10">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData}>
+                  <defs>
+                    <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--health))" stopOpacity={0.1} />
+                      <stop offset="95%" stopColor="hsl(var(--health))" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} opacity={0.4} />
+                  <XAxis dataKey="units" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: "bold", fill: "hsl(var(--muted-foreground))" }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: "bold", fill: "hsl(var(--muted-foreground))" }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
+                  <Tooltip
+                    formatter={(v: any) => formatCurrency(v, currency.code)}
+                    contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 20px 40px -12px rgb(0 0 0 / 0.2)", backgroundColor: "hsl(var(--background))" }}
+                  />
+                  <Area type="monotone" dataKey="costs" name="Total Costs" stroke="hsl(var(--destructive))" strokeWidth={2.5} fill="transparent" strokeDasharray="5 5" />
+                  <Area type="monotone" dataKey="revenue" name="Revenue" stroke="hsl(var(--health))" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="flex justify-around text-[10px] font-bold uppercase tracking-widest text-muted-foreground border-t border-border/40 pt-6 mt-6">
+              <div className="flex items-center gap-2"><span className="size-2 rounded-full bg-health" /> Revenue</div>
+              <div className="flex items-center gap-2"><span className="size-2 rounded-full bg-destructive" /> Total Costs</div>
+            </div>
           </div>
 
           {/* Stats Matrix */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-             {[
-               { l: "Profit Margin", v: ((stats.margin / price) * 100).toFixed(1), i: Activity, unit: "%" },
-               { l: "Fixed Costs", v: formatCurrency(fixed, currency.code), i: Zap, unit: "" },
-               { l: "Cost vs Price", v: (variable / price).toFixed(2), i: Ruler, unit: "x" },
-               { l: "Status", v: stats.margin > 0 ? "Viable" : "Critical", i: ShieldCheck }
-             ].map((item, idx) => (
-               <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
-                 <div className="flex items-center gap-2 mb-3">
-                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
-                 </div>
-                 <div className="text-lg font-mono font-bold tabular-nums leading-tight">
-                    {item.v}
-                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
-                 </div>
-               </div>
-             ))}
+            {[
+              { l: "Profit Margin", v: ((stats.margin / price) * 100).toFixed(1), i: Activity, unit: "%" },
+              { l: "Fixed Costs", v: formatCurrency(fixed, currency.code), i: Zap, unit: "" },
+              { l: "Cost vs Price", v: (variable / price).toFixed(2), i: Ruler, unit: "x" },
+              { l: "Status", v: stats.margin > 0 ? "Viable" : "Critical", i: ShieldCheck }
+            ].map((item, idx) => (
+              <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                </div>
+                <div className="text-lg font-mono font-bold tabular-nums leading-tight">
+                  {item.v}
+                  {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Professional Contexts */}
           <div className="grid md:grid-cols-2 gap-6 pt-4">
-             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
-                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
-                <div className="flex items-center gap-3 relative z-10">
-                  <Target className="size-4 text-muted-foreground" />
-                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Growing Your Business</h4>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
-                  Once you pass your break-even point, every sale adds directly to your profit. Lowering your cost per unit is the fastest way to grow your profits.
-                </p>
-             </div>
-             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
-                <ArrowUpRight className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
-                <div className="flex items-center gap-3 relative z-10">
-                  <ShieldCheck className="size-4 text-muted-foreground" />
-                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Lowering Your Risk</h4>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
-                  Lowering your fixed costs (like rent or software) means you don't have to sell as much just to survive.
-                </p>
-             </div>
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+              <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
+              <div className="flex items-center gap-3 relative z-10">
+                <Target className="size-4 text-muted-foreground" />
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Growing Your Business</h4>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
+                Once you pass your break-even point, every sale adds directly to your profit. Lowering your cost per unit is the fastest way to grow your profits.
+              </p>
+            </div>
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+              <ArrowUpRight className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
+              <div className="flex items-center gap-3 relative z-10">
+                <ShieldCheck className="size-4 text-muted-foreground" />
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Lowering Your Risk</h4>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
+                Lowering your fixed costs (like rent or software) means you don't have to sell as much just to survive.
+              </p>
+            </div>
           </div>
 
         </div>

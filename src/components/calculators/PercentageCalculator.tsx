@@ -1,11 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { 
-  Share, CheckCircle2, Percent, Info, TrendingUp, TrendingDown, 
+import {
+  Share, CheckCircle2, Percent, Info, TrendingUp, TrendingDown,
   Landmark, BarChart3, PieChart, Activity, Zap, History, Target,
   Settings2, ChevronRight, Calculator, Scale, RefreshCcw, Watch,
-  Copy, Ruler, Gauge, LayoutDashboard, Binary, Sparkles
+  Copy, Ruler, Gauge, LayoutDashboard, Binary, Sparkles, Sigma
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -32,9 +32,9 @@ const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
   const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => {
-    if (mode === "of") return { val: (ofP/100)*ofV, label: `Result of ${ofP}% from ${ofV}` };
-    if (mode === "diff") return { val: (dx/(dy||1))*100, label: `Percentage of ${dx} out of ${dy}` };
-    if (mode === "change") return { val: ((c2-c1)/Math.abs(c1||1))*100, label: `Percentage change from ${c1} to ${c2}` };
+    if (mode === "of") return { val: (ofP / 100) * ofV, label: `Result of ${ofP}% from ${ofV}` };
+    if (mode === "diff") return { val: (dx / (dy || 1)) * 100, label: `Percentage of ${dx} out of ${dy}` };
+    if (mode === "change") return { val: ((c2 - c1) / Math.abs(c1 || 1)) * 100, label: `Percentage change from ${c1} to ${c2}` };
     return { val: 0, label: "" };
   }, [mode, ofP, ofV, dx, dy, c1, c2]);
 
@@ -48,12 +48,12 @@ const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-        
+
         {/* Calculator Settings */}
         <div className="lg:col-span-4 space-y-6">
           <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-            
+
             <div className="space-y-4 relative z-10">
               <div className="space-y-1">
                 <h3 className="text-sm font-bold tracking-tight">Choose Type</h3>
@@ -141,8 +141,8 @@ const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
               <div className="space-y-1">
                 <h4 className="text-[10px] font-bold uppercase tracking-wider text-finance/80">Calculation Result</h4>
                 <p className="text-xs leading-relaxed font-medium">
-                  {mode === "change" 
-                    ? (results.val >= 0 ? `The value has increased by ${results.val.toFixed(2)}% compared to the start.` : `The value has decreased by ${Math.abs(results.val).toFixed(2)}% from the start.`) 
+                  {mode === "change"
+                    ? (results.val >= 0 ? `The value has increased by ${results.val.toFixed(2)}% compared to the start.` : `The value has decreased by ${Math.abs(results.val).toFixed(2)}% from the start.`)
                     : "This shows the percentage relationship between the two numbers you entered."}
                 </p>
               </div>
@@ -152,21 +152,24 @@ const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
 
         {/* Results Panel */}
         <div className="lg:col-span-8 space-y-8">
-          
+
           {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-12 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+          <div className="surface-card p-8 md:p-12 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group transition-all duration-1000">
             <Percent className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
-            
-            <div className="space-y-4 relative z-10">
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{results.label}</span>
-                  <div className="text-6xl md:text-8xl font-mono font-medium tracking-tighter tabular-nums pt-4">
+
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Sigma className="size-3" />
+                    {results.label}
+                  </div>
+                  <div className="text-6xl md:text-7xl font-mono font-bold tracking-tighter tabular-nums">
                     {mode === "of" ? formatNumber(results.val, 2) : `${formatNumber(results.val, 2)}%`}
                   </div>
                 </div>
-                <button 
-                  onClick={handleCopy} 
+                <button
+                  onClick={handleCopy}
                   className={cn(
                     "p-3 rounded-xl transition-all border shadow-sm",
                     copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
@@ -175,14 +178,25 @@ const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                   {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
                 </button>
               </div>
-              
-              <div className="flex flex-wrap items-center gap-6 pt-10 border-t border-border/40">
-                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
-                  <Binary className="size-3" />
-                  <span>Times Multiplied: {(mode === 'of' ? results.val/ofV : 1 + results.val/100).toFixed(4)}x</span>
+
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Zap className="size-3 text-health" />
+                    Mathematical Multiplier
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                    {(mode === 'of' ? results.val / ofV : 1 + results.val / 100).toFixed(4)}<span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">x</span>
+                  </div>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
-                  High Accuracy Calculation
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <History className="size-3" />
+                    Decimal Value
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {(results.val / 100).toFixed(4)}
+                  </div>
                 </div>
               </div>
             </div>
@@ -190,47 +204,47 @@ const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
 
           {/* Precision Analytics Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-             {[
-               { l: "As a Decimal", v: (results.val / 100).toFixed(4), i: BarChart3 },
-               { l: "Growth Rate", v: (1 + results.val / 100).toFixed(4), i: Target, unit: "x" },
-               { l: "Status", v: "Verified", i: History },
-               { l: "Engine", v: "Active", i: Zap }
-             ].map((item, idx) => (
-               <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
-                 <div className="flex items-center gap-2 mb-3">
-                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
-                 </div>
-                 <div className="text-xl font-mono font-bold tabular-nums leading-tight">
-                    {item.v}
-                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
-                 </div>
-               </div>
-             ))}
+            {[
+              { l: "As a Decimal", v: (results.val / 100).toFixed(4), i: BarChart3 },
+              { l: "Growth Rate", v: (1 + results.val / 100).toFixed(4), i: Target, unit: "x" },
+              { l: "Status", v: "Verified", i: History },
+              { l: "Engine", v: "Active", i: Zap }
+            ].map((item, idx) => (
+              <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
+                </div>
+                <div className="text-xl font-mono font-bold tabular-nums leading-tight">
+                  {item.v}
+                  {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Expert Strategy Cards */}
           <div className="grid md:grid-cols-2 gap-6 pt-2">
-             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
-                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-500" />
-                <div className="flex items-center gap-3 relative z-10">
-                  <Activity className="size-4 text-muted-foreground" />
-                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Money & Finance</h4>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
-                  Percentages help you track how much your savings, investments, or prices grow over time, making them essential for managing your money.
-                </p>
-             </div>
-             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
-                <PieChart className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-500" />
-                <div className="flex items-center gap-3 relative z-10">
-                  <Gauge className="size-4 text-muted-foreground" />
-                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Comparing Numbers</h4>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
-                  Using percentages makes it easy to compare different numbers and see which one is performing better or changing faster.
-                </p>
-             </div>
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+              <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-500" />
+              <div className="flex items-center gap-3 relative z-10">
+                <Activity className="size-4 text-muted-foreground" />
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Money & Finance</h4>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                Percentages help you track how much your savings, investments, or prices grow over time, making them essential for managing your money.
+              </p>
+            </div>
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
+              <PieChart className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-500" />
+              <div className="flex items-center gap-3 relative z-10">
+                <Gauge className="size-4 text-muted-foreground" />
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Comparing Numbers</h4>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                Using percentages makes it easy to compare different numbers and see which one is performing better or changing faster.
+              </p>
+            </div>
           </div>
 
         </div>

@@ -135,14 +135,17 @@ const UnitConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
  
           {/* Results Panel */}
           <div className="lg:col-span-8 space-y-8">
-            <div className="surface-card p-8 md:p-12 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <div className="surface-card p-8 md:p-12 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
               <Globe className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
               
-              <div className="space-y-4 relative z-10">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Converted Result</span>
-                    <div className="text-5xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums break-all pt-4">
+              <div className="relative z-10">
+                <div className="flex justify-between items-start mb-8">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                      <RefreshCcw className="size-3" />
+                      Converted Result
+                    </div>
+                    <div className="text-5xl md:text-7xl font-mono font-bold tracking-tighter tabular-nums break-all">
                       {Number.isFinite(unitResult) ? Number(unitResult.toPrecision(8)).toString() : "—"}
                       <span className="text-xs md:text-sm ml-4 font-bold text-muted-foreground uppercase tracking-[0.3em] opacity-40">{to}</span>
                     </div>
@@ -158,13 +161,24 @@ const UnitConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
                   </button>
                 </div>
                 
-                <div className="flex flex-wrap items-center gap-6 pt-10 border-t border-border/40">
-                  <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
-                    <Target className="size-3" />
-                    <span>Your Input: {val} {from}</span>
+                <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                      <Target className="size-3" />
+                      Original Input
+                    </div>
+                    <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                      {val} <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">{from}</span>
+                    </div>
                   </div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                    High Precision Results
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                      <Zap className="size-3 text-utility" />
+                      Conversion Accuracy
+                    </div>
+                    <div className="text-3xl md:text-4xl font-mono font-bold text-utility tabular-nums">
+                      High <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">Precision</span>
+                    </div>
                   </div>
                 </div>
               </div>

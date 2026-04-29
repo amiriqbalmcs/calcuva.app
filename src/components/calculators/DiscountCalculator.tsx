@@ -149,46 +149,50 @@ const DiscountCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
         <div className="lg:col-span-8 space-y-8">
           
           {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
             <TrendingDown className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
             
-            <div className="space-y-4 relative z-10">
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Final Price You Pay</span>
-                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <ReceiptText className="size-3" />
+                    Final Price You Pay
+                  </div>
+                  <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums text-finance">
                     {formatCurrency(finalPrice, currency.code)}
                   </div>
                 </div>
                 <button 
                   onClick={handleCopy} 
                   className={cn(
-                    "p-3 rounded-xl transition-all border",
+                    "p-3 rounded-xl transition-all border shadow-sm",
                     copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
                   )}
-                  title="Copy Results"
                 >
                   {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
                 </button>
               </div>
               
-              <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-border/40">
-                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight">
-                  <Sparkles className="size-3" />
-                  <span>You Save: {formatCurrency(amountSaved, currency.code)}</span>
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Sparkles className="size-3 text-health" />
+                    Total Amount Saved
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                    {formatCurrency(amountSaved, currency.code)}
+                  </div>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
-                  {savingsPercentage.toFixed(1)}% Discount Applied
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <ArrowDownCircle className="size-3" />
+                    Savings Percentage
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {savingsPercentage.toFixed(1)}% <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans">OFF</span>
+                  </div>
                 </div>
-              </div>
-            </div>
- 
-            <div className="space-y-3 relative z-10">
-              <div className="h-2 w-full bg-secondary/50 rounded-full overflow-hidden border border-border/10">
-                <div 
-                  className="h-full bg-foreground transition-all duration-1000 ease-in-out" 
-                  style={{ width: `${Math.min(100, savingsPercentage)}%` }} 
-                />
               </div>
             </div>
           </div>

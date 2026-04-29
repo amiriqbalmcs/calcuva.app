@@ -170,14 +170,18 @@ const GpaPercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
         <div className="lg:col-span-4 space-y-6">
 
           {/* Your GPA */}
-          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
             <GraduationCap className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
 
-            <div className="space-y-1 relative z-10">
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Final GPA Score</span>
-                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums pt-2">
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Star className="size-3" />
+                    Cumulative GPA Score
+                  </div>
+                  <div className="text-6xl md:text-7xl font-mono font-bold tracking-tighter tabular-nums">
                     {result.cumGpa.toFixed(3)}
                   </div>
                 </div>
@@ -191,15 +195,26 @@ const GpaPercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
                   {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
                 </button>
               </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-border/40 relative z-10">
-              <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
-                <Percent className="size-3" />
-                <span>{result.percentage.toFixed(1)}% Percentage</span>
-              </div>
-              <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                This Semester: {result.semGpa.toFixed(3)}
+              
+              <div className="flex flex-wrap items-center gap-10 pt-8 border-t border-border/40">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Percent className="size-3" />
+                    Percentage
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {result.percentage.toFixed(1)}<span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">%</span>
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <History className="size-3" />
+                    This Semester
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {result.semGpa.toFixed(3)}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

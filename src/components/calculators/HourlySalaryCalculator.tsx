@@ -128,14 +128,17 @@ const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
         <div className="lg:col-span-8 space-y-8">
           
           {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
             <Briefcase className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
             
-            <div className="space-y-4 relative z-10">
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Your Annual Salary</span>
-                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Landmark className="size-3" />
+                    Your Annual Salary
+                  </div>
+                  <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums text-finance">
                     {formatCurrency(results.annual, currency.code)}
                   </div>
                 </div>
@@ -150,13 +153,24 @@ const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
                 </button>
               </div>
               
-              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
-                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
-                  <Wallet className="size-3" />
-                  <span>Monthly Pay: {formatCurrency(results.monthly, currency.code)}</span>
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Wallet className="size-3 text-health" />
+                    Monthly Pay
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                    {formatCurrency(results.monthly, currency.code)}
+                  </div>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
-                  Weekly Pay: {formatCurrency(results.weekly, currency.code)}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Timer className="size-3" />
+                    Weekly Pay
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {formatCurrency(results.weekly, currency.code)}
+                  </div>
                 </div>
               </div>
             </div>

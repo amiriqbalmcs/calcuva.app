@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { 
-  Share, CheckCircle2, Coins, TrendingUp, TrendingDown, ShieldCheck, Rocket, 
-  Settings2, Activity, Target, Zap, History, Sparkles 
+import {
+  Share, CheckCircle2, Coins, TrendingUp, TrendingDown, ShieldCheck, Rocket,
+  Settings2, Activity, Target, Zap, History, Sparkles, Banknote, Receipt, Copy
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { ResultGrid, ResultStat } from "@/components/ResultStat";
@@ -32,7 +32,7 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
     const initialFee = (investment * fee) / 100;
     const grossSell = coins * sellPrice;
     const exitFee = (grossSell * fee) / 100;
-    
+
     const finalValue = grossSell - exitFee - initialFee;
     const profit = finalValue - investment;
     const roi = (profit / (investment || 1)) * 100;
@@ -71,12 +71,12 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-        
+
         {/* Trade Parameters */}
         <div className="lg:col-span-4 space-y-6">
           <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-            
+
             <div className="space-y-1 relative z-10">
               <h3 className="text-sm font-bold tracking-tight">Trade Details</h3>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Setup</p>
@@ -90,10 +90,10 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
                   <span className="text-xs font-mono font-medium">{formatCurrency(investment, currency.code)}</span>
                 </div>
                 <div className="relative group">
-                  <Input 
-                    type="number" 
-                    value={investment} 
-                    onChange={(e) => setInvestment(Number(e.target.value) || 0)} 
+                  <Input
+                    type="number"
+                    value={investment}
+                    onChange={(e) => setInvestment(Number(e.target.value) || 0)}
                     className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg shadow-sm"
                   />
                   <Coins className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground opacity-20" />
@@ -104,19 +104,19 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Entry Price</Label>
-                  <Input 
-                    type="number" 
-                    value={buyPrice} 
-                    onChange={(e) => setBuyPrice(Number(e.target.value) || 0)} 
+                  <Input
+                    type="number"
+                    value={buyPrice}
+                    onChange={(e) => setBuyPrice(Number(e.target.value) || 0)}
                     className="h-11 bg-background/50 border-border/40 font-bold focus:border-foreground/20 rounded-xl"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Exit Price</Label>
-                  <Input 
-                    type="number" 
-                    value={sellPrice} 
-                    onChange={(e) => setSellPrice(Number(e.target.value) || 0)} 
+                  <Input
+                    type="number"
+                    value={sellPrice}
+                    onChange={(e) => setSellPrice(Number(e.target.value) || 0)}
                     className="h-11 bg-background/50 border-border/40 font-bold focus:border-foreground/20 rounded-xl"
                   />
                 </div>
@@ -125,17 +125,17 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
               {/* Fees */}
               <div className="space-y-3">
                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Trading Fee (%)</Label>
-                <Input 
-                  type="number" 
+                <Input
+                  type="number"
                   step="0.01"
-                  value={fee} 
-                  onChange={(e) => setFee(Number(e.target.value) || 0)} 
+                  value={fee}
+                  onChange={(e) => setFee(Number(e.target.value) || 0)}
                   className="h-11 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm"
                 />
               </div>
 
-              <button 
-                onClick={handleShare} 
+              <button
+                onClick={handleShare}
                 className="w-full h-11 rounded-xl bg-background border border-border/60 hover:bg-foreground hover:text-background transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm"
               >
                 {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
@@ -162,35 +162,58 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
 
         {/* Results Panel */}
         <div className="lg:col-span-8 space-y-8">
-          
-          {/* Executive Summary */}
-          <div className="surface-card p-10 md:p-14 bg-background border-border/60 relative overflow-hidden group shadow-2xl">
-            <TrendingUp className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
-            
-            <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground opacity-60">Total Return</span>
-                <div className="text-6xl md:text-7xl font-mono font-bold tracking-tighter tabular-nums pt-2">
-                  {formatCurrency(result.finalValue, currency.code)}
-                </div>
-              </div>
-              <div className="shrink-0 flex flex-col items-center md:items-end gap-2">
-                <div className={cn("text-3xl md:text-4xl font-mono font-bold", result.roi >= 0 ? "text-health" : "text-destructive")}>
-                  {result.roi >= 0 ? "+" : ""}{result.roi.toFixed(1)}%
-                </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Your Gain/Loss</div>
-              </div>
-            </div>
 
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-10 mt-10 border-t border-border/40 relative z-10">
-              <div className={cn("flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md", 
-                result.profit >= 0 ? "bg-health text-white" : "bg-destructive text-white"
-              )}>
-                {result.profit >= 0 ? <TrendingUp className="size-3" /> : <TrendingDown className="size-3" />}
-                <span>Profit: {formatCurrency(result.profit, currency.code)}</span>
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <Coins className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <TrendingUp className="size-3" />
+                    Return on Investment
+                  </div>
+                  <div className={cn(
+                    "text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums",
+                    result.roi >= 0 ? "text-health" : "text-destructive"
+                  )}>
+                    {result.roi >= 0 ? "+" : ""}{result.roi.toFixed(1)}%
+                  </div>
+                </div>
+                <button
+                  onClick={handleShare}
+                  className={cn(
+                    "p-3 rounded-xl transition-all border shadow-sm",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
               </div>
-              <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                Total Fees: {formatCurrency(result.totalFees, currency.code)}
+
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Banknote className="size-3 text-health" />
+                    Net Profit
+                  </div>
+                  <div className={cn(
+                    "text-3xl md:text-4xl font-mono font-bold tabular-nums",
+                    result.profit >= 0 ? "text-health" : "text-destructive"
+                  )}>
+                    {formatCurrency(result.profit, currency.code)}
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Receipt className="size-3" />
+                    Total Value
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {formatCurrency(result.finalValue, currency.code)}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -208,23 +231,23 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
 
           {/* Precision Analytics Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-             {[
-               { l: "Coins You Own", v: result.coins.toFixed(4), i: Coins, unit: "Unit" },
-               { l: "Growth Multiplier", v: (result.finalValue / investment).toFixed(2), i: Activity, unit: "x" },
-               { l: "Break-Even Price", v: (buyPrice * (1 + (fee*2)/100)).toFixed(2), i: Target, unit: currency.code },
-               { l: "Status", v: result.roi >= 0 ? "PROFIT" : "LOSS", i: Zap, unit: "" }
-             ].map((item, idx) => (
-               <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-business/20 transition-all group shadow-sm">
-                 <div className="flex items-center gap-2 mb-3">
-                    <item.i className="size-3 text-muted-foreground group-hover:text-business transition-colors" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
-                 </div>
-                 <div className="text-xl font-mono font-bold tabular-nums leading-tight">
-                    {item.v}
-                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
-                 </div>
-               </div>
-             ))}
+            {[
+              { l: "Coins You Own", v: result.coins.toFixed(4), i: Coins, unit: "Unit" },
+              { l: "Growth Multiplier", v: (result.finalValue / investment).toFixed(2), i: Activity, unit: "x" },
+              { l: "Break-Even Price", v: (buyPrice * (1 + (fee * 2) / 100)).toFixed(2), i: Target, unit: currency.code },
+              { l: "Status", v: result.roi >= 0 ? "PROFIT" : "LOSS", i: Zap, unit: "" }
+            ].map((item, idx) => (
+              <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-business/20 transition-all group shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <item.i className="size-3 text-muted-foreground group-hover:text-business transition-colors" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
+                </div>
+                <div className="text-xl font-mono font-bold tabular-nums leading-tight">
+                  {item.v}
+                  {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Take-Profit Ladders */}
@@ -237,23 +260,23 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
               </div>
               <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-40 font-mono">Selling Plan</span>
             </div>
-            
+
             <div className="grid sm:grid-cols-2 gap-4 relative z-10">
-               {[25, 50, 100, 200].map(p => {
-                 const price = buyPrice * (1 + p/100);
-                 const gain = investment * (p/100);
-                 return (
-                   <div key={p} className="p-5 rounded-2xl bg-secondary/30 border border-border/50 hover:border-business/40 transition-all group/ladder">
-                      <div className="flex justify-between items-center mb-3">
-                        <div className="text-[10px] font-bold text-muted-foreground uppercase">Target +{p}%</div>
-                        <div className="text-[10px] font-mono font-bold text-health">Gain: {formatCurrency(gain, currency.code)}</div>
-                      </div>
-                      <div className="text-2xl font-mono font-bold tracking-tight group-hover/ladder:text-business transition-colors">
-                        {formatCurrency(price, currency.code)}
-                      </div>
-                   </div>
-                 );
-               })}
+              {[25, 50, 100, 200].map(p => {
+                const price = buyPrice * (1 + p / 100);
+                const gain = investment * (p / 100);
+                return (
+                  <div key={p} className="p-5 rounded-2xl bg-secondary/30 border border-border/50 hover:border-business/40 transition-all group/ladder">
+                    <div className="flex justify-between items-center mb-3">
+                      <div className="text-[10px] font-bold text-muted-foreground uppercase">Target +{p}%</div>
+                      <div className="text-[10px] font-mono font-bold text-health">Gain: {formatCurrency(gain, currency.code)}</div>
+                    </div>
+                    <div className="text-2xl font-mono font-bold tracking-tight group-hover/ladder:text-business transition-colors">
+                      {formatCurrency(price, currency.code)}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

@@ -183,22 +183,38 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
             {/* Results Panel */}
             <div className="lg:col-span-8 space-y-8">
               {/* Executive Summary */}
-              <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+              <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
                 <Waves className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
                 
-                <div className="space-y-4 relative z-10">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Your Daily Water Goal</span>
-                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums text-health">
-                    {water.liters.toFixed(2)}<span className="text-2xl md:text-3xl ml-3 font-sans font-normal opacity-40 uppercase tracking-tight">Liters</span>
+                <div className="relative z-10">
+                  <div className="space-y-2 mb-8">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                      <Droplet className="size-3" />
+                      Daily Water Goal
+                    </div>
+                    <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums text-health">
+                      {water.liters.toFixed(2)} <span className="text-xl md:text-2xl opacity-40 uppercase tracking-widest font-sans font-bold">Liters</span>
+                    </div>
                   </div>
                   
-                  <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
-                    <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-sm">
-                      <Beaker className="size-3" />
-                      <span>{water.ml} Total ml Goal</span>
+                  <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                        <Beaker className="size-3 text-health" />
+                        Total Volume
+                      </div>
+                      <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                        {water.ml} <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans">ml</span>
+                      </div>
                     </div>
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                      About {water.cups} standard cups (240ml)
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                        <GlassWater className="size-3" />
+                        Standard Cups
+                      </div>
+                      <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                        {water.cups} <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans">cups</span>
+                      </div>
                     </div>
                   </div>
                 </div>

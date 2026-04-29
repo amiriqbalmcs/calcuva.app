@@ -151,39 +151,65 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
         <div className="lg:col-span-8 space-y-8">
           
           {/* Executive Summary */}
-          <div className="rounded-3xl p-10 md:p-14 bg-zinc-950 text-zinc-50 border border-zinc-800/50 relative overflow-hidden group shadow-2xl">
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-zinc-950 text-zinc-50 border border-zinc-800/50 relative overflow-hidden group shadow-2xl">
             <Terminal className="absolute -top-12 -right-12 size-64 opacity-[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-1000" />
             
-            <div className="relative z-10 space-y-12">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Cpu className="size-4 opacity-40" />
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] opacity-40">New Password</span>
-                </div>
-                <button 
-                  onClick={() => setShowPassword(!showPassword)} 
-                  className="p-2 rounded-xl hover:bg-background/10 transition-colors opacity-60 hover:opacity-100"
-                >
-                  {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
-                </button>
-              </div>
-
-               <div className="flex items-center justify-center text-center py-10 w-full">
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.3em] opacity-40">
+                    <Cpu className="size-3" />
+                    New Generated Password
+                  </div>
                   <div className={cn(
-                    "font-mono font-medium break-all tracking-tight tabular-nums select-all leading-normal transition-all w-full px-2",
-                    length > 40 ? "text-xl md:text-2xl" : length > 24 ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"
+                    "font-mono font-bold break-all tracking-tight tabular-nums select-all leading-none pt-4",
+                    length > 40 ? "text-2xl md:text-3xl" : length > 24 ? "text-3xl md:text-5xl" : "text-4xl md:text-6xl"
                   )}>
                     {showPassword ? password : "•".repeat(password.length)}
                   </div>
-               </div>
-
-              <button 
-                onClick={handleCopy} 
-                className="w-full h-16 rounded-2xl bg-zinc-50 text-zinc-950 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-4 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all"
-              >
-                {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
-                {copied ? "PASSWORD COPIED" : "COPY PASSWORD"}
-              </button>
+                </div>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => setShowPassword(!showPassword)} 
+                    className="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
+                  >
+                    {showPassword ? <EyeOff className="size-5 opacity-60" /> : <Eye className="size-5 opacity-60" />}
+                  </button>
+                  <button 
+                    onClick={handleCopy} 
+                    className={cn(
+                      "p-3 rounded-xl transition-all border shadow-sm",
+                      copied ? "bg-white text-zinc-950 border-white" : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                    )}
+                  >
+                    {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-white/10">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">
+                    <ShieldCheck className="size-3" />
+                    Security Strength
+                  </div>
+                  <div className={cn(
+                    "text-3xl md:text-4xl font-mono font-bold tabular-nums",
+                    strength.score >= 75 ? "text-emerald-400" : strength.score >= 50 ? "text-amber-400" : "text-rose-400"
+                  )}>
+                    {strength.label}
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">
+                    <Fingerprint className="size-3" />
+                    Entropy Score
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold tabular-nums">
+                    {strength.score}<span className="text-[10px] ml-1 opacity-40 uppercase tracking-widest font-sans font-bold">Points</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

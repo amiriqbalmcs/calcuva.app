@@ -161,15 +161,18 @@ export default function FreelanceRateCalculator({ guideHtml, faqs, relatedArticl
         <div className="lg:col-span-8 space-y-8">
           
           {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
             <Clock className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
             
-            <div className="space-y-4 relative z-10">
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Lowest Rate to Charge</span>
-                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">
-                    {formatCurrency(results.hourlyRate, currency.code)}<span className="text-xl md:text-2xl opacity-40 uppercase tracking-widest font-sans font-bold">/hr</span>
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Target className="size-3" />
+                    Lowest Rate to Charge
+                  </div>
+                  <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums text-finance">
+                    {formatCurrency(results.hourlyRate, currency.code)}<span className="text-xl md:text-2xl opacity-40 uppercase tracking-widest font-sans">/hr</span>
                   </div>
                 </div>
                 <button 
@@ -183,13 +186,24 @@ export default function FreelanceRateCalculator({ guideHtml, faqs, relatedArticl
                 </button>
               </div>
               
-              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
-                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
-                  <TrendingUp className="size-3" />
-                  <span>Daily Target: {formatCurrency(results.hourlyRate * (billableHoursPerWeek/5), currency.code)}</span>
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Zap className="size-3 text-health" />
+                    Annual Income Goal
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                    {formatCurrency(results.requiredGross, currency.code)}
+                  </div>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">
-                  Monthly Target: {formatCurrency(results.monthlyRate, currency.code)} earnings
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Banknote className="size-3" />
+                    Monthly Goal
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {formatCurrency(results.monthlyRate, currency.code)}
+                  </div>
                 </div>
               </div>
             </div>

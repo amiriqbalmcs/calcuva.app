@@ -157,30 +157,33 @@ const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
 
           {/* Executive Summary */}
           {result ? (
-            <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
               <User className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
-
-              <div className="space-y-4 relative z-10">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Your Age Today</span>
-                    <div className="flex flex-wrap items-baseline gap-x-8 gap-y-2 pt-4">
+              
+              <div className="relative z-10">
+                <div className="flex justify-between items-start mb-8">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                      <Calendar className="size-3" />
+                      Your Age Today
+                    </div>
+                    <div className="flex flex-wrap items-baseline gap-x-8 gap-y-2">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums">{result.years}</span>
+                        <span className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums">{result.years}</span>
                         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest opacity-40">Years</span>
                       </div>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-4xl md:text-5xl font-mono font-medium tracking-tighter tabular-nums">{result.months}</span>
+                        <span className="text-3xl md:text-4xl font-mono font-bold tracking-tighter tabular-nums">{result.months}</span>
                         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest opacity-40">Months</span>
                       </div>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-4xl md:text-5xl font-mono font-medium tracking-tighter tabular-nums">{result.days}</span>
+                        <span className="text-3xl md:text-4xl font-mono font-bold tracking-tighter tabular-nums">{result.days}</span>
                         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest opacity-40">Days</span>
                       </div>
                     </div>
                   </div>
-                  <button
-                    onClick={handleCopy}
+                  <button 
+                    onClick={handleCopy} 
                     className={cn(
                       "p-3 rounded-xl transition-all border shadow-sm",
                       copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
@@ -189,14 +192,25 @@ const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
                     {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
                   </button>
                 </div>
-
-                <div className="flex flex-wrap items-center gap-6 pt-8 border-t border-border/40">
-                  <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
-                    <Target className="size-3" />
-                    <span>Next Birthday: {result.daysToBday} Days Left</span>
+                
+                <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                      <Target className="size-3 text-health" />
+                      Next Birthday
+                    </div>
+                    <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                      {result.daysToBday} <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">Days Left</span>
+                    </div>
                   </div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                    Total Time: {formatNumber(result.totalDays)} Days since birth
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                      <History className="size-3" />
+                      Total Days Lived
+                    </div>
+                    <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                      {formatNumber(result.totalDays)} <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">Days</span>
+                    </div>
                   </div>
                 </div>
               </div>

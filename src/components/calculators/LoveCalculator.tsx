@@ -168,24 +168,51 @@ const LoveCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
           {hasInput ? (
             <>
               {/* Executive Summary */}
-              <div className={cn(
-                "surface-card p-10 md:p-14 border-red-500/20 relative overflow-hidden group shadow-2xl transition-all duration-1000",
-                score >= 70 ? "bg-gradient-to-br from-red-500/[0.03] via-pink-500/[0.03] to-background" : "bg-background"
-              )}>
+              <div className="surface-card p-8 md:p-12 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group transition-all duration-1000">
                 <Stars className="absolute -top-12 -right-12 size-64 text-red-500/[0.04] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
                 <Heart className="absolute -bottom-24 -left-24 size-96 text-red-500/[0.05] -rotate-12 transition-transform group-hover:rotate-0 duration-1000" />
                 
-                <div className="relative z-10 space-y-10 text-center">
-                  <div className="space-y-1 relative">
-                    <div className={cn("absolute inset-0 blur-[100px] opacity-20 animate-pulse transition-opacity duration-1000", color.replace('text-', 'bg-'))} />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground opacity-60">Compatibility Index</span>
-                    <div className={cn("text-8xl md:text-9xl font-mono font-bold tracking-tighter tabular-nums pt-4 relative z-10 drop-shadow-sm", color)}>
-                      {score}%
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-8 text-center md:text-left">
+                    <div className="space-y-2 mx-auto md:mx-0">
+                      <div className="flex items-center justify-center md:justify-start gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                        <Heart className="size-3" />
+                        Compatibility Index
+                      </div>
+                      <div className={cn("text-7xl md:text-8xl font-mono font-bold tracking-tighter tabular-nums drop-shadow-sm", color)}>
+                        {score}%
+                      </div>
                     </div>
+                    <button 
+                      onClick={handleShare} 
+                      className={cn(
+                        "p-3 rounded-xl transition-all border shadow-sm absolute top-0 right-0",
+                        copied ? "bg-red-500 text-white border-red-500" : "bg-background text-foreground border-border hover:bg-secondary"
+                      )}
+                    >
+                      {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                    </button>
                   </div>
-
-                  <div className={cn("inline-flex items-center gap-3 px-8 py-3 rounded-2xl font-bold uppercase tracking-widest text-sm border shadow-xl transition-all relative z-10", color, "border-current bg-white dark:bg-zinc-900 shadow-current/10 hover:scale-105")}>
-                    {icon} {message}
+                  
+                  <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                        <Flame className="size-3 text-pink-500" />
+                        Resonance Level
+                      </div>
+                      <div className={cn("text-3xl md:text-4xl font-mono font-bold tabular-nums", color)}>
+                        {message}
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                        <Activity className="size-3" />
+                        Match Intensity
+                      </div>
+                      <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                        {score > 80 ? "Peak" : score > 50 ? "Stable" : "Mid"} <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">Vibration</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

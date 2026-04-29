@@ -91,16 +91,37 @@ const ScientificCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
         <div className="lg:col-span-8 space-y-6">
           
           {/* Results Screen */}
-          <div className="surface-card p-10 md:p-14 bg-zinc-950 text-white relative overflow-hidden group shadow-2xl ring-1 ring-white/10">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent opacity-50" />
-            <Terminal className="absolute -top-12 -left-12 size-64 text-emerald-500/[0.05] -rotate-12 transition-transform group-hover:rotate-0 duration-1000" />
+          <div className="surface-card p-10 md:p-14 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-50" />
+            <Terminal className="absolute -top-12 -left-12 size-64 text-foreground/[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-1000" />
             
             <div className="relative z-10 space-y-4">
-              <div className="h-6 text-[10px] font-mono font-bold text-emerald-400/80 text-right uppercase tracking-[0.4em] overflow-hidden">
+              <div className="h-6 text-[10px] font-mono font-bold text-emerald-500/80 text-right uppercase tracking-[0.4em] overflow-hidden">
                 {log[0]?.split("=")[0] || "Ready to Calculate //"}
               </div>
-              <div className="text-6xl md:text-8xl font-mono font-bold text-right tracking-tighter tabular-nums truncate text-white drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]">
+              <div className="text-6xl md:text-8xl font-mono font-bold text-right tracking-tighter tabular-nums truncate text-emerald-500 drop-shadow-[0_0_15px_rgba(16,185,129,0.2)]">
                 {display}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-border/40">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/80">
+                    <Zap className="size-3" />
+                    Operation Type
+                  </div>
+                  <div className="text-2xl font-mono font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                    {lastOp ? "Computed" : "Active"}
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/80">
+                    <HistoryIcon className="size-3" />
+                    History Stack
+                  </div>
+                  <div className="text-2xl font-mono font-bold text-foreground tabular-nums">
+                    {log.length} <span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">Entries</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

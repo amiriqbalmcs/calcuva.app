@@ -200,14 +200,17 @@ export default function TaxBracketCalculator({ guideHtml, faqs, relatedArticles 
         <div className="lg:col-span-8 space-y-8">
           
           {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-10 space-y-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
             <Landmark className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
             
-            <div className="space-y-4 relative z-10">
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Total Federal Tax</span>
-                  <div className="text-6xl md:text-7xl font-mono font-medium tracking-tighter tabular-nums text-destructive">
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Receipt className="size-3" />
+                    Federal Income Tax
+                  </div>
+                  <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums text-destructive">
                     {formatCurrency(results.totalTax, currency.code)}
                   </div>
                 </div>
@@ -222,13 +225,24 @@ export default function TaxBracketCalculator({ guideHtml, faqs, relatedArticles 
                 </button>
               </div>
               
-              <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/40">
-                <div className="flex items-center gap-1.5 px-4 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-bold uppercase tracking-tight shadow-md">
-                  <Gauge className="size-3" />
-                  <span>Effective Tax Rate: {(results.effectiveRate * 100).toFixed(1)}%</span>
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Gauge className="size-3" />
+                    Effective Rate
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {(results.effectiveRate * 100).toFixed(1)}%
+                  </div>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                  Take-Home Pay: {formatCurrency(results.takeHome, currency.code)}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Wallet className="size-3 text-health" />
+                    Take-Home Pay
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                    {formatCurrency(results.takeHome, currency.code)}
+                  </div>
                 </div>
               </div>
             </div>
