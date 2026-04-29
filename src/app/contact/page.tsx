@@ -12,63 +12,70 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="bg-background min-h-screen pb-20">
+    <div className="bg-background min-h-screen pb-32">
       <Seo 
         title="Contact — Say Hello"
         description="Have a question or a suggestion for a new tool? We'd love to hear from you."
         canonicalPath="/contact"
       />
 
-      <header className="pt-20 sm:pt-28 pb-16 text-center border-b border-border bg-secondary/10">
-        <div className="container-wide max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-signal/10 border border-signal/20 text-signal text-[10px] font-bold uppercase tracking-widest mb-6">
-            <MessageSquare className="size-3" /> Get in touch
+      {/* Hero Header */}
+      <header className="relative pt-28 pb-20 border-b border-border/40 bg-secondary/5 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0H0V40' fill='none' stroke='currentColor' stroke-width='1' stroke-dasharray='1 4'/%3E%3C/svg%3E")` }} />
+        <div className="container-wide max-w-4xl relative z-10">
+          <div className="flex items-center justify-center gap-3 mb-8 font-mono text-[10px] uppercase font-black tracking-[0.4em] text-muted-foreground animate-fade-up">
+            <MessageSquare className="size-4 text-foreground" />
+            <span>Calcuva Comm-Link · Message Router</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">We're here to help.</h1>
-          <p className="text-muted-foreground text-lg sm:text-xl">
-            Have a bug to report? A tool to suggest? Or just want to say hi?
+          <h1 className="text-6xl sm:text-8xl font-bold tracking-tighter text-center mb-10 animate-fade-up">
+            We're here <br />
+            <span className="text-foreground/40 italic">to help.</span>
+          </h1>
+          <p className="text-muted-foreground text-center text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto font-medium animate-fade-up" style={{ animationDelay: "100ms" }}>
+            Have a bug to report? A tool to suggest? Or just want to say hi? Our communication lines are always open.
           </p>
         </div>
       </header>
 
-      <main className="container-wide max-w-2xl mt-16">
-        <div className="p-10 sm:p-16 rounded-[40px] bg-secondary/30 border border-border text-center">
-           <div className="size-20 rounded-3xl bg-primary flex items-center justify-center text-primary-foreground mx-auto mb-8 shadow-xl">
+      <main className="container-wide max-w-4xl mt-20 animate-fade-up" style={{ animationDelay: "200ms" }}>
+        <div className="surface-card p-12 sm:p-20 bg-secondary/5 border-border/40 text-center relative overflow-hidden group">
+           <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+           <div className="size-24 rounded-2xl bg-foreground flex items-center justify-center text-background mx-auto mb-10 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
               <Mail className="size-10" />
            </div>
-           <h2 className="text-3xl font-bold mb-4">Send us an email</h2>
-           <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
-              We monitor our inbox every single day. The best way to reach us is via email:
+           <h2 className="text-4xl font-bold mb-6 tracking-tight">Direct Transmission</h2>
+           <p className="text-muted-foreground text-lg mb-12 leading-relaxed max-w-sm mx-auto font-medium">
+              We monitor our router every single day. The fastest way to reach us is via encrypted email:
            </p>
            
            <a 
               href={`mailto:hello@${SITE_DOMAIN}`} 
-              className="inline-flex items-center gap-4 text-2xl sm:text-3xl font-bold hover:text-signal transition-colors group"
+              className="inline-flex items-center gap-6 text-2xl sm:text-4xl font-mono font-bold hover:text-foreground transition-all group/link"
            >
               hello@{SITE_DOMAIN}
-              <ArrowRight className="size-8 group-hover:translate-x-2 transition-transform" />
+              <ArrowRight className="size-8 text-foreground/20 group-hover/link:text-foreground group-hover/link:translate-x-2 transition-all" />
            </a>
 
-           <div className="mt-12 pt-10 border-t border-border flex flex-wrap justify-center gap-x-8 gap-y-4">
-              <div className="text-left">
-                 <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Response Time</div>
-                 <div className="text-sm font-bold text-foreground">Within 24-48 hours</div>
+           <div className="mt-16 pt-12 border-t border-border/40 grid grid-cols-2 gap-8 max-w-md mx-auto">
+              <div className="text-center sm:text-left">
+                 <div className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-2">Response Time</div>
+                 <div className="text-sm font-bold text-foreground">24-48 Hours</div>
               </div>
-              <div className="text-left">
-                 <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Office Status</div>
-                 <div className="text-sm font-bold text-foreground">Fully Remote · Global</div>
+              <div className="text-center sm:text-left border-l border-border/40 pl-8">
+                 <div className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-2">Office Status</div>
+                 <div className="text-sm font-bold text-foreground">Global Remote</div>
               </div>
            </div>
         </div>
 
-        <section className="mt-20 text-center">
-           <h3 className="text-xl font-bold mb-4">Follow our progress</h3>
-           <p className="text-muted-foreground mb-8">
-              We are constantly building new calculators to help you master your math. 
-              Check back often for new updates!
+        <section className="mt-28 text-center border-t border-border/40 pt-20">
+           <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-8">Follow our progress</h3>
+           <p className="text-muted-foreground mb-12 max-w-lg mx-auto font-medium leading-relaxed">
+              We are constantly deploying new calculators to the toolkit. 
+              Check back often to see the latest engineering updates.
            </p>
-           <a href="/" className="text-sm font-bold uppercase tracking-widest text-signal hover:underline">
-              Back to Toolkit
+           <a href="/" className="inline-flex h-12 items-center justify-center px-10 rounded-xl border border-border/60 hover:border-foreground hover:bg-secondary/40 text-[10px] font-black uppercase tracking-[0.2em] transition-all">
+              Return to Terminal
            </a>
         </section>
       </main>
