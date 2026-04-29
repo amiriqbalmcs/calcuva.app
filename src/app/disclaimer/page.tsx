@@ -11,56 +11,62 @@ export const metadata: Metadata = {
 
 export default function DisclaimerPage() {
   return (
-    <div className="bg-background min-h-screen pb-20">
+    <div className="bg-background min-h-screen pb-32">
       <Seo 
         title="Disclaimer — For your information"
         description="Important information about using our calculators responsibly."
         canonicalPath="/disclaimer"
       />
 
-      <header className="pt-20 sm:pt-28 pb-16 border-b border-border bg-secondary/10">
-        <div className="container-wide max-w-3xl text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 text-[10px] font-bold uppercase tracking-widest mb-6">
-            <AlertCircle className="size-3" /> Responsibility First
+      {/* Hero Header */}
+      <header className="relative pt-28 pb-20 border-b border-border/40 bg-secondary/5 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0H0V40' fill='none' stroke='currentColor' stroke-width='1' stroke-dasharray='1 4'/%3E%3C/svg%3E")` }} />
+        <div className="container-wide max-w-4xl relative z-10">
+          <div className="flex items-center justify-center gap-3 mb-8 font-mono text-[10px] uppercase font-black tracking-[0.4em] text-muted-foreground animate-fade-up">
+            <AlertCircle className="size-4 text-amber-500" />
+            <span>Calcuva Advisory · Important Info</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Read this before you start.</h1>
-          <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-            Our tools are here to help you get numbers quickly, but they are not a replacement for professional experts.
+          <h1 className="text-6xl sm:text-8xl font-bold tracking-tighter text-center mb-10 animate-fade-up">
+            Read this <br />
+            <span className="text-foreground/40 italic">before you start.</span>
+          </h1>
+          <p className="text-muted-foreground text-center text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto font-medium animate-fade-up" style={{ animationDelay: "100ms" }}>
+            Our tools are here to help you get numbers quickly, but they are not a replacement for advice from professional experts.
           </p>
         </div>
       </header>
 
-      <main className="container-wide max-w-3xl mt-16 space-y-12">
-        <div className="grid gap-8">
+      <main className="container-wide max-w-4xl mt-16 animate-fade-up" style={{ animationDelay: "200ms" }}>
+        <div className="grid gap-4">
           
-          <div className="p-8 rounded-3xl bg-secondary/30 border border-border flex gap-6 items-start">
-             <div className="size-12 rounded-2xl bg-finance-soft text-finance flex items-center justify-center shrink-0">
-                <Landmark className="size-6" />
+          <div className="surface-card p-10 bg-secondary/5 border-border/40 group hover:border-foreground/20 transition-all flex flex-col sm:flex-row gap-8 items-start">
+             <div className="size-14 rounded-2xl bg-finance/10 text-finance flex items-center justify-center shrink-0 border border-finance/20">
+                <Landmark className="size-7" />
              </div>
              <div>
-                <h2 className="text-xl font-bold mb-3">Money & Finance</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  Our financial tools are estimates. Tax laws and bank interest rates change all the time. Before you sign any big loans or make tax decisions, always talk to a certified financial advisor or tax expert.
+                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-4">Money & Finance</h2>
+                <p className="text-xl font-medium leading-relaxed">
+                  Our financial tools are estimates. Tax laws and interest rates change often. Before you make big money decisions, always talk to a certified professional.
                 </p>
              </div>
           </div>
 
-          <div className="p-8 rounded-3xl bg-secondary/30 border border-border flex gap-6 items-start">
-             <div className="size-12 rounded-2xl bg-health-soft text-health flex items-center justify-center shrink-0">
-                <Activity className="size-6" />
+          <div className="surface-card p-10 bg-secondary/5 border-border/40 group hover:border-foreground/20 transition-all flex flex-col sm:flex-row gap-8 items-start">
+             <div className="size-14 rounded-2xl bg-health/10 text-health flex items-center justify-center shrink-0 border border-health/20">
+                <Activity className="size-7" />
              </div>
              <div>
-                <h2 className="text-xl font-bold mb-3">Health & Fitness</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  Health calculators are simplified guides. They don't know your specific medical history or physical condition. Never use these tools to replace advice from a real doctor or health professional.
+                <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-4">Health & Fitness</h2>
+                <p className="text-xl font-medium leading-relaxed">
+                  Health calculators are simple guides. They don't know your medical history. Never use these tools to replace advice from a real doctor.
                 </p>
              </div>
           </div>
 
-          <div className="p-10 border-t border-border mt-10">
-             <h2 className="text-2xl font-bold mb-4">No Guarantees</h2>
-             <p className="text-muted-foreground leading-relaxed text-lg">
-                We work hard to make our math 100% accurate, but we can't guarantee that everything is perfect all the time. Using Calcuva is at your own risk. We're not responsible for any mistakes or decisions made based on our tools.
+          <div className="surface-card p-12 bg-secondary/10 border-border/40 mt-12">
+             <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-6 border-b border-border/40 pb-4">No Guarantees</h2>
+             <p className="text-muted-foreground leading-relaxed text-lg font-medium">
+                We work hard to make our math 100% accurate, but we can't guarantee that everything is perfect all the time. Using Calcuva is at your own risk. We're not responsible for any decisions made based on our tools.
              </p>
           </div>
 

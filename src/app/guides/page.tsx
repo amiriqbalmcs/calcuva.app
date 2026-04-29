@@ -42,24 +42,24 @@ export default async function GuidesPage() {
       />
 
       {/* Header */}
-      <section className="bg-background border-b border-border pt-20 sm:pt-28 pb-16">
+      <section className="bg-background border-b border-border pt-28 pb-20">
         <div className="container-wide">
-          <nav className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-10">
+          <nav className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-mono uppercase font-black tracking-[0.3em] mb-12">
             <Link href="/" className="hover:text-foreground">Home</Link>
             <ChevronRight className="size-3" />
             <span className="text-foreground/80">Knowledge Library</span>
           </nav>
           
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-2 text-signal mb-3">
+          <div className="max-w-4xl">
+            <div className="flex items-center gap-3 text-foreground mb-8">
               <GraduationCap className="size-5" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] font-mono">Editorial Hub</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] font-mono">Calcuva Academy · Help Guides</span>
             </div>
-            <h1 className="text-4xl sm:text-6xl font-bold tracking-tighter mb-6">
-              Expert Strategy <span className="text-signal">&</span> Technical Insights
+            <h1 className="text-6xl sm:text-8xl font-bold tracking-tighter mb-10">
+              Expert Guides <span className="text-foreground/40 italic">&</span> Insights
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              We don't just provide calculators; we provide the mathematical foundations behind your most important life decisions. Explore our library of 30+ deep-dive research guides.
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl font-medium">
+              We don't just provide calculators; we explain the math behind your most important life decisions. Explore our library of 30+ easy-to-read research guides.
             </p>
           </div>
         </div>

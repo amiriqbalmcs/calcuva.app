@@ -89,29 +89,34 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       <main className="min-h-screen pt-20 sm:pt-28 pb-32">
         <div className="container-wide">
           {/* Back Navigation */}
-          <Link href="/blog" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-signal transition-colors mb-12 group">
-             <ArrowLeft className="size-3 group-hover:-translate-x-1 transition-transform" /> Back to Library
+          <Link href="/blog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-all mb-16 group">
+             <ArrowLeft className="size-3.5 group-hover:-translate-x-1 transition-transform" /> Back to Guides
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-16">
             {/* Article Content */}
             <article className="max-w-3xl">
-               <header className="mb-12">
-                  <div className="flex items-center gap-4 text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-[0.2em] mb-6">
-                     <span className="px-2 py-0.5 rounded bg-secondary text-primary">{post.category}</span>
-                     <span className="flex items-center gap-1"><Calendar className="size-3" /> {new Date(post.date).toLocaleDateString()}</span>
-                     <span className="flex items-center gap-1"><Clock className="size-3" /> {post.readingTime}</span>
+               <header className="mb-16">
+                  <div className="flex items-center gap-6 text-[10px] font-mono font-black text-muted-foreground uppercase tracking-[0.3em] mb-10">
+                     <span className={cn("px-2 py-1 rounded ring-1 ring-inset", 
+                        post.category === 'finance' ? "bg-finance/5 text-finance ring-finance/20" :
+                        post.category === 'health' ? "bg-health/5 text-health ring-health/20" :
+                        post.category === 'business' ? "bg-business/5 text-business ring-business/20" :
+                        "bg-secondary text-primary ring-border"
+                     )}>{post.category}</span>
+                     <span className="flex items-center gap-2"><Calendar className="size-3.5" /> {new Date(post.date).toLocaleDateString()}</span>
+                     <span className="flex items-center gap-2"><Clock className="size-3.5" /> {post.readingTime}</span>
                   </div>
-                  <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-8 leading-[1.1] break-words">
+                  <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter mb-12 leading-[1.05] break-words">
                      {post.title}
                   </h1>
-                  <div className="flex items-center gap-4 py-6 border-y border-border">
-                     <div className="size-10 rounded-full bg-signal/10 flex items-center justify-center text-signal">
-                        <UserRound className="size-5" />
+                  <div className="flex items-center gap-5 py-8 border-y border-border/40">
+                     <div className="size-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-foreground border border-border/40">
+                        <UserRound className="size-6" />
                      </div>
                      <div>
-                        <div className="text-xs font-bold">{author.name}</div>
-                        <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">{author.role}</div>
+                        <div className="text-sm font-bold text-foreground tracking-tight">{author.name}</div>
+                        <div className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em]">{author.role}</div>
                      </div>
                   </div>
                   {author.bio && (
