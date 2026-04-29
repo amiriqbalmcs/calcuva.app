@@ -76,10 +76,10 @@ export const SiteHeader = () => {
     >
       <div 
         className={cn(
-          "container-wide mx-auto backdrop-blur-xl transition-all duration-500 ease-in-out flex items-center justify-between",
+          "container-wide mx-auto backdrop-blur-2xl transition-all duration-500 ease-in-out flex items-center justify-between",
           scrolled 
-            ? "max-w-full rounded-none border-b border-border bg-background/80 h-14 px-8 shadow-md" 
-            : "max-w-7xl border border-border/40 rounded-2xl bg-background/60 h-16 px-6 shadow-xl shadow-black/5"
+            ? "max-w-full rounded-none border-b border-border bg-background/70 h-14 px-8 shadow-sm" 
+            : "max-w-7xl border border-border/40 rounded-2xl bg-background/40 h-16 px-6 shadow-xl shadow-black/5"
         )}
       >
         <Link href="/" className="flex items-center group shrink-0" onClick={() => setOpen(false)}>
@@ -97,8 +97,10 @@ export const SiteHeader = () => {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                    isActive ? "text-foreground bg-secondary" : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
+                    "px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] rounded-lg transition-all",
+                    isActive 
+                      ? "text-foreground bg-secondary shadow-sm ring-1 ring-border/40" 
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary/40"
                   )}
                 >
                   {item.label}
@@ -109,15 +111,15 @@ export const SiteHeader = () => {
 
           <div className="hidden lg:flex items-center gap-4">
              {historyTools.length > 0 && (
-               <div className="relative group/history">
-                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/50 text-muted-foreground hover:text-foreground text-[10px] font-bold uppercase tracking-widest transition-all">
+                <div className="relative group/history">
+                  <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary/50 text-muted-foreground hover:text-foreground text-[10px] font-black uppercase tracking-[0.2em] transition-all ring-1 ring-border/20 shadow-sm">
                      <History className="size-3" />
                      History
                   </button>
-                   <div className="absolute right-0 top-full pt-2 w-64 opacity-0 translate-y-2 pointer-events-none group-hover/history:opacity-100 group-hover/history:translate-y-0 group-hover/history:pointer-events-auto transition-all duration-300 z-[100]">
-                      <div className="bg-card border border-border rounded-2xl shadow-2xl p-2">
-                         <div className="px-3 py-2 border-b border-border mb-1">
-                            <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] flex items-center gap-1.5">
+                   <div className="absolute right-0 top-full pt-3 w-64 opacity-0 translate-y-2 pointer-events-none group-hover/history:opacity-100 group-hover/history:translate-y-0 group-hover/history:pointer-events-auto transition-all duration-300 z-[100]">
+                      <div className="bg-card/95 backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl p-2">
+                         <div className="px-3 py-2 border-b border-border/40 mb-1">
+                            <span className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.3em] flex items-center gap-2">
                                <Clock className="size-2.5" /> Recent Tools
                             </span>
                          </div>
@@ -125,14 +127,14 @@ export const SiteHeader = () => {
                            <Link 
                              key={t.slug} 
                              href={`/calculators/${t.slug}`}
-                             className="flex items-center gap-3 p-2 rounded-xl hover:bg-secondary transition-colors"
+                             className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-secondary transition-all group/tool"
                            >
-                             <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0">
-                               <Calculator className="size-4 text-muted-foreground" />
+                             <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0 group-hover/tool:bg-background transition-colors">
+                               <Calculator className="size-4 text-muted-foreground group-hover:text-foreground transition-colors" />
                              </div>
                              <div className="min-w-0">
-                                <div className="text-[11px] font-bold truncate">{t.title}</div>
-                                <div className="text-[9px] text-muted-foreground font-mono uppercase truncate">{t.category}</div>
+                                <div className="text-[11px] font-bold truncate group-hover:text-foreground transition-colors">{t.title}</div>
+                                <div className="text-[9px] text-muted-foreground font-black uppercase tracking-wider truncate">{t.category}</div>
                              </div>
                            </Link>
                          ))}
