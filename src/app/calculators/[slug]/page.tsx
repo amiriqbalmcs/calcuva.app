@@ -98,6 +98,7 @@ const QrCodeGenerator = dynamic(() => import("@/components/calculators/QrCodeGen
 const PasswordGenerator = dynamic(() => import("@/components/calculators/PasswordGenerator"), { loading });
 const TaxBracketCalculator = dynamic(() => import("@/components/calculators/TaxBracketCalculator"), { loading });
 const PregnancyWeekCalculator = dynamic(() => import("@/components/calculators/PregnancyWeekCalculator"), { loading });
+const AcademicGradeCalculator = dynamic(() => import("@/components/calculators/AcademicGradeCalculator"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -144,6 +145,7 @@ const componentMap: Record<string, any> = {
   "tax-bracket-calculator": TaxBracketCalculator,
   "pregnancy-week-calculator": PregnancyWeekCalculator,
   "intermittent-fasting-calculator": FastingCalculator,
+  "academic-grade-calculator": AcademicGradeCalculator,
   // Batch 4
   "car-loan-vs-lease-calculator": CarLoanLeaseCalculator,
   "blood-alcohol-content-calculator": BacCalculator,

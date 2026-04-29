@@ -383,6 +383,15 @@ export const CALCULATORS: CalcMeta[] = [
     icon: "Baby", category: "health",
     keywords: ["pregnancy", "weeks", "trimester", "due date", "baby"],
   },
+  {
+    slug: "academic-grade-calculator",
+    title: "Academic Grade Calculator",
+    short: "Calculate your final grade and required exam scores.",
+    description: "Determine your weighted average and find out exactly what score you need on your final exam to reach your target grade.",
+    icon: "GraduationCap", category: "education",
+    keywords: ["grade calculator", "final grade", "weighted average", "exam score", "school grades", "academic performance"],
+    relatedSlugs: ["gpa-to-percentage-calculator", "word-character-counter-tool"],
+  },
 ];
 
 export const calculatorBySlug = (slug: string) => CALCULATORS.find((c) => c.slug === slug);
