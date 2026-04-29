@@ -142,37 +142,38 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                </footer>
             </article>
 
-            {/* Sticky Sidebar Tool Recommendation */}
-            <aside className="no-print">
-               <div className="sticky top-28 space-y-8">
-                  {activeTool && (
-                    <div className="surface-card p-8 glass neo-shadow border-signal/20 bg-gradient-to-b from-signal/5 to-transparent">
-                       <div className="flex items-center gap-2 text-signal mb-6">
-                          <Calculator className="size-5" />
-                          <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Expert Decisions</h3>
-                       </div>
-                       <h4 className="text-xl font-bold mb-4 leading-tight">Apply theory to your data.</h4>
-                       <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                          Ready to run your own scenarios? Our professional-grade <strong>{activeTool.title}</strong> is optimized for precise calculations.
-                       </p>
-                       <Link 
-                         href={`/calculators/${activeTool.slug}`}
-                         className="flex items-center justify-between w-full bg-signal text-white px-6 py-4 rounded-xl font-bold text-sm shadow-xl hover:bg-signal/90 transition-all group"
-                       >
-                         Open Calculator <ArrowLeft className="size-4 rotate-180 group-hover:translate-x-1 transition-transform" />
-                       </Link>
-                    </div>
-                  )}
-
-                  <div className="surface-card p-6 bg-secondary/20 border-dotted">
-                     <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest font-mono mb-4">Share Insights</h3>
-                     <div className="flex gap-2">
-                        <button className="flex-1 p-2 rounded-lg bg-background border border-border hover:bg-secondary transition flex items-center justify-center"><Share className="size-4" /></button>
-                        <button className="flex-1 p-2 rounded-lg bg-background border border-border hover:bg-secondary transition flex items-center justify-center"><Bookmark className="size-4" /></button>
+             {/* Sticky Sidebar Tool Recommendation */}
+             <aside className="no-print">
+                <div className="sticky top-28 space-y-6">
+                   {activeTool && (
+                     <div className="surface-card p-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.02] to-transparent" />
+                        <div className="flex items-center gap-3 mb-8">
+                           <Calculator className="size-5 text-foreground" />
+                           <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Try the Tool</h3>
+                        </div>
+                        <h4 className="text-2xl font-bold mb-4 leading-tight tracking-tight text-foreground">Calculate yours now.</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-10 font-medium">
+                           Ready to run your own numbers? Our <strong>{activeTool.title}</strong> is fast, free, and entirely private.
+                        </p>
+                        <Link 
+                          href={`/calculators/${activeTool.slug}`}
+                          className="flex items-center justify-between w-full bg-foreground text-background px-8 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl hover:scale-[1.02] transition-all group/btn"
+                        >
+                          Open Tool <ArrowLeft className="size-4 rotate-180 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
                      </div>
-                  </div>
-               </div>
-            </aside>
+                   )}
+
+                   <div className="surface-card p-8 bg-secondary/10 border-border/40">
+                      <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-6">Share This Guide</h3>
+                      <div className="flex gap-3">
+                         <button className="flex-1 h-12 rounded-xl bg-background border border-border/60 hover:border-foreground transition-all flex items-center justify-center text-foreground"><Share className="size-4" /></button>
+                         <button className="flex-1 h-12 rounded-xl bg-background border border-border/60 hover:border-foreground transition-all flex items-center justify-center text-foreground"><Bookmark className="size-4" /></button>
+                      </div>
+                   </div>
+                </div>
+             </aside>
           </div>
         </div>
       </main>
