@@ -34,7 +34,7 @@ export const CurrencySwitcher = ({ className }: { className?: string }) => {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-52 bg-background border border-border shadow-2xl z-[100] p-2 rounded-2xl animate-in fade-in zoom-in-95 duration-200">
+        <div className="absolute left-0 top-full mt-2 w-52 bg-background border border-border shadow-2xl z-[100] p-2 rounded-2xl animate-in fade-in zoom-in-95 duration-200">
           <div className="px-3 py-2.5 mb-1">
             <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Select Currency</span>
           </div>

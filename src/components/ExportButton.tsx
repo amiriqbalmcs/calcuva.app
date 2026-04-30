@@ -20,39 +20,24 @@ interface Props {
 export const ExportButton = ({ title }: Props) => {
   const [loading, setLoading] = useState(false);
 
-  const handlePrint = () => {
-    setLoading(true);
-    setTimeout(() => {
-      window.print();
-      setLoading(false);
-    }, 600);
-  };
-
-  const handleDownloadImage = async (format: 'png' | 'jpeg') => {
+  const generateMockupEnvironment = async () => {
     const mainContent = document.querySelector('section.animate-fade-up');
     if (!mainContent) {
       toast.error("Could not find content to capture");
-      return;
+      return null;
     }
 
-    setLoading(true);
-    // NEW APPROACH: Using a hidden iframe to provide a true desktop viewport
     const iframe = document.createElement('iframe');
-    // Hide it but keep it in DOM so it can be captured
     iframe.style.position = 'fixed';
     iframe.style.top = '-10000px';
     iframe.style.left = '-10000px';
-    iframe.style.width = '1200px'; // Desktop Width
+    iframe.style.width = '1200px';
     iframe.style.height = '1200px';
     document.body.appendChild(iframe);
 
     const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-    if (!iframeDoc) {
-      toast.error("Failed to initialize capture environment");
-      return;
-    }
+    if (!iframeDoc) return null;
 
-    // 1. Copy all styles from the main document to the iframe safely
     const styles = document.querySelectorAll('style, link[rel="stylesheet"]');
     styles.forEach(s => {
       try {
@@ -60,24 +45,18 @@ export const ExportButton = ({ title }: Props) => {
         if (clone.tagName === 'LINK') {
           const href = (clone as HTMLLinkElement).href;
           if (href && !href.startsWith(window.location.origin) && !href.startsWith('/')) {
-            // For external stylesheets (like Google Fonts), set crossOrigin to avoid SecurityError
             (clone as HTMLLinkElement).crossOrigin = "anonymous";
           }
         }
         iframeDoc.head.appendChild(clone);
-      } catch (e) {
-        console.warn("Skipped a stylesheet due to security constraints", e);
-      }
+      } catch (e) {}
     });
 
-    // 2. Set the base theme and structure
     iframeDoc.documentElement.className = document.documentElement.className;
     iframeDoc.body.style.margin = '0';
     iframeDoc.body.style.padding = '0';
     iframeDoc.body.style.backgroundColor = 'hsl(var(--background))';
-    iframeDoc.body.style.overflow = 'hidden';
 
-    // 3. Create the mockup structure inside the iframe
     const wrapper = iframeDoc.createElement('div');
     wrapper.id = 'export-wrapper';
     wrapper.style.width = '1200px';
@@ -89,7 +68,6 @@ export const ExportButton = ({ title }: Props) => {
     wrapper.style.backgroundImage = 'linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, transparent 100%)';
     wrapper.style.fontFamily = 'Inter, sans-serif';
 
-    // Browser Frame
     const frame = iframeDoc.createElement('div');
     frame.style.width = '1000px';
     frame.style.backgroundColor = 'hsl(var(--background))';
@@ -98,7 +76,6 @@ export const ExportButton = ({ title }: Props) => {
     frame.style.overflow = 'hidden';
     frame.style.border = '1px solid hsl(var(--border))';
 
-    // Browser Header
     const header = iframeDoc.createElement('div');
     header.style.height = '52px';
     header.style.backgroundColor = 'hsl(var(--secondary) / 0.8)';
@@ -125,26 +102,24 @@ export const ExportButton = ({ title }: Props) => {
     header.appendChild(urlBar);
     frame.appendChild(header);
 
-    // Clone and Append Content
     const clone = mainContent.cloneNode(true) as HTMLElement;
     clone.style.padding = '40px';
     clone.style.margin = '0';
     clone.style.animation = 'none';
     clone.style.width = '1000px';
-    // Remove sticky positions for capture
     const stickies = clone.querySelectorAll('.sticky, .lg\\:sticky');
     stickies.forEach((s: any) => s.style.position = 'relative');
     
     frame.appendChild(clone);
     wrapper.appendChild(frame);
 
-    // Attribution
     const attribution = iframeDoc.createElement('div');
     attribution.style.marginTop = '40px';
     attribution.style.display = 'flex';
     attribution.style.flexDirection = 'column';
     attribution.style.alignItems = 'center';
     attribution.style.gap = '16px';
+    attribution.style.width = '100%';
     const badgeStyle = "padding: 12px 28px; border-radius: 99px; background: hsl(var(--background)); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); font-size: 14px; font-weight: 800; color: hsl(var(--foreground)); border: 1px solid hsl(var(--border)); display: flex; align-items: center; gap: 12px;";
     attribution.innerHTML = `
       <div style="display: flex; gap: 16px;">
@@ -157,16 +132,72 @@ export const ExportButton = ({ title }: Props) => {
     `;
     wrapper.appendChild(attribution);
     iframeDoc.body.appendChild(wrapper);
+    return { iframe, wrapper, iframeDoc };
+  };
+
+  const handlePrint = async () => {
+    setLoading(true);
+    const env = await generateMockupEnvironment();
+    if (!env) {
+      setLoading(false);
+      return;
+    }
 
     try {
-      // Wait for fonts and styles to load in the iframe
-      await new Promise(r => setTimeout(r, 1200));
+      await new Promise(r => setTimeout(r, 1500));
+      
+      // Capture as high-quality image first
+      const dataUrl = await toPng(env.wrapper, {
+        quality: 1,
+        pixelRatio: 3, // Higher ratio for crisp PDF
+        filter: (node: HTMLElement) => {
+          if (node.tagName === 'LINK' || node.tagName === 'STYLE') return false;
+          return true;
+        },
+      });
 
+      // Replace document content with the captured image for printing
+      env.iframeDoc.body.innerHTML = `
+        <style>
+          @media print {
+            @page { margin: 0; size: auto; }
+            body { margin: 0; padding: 0; overflow: hidden; height: 100vh; }
+            img { width: 100vw; height: 100vh; object-fit: contain; }
+          }
+          body { margin: 0; display: flex; justify-content: center; background: #fff; }
+          img { max-width: 100%; height: auto; }
+        </style>
+        <img src="${dataUrl}" />
+      `;
+
+      // Small delay to ensure the image is loaded in the iframe
+      await new Promise(r => setTimeout(r, 500));
+      env.iframe.contentWindow?.print();
+    } catch (err) {
+      console.error("Print failed", err);
+      toast.error("Failed to generate PDF preview");
+    } finally {
+      if (document.body.contains(env.iframe)) {
+        document.body.removeChild(env.iframe);
+      }
+      setLoading(false);
+    }
+  };
+
+  const handleDownloadImage = async (format: 'png' | 'jpeg') => {
+    setLoading(true);
+    const env = await generateMockupEnvironment();
+    if (!env) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await new Promise(r => setTimeout(r, 1200));
       const options = {
         quality: 1,
         pixelRatio: 2,
         backgroundColor: format === 'jpeg' ? '#ffffff' : undefined,
-        // Add a filter to prevent the library from trying to read rules it shouldn't
         filter: (node: HTMLElement) => {
           if (node.tagName === 'LINK' || node.tagName === 'STYLE') return false;
           return true;
@@ -174,10 +205,10 @@ export const ExportButton = ({ title }: Props) => {
       };
 
       const dataUrl = format === 'png' 
-        ? await toPng(wrapper, options) 
-        : await toJpeg(wrapper, options);
+        ? await toPng(env.wrapper, options) 
+        : await toJpeg(env.wrapper, options);
       
-      document.body.removeChild(iframe);
+      document.body.removeChild(env.iframe);
 
       const blob = await (await fetch(dataUrl)).blob();
       const file = new File([blob], `${title.toLowerCase().replace(/\s+/g, '-')}-report.${format}`, { type: `image/${format}` });
@@ -200,7 +231,7 @@ export const ExportButton = ({ title }: Props) => {
     } catch (err) {
       console.error("Capture failed", err);
       toast.error("Export failed. Please try again.");
-      if (document.body.contains(iframe)) document.body.removeChild(iframe);
+      if (document.body.contains(env.iframe)) document.body.removeChild(env.iframe);
     } finally {
       setLoading(false);
     }
@@ -259,4 +290,3 @@ export const ExportButton = ({ title }: Props) => {
     </div>
   );
 };
-
