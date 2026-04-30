@@ -50,7 +50,7 @@ export const SocialSharePreviewCalculator = ({
   const [title, setTitle] = useState("Calcuva — Smart Online Calculators for Life & Finance");
   const [description, setDescription] = useState("Fast, accurate, and 100% free online tools for taxes, solar ROI, health, and engineering. Built for the modern 2026 workflow.");
   const [url, setUrl] = useState("https://calcuva.app");
-  const [image, setImage] = useState("https://calcuva.app/og-image.png");
+  const [image, setImage] = useState("");
   const [siteName, setSiteName] = useState("Calcuva");
   const [copied, setCopied] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -63,7 +63,7 @@ export const SocialSharePreviewCalculator = ({
       const data = await res.json();
       setTitle(data.title || "");
       setDescription(data.description || "");
-      setImage(data.image || "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80");
+      setImage(data.image || "");
       toast.success("Metadata fetched!");
     } catch (error) {
       toast.error("Failed to fetch metadata. Please enter manually.");
