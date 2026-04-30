@@ -168,37 +168,39 @@ export const SolarPanelToKwCalculator = ({ calc }: { calc: CalcMeta }) => {
           <div className="space-y-4 relative z-10">
             
             {/* Main Capacity Card */}
-            <div className="p-8 bg-zinc-950 text-white rounded-3xl shadow-2xl space-y-6 overflow-hidden relative group border border-white/5">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-[80px] -mr-16 -mt-16 group-hover:bg-primary/30 transition-all duration-500" />
+            <div className="surface-card p-8 space-y-8 bg-background border-border/60 shadow-xl relative overflow-hidden group">
+              <Zap className="absolute -top-6 -right-6 size-32 text-foreground/[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
               
-              <div className="flex items-center justify-between relative">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Total Array Capacity</span>
-                  <div className="flex items-center gap-2">
-                    <Zap className="size-4 text-primary fill-primary" />
-                    <span className="text-xs font-bold text-primary uppercase">{results.systemClass}</span>
+              <div className="space-y-6 relative z-10">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Total Array Capacity</span>
+                    <div className="flex items-center gap-2">
+                      <div className="size-2 rounded-full bg-primary animate-pulse" />
+                      <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{results.systemClass}</span>
+                    </div>
+                  </div>
+                  <div className="size-10 rounded-2xl bg-secondary/50 flex items-center justify-center">
+                    <Cpu className="size-5 text-muted-foreground" />
                   </div>
                 </div>
-                <div className="size-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-                  <Cpu className="size-5 text-white/50" />
-                </div>
-              </div>
 
-              <div className="space-y-1 relative">
-                <p className="text-7xl font-mono font-black leading-none tracking-tighter text-white">
-                  {results.totalKW.toFixed(2)}<span className="text-2xl font-sans opacity-20 ml-2">kW</span>
-                </p>
-                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-[0.3em]">Direct Peak Power Potential</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10 relative">
                 <div className="space-y-1">
-                   <p className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Array Area</p>
-                   <p className="text-xl font-mono font-bold text-white">{results.areaSqFt} <span className="text-[10px] opacity-40">SqFt</span></p>
+                  <p className="text-6xl sm:text-7xl font-mono font-black leading-none tracking-tighter text-foreground">
+                    {results.totalKW.toFixed(2)}<span className="text-2xl font-sans opacity-20 ml-2">kW</span>
+                  </p>
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.3em]">Direct Peak Power Potential</p>
                 </div>
-                <div className="space-y-1">
-                   <p className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Total Watts</p>
-                   <p className="text-xl font-mono font-bold text-primary">{(results.totalKW * 1000).toLocaleString()}<span className="text-[10px] text-white opacity-40 ml-1 font-sans">W</span></p>
+
+                <div className="grid grid-cols-2 gap-4 pt-6 border-t border-border/40 relative">
+                  <div className="space-y-1">
+                     <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Array Area</p>
+                     <p className="text-xl font-mono font-bold text-foreground">{results.areaSqFt} <span className="text-[10px] opacity-40">SqFt</span></p>
+                  </div>
+                  <div className="space-y-1">
+                     <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Total Watts</p>
+                     <p className="text-xl font-mono font-bold text-primary">{(results.totalKW * 1000).toLocaleString()}<span className="text-[10px] text-foreground opacity-40 ml-1 font-sans">W</span></p>
+                  </div>
                 </div>
               </div>
             </div>
