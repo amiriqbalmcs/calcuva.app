@@ -499,6 +499,14 @@ export const CALCULATORS: CalcMeta[] = [
     keywords: ["pakistan income tax calculator 2026", "fbr tax slabs 2025-26", "calculate monthly salary tax", "yearly income tax pakistan", "fbr budget 2026 tax rates"],
     hideCurrencySwitcher: true,
   },
+  {
+    slug: "electricity-bill-predictor-pakistan",
+    title: "Electricity Bill Predictor 2026",
+    short: "Predict your electricity bill with 2026 NEPRA slabs and taxes.",
+    description: "Predict your monthly electricity bill based on the latest 2026 NEPRA/DISCO slabs. Accounts for GST, FPA, and protected consumer status.",
+    icon: "Zap", category: "finance",
+    keywords: ["pakistan electricity bill calculator 2026", "nepra tariff slabs", "lesco bill predictor", "k-electric 2026 rates", "electricity duty calculator"],
+  },
 ];
 
 export const calculatorBySlug = (slug: string) => CALCULATORS.find((c) => c.slug === slug);

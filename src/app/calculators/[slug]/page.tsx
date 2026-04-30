@@ -110,6 +110,7 @@ const CarbonFootprintCalculator = dynamic(() => import("@/components/calculators
 const SolarSimulator = dynamic(() => import("@/components/calculators/SolarSimulator"), { loading });
 const FreelanceOptimizer = dynamic(() => import("@/components/calculators/FreelanceOptimizer"), { loading });
 const SalaryTaxCalculator = dynamic(() => import("@/components/calculators/SalaryTaxCalculator"), { loading });
+const ElectricityPredictor = dynamic(() => import("@/components/calculators/ElectricityPredictor"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -176,6 +177,7 @@ const componentMap: Record<string, any> = {
   "solar-roi-simulator-pakistan": SolarSimulator,
   "freelance-fee-optimizer": FreelanceOptimizer,
   "salary-income-tax-calculator-2026": SalaryTaxCalculator,
+  "electricity-bill-predictor-pakistan": ElectricityPredictor,
 };
 
 export async function generateStaticParams() {
