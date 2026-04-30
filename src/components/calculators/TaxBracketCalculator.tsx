@@ -114,7 +114,7 @@ export default function TaxBracketCalculator({ guideHtml, faqs, relatedArticles 
   }, [income, filingStatus]);
 
   const handleCopy = () => {
-    let text = `Effective Tax Rate: ${(results.effectiveRate * 100).toFixed(1)}% | Estimated Tax: ${formatCurrency(results.totalTax, currency.code)}. Audit at ${SITE_DOMAIN}`;
+    let text = `Effective Tax Rate: ${(results.effectiveRate * 100).toFixed(1)}% | Estimated Tax: ${formatCurrency(results.totalTax, currency.code)}. Audit at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

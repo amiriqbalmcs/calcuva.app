@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import {
   Activity, TrendingUp, Info, BookOpen, Target, 
   ChevronRight, Calculator, Scale, RefreshCcw, 
-  Sparkles, Globe, Copy, Award, AlertCircle, HeartPulse, Droplet
+  Sparkles, Globe, Copy, Award, AlertCircle, HeartPulse, Droplet, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -19,6 +19,7 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
   const [glucose, setGlucose] = useState<number>(126);
   const [unit, setUnit] = useState<"mgdl" | "mmol">("mgdl");
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     // Standard Formula: HbA1c = (Average Glucose + 46.7) / 28.7
@@ -33,6 +34,13 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
     return { hba1c, risk, color, mgdl };
   }, [glucose, unit]);
+
+  const handleCopy = () => {
+    const text = `Blood Sugar Analysis: ${glucose} ${unit === 'mgdl' ? 'mg/dL' : 'mmol/L'} Average | Estimated HbA1c: ${result.hba1c.toFixed(1)}% | Status: ${result.risk}. Convert at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -95,9 +103,20 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
           <div className="surface-card p-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
              <div className="space-y-10 relative z-10">
                 <div className="space-y-2">
-                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-                      <Droplet className="size-3" /> Estimated HbA1c
-                   </div>
+                    <div className="flex items-center justify-between">
+                       <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                          <Droplet className="size-3" /> Estimated HbA1c
+                       </div>
+                       <button 
+                          onClick={handleCopy}
+                          className={cn(
+                             "p-2 rounded-lg transition-all border shadow-sm",
+                             copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                          )}
+                       >
+                          {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                       </button>
+                    </div>
                    <div className={cn("text-8xl font-mono font-bold tracking-tighter tabular-nums transition-colors", result.color)}>
                       {result.hba1c.toFixed(1)}<span className="text-3xl ml-1 opacity-20">%</span>
                    </div>

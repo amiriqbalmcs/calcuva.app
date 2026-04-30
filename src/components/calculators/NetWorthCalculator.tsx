@@ -5,7 +5,7 @@ import {
   Briefcase, TrendingUp, Info, BookOpen, Target, 
   ChevronRight, Calculator, Scale, RefreshCcw, Activity,
   Sparkles, Globe, Copy, Award, AlertCircle, Plus, Trash2,
-  Building, Wallet, Landmark, PieChart
+  Building, Wallet, Landmark, PieChart, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -33,6 +33,7 @@ const NetWorthCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
     { id: "l-1", name: "Home Loan", value: 4500000 },
     { id: "l-2", name: "Credit Card Debt", value: 85000 }
   ]);
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const totalAssets = assets.reduce((s, i) => s + (i.value || 0), 0);
@@ -42,6 +43,13 @@ const NetWorthCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
 
     return { totalAssets, totalLiabilities, netWorth, debtRatio };
   }, [assets, liabilities]);
+
+  const handleCopy = () => {
+    const text = `Financial Net Worth: ${currency.symbol}${Math.round(result.netWorth).toLocaleString()} (Assets: ${currency.symbol}${Math.round(result.totalAssets).toLocaleString()} | Debt: ${currency.symbol}${Math.round(result.totalLiabilities).toLocaleString()}). Track your wealth at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const updateAsset = (id: string, val: number) => setAssets(as => as.map(a => a.id === id ? { ...a, value: val } : a));
   const updateAssetLabel = (id: string, name: string) => setAssets(as => as.map(a => a.id === id ? { ...a, name } : a));
@@ -160,8 +168,19 @@ const NetWorthCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
         <div className="lg:col-span-4 space-y-6">
           <div className="surface-card p-8 bg-background border-border/60 shadow-xl sticky top-24">
              <div className="space-y-12">
-                <div className="space-y-2">
-                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Total Net Worth</div>
+                 <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                       <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Total Net Worth</div>
+                       <button 
+                          onClick={handleCopy}
+                          className={cn(
+                             "p-2 rounded-lg transition-all border shadow-sm",
+                             copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                          )}
+                       >
+                          {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                       </button>
+                    </div>
                    <div className={cn("text-6xl font-mono font-bold tracking-tighter tabular-nums", 
                       result.netWorth >= 0 ? "text-foreground" : "text-destructive"
                    )}>

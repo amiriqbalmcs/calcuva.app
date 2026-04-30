@@ -66,7 +66,7 @@ const CompoundInterestCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
   const last = data[data.length - 1] ?? { principal: 0, balance: 0, interest: 0 };
 
   const handleCopy = () => {
-    const resultText = `Savings Goal: ${formatCurrency(last.balance, currency.code)} in ${years} years. Calculate yours at ${SITE_DOMAIN}`;
+    const resultText = `Savings Goal: ${formatCurrency(last.balance, currency.code)} in ${years} years. Calculate yours at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

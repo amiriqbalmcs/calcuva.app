@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import {
   Landmark, TrendingUp, Info, BookOpen, Target, 
   ChevronRight, Calculator, Scale, RefreshCcw, Activity,
-  Sparkles, Globe, Copy, Award, AlertCircle, Banknote, ShieldCheck
+  Sparkles, Globe, Copy, Award, AlertCircle, Banknote, ShieldCheck, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -24,6 +24,7 @@ const LoanEligibilityCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
   const [interestRate, setInterestRate] = useState<number>(14);
   const [tenure, setTenure] = useState<number>(20);
   const [dtiRatio, setDtiRatio] = useState<number>(40); 
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const allowedMonthlyDti = (salary * dtiRatio) / 100;
@@ -47,6 +48,13 @@ const LoanEligibilityCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
       isEligible: salary >= 35000 
     };
   }, [salary, existingEmi, interestRate, tenure, dtiRatio]);
+
+  const handleCopy = () => {
+    const text = `Loan Eligibility Analysis: Monthly Salary Rs. ${salary.toLocaleString()} | Max Loan: Rs. ${Math.round(result.maxLoan).toLocaleString()} (${Math.round(result.maxLoan/100000)} Lac) | EMI Allowed: Rs. ${Math.round(result.availableForNewEmi).toLocaleString()}. Check eligibility at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -132,9 +140,20 @@ const LoanEligibilityCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
           <div className="surface-card p-8 bg-background border-border/60 shadow-md relative overflow-hidden">
              <div className="space-y-10 relative z-10">
                 <div className="space-y-2">
-                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-                      <Calculator className="size-3" /> Max Loan Eligibility
-                   </div>
+                    <div className="flex items-center justify-between">
+                       <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                          <Calculator className="size-3" /> Max Loan Eligibility
+                       </div>
+                       <button 
+                          onClick={handleCopy}
+                          className={cn(
+                             "p-2 rounded-lg transition-all border shadow-sm",
+                             copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                          )}
+                       >
+                          {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                       </button>
+                    </div>
                    <div className="text-6xl font-mono font-bold tracking-tighter tabular-nums text-foreground">
                       {Math.round(result.maxLoan / 100000).toLocaleString()}<span className="text-xl ml-1 opacity-20">Lac</span>
                    </div>

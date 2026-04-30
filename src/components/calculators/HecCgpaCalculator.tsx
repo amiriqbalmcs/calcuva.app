@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import {
   GraduationCap, TrendingUp, Info, BookOpen, Target,
   ChevronRight, Calculator, Scale, RefreshCcw, Activity,
-  Sparkles, Globe, Landmark, Copy, FileText, Award, AlertCircle, Percent
+  Sparkles, Globe, Landmark, Copy, FileText, Award, AlertCircle, Percent, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,7 @@ const HecCgpaCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
 
   const [gpa, setGpa] = useState<number>(3.5);
   const [scale, setScale] = useState<string>("hec");
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const formula = UNIVERSITY_SCALES[scale]?.formula || UNIVERSITY_SCALES.hec.formula;
@@ -37,6 +38,13 @@ const HecCgpaCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
 
     return { percentage, grade };
   }, [gpa, scale]);
+
+  const handleCopy = () => {
+    const text = `HEC CGPA Conversion: ${gpa.toFixed(2)} GPA on 4.0 scale is equivalent to ${result.percentage.toFixed(1)}% | Grade: ${result.grade}. Convert at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -112,9 +120,20 @@ const HecCgpaCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
           <div className="surface-card p-8 bg-background border-border/60 shadow-md relative overflow-hidden">
             <div className="space-y-10 relative z-10">
               <div className="space-y-2">
-                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-                  <Percent className="size-3" /> Equivalent Percentage
-                </div>
+                 <div className="flex items-center justify-between">
+                    <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                       <Percent className="size-3" /> Equivalent Percentage
+                    </div>
+                    <button 
+                       onClick={handleCopy}
+                       className={cn(
+                          "p-2 rounded-lg transition-all border shadow-sm",
+                          copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                       )}
+                    >
+                       {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                    </button>
+                 </div>
                 <div className="text-7xl font-mono font-bold tracking-tighter tabular-nums text-foreground">
                   {result.percentage.toFixed(1)}<span className="text-2xl ml-1 opacity-20">%</span>
                 </div>

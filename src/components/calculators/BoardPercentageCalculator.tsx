@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import {
   FileText, TrendingUp, Info, BookOpen, Target, 
   ChevronRight, Calculator, Scale, RefreshCcw, Activity,
-  Sparkles, Globe, Landmark, Copy, Award, AlertCircle, Percent, GraduationCap
+  Sparkles, Globe, Landmark, Copy, Award, AlertCircle, Percent, GraduationCap, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -22,6 +22,7 @@ const BoardPercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
   const [obtained, setObtained] = useState<number>(880);
   const [board, setBoard] = useState<string>("punjab");
   const [customTotal, setCustomTotal] = useState<number>(1100);
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const total = board === "custom" ? customTotal : (BOARD_MARK_SCHEMES[board]?.total || 1100);
@@ -38,6 +39,13 @@ const BoardPercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
 
     return { percentage, grade, remarks, total };
   }, [obtained, board, customTotal]);
+
+  const handleCopy = () => {
+    const text = `Board Result: ${obtained}/${result.total} Marks | Percentage: ${result.percentage.toFixed(1)}% | Grade: ${result.grade} (${result.remarks}). Calculate at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -120,9 +128,20 @@ const BoardPercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
           <div className="surface-card p-8 bg-background border-border/60 shadow-md relative overflow-hidden">
              <div className="space-y-10 relative z-10">
                 <div className="space-y-2">
-                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-                      <Percent className="size-3" /> Result Percentage
-                   </div>
+                    <div className="flex items-center justify-between">
+                       <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                          <Percent className="size-3" /> Result Percentage
+                       </div>
+                       <button 
+                          onClick={handleCopy}
+                          className={cn(
+                             "p-2 rounded-lg transition-all border shadow-sm",
+                             copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                          )}
+                       >
+                          {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                       </button>
+                    </div>
                    <div className="text-7xl font-mono font-bold tracking-tighter tabular-nums text-foreground">
                       {result.percentage.toFixed(1)}<span className="text-2xl ml-1 opacity-20">%</span>
                    </div>

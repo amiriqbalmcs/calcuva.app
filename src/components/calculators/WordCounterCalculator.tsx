@@ -51,7 +51,7 @@ const WordCounterCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
   };
 
   const handleCopy = () => {
-    let textSummary = `Text Stats: ${stats.words} Words | ${stats.characters} Characters. Check yours at ${SITE_DOMAIN}`;
+    let textSummary = `Text Stats: ${stats.words} Words | ${stats.characters} Characters. Check yours at ${window.location.href}`;
     navigator.clipboard.writeText(textSummary);
     setShareCopied(true);
     setTimeout(() => setShareCopied(false), 2000);

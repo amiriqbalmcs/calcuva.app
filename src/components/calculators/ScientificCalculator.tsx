@@ -59,7 +59,7 @@ const ScientificCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
       setDisplay("Error");
     }
   };  const handleCopy = () => {
-    let text = `Calculation Result: ${display}. Use this free scientific calculator at ${SITE_DOMAIN}`;
+    let text = `Calculation Result: ${display}. Use this free scientific calculator at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

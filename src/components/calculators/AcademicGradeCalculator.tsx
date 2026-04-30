@@ -69,7 +69,7 @@ const AcademicGradeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
   const remove = (id: string) => setAssignments((as) => as.filter((a) => a.id !== id));
 
   const handleCopy = () => {
-    let text = `Current Grade: ${result.currentGrade.toFixed(1)}%. I need ${result.requiredFinal.toFixed(1)}% on my final to get a ${targetGrade}%. Calculate yours at ${SITE_DOMAIN}`;
+    let text = `Current Grade: ${result.currentGrade.toFixed(1)}%. I need ${result.requiredFinal.toFixed(1)}% on my final to get a ${targetGrade}%. Calculate yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

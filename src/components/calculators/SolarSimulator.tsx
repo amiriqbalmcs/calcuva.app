@@ -5,7 +5,7 @@ import {
   Sun, Zap, TrendingUp, Landmark, 
   ArrowRight, ShieldCheck, Battery, 
   Lightbulb, Coins, History, BarChart3,
-  Calendar, Info, AlertTriangle, Download, Share2
+  Calendar, Info, AlertTriangle, Download, Share2, Copy, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,7 @@ const SolarSimulator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
   const [unitRate, setUnitRate] = useState<number>(55);
   const [systemCost, setSystemCost] = useState<number>(1200000);
   const [selfConsumption, setSelfConsumption] = useState<number>(60); // % of generated power used directly
+  const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => {
     // Basic Physics for Pakistan: Avg 5.5 peak hours, 20% system efficiency loss
@@ -53,6 +54,13 @@ const SolarSimulator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
       exportedUnits
     };
   }, [systemSize, unitRate, systemCost, selfConsumption]);
+
+  const handleCopy = () => {
+    const text = `Solar ROI Simulator: ${systemSize}kW System | Payback in ${results?.paybackYears.toFixed(1)} years | Annual Savings: Rs. ${Math.round(results?.annualSavings || 0).toLocaleString()}. Simulate yours at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -176,12 +184,18 @@ const SolarSimulator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
              <div className="absolute top-0 right-0 size-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
              <div className="space-y-6 relative border-b border-border/40 pb-10">
-                <div className="flex items-center justify-between">
-                   <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">System Payback</div>
-                   <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-health/10 text-health text-[9px] font-black uppercase tracking-tighter">
-                      ROI TARGET
-                   </div>
-                </div>
+                 <div className="flex items-center justify-between">
+                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">System Payback</div>
+                    <button 
+                       onClick={handleCopy}
+                       className={cn(
+                          "p-2 rounded-lg transition-all border shadow-sm",
+                          copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                       )}
+                    >
+                       {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                    </button>
+                 </div>
                 <div className="text-6xl font-mono font-bold tracking-tighter text-foreground">
                    {results?.paybackYears.toFixed(1)}<span className="text-xl ml-1">Years</span>
                 </div>

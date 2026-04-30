@@ -45,7 +45,7 @@ const WorkingDaysCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
   }, [start, end]);
 
   const handleCopy = () => {
-    let text = `Work Project: ${result?.working} Working Days (${result?.total} Total Days). Check yours at ${SITE_DOMAIN}`;
+    let text = `Work Project: ${result?.working} Working Days (${result?.total} Total Days). Check yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

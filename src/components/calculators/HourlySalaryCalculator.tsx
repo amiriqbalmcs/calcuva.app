@@ -40,7 +40,7 @@ const HourlySalaryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
   }, [hourly, hoursPerDay, daysPerWeek, weeksPerYear]);
 
   const handleCopy = () => {
-    let text = `Annual Salary Equivalent: ${formatCurrency(results.annual, currency.code)} (${formatCurrency(hourly, currency.code)}/hr). Audit at ${SITE_DOMAIN}`;
+    let text = `Annual Salary Equivalent: ${formatCurrency(results.annual, currency.code)} (${formatCurrency(hourly, currency.code)}/hr). Audit at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

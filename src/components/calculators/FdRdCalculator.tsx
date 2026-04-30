@@ -67,7 +67,7 @@ const FdRdCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
   }, [mode, amount, rate, years, compounding]);
 
   const handleCopy = () => {
-    const resultText = `Savings Maturity: ${formatCurrency(result.maturity, currency.code)} in ${years} years. Model your deposit at ${SITE_DOMAIN}`;
+    const resultText = `Savings Maturity: ${formatCurrency(result.maturity, currency.code)} in ${years} years. Model your deposit at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

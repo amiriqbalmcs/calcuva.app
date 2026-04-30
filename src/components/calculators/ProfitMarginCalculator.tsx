@@ -56,7 +56,7 @@ const ProfitMarginCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
   }, [cost, revenue]);
 
   const handleCopy = () => {
-    let text = `Unit Economics: ${result.margin.toFixed(1)}% Margin | ${formatCurrency(result.profit, currency.code)} Profit. Audit at ${SITE_DOMAIN}`;
+    let text = `Unit Economics: ${result.margin.toFixed(1)}% Margin | ${formatCurrency(result.profit, currency.code)} Profit. Audit at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

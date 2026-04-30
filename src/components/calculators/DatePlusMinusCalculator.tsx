@@ -61,7 +61,7 @@ const DatePlusMinusCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
   }, [date, amount, mode, skipWeekends]);
 
   const handleCopy = () => {
-    let text = `Calculated Date: ${result?.dateString}. Find yours at ${SITE_DOMAIN}`;
+    let text = `Calculated Date: ${result?.dateString}. Find yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

@@ -60,7 +60,7 @@ const PregnancyWeekCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
 
   const handleCopy = () => {
     if (!results) return;
-    let text = `Current Gestational Age: ${results.currentWeek}w ${results.currentDays}d. Estimated Due Date: ${formatDate(results.dueDate)}. Track at ${SITE_DOMAIN}`;
+    let text = `Current Gestational Age: ${results.currentWeek}w ${results.currentDays}d. Estimated Due Date: ${formatDate(results.dueDate)}. Track at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

@@ -70,7 +70,7 @@ const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
   }, [birth, target, now]);
 
   const handleCopy = () => {
-    let text = `My Age: ${result?.years} years, ${result?.months} months, ${result?.days} days. Calculate yours at ${SITE_DOMAIN}`;
+    let text = `My Age: ${result?.years} years, ${result?.months} months, ${result?.days} days. Calculate yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

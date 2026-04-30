@@ -9,7 +9,7 @@ import {
   Lightbulb, Refrigerator, Droplets,
   ArrowRight, ShieldCheck, Timer,
   Gauge, Coffee, Laptop, Monitor,
-  Gamepad, Wifi, Video, Fan
+  Gamepad, Wifi, Video, Fan, Copy, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -58,6 +58,7 @@ const SolarRequirementCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
   const [appliances, setAppliances] = useState<Appliance[]>(DEFAULT_APPLIANCES);
   const [peakSunHours, setPeakSunHours] = useState<number>(5.5);
   const [systemEfficiency, setSystemEfficiency] = useState<number>(80);
+  const [copied, setCopied] = useState(false);
 
   const addAppliance = (preset?: typeof PRESETS[0]) => {
     const newApp: Appliance = {
@@ -94,6 +95,13 @@ const SolarRequirementCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
       suggestedSize
     };
   }, [appliances, peakSunHours, systemEfficiency]);
+
+  const handleCopy = () => {
+    const text = `Solar Load Analysis: ${results.requiredKW.toFixed(1)}kW Recommended | Daily Load: ${results.dailyKWh.toFixed(2)}kWh | Peak Load: ${(results.totalWattage / 1000).toFixed(2)}kW. Calculate your load at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -236,7 +244,18 @@ const SolarRequirementCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
               
               <div className="space-y-8 relative z-10 text-center">
                  <div className="space-y-2">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Recommended Solar Capacity</p>
+                  <div className="flex items-center justify-between">
+                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Recommended Solar Capacity</p>
+                     <button 
+                        onClick={handleCopy}
+                        className={cn(
+                           "p-2 rounded-lg transition-all border shadow-sm",
+                           copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                        )}
+                     >
+                        {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                     </button>
+                  </div>
                     <div className="text-6xl md:text-7xl font-mono font-bold tracking-tighter text-foreground leading-none">
                        {results.requiredKW.toFixed(1)} <span className="text-xl md:text-2xl opacity-40 uppercase tracking-widest font-sans font-bold">kW</span>
                     </div>

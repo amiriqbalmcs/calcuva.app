@@ -89,7 +89,7 @@ const BmiTdeeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
   }, [units, age, sex, heightCm, weightKg, heightFt, heightIn, weightLb, activity]);
 
   const handleCopy = () => {
-    const resultText = `Body Stats: BMI ${result.bmi.toFixed(1)} (${result.category}) | Calories needed: ${formatNumber(result.tdee)} kcal. Track at ${SITE_DOMAIN}`;
+    const resultText = `Body Stats: BMI ${result.bmi.toFixed(1)} (${result.category}) | Calories needed: ${formatNumber(result.tdee)} kcal. Track at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

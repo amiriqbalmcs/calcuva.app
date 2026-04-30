@@ -39,7 +39,7 @@ const UnitConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
   }, [val, cat, from, to]);
 
   const handleCopy = () => {
-    const text = `${val} ${from} = ${unitResult.toPrecision(8)} ${to}. Precision conversion via ${SITE_DOMAIN}`;
+    const text = `${val} ${from} = ${unitResult.toPrecision(8)} ${to}. Precision conversion via ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

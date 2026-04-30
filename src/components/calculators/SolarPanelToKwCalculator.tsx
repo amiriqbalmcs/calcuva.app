@@ -15,7 +15,9 @@ import {
   Ruler, 
   ArrowRight,
   TrendingUp,
-  Cpu
+  Cpu,
+  Copy,
+  CheckCircle2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -42,6 +44,7 @@ export const SolarPanelToKwCalculator = ({
 }) => {
   const [panelQty, setPanelQty] = useState(10);
   const [panelWattage, setPanelWattage] = useState(550);
+  const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => {
     const totalWatts = panelQty * panelWattage;
@@ -68,6 +71,13 @@ export const SolarPanelToKwCalculator = ({
       systemClass
     };
   }, [panelQty, panelWattage]);
+
+  const handleCopy = () => {
+    const text = `Solar Array: ${results.totalKW.toFixed(2)}kW (${panelQty} panels x ${panelWattage}W) | Monthly Gen: ${results.monthlyKWh.toFixed(0)}kWh | Area: ${results.areaSqFt}sqft. Calculate yours at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -190,8 +200,19 @@ export const SolarPanelToKwCalculator = ({
                       <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{results.systemClass}</span>
                     </div>
                   </div>
-                  <div className="size-10 rounded-2xl bg-secondary/50 flex items-center justify-center">
-                    <Cpu className="size-5 text-muted-foreground" />
+                  <div className="flex items-center gap-2">
+                    <button 
+                       onClick={handleCopy}
+                       className={cn(
+                          "p-2 rounded-lg transition-all border shadow-sm",
+                          copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                       )}
+                    >
+                       {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                    </button>
+                    <div className="size-10 rounded-2xl bg-secondary/50 flex items-center justify-center">
+                      <Cpu className="size-5 text-muted-foreground" />
+                    </div>
                   </div>
                 </div>
 

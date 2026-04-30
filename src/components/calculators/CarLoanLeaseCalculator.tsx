@@ -64,7 +64,7 @@ const CarLoanLeaseCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
   }, [carPrice, downPayment, loanRate, loanTerm, leasePayment, leaseTerm, dueAtSigning]);
 
   const handleCopy = () => {
-    const resultText = `Vehicle Finance: Loan ${formatCurrency(stats.loanMonthly, currency.code)} vs Lease ${formatCurrency(leasePayment, currency.code)}. Audit at ${SITE_DOMAIN}`;
+    const resultText = `Vehicle Finance: Loan ${formatCurrency(stats.loanMonthly, currency.code)} vs Lease ${formatCurrency(leasePayment, currency.code)}. Audit at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

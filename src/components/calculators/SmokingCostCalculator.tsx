@@ -45,7 +45,7 @@ const SmokingCostCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
   }, [perDay, pricePerPack, packSize, years, currency]);
 
   const handleCopy = () => {
-    let text = `Smoking Impact Analysis: ${formatCurrency(stats.totalCost, currency.code)} spent & ${formatNumber(stats.daysLost)} days of life lost over ${years} years. Data at ${SITE_DOMAIN}`;
+    let text = `Smoking Impact Analysis: ${formatCurrency(stats.totalCost, currency.code)} spent & ${formatNumber(stats.daysLost)} days of life lost over ${years} years. Data at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

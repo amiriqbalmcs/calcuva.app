@@ -52,7 +52,7 @@ const DiscountCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
   }, [originalPrice, discountType, discountValue, taxRate]);
 
   const handleCopy = () => {
-    const resultText = `Discount Deal: ${formatCurrency(finalPrice, currency.code)} (Saved ${formatCurrency(amountSaved, currency.code)} - ${savingsPercentage.toFixed(1)}% OFF). Check yours at ${SITE_DOMAIN}`;
+    const resultText = `Discount Deal: ${formatCurrency(finalPrice, currency.code)} (Saved ${formatCurrency(amountSaved, currency.code)} - ${savingsPercentage.toFixed(1)}% OFF). Check yours at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

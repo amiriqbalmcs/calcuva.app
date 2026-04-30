@@ -39,7 +39,7 @@ const PercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
   }, [mode, ofP, ofV, dx, dy, c1, c2]);
 
   const handleCopy = () => {
-    let text = `Result: ${results.val.toFixed(2)}${mode === 'of' ? '' : '%'}. Use this free calculator at ${SITE_DOMAIN}`;
+    let text = `Result: ${results.val.toFixed(2)}${mode === 'of' ? '' : '%'}. Use this free calculator at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

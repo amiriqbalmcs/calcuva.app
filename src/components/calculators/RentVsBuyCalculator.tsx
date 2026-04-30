@@ -71,7 +71,7 @@ const RentVsBuyCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
   const handleCopy = () => {
     const verdict = data.finalBuy < data.finalRent ? 'BUY' : 'RENT';
-    const resultText = `Rent vs Buy Verdict: ${verdict}. Break-even: ${data.breakEven ? `Year ${data.breakEven}` : 'N/A'}. Analyze at ${SITE_DOMAIN}`;
+    const resultText = `Rent vs Buy Verdict: ${verdict}. Break-even: ${data.breakEven ? `Year ${data.breakEven}` : 'N/A'}. Analyze at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

@@ -62,8 +62,8 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
 
   const handleCopy = () => {
     const text = tab === "water" 
-      ? `Daily Hydration: ${water.liters.toFixed(2)}L (${water.cups} cups). Plan at ${SITE_DOMAIN}`
-      : `REM Sleep Cycles: Target ${mode === 'wake' ? 'Wake' : 'Sleep'} at ${time}. Plan at ${SITE_DOMAIN}`;
+      ? `Daily Hydration: ${water.liters.toFixed(2)}L (${water.cups} cups). Plan at ${window.location.href}`
+      : `REM Sleep Cycles: Target ${mode === 'wake' ? 'Wake' : 'Sleep'} at ${time}. Plan at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

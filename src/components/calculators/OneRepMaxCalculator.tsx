@@ -50,7 +50,7 @@ const OneRepMaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   }, [weight, reps]);
 
   const handleCopy = () => {
-    let text = `Estimated 1RM: ${results.oneRepMax.toFixed(1)} ${unit}. Strength analysis at ${SITE_DOMAIN}`;
+    let text = `Estimated 1RM: ${results.oneRepMax.toFixed(1)} ${unit}. Strength analysis at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

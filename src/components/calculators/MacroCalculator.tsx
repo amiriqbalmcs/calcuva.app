@@ -66,7 +66,7 @@ const MacroCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
   }, [tdee, goal, diet]);
 
   const handleCopy = () => {
-    const resultText = `Macro Plan: ${results.protein.toFixed(0)}g Protein / ${results.carbs.toFixed(0)}g Carbs / ${results.fat.toFixed(0)}g Fats. Track at ${SITE_DOMAIN}`;
+    const resultText = `Macro Plan: ${results.protein.toFixed(0)}g Protein / ${results.carbs.toFixed(0)}g Carbs / ${results.fat.toFixed(0)}g Fats. Track at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

@@ -81,7 +81,7 @@ const RunningPaceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
 
   const handleCopy = () => {
     if (!results) return;
-    let text = `Goal Pace: ${distanceUnit === 'km' ? results.pacePerKm : results.pacePerMile} per ${distanceUnit}. Race Strategy at ${SITE_DOMAIN}`;
+    let text = `Goal Pace: ${distanceUnit === 'km' ? results.pacePerKm : results.pacePerMile} per ${distanceUnit}. Race Strategy at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

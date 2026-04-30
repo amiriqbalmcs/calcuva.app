@@ -63,7 +63,7 @@ const IdealWeightCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
   const unitText = units === "metric" ? "kg" : "lb";
 
   const handleCopy = () => {
-    let text = `Ideal Weight: ${results.average.toFixed(1)} ${unitText}. Healthy Range: ${results.bmiMin.toFixed(0)}-${results.bmiMax.toFixed(0)} ${unitText}. Calculate yours at ${SITE_DOMAIN}`;
+    let text = `Ideal Weight: ${results.average.toFixed(1)} ${unitText}. Healthy Range: ${results.bmiMin.toFixed(0)}-${results.bmiMax.toFixed(0)} ${unitText}. Calculate yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

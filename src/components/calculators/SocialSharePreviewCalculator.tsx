@@ -19,7 +19,8 @@ import {
   AlertCircle,
   Globe,
   Info,
-  RefreshCcw
+  RefreshCcw,
+  CheckCircle2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -54,6 +55,7 @@ export const SocialSharePreviewCalculator = ({
   const [siteName, setSiteName] = useState("");
   const [copied, setCopied] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const fetchMetadata = async () => {
     if (!url) return;
@@ -77,6 +79,13 @@ export const SocialSharePreviewCalculator = ({
     setCopied(true);
     toast.success("Code copied to clipboard!");
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleShareTool = () => {
+    const text = `Social Share Preview: Test your website meta tags instantly at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
   };
 
   const metaCode = `<!-- HTML Meta Tags -->
@@ -122,14 +131,27 @@ export const SocialSharePreviewCalculator = ({
                     placeholder="https://example.com"
                     className="flex-1 font-medium bg-secondary/30 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl h-12"
                   />
-                  <Button 
-                    onClick={fetchMetadata} 
-                    disabled={isFetching}
-                    className="w-full sm:w-auto rounded-xl px-6 h-12 text-[10px] font-bold uppercase tracking-widest gap-2 shrink-0 shadow-lg shadow-primary/5 active:scale-95 transition-all"
-                  >
-                    {isFetching ? <RefreshCcw className="size-3.5 animate-spin" /> : <RefreshCcw className="size-3.5" />}
-                    {isFetching ? "Fetching..." : "Fetch Meta"}
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      onClick={fetchMetadata} 
+                      disabled={isFetching}
+                      className="rounded-xl px-6 h-12 text-[10px] font-bold uppercase tracking-widest gap-2 shrink-0 shadow-lg shadow-primary/5 active:scale-95 transition-all"
+                    >
+                      {isFetching ? <RefreshCcw className="size-3.5 animate-spin" /> : <RefreshCcw className="size-3.5" />}
+                      {isFetching ? "Fetching..." : "Fetch Meta"}
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={handleShareTool}
+                      className={cn(
+                        "rounded-xl px-4 h-12 font-bold text-[10px] uppercase tracking-widest gap-2 transition-all",
+                        linkCopied ? "bg-green-500 text-white border-green-500 hover:bg-green-600" : ""
+                      )}
+                      title="Share Tool"
+                    >
+                      {linkCopied ? <CheckCircle2 className="size-4" /> : <Share2 className="size-4" />}
+                    </Button>
+                  </div>
                 </div>
               </div>
 

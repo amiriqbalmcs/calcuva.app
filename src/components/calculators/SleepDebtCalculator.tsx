@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import {
   Moon, Sun, TrendingUp, Info, BookOpen, Target, 
   ChevronRight, Calculator, Scale, RefreshCcw, Activity,
-  Sparkles, Globe, Copy, Award, AlertCircle, Clock, Timer
+  Sparkles, Globe, Copy, Award, AlertCircle, Clock, Timer, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -19,6 +19,7 @@ const SleepDebtCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
   const [targetHours, setTargetHours] = useState<number>(8);
   const [dailySleep, setDailySleep] = useState<number[]>([7, 6, 8, 5, 7, 9, 8]); // 7 days
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const totalActual = dailySleep.reduce((s, h) => s + h, 0);
@@ -33,6 +34,13 @@ const SleepDebtCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
     return { debt, totalActual, average, status };
   }, [dailySleep, targetHours]);
+
+  const handleCopy = () => {
+    const text = `Sleep Debt Analysis: ${result.debt.toFixed(1)} hrs cumulative debt | Average ${result.average.toFixed(1)}h/night | Status: ${result.status}. Analyze your sleep at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const updateSleep = (idx: number, val: number) => {
     const newSleep = [...dailySleep];
@@ -108,9 +116,20 @@ const SleepDebtCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
           <div className="surface-card p-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
              <div className="space-y-10 relative z-10">
                 <div className="space-y-2">
-                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-                      <Timer className="size-3" /> Cumulative Sleep Debt
-                   </div>
+                    <div className="flex items-center justify-between">
+                       <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                          <Timer className="size-3" /> Cumulative Sleep Debt
+                       </div>
+                       <button 
+                          onClick={handleCopy}
+                          className={cn(
+                             "p-2 rounded-lg transition-all border shadow-sm",
+                             copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                          )}
+                       >
+                          {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                       </button>
+                    </div>
                    <div className={cn("text-7xl font-mono font-bold tracking-tighter tabular-nums transition-colors", 
                       result.debt > 10 ? "text-destructive" : result.debt > 0 ? "text-foreground" : "text-health"
                    )}>

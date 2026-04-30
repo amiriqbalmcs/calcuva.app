@@ -60,7 +60,7 @@ const CreditCardPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
   const remainingMonths = results.months % 12;
 
   const handleCopy = () => {
-    let text = `Debt Projection: Clearing ${formatCurrency(balance, currency.code)} in ${results.months} months. Plan your payoff at ${SITE_DOMAIN}`;
+    let text = `Debt Projection: Clearing ${formatCurrency(balance, currency.code)} in ${results.months} months. Plan your payoff at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

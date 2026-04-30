@@ -60,7 +60,7 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
   }, [investment, buyPrice, sellPrice, fee]);
 
   const handleShare = () => {
-    const text = `Crypto Trade: ${result.roi.toFixed(1)}% ROI | ${formatCurrency(result.profit, currency.code)} Profit. Track your portfolio at ${SITE_DOMAIN}`;
+    const text = `Crypto Trade: ${result.roi.toFixed(1)}% ROI | ${formatCurrency(result.profit, currency.code)} Profit. Track your portfolio at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

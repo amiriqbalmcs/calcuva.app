@@ -58,7 +58,7 @@ const BacCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
   const timeToZero = result.bac / 0.015;
 
   const handleCopy = () => {
-    let text = `Estimated BAC: ${result.bac.toFixed(3)}%. Time to sobriety: ${timeToZero.toFixed(1)}h. Analyze safety at ${SITE_DOMAIN}`;
+    let text = `Estimated BAC: ${result.bac.toFixed(3)}%. Time to sobriety: ${timeToZero.toFixed(1)}h. Analyze safety at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

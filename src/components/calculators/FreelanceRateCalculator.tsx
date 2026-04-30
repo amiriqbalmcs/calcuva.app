@@ -50,7 +50,7 @@ export default function FreelanceRateCalculator({ guideHtml, faqs, relatedArticl
   }, [personalSalary, businessExpenses, taxRate, vacationWeeks, billableHoursPerWeek]);
 
   const handleCopy = () => {
-    let text = `Professional Rate: ${formatCurrency(results.hourlyRate, currency.code)}/hr | Annual Goal: ${formatCurrency(results.requiredGross, currency.code)}. Audit at ${SITE_DOMAIN}`;
+    let text = `Professional Rate: ${formatCurrency(results.hourlyRate, currency.code)}/hr | Annual Goal: ${formatCurrency(results.requiredGross, currency.code)}. Audit at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

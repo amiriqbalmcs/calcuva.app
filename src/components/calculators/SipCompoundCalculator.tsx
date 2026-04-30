@@ -64,7 +64,7 @@ const SipCompoundCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
   }, [last.value, last.invested]);
 
   const handleCopy = () => {
-    const resultText = `Wealth Projection: Targeting ${formatCurrency(last.value, currency.code)} in ${years} years. Model yours at ${SITE_DOMAIN}`;
+    const resultText = `Wealth Projection: Targeting ${formatCurrency(last.value, currency.code)} in ${years} years. Model yours at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

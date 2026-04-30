@@ -57,7 +57,7 @@ const GpaPercentageCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
   const remove = (id: string) => setCourses((cs) => cs.filter((c) => c.id !== id));
 
   const handleCopy = () => {
-    let text = `My Grades: GPA ${result.cumGpa.toFixed(3)} (${result.percentage.toFixed(1)}%). Check yours at ${SITE_DOMAIN}`;
+    let text = `My Grades: GPA ${result.cumGpa.toFixed(3)} (${result.percentage.toFixed(1)}%). Check yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

@@ -69,7 +69,7 @@ const BodyFatCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
   }, [units, sex, height, neck, waist, hip, weight]);
 
   const handleCopy = () => {
-    const resultText = `Body Check: ${result.bf.toFixed(1)}% Body Fat (${result.category}) | Muscle Mass: ${result.leanMass.toFixed(1)}kg. Created on ${SITE_DOMAIN}`;
+    const resultText = `Body Check: ${result.bf.toFixed(1)}% Body Fat (${result.category}) | Muscle Mass: ${result.leanMass.toFixed(1)}kg. Created on ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

@@ -8,7 +8,7 @@ import {
    LayoutGrid, MousePointer2, Monitor,
    Wind, Snowflake, Waves, Coffee,
    Laptop, Tv, Trash2, Plus, ArrowRight,
-   ClipboardCheck, Clock, Calculator
+   ClipboardCheck, Clock, Calculator, Copy, ShieldAlert, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -73,6 +73,7 @@ const ElectricityPredictor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
    const [load, setLoad] = useState<number>(2);
    const [consumerCat, setConsumerCat] = useState<string>("unprotected");
    const [consumerType, setConsumerType] = useState<string>("residential");
+   const [copied, setCopied] = useState(false);
 
    const [appliances, setAppliances] = useState<Record<string, { qty: number; hrs: number; watts: number }>>(
       APPLIANCES.reduce((acc, a) => ({ ...acc, [a.id]: { qty: a.defaultQty, hrs: a.defaultHrs, watts: a.watts } }), {})
@@ -124,6 +125,13 @@ const ElectricityPredictor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
          avgRate: activeUnits > 0 ? total / activeUnits : 0
       };
    }, [activeUnits, consumerCat, consumerType, load]);
+
+   const handleCopy = () => {
+      const text = `Electricity Bill Prediction: Monthly Units: ${Math.round(activeUnits)} | Estimated Bill: Rs. ${Math.round(results.total).toLocaleString()} | Effective Rate: Rs. ${results.avgRate.toFixed(2)} per unit. Check yours at ${window.location.href}`;
+      navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+   };
 
    return (
       <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles} hideHeaderCurrency={true}>
@@ -341,9 +349,15 @@ const ElectricityPredictor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                      <div className="space-y-4">
                         <div className="flex items-center justify-between">
                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Monthly Bill</div>
-                           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-health/10 text-health text-[9px] font-black uppercase tracking-tighter">
-                              TOTAL PAYABLE
-                           </div>
+                           <button 
+                              onClick={handleCopy}
+                              className={cn(
+                                 "p-2 rounded-lg transition-all border shadow-sm",
+                                 copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                              )}
+                           >
+                              {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                           </button>
                         </div>
                         <div className={cn(
                            "font-mono font-bold tracking-tighter text-foreground leading-none break-all",

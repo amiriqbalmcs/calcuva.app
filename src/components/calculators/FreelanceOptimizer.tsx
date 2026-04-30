@@ -6,7 +6,7 @@ import {
    ShieldCheck, Landmark, Receipt, PieChart,
    Globe, Briefcase, CreditCard, Banknote,
    Info, AlertTriangle, Scale, RefreshCw,
-   LayoutGrid, MousePointer2, ShieldAlert
+   LayoutGrid, MousePointer2, ShieldAlert, CheckCircle2, Copy
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -35,6 +35,7 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
    const [platformId, setPlatformId] = useState<string>("upwork");
    const [pathId, setPathId] = useState<string>("payoneer");
    const [exchangeRate, setExchangeRate] = useState<number>(278);
+   const [copied, setCopied] = useState(false);
 
    const results = useMemo(() => {
       const platform = PLATFORMS.find(p => p.id === platformId)!;
@@ -67,6 +68,13 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
          effectiveExchangeRate
       };
    }, [amount, platformId, pathId, exchangeRate]);
+
+   const handleCopy = () => {
+      const text = `Freelance Fee Optimizer: Contract $${amount.toLocaleString()} | Total Take-Home $${Math.round(results.finalUsd).toLocaleString()} (Rs. ${Math.round(results.finalLocal).toLocaleString()}) | Efficiency: ${(100 - results.totalLostPercent).toFixed(1)}%. Optimize at ${window.location.href}`;
+      navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+   };
 
    return (
       <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -197,9 +205,15 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
                      <div className="space-y-4">
                         <div className="flex items-center justify-between">
                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Total Take-Home</div>
-                           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-health/10 text-health text-[9px] font-black uppercase tracking-tighter">
-                              NET LANDING
-                           </div>
+                           <button 
+                              onClick={handleCopy}
+                              className={cn(
+                                 "p-2 rounded-lg transition-all border shadow-sm",
+                                 copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                              )}
+                           >
+                              {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                           </button>
                         </div>
                         <div className={cn(
                            "font-mono font-bold tracking-tighter text-foreground leading-none",

@@ -5,7 +5,7 @@ import {
   Target, TrendingUp, Info, BookOpen, 
   ChevronRight, Calculator, Scale, RefreshCcw, Activity,
   Sparkles, Globe, Copy, Award, AlertCircle, Banknote, ShieldCheck,
-  TrendingDown, Plus, Trash2, ArrowRight
+  TrendingDown, Plus, Trash2, ArrowRight, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -43,6 +43,7 @@ const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
   ]);
   const [extraPayment, setExtraPayment] = useState<number>(200);
   const [debtCount, setDebtCount] = useState(2);
+  const [copied, setCopied] = useState(false);
 
   const addNewDebt = () => {
     const nextNum = debtCount + 1;
@@ -104,6 +105,13 @@ const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
     const avalanche = calculateStrategy("avalanche");
     return { snowball, avalanche, totalInitialDebt };
   }, [debts, extraPayment]);
+
+  const handleCopy = () => {
+    const text = `Debt Payoff Plan: Total Debt ${currency.symbol}${results?.totalInitialDebt.toLocaleString()} | Payoff in ${results?.avalanche.totalMonths} months (Avalanche) or ${results?.snowball.totalMonths} months (Snowball). Analysis at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const update = (id: string, patch: Partial<Debt>) => setDebts((ds) => ds.map((d) => (d.id === id ? { ...d, ...patch } : d)));
   const remove = (id: string) => setDebts((ds) => ds.filter((d) => d.id !== id));
@@ -220,7 +228,18 @@ const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
         <div className="lg:col-span-4 space-y-6">
           <div className="surface-card p-8 bg-background border-border/60 shadow-md space-y-8">
              <div className="space-y-2 border-b border-border/40 pb-6">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Total Initial Debt</div>
+                <div className="flex items-center justify-between">
+                   <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Total Initial Debt</div>
+                   <button 
+                      onClick={handleCopy}
+                      className={cn(
+                         "p-2 rounded-lg transition-all border shadow-sm",
+                         copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                      )}
+                   >
+                      {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                   </button>
+                </div>
                 <div className="text-3xl font-mono font-bold tracking-tight text-foreground">
                    {currency.symbol} {results?.totalInitialDebt.toLocaleString()}
                 </div>

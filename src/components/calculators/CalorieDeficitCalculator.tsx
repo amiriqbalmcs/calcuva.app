@@ -91,7 +91,7 @@ const CalorieDeficitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
   }, [units, age, sex, heightCm, weightKg, targetWeightKg, heightFt, heightIn, weightLb, targetWeightLb, activity, pace]);
 
   const handleCopy = () => {
-    const resultText = `Weight Loss Plan: Target ${formatNumber(result.targetCalories)} calories/day | Goal: ${result.goalDate}. Created on ${SITE_DOMAIN}`;
+    const resultText = `Weight Loss Plan: Target ${formatNumber(result.targetCalories)} calories/day | Goal: ${result.goalDate}. Created on ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

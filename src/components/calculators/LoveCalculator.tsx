@@ -71,7 +71,7 @@ const LoveCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
   }
 
   const handleShare = () => {
-    let text = `Love Match: ${name1} + ${name2} = ${score}%! ${message}. Test your crush at ${SITE_DOMAIN}`;
+    let text = `Love Match: ${name1} + ${name2} = ${score}%! ${message}. Test your crush at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

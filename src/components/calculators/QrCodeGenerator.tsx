@@ -58,7 +58,7 @@ const QrCodeGenerator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
   };
 
   const handleCopyShare = () => {
-    let text = `Generate custom QR assets instantly at ${SITE_DOMAIN}`;
+    let text = `Generate custom QR assets instantly at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setShareCopied(true);
     setTimeout(() => setShareCopied(false), 2000);

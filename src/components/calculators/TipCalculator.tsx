@@ -44,7 +44,7 @@ const TipCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
   }, [bill, tipPercent, split]);
 
   const handleCopy = () => {
-    let text = `Total Bill: ${formatCurrency(totalBill, currency.code)} (${tipPercent}% Tip). ${split > 1 ? `Split ${split} ways: ${formatCurrency(totalPerPerson, currency.code)} each.` : ""} Calculate at ${SITE_DOMAIN}`;
+    let text = `Total Bill: ${formatCurrency(totalBill, currency.code)} (${tipPercent}% Tip). ${split > 1 ? `Split ${split} ways: ${formatCurrency(totalPerPerson, currency.code)} each.` : ""} Calculate at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

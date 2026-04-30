@@ -67,7 +67,7 @@ const RetirementFireCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
   }, [currentAge, retireAge, currentSavings, monthlyContribution, expectedReturn, monthlyExpensesAtRetirement]);
 
   const handleCopy = () => {
-    const resultText = `Financial Freedom Path: Targeting ${formatCurrency(stats.fireNumber, currency.code)} at age ${retireAge}. Plan yours at ${SITE_DOMAIN}`;
+    const resultText = `Financial Freedom Path: Targeting ${formatCurrency(stats.fireNumber, currency.code)} at age ${retireAge}. Plan yours at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

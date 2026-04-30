@@ -55,7 +55,7 @@ const FastingCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
 
   const handleCopy = () => {
     if (!results) return;
-    let text = `Fasting Protocol ${protocol}: Window ends at ${results.fastEnd}. Resume feeding until ${results.eatEnd}. Optimize yours at ${SITE_DOMAIN}`;
+    let text = `Fasting Protocol ${protocol}: Window ends at ${results.fastEnd}. Resume feeding until ${results.eatEnd}. Optimize yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

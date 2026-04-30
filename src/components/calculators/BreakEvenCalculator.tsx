@@ -65,7 +65,7 @@ const BreakEvenCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   }, [fixed, variable, price, stats.units]);
 
   const handleCopy = () => {
-    let text = `Break-Even Point: ${formatNumber(stats.units)} units | Total Sales Needed: ${formatCurrency(stats.sales, currency.code)}. Calculate yours at ${SITE_DOMAIN}`;
+    let text = `Break-Even Point: ${formatNumber(stats.units)} units | Total Sales Needed: ${formatCurrency(stats.sales, currency.code)}. Calculate yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

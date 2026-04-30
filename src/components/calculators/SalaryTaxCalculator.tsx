@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import {
    Landmark, Wallet, TrendingDown, ArrowRight,
    ShieldCheck, Receipt, PieChart, Banknote,
-   Info, Calendar, ArrowUpRight, Calculator, ShieldAlert
+   Info, Calendar, ArrowUpRight, Calculator, ShieldAlert,
+   Copy, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -19,6 +20,7 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
    const [monthlySalary, setMonthlySalary] = useState<number>(189000);
    const [taxYear, setTaxYear] = useState<"2025" | "2024">("2025");
+   const [copied, setCopied] = useState(false);
 
    const results = useMemo(() => {
       const annualSalary = monthlySalary * 12;
@@ -68,6 +70,13 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
          annualTakeHome
       };
    }, [monthlySalary, taxYear]);
+
+   const handleCopy = () => {
+      const text = `Salary Tax Analysis (FY ${taxYear === '2025' ? '2025-26' : '2024-25'}): Monthly Salary Rs. ${monthlySalary.toLocaleString()} | Monthly Take-Home Rs. ${Math.round(results.monthlyTakeHome).toLocaleString()} | Monthly Tax Rs. ${Math.round(results.monthlyTax).toLocaleString()}. Calculate at ${window.location.href}`;
+      navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+   };
 
    return (
       <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -154,8 +163,19 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                      <div className="space-y-4">
                         <div className="flex items-center justify-between">
                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Monthly Take-Home</div>
-                           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-health/10 text-health text-[9px] font-black uppercase tracking-tighter">
-                              {taxYear === "2025" ? "NEW RATES" : "OLD RATES"}
+                           <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-health/10 text-health text-[9px] font-black uppercase tracking-tighter">
+                                 {taxYear === "2025" ? "NEW RATES" : "OLD RATES"}
+                              </div>
+                              <button 
+                                 onClick={handleCopy}
+                                 className={cn(
+                                    "p-2 rounded-lg transition-all border shadow-sm",
+                                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                                 )}
+                              >
+                                 {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                              </button>
                            </div>
                         </div>
                         <div className={cn(

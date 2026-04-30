@@ -53,7 +53,7 @@ const InflationCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   }, [multiplier, amount, cumulative]);
 
   const handleCopy = () => {
-    const resultText = `Inflation Check: In ${years} years, ${formatCurrency(amount, currency.code)} will only buy what ${formatCurrency(resultInfo.purchasingPower, currency.code)} buys today. Calculate at ${SITE_DOMAIN}`;
+    const resultText = `Inflation Check: In ${years} years, ${formatCurrency(amount, currency.code)} will only buy what ${formatCurrency(resultInfo.purchasingPower, currency.code)} buys today. Calculate at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

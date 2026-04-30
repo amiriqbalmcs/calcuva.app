@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import {
   Leaf, TrendingUp, Info, BookOpen, Target, 
   ChevronRight, Calculator, Scale, RefreshCcw, Activity,
-  Sparkles, Globe, Copy, Award, AlertCircle, Plane, Car, Flame, Utensils
+  Sparkles, Globe, Copy, Award, AlertCircle, Plane, Car, Flame, Utensils, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -22,6 +22,7 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
   const [carMiles, setCarMiles] = useState<number>(8000);
   const [electricity, setElectricity] = useState<number>(300); // Monthly kWh
   const [diet, setDiet] = useState<number>(2); // 0: Vegan, 1: Veg, 2: Average, 3: High Meat
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     // Standard Emission Factors (kg CO2e)
@@ -42,6 +43,13 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
 
     return { total, breakdown };
   }, [flightHours, carMiles, electricity, diet]);
+
+  const handleCopy = () => {
+    const text = `Carbon Footprint: Annual Total ${result.total.toFixed(1)} Tons CO2e. Calculate yours at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const dietLabels = ["Vegan", "Vegetarian", "Average", "Meat Heavy"];
 
@@ -109,9 +117,20 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
           <div className="surface-card p-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
              <div className="space-y-10 relative z-10">
                 <div className="space-y-2">
-                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-                      <Activity className="size-3" /> Annual Carbon Footprint
-                   </div>
+                    <div className="flex items-center justify-between">
+                       <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                          <Activity className="size-3" /> Annual Carbon Footprint
+                       </div>
+                       <button 
+                          onClick={handleCopy}
+                          className={cn(
+                             "p-2 rounded-lg transition-all border shadow-sm",
+                             copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                          )}
+                       >
+                          {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                       </button>
+                    </div>
                    <div className="text-7xl font-mono font-bold tracking-tighter tabular-nums text-health">
                       {result.total.toFixed(1)}<span className="text-2xl ml-1 opacity-20">Tons</span>
                    </div>

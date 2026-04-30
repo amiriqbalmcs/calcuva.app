@@ -47,7 +47,7 @@ const PregnancyCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
   const handleCopy = () => {
     if (!result) return;
-    let text = `Estimated Due Date: ${fmtDate(result.dueDate)}. Progress: ${result.weeks}w ${result.days}d. Gestational tracking at ${SITE_DOMAIN}`;
+    let text = `Estimated Due Date: ${fmtDate(result.dueDate)}. Progress: ${result.weeks}w ${result.days}d. Gestational tracking at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

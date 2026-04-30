@@ -5,7 +5,7 @@ import {
   Lock, Shield, RefreshCw, Copy, Check, Info, Settings2, Fingerprint, 
   Eye, EyeOff, ShieldCheck, Zap, Server, Globe, History, Target, 
   Activity, Cpu, Terminal, ShieldAlert, Sparkles, LayoutDashboard,
-  ChevronRight, Calculator, Scale, RefreshCcw, Watch, CheckCircle2,
+  Share2, ChevronRight, Calculator, Scale, RefreshCcw, Watch, CheckCircle2,
   FileText, Landmark
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
@@ -32,6 +32,7 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
   const [useSymbols, setUseSymbols] = useState<boolean>(true);
   const [password, setPassword] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
+  const [linkCopied, setLinkCopied] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(true);
 
   const generatePassword = useCallback(() => {
@@ -65,6 +66,13 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
     navigator.clipboard.writeText(password);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopyLink = () => {
+    const text = `Secure Password Generator: Create unhackable passwords instantly at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
   };
 
   const strength = useMemo(() => {
@@ -185,6 +193,16 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
                     title="Copy Password"
                   >
                     {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                  </button>
+                  <button 
+                    onClick={handleCopyLink} 
+                    className={cn(
+                      "p-3 rounded-xl transition-all border shadow-sm",
+                      linkCopied ? "bg-white text-black border-white" : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                    )}
+                    title="Share Tool"
+                  >
+                    {linkCopied ? <CheckCircle2 className="size-5" /> : <Share2 className="size-5" />}
                   </button>
                 </div>
               </div>

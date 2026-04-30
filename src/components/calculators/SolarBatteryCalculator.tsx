@@ -6,7 +6,7 @@ import {
   Settings2, Info, BarChart3, 
   AlertTriangle, History, 
   ShieldCheck, ArrowRight, Sun,
-  Layers, Gauge
+  Layers, Gauge, Copy, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -34,6 +34,7 @@ const SolarBatteryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
   const [voltage, setVoltage] = useState<number>(12); // Per battery
   const [loadWatts, setLoadWatts] = useState<number>(1000);
   const [batteryType, setBatteryType] = useState<"lithium" | "tubular" | "lead-acid">("lithium");
+  const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => {
     const dod = batteryType === "lithium" ? 0.9 : 0.5;
@@ -57,6 +58,13 @@ const SolarBatteryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
       dodPercentage: dod * 100
     };
   }, [inputType, capacityKWh, batteryAh, batteryQty, voltage, loadWatts, batteryType]);
+
+  const handleCopy = () => {
+    const text = `Solar Battery Backup: ${results.runtimeHours}h ${results.runtimeMinutes}m runtime | Load: ${loadWatts}W | Total Capacity: ${results.totalEnergyKWh.toFixed(1)}kWh. Calculate your backup at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -168,7 +176,18 @@ const SolarBatteryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
               
               <div className="space-y-8 relative z-10">
                  <div className="space-y-2">
+                 <div className="flex items-center justify-between">
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Total Backup Runtime</p>
+                    <button 
+                       onClick={handleCopy}
+                       className={cn(
+                          "p-2 rounded-lg transition-all border shadow-sm",
+                          copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                       )}
+                    >
+                       {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                    </button>
+                 </div>
                     <div className="text-7xl md:text-8xl font-mono font-bold tracking-tighter text-foreground leading-none">
                        {results.runtimeHours}<span className="text-2xl md:text-3xl ml-2 text-muted-foreground/30 uppercase font-black">h</span>
                        <span className="mx-4 text-4xl opacity-20">:</span>

@@ -44,7 +44,7 @@ const GstVatCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
   }, [mode, amount, rate]);
 
   const handleCopy = () => {
-    let text = `Tax Audit: ${formatCurrency(result.total, currency.code)} Total (${rate}% Statutory Rate). Analysis at ${SITE_DOMAIN}`;
+    let text = `Tax Audit: ${formatCurrency(result.total, currency.code)} Total (${rate}% Statutory Rate). Analysis at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

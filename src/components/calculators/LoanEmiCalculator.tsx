@@ -87,7 +87,7 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
   }, [result.interest, principal]);
 
   const handleCopy = () => {
-    const resultText = `Loan Details: ${formatCurrency(result.emi, currency.code)} Monthly | Total Cost ${formatCurrency(result.total, currency.code)}. Calculate yours at ${SITE_DOMAIN}`;
+    const resultText = `Loan Details: ${formatCurrency(result.emi, currency.code)} Monthly | Total Cost ${formatCurrency(result.total, currency.code)}. Calculate yours at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
