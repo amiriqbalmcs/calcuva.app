@@ -87,7 +87,7 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
         
         {/* Password Settings */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/10 border-border/40 relative overflow-hidden group shadow-sm">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
             
             <div className="space-y-1 relative z-10">
@@ -100,7 +100,7 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Password Length</Label>
-                  <span className="text-[10px] font-bold">{length} Characters</span>
+                  <span className="text-[10px] font-bold text-foreground">{length} Characters</span>
                 </div>
                 <Slider value={[length]} min={8} max={64} step={1} onValueChange={([v]) => setLength(v)} />
               </div>
@@ -115,7 +115,7 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
                   <div key={item.id} className="flex items-center justify-between group/row">
                     <div className="space-y-0.5">
                       <Label className="text-[11px] font-bold uppercase tracking-tight cursor-pointer" htmlFor={item.id}>{item.label}</Label>
-                      <p className="text-[9px] text-muted-foreground font-mono uppercase opacity-40">{item.sub}</p>
+                      <p className="text-[9px] text-muted-foreground/60 font-mono uppercase font-medium">{item.sub}</p>
                     </div>
                     <Switch id={item.id} checked={item.state} onCheckedChange={item.setter} />
                   </div>
@@ -151,36 +151,38 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
         <div className="lg:col-span-8 space-y-8">
           
           {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-10 space-y-10 bg-zinc-950 text-zinc-50 border border-zinc-800/50 relative overflow-hidden group shadow-2xl">
-            <Terminal className="absolute -top-12 -right-12 size-64 opacity-[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-1000" />
+          <div className="p-8 md:p-10 space-y-10 bg-[#09090b] text-[#fafafa] border border-white/10 rounded-2xl relative overflow-hidden group shadow-2xl">
+            <Terminal className="absolute -top-12 -right-12 size-64 text-white/5 -rotate-12 transition-transform group-hover:rotate-0 duration-1000" />
             
             <div className="relative z-10">
               <div className="flex justify-between items-start mb-8">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.3em] opacity-40">
+                <div className="space-y-2 flex-1 mr-4">
+                  <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-white/60">
                     <Cpu className="size-3" />
                     New Generated Password
                   </div>
                   <div className={cn(
-                    "font-mono font-bold break-all tracking-tight tabular-nums select-all leading-none pt-4",
-                    length > 40 ? "text-2xl md:text-3xl" : length > 24 ? "text-3xl md:text-5xl" : "text-4xl md:text-6xl"
+                    "font-mono font-bold break-all tracking-tight tabular-nums select-all leading-tight pt-4 text-white",
+                    length > 40 ? "text-xl md:text-2xl" : length > 24 ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"
                   )}>
                     {showPassword ? password : "•".repeat(password.length)}
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-shrink-0">
                   <button 
                     onClick={() => setShowPassword(!showPassword)} 
-                    className="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
+                    className="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/10 text-white"
+                    title={showPassword ? "Hide Password" : "Show Password"}
                   >
-                    {showPassword ? <EyeOff className="size-5 opacity-60" /> : <Eye className="size-5 opacity-60" />}
+                    {showPassword ? <EyeOff className="size-5 opacity-80" /> : <Eye className="size-5 opacity-80" />}
                   </button>
                   <button 
                     onClick={handleCopy} 
                     className={cn(
                       "p-3 rounded-xl transition-all border shadow-sm",
-                      copied ? "bg-white text-zinc-950 border-white" : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                      copied ? "bg-white text-black border-white" : "bg-white/10 text-white border-white/20 hover:bg-white/20"
                     )}
+                    title="Copy Password"
                   >
                     {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
                   </button>
@@ -189,7 +191,7 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
               
               <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-white/10">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
                     <ShieldCheck className="size-3" />
                     Security Strength
                   </div>
@@ -201,12 +203,12 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
                     <Fingerprint className="size-3" />
                     Entropy Score
                   </div>
-                  <div className="text-3xl md:text-4xl font-mono font-bold tabular-nums">
-                    {strength.score}<span className="text-[10px] ml-1 opacity-40 uppercase tracking-widest font-sans font-bold">Points</span>
+                  <div className="text-3xl md:text-4xl font-mono font-bold tabular-nums text-white">
+                    {strength.score}<span className="text-[10px] ml-1 opacity-40 uppercase tracking-widest font-sans font-bold text-white">Points</span>
                   </div>
                 </div>
               </div>
@@ -218,9 +220,9 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <ShieldCheck className="size-5 text-muted-foreground/60" />
-                <h3 className="text-[10px] font-bold uppercase tracking-widest">Password Strength</h3>
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-foreground">Password Strength</h3>
               </div>
-              <div className={cn("text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-secondary shadow-inner", strength.color === 'bg-foreground' ? 'text-foreground' : 'text-foreground')}>
+              <div className={cn("text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-secondary shadow-inner", strength.score >= 75 ? 'text-emerald-600 dark:text-emerald-400' : 'text-foreground')}>
                 {strength.label}
               </div>
             </div>
@@ -249,11 +251,11 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
                <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
                  <div className="flex items-center gap-2 mb-3">
                     <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{item.l}</span>
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground font-medium">{item.l}</span>
                  </div>
-                 <div className="text-xl font-mono font-bold tabular-nums leading-tight">
+                 <div className="text-xl font-mono font-bold tabular-nums leading-tight text-foreground">
                     {item.v}
-                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
+                    {item.unit && <span className="text-[10px] ml-1 opacity-60 uppercase">{item.unit}</span>}
                  </div>
                </div>
              ))}
