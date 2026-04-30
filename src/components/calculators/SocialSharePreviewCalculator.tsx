@@ -99,7 +99,7 @@ export const SocialSharePreviewCalculator = ({
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
-      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-7xl mx-auto w-full">
         
         {/* Input Controls */}
         <div className="lg:col-span-5 space-y-6">
@@ -208,7 +208,7 @@ export const SocialSharePreviewCalculator = ({
 
             {/* WhatsApp Preview */}
             <TabsContent value="whatsapp" className="mt-0 focus-visible:outline-none">
-              <div className="max-w-[340px] mx-auto sm:mx-0">
+              <div className="w-full max-w-[320px] sm:max-w-[340px] mx-auto lg:mx-0">
                 <div className="bg-[#e5ddd5] dark:bg-zinc-900 rounded-2xl p-4 shadow-xl relative overflow-hidden">
                   <div className="bg-[#dcf8c6] dark:bg-zinc-800 rounded-xl p-0.5 shadow-sm border border-black/5 overflow-hidden">
                     <div className="bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
@@ -277,9 +277,9 @@ export const SocialSharePreviewCalculator = ({
                 </Button>
              </div>
 
-             <div className="bg-zinc-950 rounded-2xl p-6 relative group overflow-hidden">
+             <div className="bg-zinc-950 rounded-2xl p-4 sm:p-6 relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-50 pointer-events-none" />
-                <pre className="font-mono text-xs text-zinc-300 leading-relaxed overflow-x-auto">
+                <pre className="font-mono text-[10px] sm:text-xs text-zinc-300 leading-relaxed overflow-x-auto whitespace-pre-wrap break-all">
                    {metaCode}
                 </pre>
              </div>
