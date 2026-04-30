@@ -1,6 +1,6 @@
 ---
 title: "The Power of Compounding: How to Build Wealth in 2026"
-date: "2026-04-30"
+date: "2026-01-22"
 excerpt: "Albert Einstein famously called compounding the 'eighth wonder of the world.' Learn how to harness this force to grow your investments exponentially over time."
 category: "finance"
 author: "Admin"

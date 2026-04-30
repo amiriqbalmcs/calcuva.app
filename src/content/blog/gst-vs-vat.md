@@ -1,6 +1,6 @@
 ---
 title: "GST vs. VAT: Understanding Indirect Taxes in 2026"
-date: "2026-04-30"
+date: "2026-02-08"
 excerpt: "As global tax systems become increasingly digitized, understanding the difference between Goods and Services Tax (GST) and Value Added Tax (VAT) is crucial for business owners and consumers alike."
 category: "finance"
 author: "Admin"

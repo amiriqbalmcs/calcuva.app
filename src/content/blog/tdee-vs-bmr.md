@@ -1,6 +1,6 @@
 ---
 title: "The Math of Metabolism: Understanding TDEE vs. BMR in 2026"
-date: "2026-04-30"
+date: "2026-03-18"
 excerpt: "Stop guessing your calories. Master the difference between Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE) to master your body composition."
 category: "health"
 author: "Admin"

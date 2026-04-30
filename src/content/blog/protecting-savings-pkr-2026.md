@@ -1,6 +1,6 @@
 ---
 title: "The Silent Thief: Protecting Your Savings from PKR Devaluation in 2026"
-date: "2026-04-30"
+date: "2026-02-22"
 excerpt: "With the Pakistani Rupee (PKR) facing ongoing volatility, learn how to calculate your real purchasing power loss and discover proven strategies to hedge against inflation in 2026."
 category: "finance"
 author: "Admin"

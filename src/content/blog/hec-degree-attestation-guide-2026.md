@@ -1,6 +1,6 @@
 ---
 title: "HEC Degree Attestation 2026: The Complete Online Process Guide"
-date: "2026-04-30"
+date: "2026-04-10"
 excerpt: "Applying for a job abroad or further studies? This 2026 update covers the entire HEC e-portal process, attestation fees, and the critical CGPA to percentage conversion rules."
 category: "education"
 author: "Admin"

@@ -1,6 +1,6 @@
 ---
 title: "The Math of Life: Understanding Your Metascore in 2026"
-date: "2026-03-25"
+date: "2026-03-20"
 excerpt: "Beyond BMI, what determines your metabolic health? Learn the role of Resting Metabolic Rate (RMR) and how to optimize your health markers in 2026."
 category: "health"
 author: "Admin"

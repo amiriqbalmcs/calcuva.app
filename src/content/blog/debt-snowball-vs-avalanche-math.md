@@ -1,6 +1,6 @@
 ---
 title: "Debt Snowball vs. Avalanche: Which Strategy Actually Works in 2026?"
-date: "2026-04-30"
+date: "2026-03-28"
 excerpt: "Struggling with multiple credit cards or personal loans? We break down the psychological vs. mathematical debate between the Snowball and Avalanche methods."
 category: "finance"
 author: "Admin"
