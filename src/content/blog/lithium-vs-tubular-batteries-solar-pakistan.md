@@ -3,7 +3,7 @@ title: "Lithium vs. Tubular Batteries: Which is Best for Solar in Pakistan?"
 description: "A deep dive comparison for 2026. Compare 5kWh Lithium LFP modules with traditional tubular batteries on price, life, and performance."
 date: "2026-01-20"
 category: "utility"
-author: "Calcuva Energy Lab"
+author: "Admin"
 calculator: "solar-battery-backup-calculator"
 keywords: ["lithium vs tubular battery pakistan", "best battery for solar home", "5kwh lithium battery price pakistan", "tubular battery backup time", "lfp battery benefits"]
 ---

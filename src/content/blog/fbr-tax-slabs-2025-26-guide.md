@@ -3,7 +3,7 @@ title: "FBR Salary Tax Slabs 2025-26: The Ultimate Guide for Pakistani Employees
 description: "Everything you need to know about the new income tax slabs for FY 2025-26. See how much tax is deducted on 1 lakh, 2 lakh, and 5 lakh salaries."
 date: "2026-03-12"
 category: "finance"
-author: "Calcuva Finance Team"
+author: "Admin"
 calculator: "salary-income-tax-calculator-2026"
 image: "/blog/fbr-tax-2026.jpg"
 keywords: ["FBR tax slabs 2026", "Pakistan salary tax", "income tax calculator 2025-26", "filer vs non-filer", "salary tax pakistan"]

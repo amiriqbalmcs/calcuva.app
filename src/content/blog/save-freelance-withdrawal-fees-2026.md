@@ -3,7 +3,7 @@ title: "Freelance Arbitrage: How to Save 5% on Every Withdrawal in 2026"
 description: "Upwork and Fiverr fees are only the beginning. Learn how to beat hidden bank spreads and find the most efficient way to withdraw USD to PKR."
 date: "2026-03-05"
 category: "finance"
-author: "Calcuva Freelance Desk"
+author: "Admin"
 calculator: "salary-income-tax-calculator-2026"
 image: "/blog/freelance-fees-2026.jpg"
 keywords: ["freelance fee optimizer", "upwork vs fiverr fees", "wise vs payoneer pakistan", "bank exchange rate spread", "withdraw usd to pakistan"]

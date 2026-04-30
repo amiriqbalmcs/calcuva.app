@@ -3,7 +3,7 @@ title: "How to Size Your Solar System for Pakistan (2026 Strategy)"
 description: "A professional guide to solar sizing in 2026. Learn how to calculate load for 1.5 ton ACs, choosing between 5kW, 10kW systems, and maximizing ROI."
 date: "2026-02-14"
 category: "utility"
-author: "Amir Iqbal"
+author: "Admin"
 calculator: "solar-system-requirement-calculator"
 keywords: ["how to calculate solar load pakistan", "solar system sizing 2026", "how many solar panels for 1.5 ton ac", "best solar system size home", "solar roi pakistan"]
 ---

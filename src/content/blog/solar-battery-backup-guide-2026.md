@@ -3,7 +3,7 @@ title: "The Ultimate Guide to Solar Battery Backup in Pakistan (2026 Strategy)"
 description: "Everything you need to know about energy storage in 2026. From Lithium LFP modules to backup time calculations and NEPRA regulations."
 date: "2026-03-25"
 category: "utility"
-author: "Calcuva Energy Lab"
+author: "Admin"
 calculator: "solar-battery-backup-calculator"
 keywords: ["solar battery backup pakistan", "5kwh lithium battery runtime", "energy storage trends 2026", "solar battery sizing guide", "hybrid solar systems pakistan"]
 ---

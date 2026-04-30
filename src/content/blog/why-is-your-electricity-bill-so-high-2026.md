@@ -3,7 +3,7 @@ title: "Why is Your Electricity Bill So High? A 2026 Deep Dive into Pakistan's T
 description: "From circular debt surcharges to 18% GST, we analyze why Pakistani electricity bills are reaching record highs in 2026 and how you can fight back."
 date: "2026-01-05"
 category: "finance"
-author: "Calcuva Energy Desk"
+author: "Admin"
 calculator: "electricity-bill-predictor-pakistan"
 image: "/blog/pakistan-electricity-2026.jpg"
 keywords: ["electricity bill pakistan 2026", "nepra tariff slabs", "why is electricity so expensive in pakistan", "circular debt surcharge", "FPA calculation 2026"]
