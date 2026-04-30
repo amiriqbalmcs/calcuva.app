@@ -61,10 +61,10 @@ export const SocialSharePreviewCalculator = ({
     try {
       const res = await fetch(`/api/fetch-metadata?url=${encodeURIComponent(url)}`);
       const data = await res.json();
-      if (data.title) setTitle(data.title);
-      if (data.description) setDescription(data.description);
-      if (data.image) setImage(data.image);
-      toast.success("Metadata fetched successfully!");
+      setTitle(data.title || "");
+      setDescription(data.description || "");
+      setImage(data.image || "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80");
+      toast.success("Metadata fetched!");
     } catch (error) {
       toast.error("Failed to fetch metadata. Please enter manually.");
     } finally {
