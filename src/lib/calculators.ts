@@ -9,6 +9,7 @@ export interface CalcMeta {
   category: CategoryKey;
   keywords: string[];
   relatedSlugs?: string[];
+  hideCurrencySwitcher?: boolean;
 }
 
 export const CATEGORIES: Record<CategoryKey, { label: string; code: string; description: string }> = {
@@ -391,6 +392,112 @@ export const CALCULATORS: CalcMeta[] = [
     icon: "GraduationCap", category: "education",
     keywords: ["grade calculator", "final grade", "weighted average", "exam score", "school grades", "academic performance"],
     relatedSlugs: ["gpa-to-percentage-calculator", "word-character-counter-tool"],
+  },
+  // Batch: Static Logic Tools (Pakistan)
+  {
+    slug: "hec-cgpa-converter",
+    title: "HEC CGPA to Percentage Calculator",
+    short: "Convert CGPA to percentage using HEC and university-specific scales.",
+    description: "Official CGPA to percentage converter for Pakistani universities including NUST, FAST, LUMS, and UET based on HEC guidelines.",
+    icon: "GraduationCap", category: "education",
+    keywords: ["hec cgpa converter", "cgpa to percentage pakistan", "nust gpa calculator", "fast university gpa", "hec grading scale"],
+    relatedSlugs: ["academic-grade-calculator", "gpa-to-percentage-calculator"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "board-percentage-calculator",
+    title: "Matric & Inter Percentage Calculator",
+    short: "Calculate percentage and grade for all Pakistani education boards.",
+    description: "Result calculator for Matric and Intermediate students across Punjab, Sindh, KPK, and Federal boards with grade and division analysis.",
+    icon: "FileText", category: "education",
+    keywords: ["board result calculator", "matric percentage", "inter percentage calculator", "punjab board grading", "federal board marks"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "pakistan-inflation-calculator",
+    title: "Pakistan Inflation & Purchasing Power",
+    short: "Calculate the real value of PKR over time using historical data.",
+    description: "Compare the value of Pakistani Rupee (PKR) between any two years from 2010 to 2025 using historical CPI data.",
+    icon: "TrendingUp", category: "finance",
+    keywords: ["pakistan inflation calculator", "pkr purchasing power", "inflation rate pakistan history", "value of 1000 pkr"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "loan-eligibility-calculator-pakistan",
+    title: "Pakistan Loan Eligibility Calculator",
+    short: "Check how much home or car loan you can get based on your salary.",
+    description: "Calculate your maximum loan amount and monthly EMI eligibility using standard Pakistani bank DTI (Debt-to-Income) ratios.",
+    icon: "Landmark", category: "finance",
+    keywords: ["loan eligibility pakistan", "home loan calculator pakistan", "car loan salary requirement", "bank loan eligibility"],
+    hideCurrencySwitcher: true,
+  },
+  // Batch: Static Logic Tools (Worldwide)
+  {
+    slug: "debt-payoff-calculator",
+    title: "Debt Snowball vs Avalanche Calculator",
+    short: "Compare the fastest way to pay off your debts and save interest.",
+    description: "Strategic debt payoff tool to compare the Snowball method (lowest balance first) vs Avalanche method (highest interest first).",
+    icon: "Target", category: "finance",
+    keywords: ["debt snowball vs avalanche", "debt payoff calculator", "get out of debt tool", "credit card payoff strategy"],
+  },
+  {
+    slug: "sleep-debt-calculator",
+    title: "Sleep Debt & Recovery Calculator",
+    short: "Calculate your weekly sleep deficit and get a recovery plan.",
+    description: "Track your sleep hours over the week to identify cumulative sleep debt and get a scientifically-backed recovery schedule.",
+    icon: "Moon", category: "health",
+    keywords: ["sleep debt calculator", "sleep deficit tool", "how to recover sleep", "circadian rhythm tracker"],
+  },
+  {
+    slug: "blood-sugar-hba1c-converter",
+    title: "Blood Sugar to HbA1c Converter",
+    short: "Convert average blood glucose levels to HbA1c and assess risk.",
+    description: "Clinical converter to estimate your HbA1c percentage from average daily blood sugar readings with a diabetes risk chart.",
+    icon: "Activity", category: "health",
+    keywords: ["blood sugar to hba1c", "glucose converter", "diabetes risk assessment", "average blood sugar hba1c"],
+  },
+  {
+    slug: "net-worth-tracker",
+    title: "Personal Net Worth Calculator",
+    short: "Track your total assets and liabilities in one place.",
+    description: "Comprehensive net worth calculator with categories for property, savings, investments, and debts for a clear financial snapshot.",
+    icon: "Briefcase", category: "finance",
+    keywords: ["net worth calculator", "track assets and liabilities", "personal balance sheet", "financial snapshot"],
+  },
+  {
+    slug: "personal-carbon-footprint-calculator",
+    title: "Personal Carbon Footprint Calculator",
+    short: "Estimate your annual carbon emissions and environmental impact.",
+    description: "Calculate your CO2 emissions from flights, driving, home energy, and diet with reduction tips and impact breakdown.",
+    icon: "Leaf", category: "utility",
+    keywords: ["carbon footprint calculator", "co2 emissions tool", "environmental impact calculator", "reduce carbon footprint"],
+  },
+  {
+    slug: "solar-roi-simulator-pakistan",
+    title: "Solar ROI & Net-Metering Simulator",
+    short: "Simulate your solar savings and calculate payback period for your home.",
+    description: "Advanced energy simulation for 2026. Calculate monthly savings, export credits, and system ROI based on current Pakistani electricity tariffs and net-metering policies.",
+    icon: "Sun", category: "finance",
+    keywords: ["solar roi calculator pakistan", "net metering simulator", "solar payback period", "electricity bill savings solar", "solar inverter sizing"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "freelance-fee-optimizer",
+    title: "Freelance Fee & Arbitrage Optimizer",
+    short: "Compare platform fees and withdrawal paths to maximize your earnings.",
+    description: "Are you losing money to hidden bank fees? Use our optimizer to compare Upwork, Fiverr, and Direct Client fees against Wise, Payoneer, and Bank Wire withdrawal paths.",
+    icon: "Coins", category: "finance",
+    keywords: ["freelance fee calculator", "upwork vs fiverr fees", "payoneer withdrawal fee pakistan", "wise vs payoneer", "bank exchange rate calculator"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "salary-income-tax-calculator-2026",
+    title: "Pakistan Salary Tax Calculator 2026",
+    short: "Calculate your monthly and yearly take-home salary after official FBR tax deductions.",
+    description: "The most accurate tax calculator for the 2025-26 and 2024-25 fiscal years. Compare yearly tax slabs, calculate monthly deductions, and see your real take-home pay based on latest FBR budget rules.",
+    icon: "Landmark", category: "finance",
+    keywords: ["pakistan income tax calculator 2026", "fbr tax slabs 2025-26", "calculate monthly salary tax", "yearly income tax pakistan", "fbr budget 2026 tax rates"],
+    hideCurrencySwitcher: true,
   },
 ];
 

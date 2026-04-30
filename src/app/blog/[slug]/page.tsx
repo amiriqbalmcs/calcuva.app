@@ -1,15 +1,18 @@
 import { getPostData, getSortedPostsData } from "@/lib/markdown";
 import { SiteHeader } from "@/components/SiteHeader";
-import { Calendar, Clock, ArrowLeft, Share, Bookmark, Calculator, UserRound } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Calculator, UserRound, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CALCULATORS } from "@/lib/calculators";
 import { Seo } from "@/components/Seo";
+import { BlogShareAction } from "@/components/BlogShareAction";
 import authorsData from "@/content/authors.json";
 import type { Metadata } from "next";
 
 const authors = authorsData as Record<string, { name: string; role: string; bio: string; avatar?: string }>;
-const BASE_URL = "https://calcuva.app";
+import { SITE_URL } from "@/lib/constants";
+
+const BASE_URL = SITE_URL;
 
 export async function generateStaticParams() {
   const posts = await getSortedPostsData("blog");
@@ -51,7 +54,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const post = await getPostData("blog", slug);
   const author = authors[post.author] || authors["Admin"];
 
-  // Intent-based tool discovery: Target exact tool if provided, else fallback to category
   const activeTool = post.calculator 
     ? CALCULATORS.find(c => c.slug === post.calculator) 
     : CALCULATORS.find(c => c.category === post.category);
@@ -88,13 +90,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       />
       <main className="min-h-screen pt-20 sm:pt-28 pb-32">
         <div className="container-wide">
-          {/* Back Navigation */}
           <Link href="/blog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-all mb-16 group">
              <ArrowLeft className="size-3.5 group-hover:-translate-x-1 transition-transform" /> Back to Guides
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-16">
-            {/* Article Content */}
             <article className="max-w-3xl">
                <header className="mb-16">
                   <div className="flex items-center gap-6 text-[10px] font-mono font-black text-muted-foreground uppercase tracking-[0.3em] mb-10">
@@ -106,6 +106,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                      )}>{post.category}</span>
                      <span className="flex items-center gap-2"><Calendar className="size-3.5" /> {new Date(post.date).toLocaleDateString()}</span>
                      <span className="flex items-center gap-2"><Clock className="size-3.5" /> {post.readingTime}</span>
+                     <BlogShareAction title={post.title} excerpt={post.excerpt} slug={post.slug} />
                   </div>
                   <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter mb-12 leading-[1.05] break-words">
                      {post.title}
@@ -126,13 +127,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   )}
                </header>
 
-               {/* Markdown Output */}
                <div 
                  className="prose dark:prose-invert max-w-none"
                  dangerouslySetInnerHTML={{ __html: post.contentHtml }} 
                />
 
-               {/* Tags/Footer */}
                <footer className="mt-20 pt-10 border-t border-border flex items-center justify-between">
                 <div className="flex flex-wrap items-center gap-2">
                    {post.keywords.map(k => (
@@ -142,35 +141,31 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                </footer>
             </article>
 
-             {/* Sticky Sidebar Tool Recommendation */}
              <aside className="no-print">
                 <div className="sticky top-28 space-y-6">
                    {activeTool && (
                      <div className="surface-card p-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.02] to-transparent" />
-                        <div className="flex items-center gap-3 mb-8">
-                           <Calculator className="size-5 text-foreground" />
-                           <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Try the Tool</h3>
+                        <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.02] to-transparent pointer-events-none" />
+                        <div className="relative z-10 space-y-6">
+                           <div className="size-12 rounded-2xl bg-background border border-border/60 flex items-center justify-center shadow-sm">
+                              <Calculator className="size-6 text-muted-foreground" />
+                           </div>
+                           <div className="space-y-2">
+                              <h4 className="text-xl font-bold tracking-tight leading-tight">{activeTool.title}</h4>
+                              <p className="text-xs text-muted-foreground font-medium leading-relaxed">Calculate and analyze results based on the insights in this guide.</p>
+                           </div>
+                           <Link 
+                              href={`/calculators/${activeTool.slug}`}
+                              className="flex items-center justify-center w-full h-12 bg-foreground text-background text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-foreground/90 transition-all shadow-xl shadow-black/10"
+                           >
+                              Open Tool
+                           </Link>
                         </div>
-                        <h4 className="text-2xl font-bold mb-4 leading-tight tracking-tight text-foreground">Calculate yours now.</h4>
-                        <p className="text-sm text-muted-foreground leading-relaxed mb-10 font-medium">
-                           Ready to run your own numbers? Our <strong>{activeTool.title}</strong> is fast, free, and entirely private.
-                        </p>
-                        <Link 
-                          href={`/calculators/${activeTool.slug}`}
-                          className="flex items-center justify-between w-full bg-foreground text-background px-8 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl hover:scale-[1.02] transition-all group/btn"
-                        >
-                          Open Tool <ArrowLeft className="size-4 rotate-180 group-hover/btn:translate-x-1 transition-transform" />
-                        </Link>
                      </div>
                    )}
-
-                   <div className="surface-card p-8 bg-secondary/10 border-border/40">
-                      <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-6">Share This Guide</h3>
-                      <div className="flex gap-3">
-                         <button className="flex-1 h-12 rounded-xl bg-background border border-border/60 hover:border-foreground transition-all flex items-center justify-center text-foreground"><Share className="size-4" /></button>
-                         <button className="flex-1 h-12 rounded-xl bg-background border border-border/60 hover:border-foreground transition-all flex items-center justify-center text-foreground"><Bookmark className="size-4" /></button>
-                      </div>
+                   
+                   <div className="space-y-4">
+                      <BlogShareAction title={post.title} excerpt={post.excerpt} slug={post.slug} variant="sidebar" />
                    </div>
                 </div>
              </aside>

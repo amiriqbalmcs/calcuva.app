@@ -9,6 +9,9 @@ import { SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "Calcuva — Free Online Calculators for Finance, Health & Business",
     template: "%s | Calcuva",

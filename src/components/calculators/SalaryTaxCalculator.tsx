@@ -2,395 +2,216 @@
 
 import { useMemo, useState } from "react";
 import { 
-  Share, CheckCircle2, Receipt, Info, Plus, Trash2, Globe, 
-  History, Landmark, Target, Activity, Zap, Ruler, Gauge, 
-  Sparkles, LayoutDashboard, Calculator, Wallet, TrendingDown,
-  Settings2, Copy, Banknote, BarChart as BarChartIcon, ChevronRight,
-  ShieldCheck, ArrowDownRight, Fingerprint
+  Landmark, Wallet, TrendingDown, ArrowRight, 
+  ShieldCheck, Receipt, PieChart, Banknote,
+  Info, Calendar, ArrowUpRight, Calculator
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { calculatorBySlug } from "@/lib/calculators";
-import { formatCurrency } from "@/lib/format";
-import { useUrlState } from "@/hooks/useUrlState";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useCurrency } from "@/context/CurrencyContext";
-import { SITE_DOMAIN } from "@/lib/constants";
 
-const calc = calculatorBySlug("income-tax-calculator");
-
-const REGIMES = {
-  US: { label: "United States (Federal)", standard: 14600, brackets: [{ upTo: 11600, rate: 0.10 }, { upTo: 47150, rate: 0.12 }, { upTo: 100525, rate: 0.22 }, { upTo: 191950, rate: 0.24 }, { upTo: 243725, rate: 0.32 }, { upTo: 609350, rate: 0.35 }, { upTo: Infinity, rate: 0.37 }] },
-  UK: { label: "United Kingdom", standard: 12570, brackets: [{ upTo: 37700, rate: 0.20 }, { upTo: 125140, rate: 0.40 }, { upTo: Infinity, rate: 0.45 }] },
-  IN: { label: "India (FY 2024-25)", standard: 75000, brackets: [{ upTo: 300000, rate: 0 }, { upTo: 700000, rate: 0.05 }, { upTo: 1000000, rate: 0.10 }, { upTo: 1200000, rate: 0.15 }, { upTo: 1500000, rate: 0.20 }, { upTo: Infinity, rate: 0.30 }] },
-  CUSTOM: { label: "Universal / Manual Config", standard: 0, brackets: [] }
-};
-
-type RegimeKey = keyof typeof REGIMES;
+const calc = calculatorBySlug("salary-income-tax-calculator-2026");
 
 const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
   if (!calc) return null;
-  const { currency } = useCurrency();
-  const [regime, setRegime] = useUrlState<RegimeKey>("rg", "US");
-  const [income, setIncome] = useUrlState<number>("inc", 85000);
-  const [otherDeductions, setOtherDeductions] = useUrlState<number>("ded", 0);
-  const [customStandard, setCustomStandard] = useUrlState<number>("cstd", 0);
-  const [customBracketsStr, setCustomBracketsStr] = useUrlState<string>("cb", JSON.stringify([{ upTo: 20000, rate: 0.1 }, { upTo: 50000, rate: 0.2 }, { upTo: Infinity, rate: 0.3 }]));
-  const [copied, setCopied] = useState(false);
 
-  const customBrackets = useMemo(() => {
-    try { return JSON.parse(customBracketsStr); } catch { return []; }
-  }, [customBracketsStr]);
+  const [monthlySalary, setMonthlySalary] = useState<number>(189000);
+  const [taxYear, setTaxYear] = useState<"2025" | "2024">("2025");
 
-  const result = useMemo(() => {
-    const isCustom = regime === "CUSTOM";
-    const standard = isCustom ? customStandard : REGIMES[regime].standard;
-    const brackets = isCustom ? customBrackets : REGIMES[regime].brackets;
-
-    const taxable = Math.max(0, income - (Number(standard) || 0) - otherDeductions);
+  const results = useMemo(() => {
+    const annualSalary = monthlySalary * 12;
     let tax = 0;
-    let prev = 0;
-    const breakdown = [];
 
-    for (const b of brackets) {
-      if (taxable <= prev) break;
-      const upTo = b.upTo ?? Infinity;
-      const taxedHere = Math.min(taxable, upTo) - prev;
-      tax += taxedHere * b.rate;
-      
-      const rangeStart = (Number(prev) || 0).toLocaleString();
-      const rangeEnd = upTo === Infinity ? "∞" : (Number(upTo) || 0).toLocaleString();
-      
-      breakdown.push({ 
-        range: `${rangeStart} – ${rangeEnd}`, 
-        amount: taxedHere, 
-        rate: b.rate, 
-        tax: taxedHere * b.rate 
-      });
-      prev = upTo;
-    }
-
-    const net = income - tax;
-    const effective = income > 0 ? (tax / income) * 100 : 0;
-    
-    let insight = "";
-    let status: "optimal" | "warning" | "critical" = "optimal";
-    if (effective > 35) {
-      status = "critical";
-      insight = "High Tax Rate: You are paying a high percentage of your income in taxes. You may want to look into tax-saving investments or deductions.";
-    } else if (effective > 20) {
-      status = "warning";
-      insight = "Average Tax Rate: Your tax rate is fairly standard for your income level.";
+    if (taxYear === "2025") {
+      // OFFICIAL 2025-26 SLABS
+      if (annualSalary <= 600000) {
+        tax = 0;
+      } else if (annualSalary <= 1200000) {
+        tax = (annualSalary - 600000) * 0.01;
+      } else if (annualSalary <= 2200000) {
+        tax = 6000 + (annualSalary - 1200000) * 0.11;
+      } else if (annualSalary <= 3200000) {
+        tax = 116000 + (annualSalary - 2200000) * 0.23;
+      } else if (annualSalary <= 4100000) {
+        tax = 346000 + (annualSalary - 3200000) * 0.30;
+      } else {
+        tax = 616000 + (annualSalary - 4100000) * 0.35;
+      }
     } else {
-      status = "optimal";
-      insight = "Low Tax Rate: You are keeping most of your money! Your tax rate is very efficient.";
+      // PREVIOUS 2024-25 SLABS
+      if (annualSalary <= 600000) {
+        tax = 0;
+      } else if (annualSalary <= 1200000) {
+        tax = (annualSalary - 600000) * 0.025;
+      } else if (annualSalary <= 2400000) {
+        tax = 15000 + (annualSalary - 1200000) * 0.125;
+      } else if (annualSalary <= 3600000) {
+        tax = 165000 + (annualSalary - 2400000) * 0.225;
+      } else if (annualSalary <= 6000000) {
+        tax = 435000 + (annualSalary - 3600000) * 0.275;
+      } else {
+        tax = 1095000 + (annualSalary - 6000000) * 0.35;
+      }
     }
 
-    return { taxable, tax, net, effective, breakdown, monthly: net / 12, insight, status };
-  }, [income, regime, otherDeductions, customStandard, customBrackets]);
+    const monthlyTax = tax / 12;
+    const monthlyTakeHome = monthlySalary - monthlyTax;
+    const annualTakeHome = annualSalary - tax;
 
-  const updateBracket = (idx: number, patch: any) => {
-    const next = [...customBrackets];
-    next[idx] = { ...next[idx], ...patch };
-    setCustomBracketsStr(JSON.stringify(next));
-  };
-
-  const addBracket = () => setCustomBracketsStr(JSON.stringify([...customBrackets, { upTo: Infinity, rate: 0.25 }]));
-  const removeBracket = (idx: number) => setCustomBracketsStr(JSON.stringify(customBrackets.filter((_: any, i: number) => i !== idx)));
-
-  const handleCopy = () => {
-    const resultText = `Fiscal Audit: ${result.effective.toFixed(1)}% Effective Tax | Net ${formatCurrency(result.net, currency.code)}. Plan your taxes at ${SITE_DOMAIN}`;
-    navigator.clipboard.writeText(resultText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    return {
+      annualSalary,
+      annualTax: tax,
+      monthlyTax,
+      monthlyTakeHome,
+      annualTakeHome
+    };
+  }, [monthlySalary, taxYear]);
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-        
-        {/* Input Side */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
-            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-            
-            <div className="space-y-1 relative z-10">
-              <h3 className="text-sm font-bold tracking-tight">Tax Details</h3>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Info</p>
-            </div>
-
-            <div className="space-y-8 relative z-10">
-              {/* Jurisdiction */}
-              <div className="space-y-3">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Your Location</Label>
-                <Select value={regime} onValueChange={(v) => setRegime(v as RegimeKey)}>
-                  <SelectTrigger className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-[10px] uppercase tracking-widest rounded-xl shadow-sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="rounded-xl border-border/40">
-                    {(Object.keys(REGIMES) as RegimeKey[]).map(k => (
-                      <SelectItem key={k} value={k} className="text-[10px] font-bold uppercase tracking-widest">
-                        {REGIMES[k].label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Annual Income */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Yearly Income</Label>
-                </div>
-                <div className="relative group">
-                  <Input 
-                    type="number" 
-                    value={income} 
-                    onChange={(e) => setIncome(Number(e.target.value) || 0)} 
-                    className="h-12 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-lg rounded-xl pr-12 shadow-sm"
-                  />
-                  <Banknote className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
-                </div>
-              </div>
-
-              {/* Deductions */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Deductions</Label>
-                </div>
-                <div className="relative group">
-                  <Input 
-                    type="number" 
-                    value={otherDeductions} 
-                    onChange={(e) => setOtherDeductions(Number(e.target.value) || 0)} 
-                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg shadow-sm pr-12"
-                  />
-                  <ArrowDownRight className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
-                </div>
-              </div>
-
-              {regime === "CUSTOM" && (
-                <div className="space-y-3 pt-2">
-                  <div className="flex justify-between items-center">
-                    <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Standard Deduction</Label>
+        <div className="lg:col-span-8 space-y-6">
+          <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden shadow-sm">
+            <div className="p-8 border-b border-border/40 bg-background flex items-center justify-between">
+               <div className="flex items-center gap-4">
+                  <div className="size-12 rounded-2xl bg-secondary flex items-center justify-center">
+                     <Landmark className="size-6 text-foreground" />
                   </div>
-                  <Input 
-                    type="number" 
-                    value={customStandard} 
-                    onChange={(e) => setCustomStandard(Number(e.target.value) || 0)} 
-                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-
-          {regime === "CUSTOM" && (
-            <div className="surface-card p-6 md:p-8 space-y-6 bg-background border-border/30 relative overflow-hidden group">
-               <Fingerprint className="absolute -top-4 -right-4 size-20 text-muted-foreground/5 -rotate-12" />
-               <div className="flex items-center justify-between relative z-10">
-                 <h3 className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Custom Tax Rates</h3>
-                 <button onClick={addBracket} className="size-8 rounded-lg bg-foreground text-background flex items-center justify-center hover:scale-105 transition-transform shadow-lg">
-                    <Plus className="size-4" />
-                 </button>
+                  <div className="space-y-0.5">
+                     <h3 className="text-lg font-bold tracking-tight text-foreground uppercase">Income Tax Configuration</h3>
+                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">FBR Official Salary Slabs (Pakistan)</p>
+                  </div>
                </div>
-               <div className="space-y-3 relative z-10">
-                 {customBrackets.map((b: any, i: number) => (
-                   <div key={i} className="flex gap-2 items-center p-3 rounded-xl bg-secondary/20 border border-border/40 relative group/row hover:border-foreground/20 transition-colors">
-                     <div className="flex-1">
-                        <Input 
-                          type="number" 
-                          value={b.upTo === Infinity ? "" : b.upTo} 
-                          placeholder="Upper Bound (∞)" 
-                          onChange={(e) => updateBracket(i, { upTo: e.target.value === "" ? Infinity : Number(e.target.value) })} 
-                          className="h-9 text-[10px] font-bold bg-background border-border/40 rounded-lg pr-8" 
-                        />
-                     </div>
-                     <div className="w-20 relative">
-                        <Input 
-                          type="number" 
-                          value={Math.round(b.rate * 100)} 
-                          onChange={(e) => updateBracket(i, { rate: Number(e.target.value) / 100 })} 
-                          className="h-9 text-[10px] font-bold bg-background border-border/40 text-center rounded-lg pr-6" 
-                        />
-                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold text-muted-foreground">%</span>
-                     </div>
-                     <button onClick={() => removeBracket(i)} className="size-6 text-muted-foreground/30 hover:text-destructive transition-colors">
-                        <Trash2 className="size-3" />
+            </div>
+            
+            <div className="p-8 space-y-10">
+               <div className="space-y-6">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Monthly Income (PKR)</Label>
+                  <div className="relative group">
+                     <Input
+                        type="number"
+                        value={monthlySalary || ""}
+                        onChange={(e) => setMonthlySalary(Number(e.target.value) || 0)}
+                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-20 focus:ring-4 ring-primary/5 transition-all"
+                        placeholder="0"
+                     />
+                     <div className="absolute left-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-xl font-bold">Rs.</div>
+                  </div>
+               </div>
+
+               <div className="space-y-4 pt-4 border-t border-border/40">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Select Fiscal Year</Label>
+                  <div className="grid grid-cols-2 gap-4">
+                     <button 
+                        onClick={() => setTaxYear("2025")}
+                        className={cn("p-6 border rounded-3xl transition-all text-left space-y-2", 
+                           taxYear === "2025" ? "bg-primary/5 border-primary/40 shadow-sm" : "bg-background border-border/60 hover:border-foreground/20")
+                        }
+                     >
+                        <div className="flex items-center gap-2">
+                           <Calendar className={cn("size-4", taxYear === "2025" ? "text-primary" : "text-muted-foreground")} />
+                           <span className={cn("text-xs font-bold uppercase tracking-tight", taxYear === "2025" ? "text-foreground" : "text-muted-foreground")}>FY 2025 - 2026</span>
+                        </div>
+                        <p className="text-[10px] text-muted-foreground leading-relaxed">Current Year (Post-Budget June 2025 Rates).</p>
                      </button>
-                   </div>
-                 ))}
+                     <button 
+                        onClick={() => setTaxYear("2024")}
+                        className={cn("p-6 border rounded-3xl transition-all text-left space-y-2", 
+                           taxYear === "2024" ? "bg-primary/5 border-primary/40 shadow-sm" : "bg-background border-border/60 hover:border-foreground/20")
+                        }
+                     >
+                        <div className="flex items-center gap-2">
+                           <History className="size-4" />
+                           <span className={cn("text-xs font-bold uppercase tracking-tight", taxYear === "2024" ? "text-foreground" : "text-muted-foreground")}>FY 2024 - 2025</span>
+                        </div>
+                        <p className="text-[10px] text-muted-foreground leading-relaxed">Previous Year (Old Slabs).</p>
+                     </button>
+                  </div>
                </div>
             </div>
-          )}
 
-          {/* Fiscal Insight */}
-          <div className={cn(
-            "surface-card p-6 border-border/30 relative overflow-hidden group",
-            result.status === "critical" ? "bg-destructive/5 text-destructive" : result.status === "warning" ? "bg-amber-500/5 text-amber-500" : "bg-health/5 text-health"
-          )}>
-            <ShieldCheck className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
-            <div className="flex gap-4 items-start relative z-10">
-              <div className="mt-1">
-                <Receipt className="size-5" />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-[10px] font-bold uppercase tracking-wider">Tax Analysis</h4>
-                <p className="text-xs opacity-80 leading-relaxed font-medium">
-                  {result.insight}
-                </p>
-              </div>
+            <div className="p-8 bg-foreground/5 border-t border-border/40 flex items-center gap-6">
+               <div className="size-12 rounded-2xl bg-background border border-border/40 flex items-center justify-center shrink-0 shadow-sm">
+                  <ShieldCheck className="size-5 text-primary" />
+               </div>
+               <div className="space-y-1">
+                  <p className="text-[11px] font-bold text-foreground uppercase tracking-tight">Verified FBR Slabs</p>
+                  <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase">
+                     Calculated using official progressive slabs. Rs. {monthlySalary.toLocaleString()} monthly income generates Rs. {Math.round(results.monthlyTax).toLocaleString()} tax for {taxYear === "2025" ? "2025-26" : "2024-25"}.
+                  </p>
+               </div>
             </div>
           </div>
         </div>
 
-        {/* Results Side */}
-        <div className="lg:col-span-8 space-y-8">
-          
-          {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
-            <Calculator className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
-            
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-8">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                    <Wallet className="size-3" />
-                    Annual Take-Home Pay
-                  </div>
-                  <div className="text-6xl md:text-7xl font-mono font-bold tracking-tighter tabular-nums text-foreground">
-                    {formatCurrency(result.net, currency.code)}
-                  </div>
-                </div>
-                <button 
-                  onClick={handleCopy} 
-                  className={cn(
-                    "p-3 rounded-xl transition-all border shadow-sm",
-                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
-                  )}
-                  title="Copy Results"
-                >
-                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
-                </button>
-              </div>
-              
-              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                    <Gauge className="size-3 text-health" />
-                    Effective Tax Rate
-                  </div>
-                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
-                    {result.effective.toFixed(1)}<span className="text-[10px] opacity-40 uppercase tracking-widest font-sans font-bold">%</span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                    <Receipt className="size-3" />
-                    Total Tax Paid
-                  </div>
-                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
-                    {formatCurrency(result.tax, currency.code)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="lg:col-span-4 space-y-6">
+          <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-28 overflow-hidden">
+             <div className="absolute top-0 right-0 size-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
-          {/* Progression Matrix */}
-          <div className="surface-card overflow-hidden bg-secondary/5 border-border/30 relative group shadow-sm">
-            <div className="p-8 border-b border-border/40 flex items-center justify-between bg-background/40 backdrop-blur-sm relative overflow-hidden">
-               <BarChartIcon className="absolute -top-4 -right-4 size-24 text-muted-foreground/5 -rotate-12" />
-               <div className="space-y-1 relative z-10">
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Tax Breakdown</h4>
-                  <p className="text-sm font-bold tracking-tight">How Your Tax Is Calculated</p>
-               </div>
-               <div className="text-right relative z-10">
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1 opacity-40">Monthly Take-Home</span>
-                  <div className="text-xl font-mono font-medium text-foreground">{formatCurrency(result.monthly, currency.code)}</div>
-               </div>
-            </div>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead className="bg-background/20 text-[9px] uppercase font-bold text-muted-foreground border-b border-border/40">
-                  <tr>
-                    <th className="px-8 py-5">Income Bracket ({currency.code})</th>
-                    <th className="px-8 py-5 text-center">Tax Rate</th>
-                    <th className="px-8 py-5 text-right">Tax Paid</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border/20">
-                  {result.breakdown.map((b, i) => (
-                    <tr key={i} className="hover:bg-foreground/[0.02] transition-colors group/row">
-                      <td className="px-8 py-5 text-xs font-mono font-medium opacity-60 group-hover/row:opacity-100 transition-opacity italic">{b.range}</td>
-                      <td className="px-8 py-5 text-center">
-                        <span className="px-3 py-1 rounded-full bg-secondary text-[10px] font-bold tabular-nums border border-border/40">
-                          {(b.rate * 100).toFixed(0)}%
-                        </span>
-                      </td>
-                      <td className="px-8 py-5 text-right tabular-nums text-sm font-medium font-mono">
-                        {formatCurrency(b.tax, currency.code)}
-                      </td>
-                    </tr>
-                  ))}
-                  <tr className="bg-foreground/[0.03]">
-                    <td colSpan={2} className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em]">Total Tax</td>
-                    <td className="px-8 py-6 text-right tabular-nums text-xl font-mono font-bold text-foreground">{formatCurrency(result.tax, currency.code)}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Detailed Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-             {[
-               { l: "Taxable Income", v: formatCurrency(result.taxable, currency.code), i: Activity },
-               { l: "Daily Tax Cost", v: formatCurrency(result.tax / 365, currency.code), i: Zap },
-               { l: "Income Kept", v: (100 - result.effective).toFixed(1), i: Target, unit: "%" },
-               { l: "Status", v: "Class A", i: Landmark }
-             ].map((item, idx) => (
-               <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all group shadow-sm">
-                 <div className="flex items-center gap-2 mb-3">
-                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
-                 </div>
-                 <div className="text-lg font-mono font-medium tabular-nums leading-tight">
-                    {item.v}
-                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
-                 </div>
-               </div>
-             ))}
-          </div>
-
-          {/* Expert Insights */}
-          <div className="grid md:grid-cols-2 gap-6 pt-4">
-             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
-                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
-                <div className="flex items-center gap-3 relative z-10">
-                  <Globe className="size-4 text-muted-foreground" />
-                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Where You Pay Taxes</h4>
+             <div className="space-y-6 relative border-b border-border/40 pb-10">
+                <div className="space-y-4">
+                   <div className="flex items-center justify-between">
+                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Monthly Take-Home</div>
+                      <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-health/10 text-health text-[9px] font-black uppercase tracking-tighter">
+                         {taxYear === "2025" ? "NEW RATES" : "OLD RATES"}
+                      </div>
+                   </div>
+                   <div className="text-5xl font-mono font-bold tracking-tighter text-foreground">
+                      {Math.round(results?.monthlyTakeHome || 0).toLocaleString()}
+                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
-                  You usually pay taxes where you live and work. If you work remotely in different countries, check local tax rules to avoid being taxed twice.
-                </p>
+
+                <div className="space-y-4 pt-4 border-t border-border/40">
+                   <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Yearly (After Tax)</div>
+                   <div className="text-4xl font-mono font-bold tracking-tighter text-health">
+                      Rs.{Math.round(results?.annualTakeHome || 0).toLocaleString()}
+                   </div>
+                </div>
+                
+                <div className="text-[11px] text-muted-foreground font-black uppercase tracking-widest flex items-center gap-2">
+                   <Banknote className="size-3" /> Pakistan Rupees (PKR)
+                </div>
              </div>
-             <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group shadow-sm">
-                <TrendingDown className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
-                <div className="flex items-center gap-3 relative z-10">
-                  <ShieldCheck className="size-4 text-muted-foreground" />
-                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Saving on Taxes</h4>
+
+             <div className="space-y-8 relative">
+                <div className="space-y-5">
+                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
+                      <span>Monthly Tax</span>
+                      <span className="text-destructive font-mono">-Rs.{Math.round(results?.monthlyTax || 0).toLocaleString()}</span>
+                   </div>
+                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
+                      <span>Yearly Tax</span>
+                      <span className="text-destructive font-mono">-Rs.{Math.round(results?.annualTax || 0).toLocaleString()}</span>
+                   </div>
+                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
+                      <span>Gross Annual</span>
+                      <span className="text-foreground font-mono">Rs.{Math.round(results?.annualSalary || 0).toLocaleString()}</span>
+                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed relative z-10 font-medium">
-                  Putting money into retirement accounts (like a 401k or ISA) is one of the best ways to lower your tax bill and save for the future.
-                </p>
+
+                <div className="p-6 rounded-3xl bg-secondary/30 border border-border/60 space-y-4">
+                   <div className="flex items-center gap-2 text-foreground/60">
+                      <PieChart className="size-4" />
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em]">Summary</span>
+                   </div>
+                   <p className="text-[10px] text-muted-foreground leading-relaxed font-medium">
+                      Your yearly income after tax is <strong>Rs. {Math.round(results.annualTakeHome).toLocaleString()}</strong>.
+                   </p>
+                </div>
+                
+                <div className="p-6 bg-primary/5 border border-primary/10 rounded-2xl flex gap-4">
+                   <Info className="size-5 text-primary shrink-0" />
+                   <div className="space-y-1">
+                      <p className="text-[10px] text-foreground font-bold uppercase">Official Source</p>
+                      <p className="text-[9px] text-muted-foreground leading-relaxed font-medium">
+                         Calculations based on <strong>Income Tax Ordinance 2001</strong> as amended by the <strong>Finance Act 2025</strong>.
+                      </p>
+                   </div>
+                </div>
              </div>
           </div>
-
         </div>
       </div>
     </CalculatorPage>
@@ -398,3 +219,25 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 };
 
 export default SalaryTaxCalculator;
+
+// Helper icons
+function History(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+      <path d="M3 3v5h5" />
+      <path d="M12 7v5l4 2" />
+    </svg>
+  );
+}

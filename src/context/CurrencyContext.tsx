@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-export type CurrencyCode = "USD" | "EUR" | "GBP" | "INR" | "JPY" | "CAD" | "AUD" | "AED" | "SAR";
+export type CurrencyCode = "USD" | "EUR" | "GBP" | "INR" | "JPY" | "CAD" | "AUD" | "AED" | "SAR" | "PKR";
 
 export interface Currency {
   code: CurrencyCode;
@@ -15,6 +15,7 @@ export const CURRENCIES: Currency[] = [
   { code: "EUR", symbol: "€", name: "Euro" },
   { code: "GBP", symbol: "£", name: "British Pound" },
   { code: "INR", symbol: "₹", name: "Indian Rupee" },
+  { code: "PKR", symbol: "Rs.", name: "Pakistani Rupee" },
   { code: "JPY", symbol: "¥", name: "Japanese Yen" },
   { code: "CAD", symbol: "$", name: "Canadian Dollar" },
   { code: "AUD", symbol: "$", name: "Australian Dollar" },

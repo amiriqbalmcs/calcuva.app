@@ -5,18 +5,20 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 
+import { SITE_URL } from "@/lib/constants";
+
 export const metadata: Metadata = {
   title: "Research & Editorial — Finance, Health & Business Insights | Calcuva",
   description: "In-depth research, professional guides, and data-driven strategies to help you master your finances, health, and business metrics.",
-  alternates: { canonical: "https://calcuva.app/blog" },
+  alternates: { canonical: `${SITE_URL}/blog` },
   openGraph: {
     title: "Research & Editorial | Calcuva",
     description: "In-depth research, professional guides, and data-driven strategies to help you master your finances, health, and business metrics.",
-    url: "https://calcuva.app/blog",
+    url: `${SITE_URL}/blog`,
     siteName: "Calcuva",
-    images: [{ url: "https://calcuva.app/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }],
   },
-  twitter: { card: "summary_large_image", images: ["https://calcuva.app/og-image.png"] },
+  twitter: { card: "summary_large_image", images: [`${SITE_URL}/og-image.png`] },
 };
 
 

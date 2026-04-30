@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { SITE_URL } from "@/lib/constants";
 
 interface Props {
   title: string;
@@ -50,7 +51,7 @@ export const Seo = ({ title, description, canonicalPath, jsonLd, faqs }: Props) 
       document.head.appendChild(canonical);
     }
     const path = canonicalPath ?? window.location.pathname;
-    canonical.setAttribute("href", `${window.location.origin}${path}`);
+    canonical.setAttribute("href", `${SITE_URL}${path}`);
 
     // json-ld
     const existing = document.getElementById("page-jsonld");

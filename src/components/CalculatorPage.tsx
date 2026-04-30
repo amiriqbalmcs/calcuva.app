@@ -71,8 +71,8 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
     ? calc.relatedSlugs.map(s => CALCULATORS.find(c => c.slug === s)).filter(Boolean) as CalcMeta[]
     : CALCULATORS.filter(c => c.category === calc.category && c.slug !== calc.slug).slice(0, 3);
 
-  const hasCurrency = ["finance", "business"].includes(calc.category) || 
-                      ["inflation-calculator", "hourly-to-salary-calculator", "freelance-rate-calculator", "tax-bracket-calculator", "smoking-cost-calculator", "crypto-profit-calculator", "gst-vat-tax-calculator", "discount-calculator", "tip-calculator"].includes(calc.slug);
+  const hasCurrency = (["finance", "business"].includes(calc.category) || 
+                      ["inflation-calculator", "hourly-to-salary-calculator", "freelance-rate-calculator", "tax-bracket-calculator", "smoking-cost-calculator", "crypto-profit-calculator", "gst-vat-tax-calculator", "discount-calculator", "tip-calculator"].includes(calc.slug)) && !calc.hideCurrencySwitcher;
 
   return (
     <>

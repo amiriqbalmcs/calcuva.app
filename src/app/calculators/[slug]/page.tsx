@@ -49,7 +49,6 @@ const RunningPaceCalculator = dynamic(() => import("@/components/calculators/Run
 const LoanEmiCalculator = dynamic(() => import("@/components/calculators/LoanEmiCalculator"), { loading });
 const PregnancyCalculator = dynamic(() => import("@/components/calculators/PregnancyCalculator"), { loading });
 const RentVsBuyCalculator = dynamic(() => import("@/components/calculators/RentVsBuyCalculator"), { loading });
-const SalaryTaxCalculator = dynamic(() => import("@/components/calculators/SalaryTaxCalculator"), { loading });
 const SipCompoundCalculator = dynamic(() => import("@/components/calculators/SipCompoundCalculator"), { loading });
 const UnitConverter = dynamic(() => import("@/components/calculators/UnitConverter"), { loading });
 const WaterSleepCalculator = dynamic(() => import("@/components/calculators/WaterSleepCalculator"), { loading });
@@ -99,6 +98,18 @@ const PasswordGenerator = dynamic(() => import("@/components/calculators/Passwor
 const TaxBracketCalculator = dynamic(() => import("@/components/calculators/TaxBracketCalculator"), { loading });
 const PregnancyWeekCalculator = dynamic(() => import("@/components/calculators/PregnancyWeekCalculator"), { loading });
 const AcademicGradeCalculator = dynamic(() => import("@/components/calculators/AcademicGradeCalculator"), { loading });
+const HecCgpaCalculator = dynamic(() => import("@/components/calculators/HecCgpaCalculator"), { loading });
+const BoardPercentageCalculator = dynamic(() => import("@/components/calculators/BoardPercentageCalculator"), { loading });
+const PkInflationCalculator = dynamic(() => import("@/components/calculators/PkInflationCalculator"), { loading });
+const LoanEligibilityCalculator = dynamic(() => import("@/components/calculators/LoanEligibilityCalculator"), { loading });
+const DebtPayoffCalculator = dynamic(() => import("@/components/calculators/DebtPayoffCalculator"), { loading });
+const SleepDebtCalculator = dynamic(() => import("@/components/calculators/SleepDebtCalculator"), { loading });
+const BloodSugarConverter = dynamic(() => import("@/components/calculators/BloodSugarConverter"), { loading });
+const NetWorthCalculator = dynamic(() => import("@/components/calculators/NetWorthCalculator"), { loading });
+const CarbonFootprintCalculator = dynamic(() => import("@/components/calculators/CarbonFootprintCalculator"), { loading });
+const SolarSimulator = dynamic(() => import("@/components/calculators/SolarSimulator"), { loading });
+const FreelanceOptimizer = dynamic(() => import("@/components/calculators/FreelanceOptimizer"), { loading });
+const SalaryTaxCalculator = dynamic(() => import("@/components/calculators/SalaryTaxCalculator"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -152,6 +163,19 @@ const componentMap: Record<string, any> = {
   "smoking-cost-calculator": SmokingCostCalculator,
   "retirement-fire-calculator": RetirementFireCalculator,
   "percentage-increase-calculator": PercentageCalculator,
+  // Static Batch
+  "hec-cgpa-converter": HecCgpaCalculator,
+  "board-percentage-calculator": BoardPercentageCalculator,
+  "pakistan-inflation-calculator": PkInflationCalculator,
+  "loan-eligibility-calculator-pakistan": LoanEligibilityCalculator,
+  "debt-payoff-calculator": DebtPayoffCalculator,
+  "sleep-debt-calculator": SleepDebtCalculator,
+  "blood-sugar-hba1c-converter": BloodSugarConverter,
+  "net-worth-tracker": NetWorthCalculator,
+  "personal-carbon-footprint-calculator": CarbonFootprintCalculator,
+  "solar-roi-simulator-pakistan": SolarSimulator,
+  "freelance-fee-optimizer": FreelanceOptimizer,
+  "salary-income-tax-calculator-2026": SalaryTaxCalculator,
 };
 
 export async function generateStaticParams() {
