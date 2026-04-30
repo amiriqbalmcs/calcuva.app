@@ -192,16 +192,16 @@ export const ExportButton = ({ title }: Props) => {
         <DropdownMenuTrigger asChild>
           <button 
             disabled={loading}
-            aria-label="Download Report"
+            aria-label="Share Analysis"
             className={cn(
-              "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all shadow-lg active:scale-95",
+              "flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95",
               loading 
                 ? "bg-secondary text-muted-foreground border-border cursor-wait" 
-                : "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-primary/20"
+                : "bg-foreground text-background hover:bg-foreground/90 hover:shadow-black/10"
             )}
           >
-            {loading ? <CheckCircle2 className="size-4 animate-spin" /> : <Download className="size-4" />}
-            {loading ? "Exporting..." : "Download Report"}
+            {loading ? <CheckCircle2 className="size-4 animate-spin" /> : <div className="size-4 flex items-center justify-center"><svg className="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg></div>}
+            {loading ? "Exporting..." : "Share Analysis"}
             <ChevronDown className="size-3 opacity-50 ml-1" />
           </button>
         </DropdownMenuTrigger>

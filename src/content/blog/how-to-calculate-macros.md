@@ -1,10 +1,10 @@
 ---
 title: "The Math of Muscle: How to Calculate Your Macros in 2026"
-date: "2026-03-14"
+date: "2026-02-28"
 excerpt: "Calories dictate weight, but Macronutrients dictate body composition. Learn how to balance Protein, Fats, and Carbs for your specific 2026 fitness goals."
 category: "health"
 author: "Admin"
-calculator: "macro-nutrient-calculator"
+calculator: "macros-calculator"
 keywords: ["calculate macros 2026", "protein requirements muscle gain", "keto vs high carb", "macronutrient ratios", "how to track food", "fitness nutrition 2026"]
 ---
 

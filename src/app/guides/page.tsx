@@ -10,7 +10,7 @@ import { SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Expert Strategy Guides & Insights — Calcuva Knowledge Library",
-  description: "Deep-dive technical guides on finance, health math, and business strategy. Master the professional math behind our tools with 30+ expert research guides.",
+  description: "Deep-dive technical guides on finance, health math, and business strategy. Master the professional math behind our tools with 60+ expert research guides.",
   alternates: { canonical: `${SITE_URL}/guides` },
   openGraph: {
     title: "Expert Strategy Guides | Calcuva",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default async function GuidesPage() {
   const guides = await getSortedPostsData("guides");
-  
+
   // Group guides by category
   const groupedGuides = (Object.keys(CATEGORIES) as CategoryKey[]).map(key => {
     return {
@@ -37,7 +37,7 @@ export default async function GuidesPage() {
 
   return (
     <div className="bg-secondary/5 min-h-screen">
-      <Seo 
+      <Seo
         title="Expert Strategy Guides & Insights — Calcuva Knowledge Library"
         description="Deep-dive technical guides on finance, health math, and business strategy. Master the professional math behind our tools with over 25,000 words of expert research."
         canonicalPath="/guides"
@@ -51,7 +51,7 @@ export default async function GuidesPage() {
             <ChevronRight className="size-3" />
             <span className="text-foreground/80">Knowledge Library</span>
           </nav>
-          
+
           <div className="max-w-4xl">
             <div className="flex items-center gap-3 text-foreground mb-8">
               <GraduationCap className="size-5" />
@@ -61,7 +61,7 @@ export default async function GuidesPage() {
               Expert Guides <span className="text-foreground/40 italic">&</span> Insights
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl font-medium">
-              We don't just provide calculators; we explain the math behind your most important life decisions. Explore our library of 30+ easy-to-read research guides.
+              We don't just provide calculators; we explain the math behind your most important life decisions. Explore our library of 60+ easy-to-read research guides.
             </p>
           </div>
         </div>

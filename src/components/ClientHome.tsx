@@ -67,7 +67,7 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
         <section className="container-wide relative pt-16 sm:pt-28 pb-16 sm:pb-24">
           <div className="flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-widest text-muted-foreground animate-fade-up">
             <Sparkles className="size-3.5 text-signal" />
-            <span>30+ Smart Online Tools</span>
+            <span>60+ Smart Online Tools</span>
           </div>
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tighter max-w-[20ch] animate-fade-up">
             Calculate anything in{" "}
@@ -99,16 +99,16 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
       {/* Trending Section */}
       {active === "all" && !query && (
         <section className="container-wide py-12 animate-fade-up border-b border-border/50">
-           <div className="flex items-center gap-2 mb-6 text-signal">
-             <TrendingUp className="size-4" />
-             <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Trending Now</h3>
-           </div>
-           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-             {["loan-emi-calculator", "calorie-deficit-calculator", "compound-interest-calculator", "bmi-tdee-calculator"].map(slug => {
-                const c = CALCULATORS.find(c => c.slug === slug);
-                return c ? <CalculatorCard key={c.slug} calc={c} /> : null;
-             })}
-           </div>
+          <div className="flex items-center gap-2 mb-6 text-signal">
+            <TrendingUp className="size-4" />
+            <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Trending Now</h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            {["loan-emi-calculator", "calorie-deficit-calculator", "compound-interest-calculator", "bmi-tdee-calculator"].map(slug => {
+              const c = CALCULATORS.find(c => c.slug === slug);
+              return c ? <CalculatorCard key={c.slug} calc={c} /> : null;
+            })}
+          </div>
         </section>
       )}
 
@@ -203,7 +203,7 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
               Explore Library →
             </Link>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {guides.slice(0, 3).map((guide) => (
               <GuideCard key={guide.slug} guide={guide} />
@@ -212,8 +212,8 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
         </section>
       )}
 
-       {/* Blog / Editorial Section with high contrast background */}
-       {!query && active === "all" && posts.length > 0 && (
+      {/* Blog / Editorial Section with high contrast background */}
+      {!query && active === "all" && posts.length > 0 && (
         <section className="bg-secondary/30 border-t border-border py-20 mt-12">
           <div className="container-wide">
             <div className="flex items-baseline justify-between mb-10">
@@ -228,26 +228,26 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {posts.map((post) => (
                 <Link key={post.slug} href={`/blog/${post.slug}`} className="group block bg-background rounded-3xl p-2 border border-border/50 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
-                   <div className="aspect-[16/10] rounded-2xl bg-secondary/50 mb-5 overflow-hidden relative">
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
-                         <span className="text-xs font-black text-foreground uppercase tracking-widest flex items-center gap-2">
-                            Read Full Article <ArrowRight className="size-3" />
-                         </span>
-                      </div>
-                      <div className="absolute inset-0 opacity-10 flex items-center justify-center">
-                         <Calculator className="size-20" />
-                      </div>
-                   </div>
-                   <div className="px-4 pb-6">
-                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-signal mb-3">{post.category || "Insight"}</div>
-                      <h3 className="text-xl font-bold leading-tight group-hover:text-signal transition-colors">{post.title}</h3>
-                      <p className="text-sm text-muted-foreground mt-3 line-clamp-2 leading-relaxed">{post.excerpt}</p>
-                      <div className="mt-5 flex items-center gap-3 text-[10px] text-muted-foreground font-mono uppercase font-bold tracking-wider">
-                        <span>{post.date}</span>
-                        <span className="size-1 rounded-full bg-border" />
-                        <span>{post.readingTime}</span>
-                      </div>
-                   </div>
+                  <div className="aspect-[16/10] rounded-2xl bg-secondary/50 mb-5 overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+                      <span className="text-xs font-black text-foreground uppercase tracking-widest flex items-center gap-2">
+                        Read Full Article <ArrowRight className="size-3" />
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 opacity-10 flex items-center justify-center">
+                      <Calculator className="size-20" />
+                    </div>
+                  </div>
+                  <div className="px-4 pb-6">
+                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-signal mb-3">{post.category || "Insight"}</div>
+                    <h3 className="text-xl font-bold leading-tight group-hover:text-signal transition-colors">{post.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-3 line-clamp-2 leading-relaxed">{post.excerpt}</p>
+                    <div className="mt-5 flex items-center gap-3 text-[10px] text-muted-foreground font-mono uppercase font-bold tracking-wider">
+                      <span>{post.date}</span>
+                      <span className="size-1 rounded-full bg-border" />
+                      <span>{post.readingTime}</span>
+                    </div>
+                  </div>
                 </Link>
               ))}
             </div>

@@ -1,10 +1,10 @@
 ---
 title: "The Science of 16:8 Intermittent Fasting: A 2026 Guide to Metabolic Health"
-date: "2026-04-30"
+date: "2026-01-15"
 excerpt: "Intermittent Fasting is more than a trend; it's a tool for cellular repair. Discover the latest 2026 research on the 16:8 method, autophagy, and hormonal optimization."
 category: "health"
 author: "Admin"
-calculator: "intermittent-fasting-calculator"
+calculator: "macros-calculator"
 keywords: ["16 8 intermittent fasting", "autophagy benefits 2026", "fasting for weight loss", "insulin sensitivity", "circadian rhythm fasting", "fasting window guide"]
 ---
 

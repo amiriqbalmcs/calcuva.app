@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import remarkGfm from "remark-gfm";
 import { CALCULATORS } from "@/lib/calculators";
 
 const contentDirectory = path.join(process.cwd(), "src/content");
@@ -45,10 +46,13 @@ export async function getSortedPostsData(subfolder: "blog" | "guides") {
         if (found) category = found.category;
       }
 
+      const excerpt = (data.excerpt as string) || (data.description as string) || "";
+
       return {
         slug,
         readingTime,
-        ...(data as Omit<PostData, "slug" | "contentHtml" | "readingTime">),
+        ...(data as Omit<PostData, "slug" | "contentHtml" | "readingTime" | "excerpt">),
+        excerpt,
         category, 
       };
     })
@@ -67,6 +71,7 @@ export async function getPostData(subfolder: "blog" | "guides", slug: string): P
   const { data, content } = matter(fileContents);
 
   const processedContent = await remark()
+    .use(remarkGfm)
     .use(html)
     .process(content);
   const contentHtml = processedContent.toString();
@@ -74,10 +79,13 @@ export async function getPostData(subfolder: "blog" | "guides", slug: string): P
   const words = content.split(/\s+/g).length;
   const readingTime = Math.ceil(words / 200) + " min read";
 
+  const excerpt = (data.excerpt as string) || (data.description as string) || "";
+
   return {
     slug,
     contentHtml,
     readingTime,
-    ...(data as Omit<PostData, "slug" | "contentHtml" | "readingTime">),
+    ...(data as Omit<PostData, "slug" | "contentHtml" | "readingTime" | "excerpt">),
+    excerpt,
   };
 }

@@ -507,6 +507,24 @@ export const CALCULATORS: CalcMeta[] = [
     icon: "Zap", category: "finance",
     keywords: ["pakistan electricity bill calculator 2026", "nepra tariff slabs", "lesco bill predictor", "k-electric 2026 rates", "electricity duty calculator"],
   },
+  {
+    slug: "solar-system-requirement-calculator",
+    title: "Solar System Size (kW) Requirement Calculator 2026",
+    short: "Calculate the solar kW capacity you need based on appliances.",
+    description: "Determine the ideal solar system size for your home. Input your appliance load and usage hours to calculate required PV capacity, inverter size, and 2026 configuration.",
+    icon: "Sun", category: "utility",
+    keywords: ["solar sizing calculator", "how many solar panels for 1.5 ton ac", "calculate solar kw requirement", "solar load calculator pakistan", "solar panel capacity for home"],
+    relatedSlugs: ["solar-roi-simulator-pakistan", "electricity-bill-predictor-pakistan", "solar-battery-backup-calculator"],
+  },
+  {
+    slug: "solar-battery-backup-calculator",
+    title: "Solar Battery Backup & Runtime Calculator (kWh)",
+    short: "Calculate how long your batteries will last under different loads.",
+    description: "Estimate your solar battery backup time in hours. Supports 5kWh, 10kWh Lithium (LFP) modules and Tubular batteries with Depth of Discharge (DoD) analysis.",
+    icon: "Battery", category: "utility",
+    keywords: ["solar battery backup calculator", "5kwh lithium battery runtime", "10kwh solar battery backup hours", "lithium vs tubular battery backup", "solar storage sizing calculator"],
+    relatedSlugs: ["solar-system-requirement-calculator", "solar-roi-simulator-pakistan"],
+  },
 ];
 
 export const calculatorBySlug = (slug: string) => CALCULATORS.find((c) => c.slug === slug);

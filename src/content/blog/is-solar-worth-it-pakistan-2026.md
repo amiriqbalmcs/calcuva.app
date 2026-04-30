@@ -1,9 +1,10 @@
 ---
 title: "Is Solar Still Worth It in Pakistan? ROI Analysis for 2026"
 description: "With new net-metering fixed charges and rising electricity bills, we analyze if solar energy is still a smart investment for Pakistani homes in 2026."
-date: "2026-04-30"
+date: "2026-02-10"
 category: "utility"
 author: "Calcuva Energy Lab"
+calculator: "solar-roi-simulator-pakistan"
 image: "/blog/solar-pakistan-2026.jpg"
 keywords: ["solar roi pakistan 2026", "net metering fixed charges", "solar payback period", "NEPRA solar rates 2026", "is solar worth it pakistan"]
 ---

@@ -38,9 +38,10 @@ export const Seo = ({ title, description, canonicalPath, jsonLd, faqs }: Props) 
       el.setAttribute("content", content);
     };
 
-    setMeta("description", description.slice(0, 158));
+    const safeDescription = (description || "").slice(0, 158);
+    setMeta("description", safeDescription);
     setOg("og:title", title);
-    setOg("og:description", description.slice(0, 158));
+    setOg("og:description", safeDescription);
     setOg("og:type", "website");
 
     // canonical

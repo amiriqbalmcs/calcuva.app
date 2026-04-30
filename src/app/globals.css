@@ -419,6 +419,46 @@
     color: hsl(var(--foreground));
     text-decoration-color: transparent;
   }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5rem 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .prose thead {
+    border-bottom: 2px solid var(--tw-prose-quote-borders);
+  }
+
+  .prose th {
+    font-weight: 700;
+    text-align: left;
+    padding: 1rem;
+    color: var(--tw-prose-headings);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+  }
+
+  .prose td {
+    padding: 1rem;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    color: var(--tw-prose-body);
+  }
+
+  .prose tr:last-child td {
+    border-bottom: none;
+  }
+
+  .prose tr:nth-child(even) {
+    background-color: hsl(var(--secondary) / 0.3);
+  }
+
+  .prose table strong {
+    color: var(--tw-prose-headings);
+  }
 }
 
 @media print {

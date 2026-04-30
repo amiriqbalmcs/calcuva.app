@@ -136,7 +136,7 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
               <p className="text-muted-foreground mt-3 max-w-2xl text-base sm:text-lg font-medium leading-relaxed">{calc.description}</p>
             </div>
           </div>
-          <div className="no-print flex items-center gap-3 self-start md:self-auto">
+          <div className="no-print flex items-center justify-center md:justify-end gap-3 w-full md:w-auto">
             {hasCurrency && !hideHeaderCurrency && <CurrencySwitcher />}
             <ExportButton title={calc.title} />
           </div>
