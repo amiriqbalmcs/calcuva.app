@@ -17,7 +17,8 @@ import {
   Code2,
   AlertCircle,
   Globe,
-  Info
+  Info,
+  RefreshCcw
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -51,6 +52,24 @@ export const SocialSharePreviewCalculator = ({
   const [image, setImage] = useState("https://calcuva.app/og-image.png");
   const [siteName, setSiteName] = useState("Calcuva");
   const [copied, setCopied] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const fetchMetadata = async () => {
+    if (!url) return;
+    setIsFetching(true);
+    try {
+      const res = await fetch(`/api/fetch-metadata?url=${encodeURIComponent(url)}`);
+      const data = await res.json();
+      if (data.title) setTitle(data.title);
+      if (data.description) setDescription(data.description);
+      if (data.image) setImage(data.image);
+      toast.success("Metadata fetched successfully!");
+    } catch (error) {
+      toast.error("Failed to fetch metadata. Please enter manually.");
+    } finally {
+      setIsFetching(false);
+    }
+  };
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -131,12 +150,22 @@ export const SocialSharePreviewCalculator = ({
 
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Site URL</Label>
-                <Input 
-                  value={url} 
-                  onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://example.com"
-                  className="font-medium bg-secondary/30 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl"
-                />
+                <div className="flex gap-2">
+                  <Input 
+                    value={url} 
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="https://example.com"
+                    className="font-medium bg-secondary/30 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl"
+                  />
+                  <Button 
+                    onClick={fetchMetadata} 
+                    disabled={isFetching}
+                    className="rounded-xl px-4 h-12 text-[10px] font-bold uppercase tracking-widest gap-2 shrink-0"
+                  >
+                    {isFetching ? "..." : <RefreshCcw className="size-3.5" />}
+                    {isFetching ? "Fetching" : "Fetch"}
+                  </Button>
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -199,30 +228,30 @@ export const SocialSharePreviewCalculator = ({
 
             {/* Facebook Preview */}
             <TabsContent value="facebook" className="mt-0 focus-visible:outline-none">
-               <div className="max-w-[500px] border border-border/40 rounded-xl overflow-hidden shadow-lg bg-white dark:bg-zinc-900">
+               <div className="w-full max-w-[500px] border border-border/40 rounded-xl overflow-hidden shadow-lg bg-white dark:bg-zinc-900 mx-auto lg:mx-0">
                   <div className="aspect-[1.91/1] overflow-hidden bg-zinc-100 dark:bg-zinc-800">
                     <img src={image} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="p-4 bg-zinc-50 dark:bg-zinc-900 space-y-1 border-t border-border/40">
-                    <p className="text-[12px] uppercase text-zinc-500 font-medium">{url.replace(/https?:\/\//, '')}</p>
-                    <h4 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 line-clamp-2">{title}</h4>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">{description}</p>
+                    <p className="text-[10px] sm:text-[12px] uppercase text-zinc-500 font-medium truncate">{url.replace(/https?:\/\//, '')}</p>
+                    <h4 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100 line-clamp-2">{title}</h4>
+                    <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">{description}</p>
                   </div>
                </div>
             </TabsContent>
 
             {/* Twitter Preview */}
             <TabsContent value="twitter" className="mt-0 focus-visible:outline-none">
-              <div className="max-w-[500px] border border-border/40 rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-zinc-900">
+              <div className="w-full max-w-[500px] border border-border/40 rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-zinc-900 mx-auto lg:mx-0">
                  <div className="aspect-[1.91/1] overflow-hidden bg-zinc-100 dark:bg-zinc-800 relative">
                     <img src={image} alt="Preview" className="w-full h-full object-cover" />
-                    <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md text-white text-[11px] font-bold border border-white/10">
+                    <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md text-white text-[9px] sm:text-[11px] font-bold border border-white/10 truncate max-w-[80%]">
                       {url.replace(/https?:\/\//, '')}
                     </div>
                  </div>
                  <div className="p-4 space-y-1">
-                    <h4 className="text-base font-bold text-zinc-900 dark:text-zinc-100">{title}</h4>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-1">{description}</p>
+                    <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-zinc-100">{title}</h4>
+                    <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 line-clamp-1">{description}</p>
                  </div>
               </div>
             </TabsContent>
