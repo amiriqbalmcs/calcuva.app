@@ -36,39 +36,70 @@ export const ExportButton = ({ title }: Props) => {
     }
 
     setLoading(true);
-    // Create a hidden wrapper for the mockup
-    const wrapper = document.createElement('div');
-    // Important: Include the theme class (dark/light)
-    wrapper.className = document.documentElement.className;
-    wrapper.style.position = 'absolute';
-    wrapper.style.top = '0';
-    wrapper.style.left = '0';
+    // NEW APPROACH: Using a hidden iframe to provide a true desktop viewport
+    const iframe = document.createElement('iframe');
+    // Hide it but keep it in DOM so it can be captured
+    iframe.style.position = 'fixed';
+    iframe.style.top = '-10000px';
+    iframe.style.left = '-10000px';
+    iframe.style.width = '1200px'; // Desktop Width
+    iframe.style.height = '1200px';
+    document.body.appendChild(iframe);
+
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!iframeDoc) {
+      toast.error("Failed to initialize capture environment");
+      return;
+    }
+
+    // 1. Copy all styles from the main document to the iframe safely
+    const styles = document.querySelectorAll('style, link[rel="stylesheet"]');
+    styles.forEach(s => {
+      try {
+        const clone = s.cloneNode(true) as HTMLElement;
+        if (clone.tagName === 'LINK') {
+          const href = (clone as HTMLLinkElement).href;
+          if (href && !href.startsWith(window.location.origin) && !href.startsWith('/')) {
+            // For external stylesheets (like Google Fonts), set crossOrigin to avoid SecurityError
+            (clone as HTMLLinkElement).crossOrigin = "anonymous";
+          }
+        }
+        iframeDoc.head.appendChild(clone);
+      } catch (e) {
+        console.warn("Skipped a stylesheet due to security constraints", e);
+      }
+    });
+
+    // 2. Set the base theme and structure
+    iframeDoc.documentElement.className = document.documentElement.className;
+    iframeDoc.body.style.margin = '0';
+    iframeDoc.body.style.padding = '0';
+    iframeDoc.body.style.backgroundColor = 'hsl(var(--background))';
+    iframeDoc.body.style.overflow = 'hidden';
+
+    // 3. Create the mockup structure inside the iframe
+    const wrapper = iframeDoc.createElement('div');
+    wrapper.id = 'export-wrapper';
     wrapper.style.width = '1200px';
-    wrapper.style.zIndex = '-9999';
-    wrapper.style.opacity = '0.01'; // Slightly visible to ensure browser paints it
-    wrapper.style.pointerEvents = 'none';
-    wrapper.style.padding = '80px';
+    wrapper.style.padding = '60px';
     wrapper.style.display = 'flex';
     wrapper.style.flexDirection = 'column';
     wrapper.style.alignItems = 'center';
-    wrapper.style.justifyContent = 'center';
-    
-    // Background and Base Styles
     wrapper.style.backgroundColor = 'hsl(var(--background))';
-    wrapper.style.backgroundImage = 'linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, hsl(var(--primary) / 0.05) 100%)';
-    wrapper.style.fontFamily = 'var(--font-sans)';
+    wrapper.style.backgroundImage = 'linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, transparent 100%)';
+    wrapper.style.fontFamily = 'Inter, sans-serif';
 
-    // 1. Browser Frame
-    const frame = document.createElement('div');
-    frame.style.width = '100%';
+    // Browser Frame
+    const frame = iframeDoc.createElement('div');
+    frame.style.width = '1000px';
     frame.style.backgroundColor = 'hsl(var(--background))';
     frame.style.borderRadius = '24px';
     frame.style.boxShadow = '0 30px 60px -12px rgba(0, 0, 0, 0.4)';
     frame.style.overflow = 'hidden';
     frame.style.border = '1px solid hsl(var(--border))';
 
-    // 2. Browser Header
-    const header = document.createElement('div');
+    // Browser Header
+    const header = iframeDoc.createElement('div');
     header.style.height = '52px';
     header.style.backgroundColor = 'hsl(var(--secondary) / 0.8)';
     header.style.display = 'flex';
@@ -76,98 +107,87 @@ export const ExportButton = ({ title }: Props) => {
     header.style.padding = '0 24px';
     header.style.gap = '10px';
     header.style.borderBottom = '1px solid hsl(var(--border))';
-
     ['#ff5f56', '#ffbd2e', '#27c93f'].forEach(color => {
-      const dot = document.createElement('div');
-      dot.style.width = '12px';
-      dot.style.height = '12px';
-      dot.style.borderRadius = '50%';
-      dot.style.backgroundColor = color;
+      const dot = iframeDoc.createElement('div');
+      dot.style.width = '12px'; dot.style.height = '12px';
+      dot.style.borderRadius = '50%'; dot.style.backgroundColor = color;
       header.appendChild(dot);
     });
-
-    const urlBar = document.createElement('div');
-    urlBar.style.flex = '1';
-    urlBar.style.height = '34px';
+    const urlBar = iframeDoc.createElement('div');
+    urlBar.style.flex = '1'; urlBar.style.height = '34px';
     urlBar.style.backgroundColor = 'hsl(var(--background))';
-    urlBar.style.borderRadius = '10px';
-    urlBar.style.marginLeft = '24px';
-    urlBar.style.display = 'flex';
-    urlBar.style.alignItems = 'center';
-    urlBar.style.justifyContent = 'center';
-    urlBar.style.fontSize = '12px';
-    urlBar.style.fontWeight = '600';
-    urlBar.style.color = 'hsl(var(--muted-foreground))';
+    urlBar.style.borderRadius = '10px'; urlBar.style.marginLeft = '24px';
+    urlBar.style.display = 'flex'; urlBar.style.alignItems = 'center';
+    urlBar.style.justifyContent = 'center'; urlBar.style.fontSize = '12px';
+    urlBar.style.fontWeight = '600'; urlBar.style.color = 'hsl(var(--muted-foreground))';
     urlBar.style.border = '1px solid hsl(var(--border) / 0.5)';
-    // Use the real current URL but clean it up for the mockup
-    const cleanUrl = window.location.href
-      .replace(/^https?:\/\//, '')
-      .replace(/^www\./, '');
-    urlBar.innerText = cleanUrl;
+    urlBar.innerText = window.location.href.replace(/^https?:\/\//, '').replace(/^www\./, '');
     header.appendChild(urlBar);
     frame.appendChild(header);
 
-    // 3. Clone Content
+    // Clone and Append Content
     const clone = mainContent.cloneNode(true) as HTMLElement;
-    clone.style.padding = '48px';
+    clone.style.padding = '40px';
     clone.style.margin = '0';
-    clone.style.animation = 'none'; // CRITICAL: Stop fade-in animations
-    clone.style.opacity = '1';      // CRITICAL: Ensure it's visible
-    clone.style.transform = 'none';
-    clone.style.width = '100%';
-    clone.style.visibility = 'visible';
+    clone.style.animation = 'none';
+    clone.style.width = '1000px';
+    // Remove sticky positions for capture
+    const stickies = clone.querySelectorAll('.sticky, .lg\\:sticky');
+    stickies.forEach((s: any) => s.style.position = 'relative');
+    
     frame.appendChild(clone);
     wrapper.appendChild(frame);
 
-    // 4. Attribution
-    const footer = document.createElement('div');
-    footer.style.marginTop = '40px';
-    footer.style.display = 'flex';
-    footer.style.gap = '16px';
-    
-    const badgeStyle = "padding: 12px 28px; border-radius: 99px; background: hsl(var(--background)); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); font-size: 14px; font-weight: 800; color: hsl(var(--foreground)); border: 1px solid hsl(var(--border)); display: flex; align-items: center; gap: 12px;";
-    
-    footer.innerHTML = `
-      <div style="${badgeStyle}">
-        <span style="color: hsl(var(--primary)); font-size: 20px;">❖</span> ${SITE_DOMAIN}
+    // Attribution
+    const attribution = iframeDoc.createElement('div');
+    attribution.style.marginTop = '40px';
+    attribution.style.display = 'flex';
+    attribution.style.flexDirection = 'column';
+    attribution.style.alignItems = 'center';
+    attribution.style.gap = '16px';
+    const badgeStyle = "padding: 12px 28px; border-radius: 99px; background: hsl(var(--background)); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); font-size: 14px; font-weight: 800; color: hsl(var(--foreground)); border: 1px solid hsl(var(--border)); display: flex; align-items: center; gap: 12px;";
+    attribution.innerHTML = `
+      <div style="display: flex; gap: 16px;">
+        <div style="${badgeStyle}"><span style="color: hsl(var(--primary));">❖</span> ${SITE_NAME}</div>
+        <div style="${badgeStyle}">𝕏 ${TWITTER_HANDLE}</div>
       </div>
-      <div style="${badgeStyle}">
-        <span style="font-size: 20px;">𝕏</span> ${TWITTER_HANDLE}
+      <div style="font-family: monospace; font-size: 12px; color: hsl(var(--muted-foreground)); opacity: 0.6;">
+        URL: ${window.location.origin}${window.location.pathname}
       </div>
     `;
-    wrapper.appendChild(footer);
-
-    document.body.appendChild(wrapper);
+    wrapper.appendChild(attribution);
+    iframeDoc.body.appendChild(wrapper);
 
     try {
-      // Wait for everything to settle
-      await new Promise(r => setTimeout(r, 400));
+      // Wait for fonts and styles to load in the iframe
+      await new Promise(r => setTimeout(r, 1200));
 
       const options = {
-        quality: 0.95,
+        quality: 1,
         pixelRatio: 2,
         backgroundColor: format === 'jpeg' ? '#ffffff' : undefined,
-        style: {
-          opacity: '1',
-          visibility: 'visible',
+        // Add a filter to prevent the library from trying to read rules it shouldn't
+        filter: (node: HTMLElement) => {
+          if (node.tagName === 'LINK' || node.tagName === 'STYLE') return false;
+          return true;
         },
-        cacheBust: true, // Prevent cached assets from failing
       };
 
       const dataUrl = format === 'png' 
         ? await toPng(wrapper, options) 
         : await toJpeg(wrapper, options);
       
-      document.body.removeChild(wrapper);
+      document.body.removeChild(iframe);
 
       const blob = await (await fetch(dataUrl)).blob();
-      const file = new File([blob], `${title.toLowerCase().replace(/\s+/g, '-')}-mockup.${format}`, { type: `image/${format}` });
+      const file = new File([blob], `${title.toLowerCase().replace(/\s+/g, '-')}-report.${format}`, { type: `image/${format}` });
 
       if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           files: [file],
           title: `${SITE_NAME} Report: ${title}`,
           text: `Check out my ${title} calculation on ${SITE_NAME}!`,
+          url: window.location.href,
         });
         toast.success("Shared successfully!");
       } else {
@@ -175,12 +195,12 @@ export const ExportButton = ({ title }: Props) => {
         link.download = file.name;
         link.href = dataUrl;
         link.click();
-        toast.success(`${format.toUpperCase()} mockup saved!`);
+        toast.success(`${format.toUpperCase()} report saved!`);
       }
     } catch (err) {
-      console.error("Failed to generate image", err);
-      toast.error("Failed to generate or share image");
-      if (document.body.contains(wrapper)) document.body.removeChild(wrapper);
+      console.error("Capture failed", err);
+      toast.error("Export failed. Please try again.");
+      if (document.body.contains(iframe)) document.body.removeChild(iframe);
     } finally {
       setLoading(false);
     }
