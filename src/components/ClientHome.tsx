@@ -114,7 +114,7 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
 
       {/* Category filter */}
       <section className="container-wide py-12 pb-4">
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           {(["all", ...Object.keys(CATEGORIES)] as const).map((key) => {
             const label = key === "all" ? "All Tools" : CATEGORIES[key as CategoryKey].label;
             const isActive = active === key;

@@ -231,6 +231,15 @@
   .dark .logo-dark-mode {
     filter: brightness(0) invert(1);
   }
+
+  /* ── Hide Scrollbar Utility ───────────────────── */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 }
 
 

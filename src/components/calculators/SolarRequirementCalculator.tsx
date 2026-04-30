@@ -251,41 +251,41 @@ const SolarRequirementCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
               </div>
            </div>
 
+           {/* Highlighted Results Section */}
            <div className="space-y-4 relative z-10">
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4 px-2">System Specifications</div>
-              
-              <div className="space-y-3">
-                 <div className="flex justify-between items-center p-5 rounded-2xl bg-health/5 border border-health/10 transition-all hover:scale-[1.02]">
-                    <div className="space-y-1">
-                       <span className="text-[11px] font-black uppercase tracking-widest text-health/70 block">Daily Generation</span>
-                       <span className="text-[9px] text-health/60 font-bold uppercase tracking-tight">Est. Production</span>
-                    </div>
-                    <span className="text-2xl font-mono font-black text-health">{results.dailyKWh.toFixed(2)} <span className="text-[10px] uppercase opacity-60">kWh</span></span>
+              <div className="surface-card p-6 bg-health/5 border-health/20 shadow-lg shadow-health/5 space-y-2 transition-all hover:scale-[1.02] border-2">
+                 <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-health/70">Daily Generation</span>
+                    <Sun className="size-4 text-health" />
                  </div>
+                 <p className="text-3xl font-mono font-black text-health leading-none">
+                    {results.dailyKWh.toFixed(2)} <span className="text-sm uppercase ml-1 opacity-60">kWh</span>
+                 </p>
+                 <p className="text-[9px] text-health/60 font-bold uppercase tracking-tight">Estimated production per day</p>
+              </div>
 
-                 <div className="flex justify-between items-center p-5 rounded-2xl bg-secondary/30 border border-border/40 transition-all hover:scale-[1.02]">
-                    <div className="space-y-1">
-                       <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground block">Panel Count</span>
-                       <span className="text-[9px] text-muted-foreground/60 font-bold uppercase tracking-tight">550W Tier-1 Mono</span>
-                    </div>
-                    <span className="text-2xl font-mono font-black text-foreground">{Math.ceil(results.requiredKW * 1000 / 550)} <span className="text-[10px] uppercase opacity-60">Units</span></span>
+              <div className="surface-card p-4 bg-signal/5 border-signal/20 shadow-lg shadow-signal/5 space-y-1.5 transition-all hover:scale-[1.02] border-2">
+                 <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-signal/70">Active Peak Load</span>
+                    <Zap className="size-4 text-signal" />
                  </div>
+                 <p className="text-2xl font-mono font-black text-signal leading-none">
+                    {(results.totalWattage / 1000).toFixed(2)} <span className="text-sm uppercase ml-1 opacity-60">kW</span>
+                 </p>
+                 <p className="text-[9px] text-signal/60 font-bold uppercase tracking-tight">Total instantaneous power load</p>
+              </div>
 
-                 <div className="flex justify-between items-center p-5 rounded-2xl bg-secondary/30 border border-border/40 transition-all hover:scale-[1.02]">
-                    <div className="space-y-1">
-                       <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground block">Space Required</span>
-                       <span className="text-[9px] text-muted-foreground/60 font-bold uppercase tracking-tight">Approx. Rooftop Area</span>
+              <div className="surface-card p-4 bg-amber-50/80 border-amber-200 shadow-lg shadow-amber-500/5 space-y-1.5 transition-all hover:scale-[1.02] border-2">
+                 <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-amber-700">PV Panel Estimate</span>
+                    <div className="size-4 rounded-full bg-amber-600/10 flex items-center justify-center border border-amber-600/20">
+                       <div className="size-1.5 rounded-full bg-amber-600 animate-pulse" />
                     </div>
-                    <span className="text-2xl font-mono font-black text-foreground">{Math.ceil(results.requiredKW * 80)} <span className="text-[10px] uppercase opacity-60">Sq.Ft</span></span>
                  </div>
-
-                 <div className="flex justify-between items-center p-5 rounded-2xl bg-signal/5 border border-signal/10 transition-all hover:scale-[1.02]">
-                    <div className="space-y-1">
-                       <span className="text-[11px] font-black uppercase tracking-widest text-signal/70 block">Active Peak Load</span>
-                       <span className="text-[9px] text-signal/60 font-bold uppercase tracking-tight">Total Power Draw</span>
-                    </div>
-                    <span className="text-2xl font-mono font-black text-signal">{(results.totalWattage / 1000).toFixed(2)} <span className="text-[10px] uppercase opacity-60">kW</span></span>
-                 </div>
+                 <p className="text-3xl font-mono font-black text-amber-600 leading-none">
+                    {Math.ceil(results.requiredKW * 1000 / 550)} <span className="text-sm uppercase ml-1 font-sans text-amber-600/40">Panels</span>
+                 </p>
+                 <p className="text-[9px] text-amber-700 font-bold uppercase tracking-tight">Based on 550W Tier-1 Mono PERC</p>
               </div>
            </div>
 
