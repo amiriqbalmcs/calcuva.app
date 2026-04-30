@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "Calcuva",
     title: "Calcuva — Free Online Calculators",
     description: "Fast, accurate, and 100% free online calculators for finance, health, business, and everyday math.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Calcuva — 30+ Free Smart Calculators" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Calcuva — 60+ Free Smart Calculators" }],
   },
   twitter: {
     card: "summary_large_image",

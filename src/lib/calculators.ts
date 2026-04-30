@@ -525,6 +525,15 @@ export const CALCULATORS: CalcMeta[] = [
     keywords: ["solar battery backup calculator", "5kwh lithium battery runtime", "10kwh solar battery backup hours", "lithium vs tubular battery backup", "solar storage sizing calculator"],
     relatedSlugs: ["solar-system-requirement-calculator", "solar-roi-simulator-pakistan"],
   },
+  {
+    slug: "solar-panel-to-kw-calculator",
+    title: "Solar Panel to kW Converter",
+    short: "Convert number of panels and wattage to total system kW capacity.",
+    description: "Instantly calculate your total solar system capacity in kW. Enter the number of panels and their wattage (e.g., 550W, 580W) to see your total peak capacity, area required, and generation potential.",
+    icon: "Grid3X3", category: "utility",
+    keywords: ["solar panel to kw converter", "how many kw is 10 solar panels", "calculate solar peak capacity", "solar panel wattage converter", "solar system capacity tool"],
+    relatedSlugs: ["solar-system-requirement-calculator", "solar-roi-simulator-pakistan"],
+  },
 ];
 
 export const calculatorBySlug = (slug: string) => CALCULATORS.find((c) => c.slug === slug);

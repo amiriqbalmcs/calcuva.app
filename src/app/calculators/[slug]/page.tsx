@@ -113,6 +113,7 @@ const SalaryTaxCalculator = dynamic(() => import("@/components/calculators/Salar
 const ElectricityPredictor = dynamic(() => import("@/components/calculators/ElectricityPredictor"), { loading });
 const SolarRequirementCalculator = dynamic(() => import("@/components/calculators/SolarRequirementCalculator"), { loading });
 const SolarBatteryCalculator = dynamic(() => import("@/components/calculators/SolarBatteryCalculator"), { loading });
+const SolarPanelToKwCalculator = dynamic(() => import("@/components/calculators/SolarPanelToKwCalculator"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -182,6 +183,7 @@ const componentMap: Record<string, any> = {
   "electricity-bill-predictor-pakistan": ElectricityPredictor,
   "solar-system-requirement-calculator": SolarRequirementCalculator,
   "solar-battery-backup-calculator": SolarBatteryCalculator,
+  "solar-panel-to-kw-calculator": SolarPanelToKwCalculator,
 };
 
 export async function generateStaticParams() {
