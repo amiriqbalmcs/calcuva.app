@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { 
+  Share,
   Share2, 
   MessageSquare, 
   Copy, 
@@ -113,6 +114,26 @@ export const SocialSharePreviewCalculator = ({
 
             <div className="space-y-4">
               <div className="space-y-2">
+                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Site URL</Label>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Input 
+                    value={url} 
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="https://example.com"
+                    className="flex-1 font-medium bg-secondary/30 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl h-12"
+                  />
+                  <Button 
+                    onClick={fetchMetadata} 
+                    disabled={isFetching}
+                    className="w-full sm:w-auto rounded-xl px-6 h-12 text-[10px] font-bold uppercase tracking-widest gap-2 shrink-0 shadow-lg shadow-primary/5 active:scale-95 transition-all"
+                  >
+                    {isFetching ? <RefreshCcw className="size-3.5 animate-spin" /> : <RefreshCcw className="size-3.5" />}
+                    {isFetching ? "Fetching..." : "Fetch Meta"}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
                 <div className="flex justify-between items-end">
                   <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Page Title</Label>
                   <span className={cn(
@@ -146,26 +167,6 @@ export const SocialSharePreviewCalculator = ({
                   placeholder="Enter meta description..."
                   className="min-h-[100px] font-medium bg-secondary/30 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl resize-none"
                 />
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Site URL</Label>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Input 
-                    value={url} 
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="https://example.com"
-                    className="flex-1 font-medium bg-secondary/30 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl h-12"
-                  />
-                  <Button 
-                    onClick={fetchMetadata} 
-                    disabled={isFetching}
-                    className="w-full sm:w-auto rounded-xl px-6 h-12 text-[10px] font-bold uppercase tracking-widest gap-2 shrink-0 shadow-lg shadow-primary/5 active:scale-95 transition-all"
-                  >
-                    {isFetching ? <RefreshCcw className="size-3.5 animate-spin" /> : <RefreshCcw className="size-3.5" />}
-                    {isFetching ? "Fetching..." : "Fetch Meta"}
-                  </Button>
-                </div>
               </div>
 
               <div className="space-y-2">
@@ -262,7 +263,7 @@ export const SocialSharePreviewCalculator = ({
              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="size-8 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                    <Code2 className="size-4 text-orange-500" />
+                    <Share className="size-4 text-orange-500" />
                   </div>
                   <h3 className="text-sm font-bold uppercase tracking-wider">Meta Tags Output</h3>
                 </div>

@@ -539,7 +539,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Social Share Preview & Meta Tag Generator",
     short: "Preview how your website looks on social media and generate meta tags.",
     description: "The ultimate debugger for your website's social media presence. Preview your Open Graph (OG) tags for Facebook, X (Twitter), LinkedIn, and WhatsApp. Generate perfectly optimized meta tags for Next.js, React, and HTML instantly.",
-    icon: "Share2", category: "utility",
+    icon: "Share", category: "utility",
     keywords: ["social share preview", "og tag debugger", "meta tag generator", "facebook link preview", "whatsapp link preview", "twitter card validator", "linkedin post preview"],
     relatedSlugs: ["qr-code-generator", "word-character-counter-tool"],
   },
