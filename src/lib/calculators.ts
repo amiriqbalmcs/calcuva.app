@@ -534,6 +534,15 @@ export const CALCULATORS: CalcMeta[] = [
     keywords: ["solar panel to kw converter", "how many kw is 10 solar panels", "calculate solar peak capacity", "solar panel wattage converter", "solar system capacity tool"],
     relatedSlugs: ["solar-system-requirement-calculator", "solar-roi-simulator-pakistan"],
   },
+  {
+    slug: "social-share-preview-tool",
+    title: "Social Share Preview & Meta Tag Generator",
+    short: "Preview how your website looks on social media and generate meta tags.",
+    description: "The ultimate debugger for your website's social media presence. Preview your Open Graph (OG) tags for Facebook, X (Twitter), LinkedIn, and WhatsApp. Generate perfectly optimized meta tags for Next.js, React, and HTML instantly.",
+    icon: "Share2", category: "business",
+    keywords: ["social share preview", "og tag debugger", "meta tag generator", "facebook link preview", "whatsapp link preview", "twitter card validator", "linkedin post preview"],
+    relatedSlugs: ["qr-code-generator", "word-character-counter-tool"],
+  },
 ];
 
 export const calculatorBySlug = (slug: string) => CALCULATORS.find((c) => c.slug === slug);

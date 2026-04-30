@@ -114,6 +114,7 @@ const ElectricityPredictor = dynamic(() => import("@/components/calculators/Elec
 const SolarRequirementCalculator = dynamic(() => import("@/components/calculators/SolarRequirementCalculator"), { loading });
 const SolarBatteryCalculator = dynamic(() => import("@/components/calculators/SolarBatteryCalculator"), { loading });
 const SolarPanelToKwCalculator = dynamic(() => import("@/components/calculators/SolarPanelToKwCalculator"), { loading });
+const SocialSharePreviewCalculator = dynamic(() => import("@/components/calculators/SocialSharePreviewCalculator"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -184,6 +185,7 @@ const componentMap: Record<string, any> = {
   "solar-system-requirement-calculator": SolarRequirementCalculator,
   "solar-battery-backup-calculator": SolarBatteryCalculator,
   "solar-panel-to-kw-calculator": SolarPanelToKwCalculator,
+  "social-share-preview-tool": SocialSharePreviewCalculator,
 };
 
 export async function generateStaticParams() {
