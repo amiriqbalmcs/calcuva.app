@@ -2,7 +2,7 @@
 title: "How to Calculate Your Solar System kW Capacity in Pakistan (2026)"
 date: "2026-04-15"
 excerpt: "Don't get confused by panel wattages. Learn how to accurately calculate your total solar kW capacity, daily unit generation, and roof space requirements."
-category: "finance"
+category: "utility"
 author: "Admin"
 calculator: "solar-panel-to-kw-calculator"
 ---

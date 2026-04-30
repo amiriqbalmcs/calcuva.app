@@ -29,7 +29,17 @@ const PANEL_PRESETS = [
 
 const QTY_PRESETS = [6, 8, 10, 12, 16, 20];
 
-export const SolarPanelToKwCalculator = ({ calc }: { calc: CalcMeta }) => {
+export const SolarPanelToKwCalculator = ({ 
+  calc, 
+  guideHtml, 
+  faqs, 
+  relatedArticles 
+}: { 
+  calc: CalcMeta;
+  guideHtml?: string;
+  faqs?: { q: string; a: string }[];
+  relatedArticles?: any[];
+}) => {
   const [panelQty, setPanelQty] = useState(10);
   const [panelWattage, setPanelWattage] = useState(550);
 
@@ -60,7 +70,7 @@ export const SolarPanelToKwCalculator = ({ calc }: { calc: CalcMeta }) => {
   }, [panelQty, panelWattage]);
 
   return (
-    <CalculatorPage calc={calc}>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
         
         {/* Input Configuration */}
