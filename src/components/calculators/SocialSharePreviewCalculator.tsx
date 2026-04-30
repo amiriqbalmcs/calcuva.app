@@ -179,6 +179,64 @@ export const SocialSharePreviewCalculator = ({
                 />
               </div>
             </div>
+
+            {/* SEO Health Check Summary */}
+            <div className="mt-8 p-5 rounded-2xl bg-primary/5 border border-primary/10 space-y-4">
+              <div className="flex items-center gap-2">
+                <div className="size-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Info className="size-3.5 text-primary" />
+                </div>
+                <h4 className="text-xs font-bold uppercase tracking-wider">SEO Health Check</h4>
+              </div>
+              
+              <div className="space-y-3">
+                {title.length === 0 ? (
+                  <div className="flex gap-3 text-[11px] leading-relaxed">
+                    <AlertCircle className="size-4 text-red-500 shrink-0 mt-0.5" />
+                    <p><span className="font-bold text-red-500">Title is missing:</span> Search engines and social platforms won't have a name to display. Add a title (50-60 chars) for better results.</p>
+                  </div>
+                ) : title.length > 60 ? (
+                  <div className="flex gap-3 text-[11px] leading-relaxed">
+                    <AlertCircle className="size-4 text-amber-500 shrink-0 mt-0.5" />
+                    <p><span className="font-bold text-amber-500">Title too long:</span> Your title will likely be truncated (cut off) on most platforms. Aim for under 60 characters.</p>
+                  </div>
+                ) : (
+                  <div className="flex gap-3 text-[11px] leading-relaxed text-green-600 dark:text-green-400">
+                    <Check className="size-4 shrink-0 mt-0.5" />
+                    <p>Title is looking good!</p>
+                  </div>
+                )}
+
+                {description.length === 0 ? (
+                  <div className="flex gap-3 text-[11px] leading-relaxed">
+                    <AlertCircle className="size-4 text-red-500 shrink-0 mt-0.5" />
+                    <p><span className="font-bold text-red-500">Description is missing:</span> Platforms will try to scrape random text from your page, which looks unprofessional. Add a summary (150 chars).</p>
+                  </div>
+                ) : description.length > 155 ? (
+                  <div className="flex gap-3 text-[11px] leading-relaxed">
+                    <AlertCircle className="size-4 text-amber-500 shrink-0 mt-0.5" />
+                    <p><span className="font-bold text-amber-500">Description too long:</span> Keep it under 155 characters to avoid being cut off in search results.</p>
+                  </div>
+                ) : (
+                  <div className="flex gap-3 text-[11px] leading-relaxed text-green-600 dark:text-green-400">
+                    <Check className="size-4 shrink-0 mt-0.5" />
+                    <p>Description is looking good!</p>
+                  </div>
+                )}
+
+                {!image ? (
+                  <div className="flex gap-3 text-[11px] leading-relaxed">
+                    <AlertCircle className="size-4 text-amber-500 shrink-0 mt-0.5" />
+                    <p><span className="font-bold text-amber-500">OG Image is missing:</span> Your link will appear as a plain text block. Adding a high-quality image (1200x630px) can increase clicks by up to 40%.</p>
+                  </div>
+                ) : (
+                  <div className="flex gap-3 text-[11px] leading-relaxed text-green-600 dark:text-green-400">
+                    <Check className="size-4 shrink-0 mt-0.5" />
+                    <p>Open Graph Image is set.</p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           <div className="surface-card p-6 bg-primary/5 border-primary/10 space-y-4">
