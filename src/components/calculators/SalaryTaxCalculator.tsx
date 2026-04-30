@@ -175,19 +175,21 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                 </div>
              </div>
 
-             <div className="space-y-8 relative">
-                <div className="space-y-5">
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Monthly Tax</span>
-                      <span className="text-destructive font-mono">-Rs.{Math.round(results?.monthlyTax || 0).toLocaleString()}</span>
+             <div className="space-y-4 relative">
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4">Tax Analysis</div>
+                
+                <div className="space-y-3">
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-destructive/5 border border-destructive/10">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-destructive/80">Monthly Tax</span>
+                      <span className="text-lg font-mono font-bold text-destructive">-Rs.{Math.round(results?.monthlyTax || 0).toLocaleString()}</span>
                    </div>
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Yearly Tax</span>
-                      <span className="text-destructive font-mono">-Rs.{Math.round(results?.annualTax || 0).toLocaleString()}</span>
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-destructive/5 border border-destructive/10">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-destructive/80">Yearly Tax</span>
+                      <span className="text-lg font-mono font-bold text-destructive">-Rs.{Math.round(results?.annualTax || 0).toLocaleString()}</span>
                    </div>
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Gross Annual</span>
-                      <span className="text-foreground font-mono">Rs.{Math.round(results?.annualSalary || 0).toLocaleString()}</span>
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-secondary/30 border border-border/40">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">Gross Annual</span>
+                      <span className="text-lg font-mono font-bold text-foreground">Rs.{Math.round(results?.annualSalary || 0).toLocaleString()}</span>
                    </div>
                 </div>
 

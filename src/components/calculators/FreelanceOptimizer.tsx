@@ -218,19 +218,21 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
                 </div>
              </div>
 
-             <div className="space-y-8 relative">
-                <div className="space-y-5">
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Total Fees</span>
-                      <span className="text-destructive font-mono">-${results?.totalLost.toFixed(2)}</span>
+             <div className="space-y-4 relative">
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4">Fee Efficiency</div>
+                
+                <div className="space-y-3">
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-destructive/5 border border-destructive/10">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-destructive/80">Total Fees</span>
+                      <span className="text-lg font-mono font-bold text-destructive">-${results?.totalLost.toFixed(2)}</span>
                    </div>
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Fee Leakage</span>
-                      <span className="text-destructive font-mono">{results?.totalLostPercent.toFixed(1)}%</span>
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-destructive/5 border border-destructive/10">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-destructive/80">Fee Leakage</span>
+                      <span className="text-lg font-mono font-bold text-destructive">{results?.totalLostPercent.toFixed(1)}%</span>
                    </div>
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Platform Cut</span>
-                      <span className="text-foreground font-mono">-${results?.platformFee.toFixed(2)}</span>
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-secondary/30 border border-border/40">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">Platform Cut</span>
+                      <span className="text-lg font-mono font-bold text-foreground">-${results?.platformFee.toFixed(2)}</span>
                    </div>
                 </div>
 

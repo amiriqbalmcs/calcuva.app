@@ -285,23 +285,25 @@ const ElectricityPredictor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                 </div>
              </div>
 
-             <div className="space-y-8 relative">
-                <div className="space-y-4">
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Energy Cost</span>
-                      <span className="text-foreground font-mono">Rs.{Math.round(results?.energyCharge || 0).toLocaleString()}</span>
+             <div className="space-y-4 relative">
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4">Bill Breakdown</div>
+                
+                <div className="space-y-3">
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-secondary/30 border border-border/40">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">Energy Cost</span>
+                      <span className="text-lg font-mono font-bold text-foreground">Rs.{Math.round(results?.energyCharge || 0).toLocaleString()}</span>
                    </div>
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Fixed Charge</span>
-                      <span className="text-foreground font-mono">Rs.{Math.round(results?.fixedCharge || 0).toLocaleString()}</span>
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-secondary/30 border border-border/40">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">Fixed Charge</span>
+                      <span className="text-lg font-mono font-bold text-foreground">Rs.{Math.round(results?.fixedCharge || 0).toLocaleString()}</span>
                    </div>
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>GST (17%)</span>
-                      <span className="text-destructive font-mono">+Rs.{Math.round(results?.gst || 0).toLocaleString()}</span>
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-destructive/5 border border-destructive/10">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-destructive/80">GST (17%)</span>
+                      <span className="text-lg font-mono font-bold text-destructive">+Rs.{Math.round(results?.gst || 0).toLocaleString()}</span>
                    </div>
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Misc Taxes</span>
-                      <span className="text-destructive font-mono">+Rs.{Math.round(results?.ed + results?.njSurcharge + results?.tvFee).toLocaleString()}</span>
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-destructive/5 border border-destructive/10">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-destructive/80">Misc Taxes</span>
+                      <span className="text-lg font-mono font-bold text-destructive">+Rs.{Math.round(results?.ed + results?.njSurcharge + results?.tvFee).toLocaleString()}</span>
                    </div>
                 </div>
 

@@ -190,15 +190,17 @@ const SolarSimulator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
                 </div>
              </div>
 
-             <div className="space-y-8 relative">
-                <div className="space-y-5">
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Monthly Saving</span>
-                      <span className="text-health font-mono">Rs.{Math.round(results?.monthlySavings || 0).toLocaleString()}</span>
+             <div className="space-y-4 relative">
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4">Monthly Performance</div>
+                
+                <div className="space-y-3">
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-health/5 border border-health/10">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-health">Monthly Saving</span>
+                      <span className="text-lg font-mono font-bold text-health">Rs.{Math.round(results?.monthlySavings || 0).toLocaleString()}</span>
                    </div>
-                   <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-widest text-muted-foreground">
-                      <span>Monthly Gen</span>
-                      <span className="text-foreground font-mono">{Math.round(results?.monthlyGeneration)} Units</span>
+                   <div className="flex justify-between items-center p-4 rounded-2xl bg-secondary/30 border border-border/40">
+                      <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">Monthly Gen</span>
+                      <span className="text-lg font-mono font-bold text-foreground">{Math.round(results?.monthlyGeneration)} Units</span>
                    </div>
                 </div>
 
