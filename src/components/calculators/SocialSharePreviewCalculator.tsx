@@ -150,20 +150,20 @@ export const SocialSharePreviewCalculator = ({
 
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Site URL</Label>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Input 
                     value={url} 
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="https://example.com"
-                    className="font-medium bg-secondary/30 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl"
+                    className="flex-1 font-medium bg-secondary/30 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl h-12"
                   />
                   <Button 
                     onClick={fetchMetadata} 
                     disabled={isFetching}
-                    className="rounded-xl px-4 h-12 text-[10px] font-bold uppercase tracking-widest gap-2 shrink-0"
+                    className="w-full sm:w-auto rounded-xl px-6 h-12 text-[10px] font-bold uppercase tracking-widest gap-2 shrink-0 shadow-lg shadow-primary/5 active:scale-95 transition-all"
                   >
-                    {isFetching ? "..." : <RefreshCcw className="size-3.5" />}
-                    {isFetching ? "Fetching" : "Fetch"}
+                    {isFetching ? <RefreshCcw className="size-3.5 animate-spin" /> : <RefreshCcw className="size-3.5" />}
+                    {isFetching ? "Fetching..." : "Fetch Meta"}
                   </Button>
                 </div>
               </div>
@@ -199,10 +199,10 @@ export const SocialSharePreviewCalculator = ({
                 <Eye className="size-5 text-muted-foreground" />
                 <h3 className="text-sm font-bold uppercase tracking-wider">Live Social Preview</h3>
               </div>
-              <TabsList className="bg-secondary/50 p-1 rounded-xl">
-                <TabsTrigger value="whatsapp" className="data-[state=active]:bg-background rounded-lg px-3 py-1.5"><MessageSquare className="size-3.5 mr-2 text-green-500" /> WhatsApp</TabsTrigger>
-                <TabsTrigger value="facebook" className="data-[state=active]:bg-background rounded-lg px-3 py-1.5"><FacebookIcon className="size-3.5 mr-2 text-blue-600" /> Facebook</TabsTrigger>
-                <TabsTrigger value="twitter" className="data-[state=active]:bg-background rounded-lg px-3 py-1.5"><TwitterIcon className="size-3.5 mr-2 text-sky-400" /> X / Twitter</TabsTrigger>
+              <TabsList className="bg-secondary/50 p-1 rounded-xl flex flex-wrap h-auto sm:h-10 w-full sm:w-auto">
+                <TabsTrigger value="whatsapp" className="flex-1 sm:flex-none data-[state=active]:bg-background rounded-lg px-3 py-1.5 text-[11px] sm:text-xs"><MessageSquare className="size-3.5 mr-2 text-green-500" /> WhatsApp</TabsTrigger>
+                <TabsTrigger value="facebook" className="flex-1 sm:flex-none data-[state=active]:bg-background rounded-lg px-3 py-1.5 text-[11px] sm:text-xs"><FacebookIcon className="size-3.5 mr-2 text-blue-600" /> Facebook</TabsTrigger>
+                <TabsTrigger value="twitter" className="flex-1 sm:flex-none data-[state=active]:bg-background rounded-lg px-3 py-1.5 text-[11px] sm:text-xs"><TwitterIcon className="size-3.5 mr-2 text-sky-400" /> X / Twitter</TabsTrigger>
               </TabsList>
             </div>
 
