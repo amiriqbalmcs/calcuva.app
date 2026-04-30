@@ -5,6 +5,7 @@ date: "2026-04-30"
 category: "utility"
 author: "Calcuva Energy Lab"
 image: "/blog/solar-pakistan-2026.jpg"
+keywords: ["solar roi pakistan 2026", "net metering fixed charges", "solar payback period", "NEPRA solar rates 2026", "is solar worth it pakistan"]
 ---
 
 The solar landscape in Pakistan has shifted dramatically in 2026. After the massive boom of 2023-2024, NEPRA and local DISCOs (LESCO, K-Electric, etc.) have introduced new regulations that have left many homeowners wondering: **"Is solar still worth the investment?"**

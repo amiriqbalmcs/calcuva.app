@@ -134,7 +134,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
                <footer className="mt-20 pt-10 border-t border-border flex items-center justify-between">
                 <div className="flex flex-wrap items-center gap-2">
-                   {post.keywords.map(k => (
+                   {post.keywords?.map(k => (
                      <span key={k} className="text-[10px] font-mono font-bold bg-secondary/50 px-2.5 py-1 rounded-md text-muted-foreground">#{k.replace(' ', '-')}</span>
                    ))}
                 </div>

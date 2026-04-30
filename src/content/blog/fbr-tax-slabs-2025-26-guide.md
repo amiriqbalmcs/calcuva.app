@@ -5,6 +5,7 @@ date: "2026-04-30"
 category: "finance"
 author: "Calcuva Finance Team"
 image: "/blog/fbr-tax-2026.jpg"
+keywords: ["FBR tax slabs 2026", "Pakistan salary tax", "income tax calculator 2025-26", "filer vs non-filer", "salary tax pakistan"]
 ---
 
 The fiscal year 2025-26 has brought significant changes to the tax landscape in Pakistan. For salaried individuals, the Federal Board of Revenue (FBR) has introduced a new progressive structure that impacts everyone from entry-level professionals to senior executives.
