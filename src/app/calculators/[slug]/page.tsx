@@ -116,6 +116,10 @@ const SolarBatteryCalculator = dynamic(() => import("@/components/calculators/So
 const SolarPanelToKwCalculator = dynamic(() => import("@/components/calculators/SolarPanelToKwCalculator"), { loading });
 const SocialSharePreviewCalculator = dynamic(() => import("@/components/calculators/SocialSharePreviewCalculator"), { loading });
 const UniversityMeritCalculator = dynamic(() => import("@/components/calculators/UniversityMeritCalculator"), { loading });
+const PtaTaxCalculator = dynamic(() => import("@/components/calculators/PtaTaxCalculator"), { loading });
+const AiTokenCalculator = dynamic(() => import("@/components/calculators/AiTokenCalculator"), { loading });
+const CarRegistrationCalculator = dynamic(() => import("@/components/calculators/CarRegistrationCalculator"), { loading });
+const ZakatCalculator = dynamic(() => import("@/components/calculators/ZakatCalculator"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -188,6 +192,10 @@ const componentMap: Record<string, any> = {
   "solar-panel-to-kw-calculator": SolarPanelToKwCalculator,
   "social-share-preview-tool": SocialSharePreviewCalculator,
   "university-merit-aggregate-calculator": UniversityMeritCalculator,
+  "pakistan-mobile-pta-tax-calculator": PtaTaxCalculator,
+  "ai-api-token-cost-calculator": AiTokenCalculator,
+  "pakistan-car-registration-fee-calculator": CarRegistrationCalculator,
+  "zakat-calculator-pakistan-2026": ZakatCalculator,
 };
 
 export async function generateStaticParams() {

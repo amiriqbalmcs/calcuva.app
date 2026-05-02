@@ -6,7 +6,7 @@ import {
    ShieldCheck, Landmark, Receipt, PieChart,
    Globe, Briefcase, CreditCard, Banknote,
    Info, AlertTriangle, Scale, RefreshCw,
-   LayoutGrid, MousePointer2, ShieldAlert, CheckCircle2, Copy
+   LayoutGrid, MousePointer2, ShieldAlert, CheckCircle2, Copy, Zap
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
@@ -23,9 +23,10 @@ const PLATFORMS = [
 ];
 
 const WITHDRAWAL_PATHS = [
-   { id: "wise", label: "Wise", sub: "Mid-Market Rate", fixedFee: 0, spread: 0.005 },
+   { id: "wise", label: "Wise (Direct)", sub: "Mid-Market (0.5%)", fixedFee: 0, spread: 0.005 },
    { id: "payoneer", label: "Payoneer", sub: "$2 + 2% Spread", fixedFee: 2, spread: 0.02 },
-   { id: "wire", label: "Bank Wire", sub: "$30 Fixed Fee", fixedFee: 30, spread: 0.01 },
+   { id: "binance", label: "Binance P2P", sub: "Premium Rate (+1%)", fixedFee: 0, spread: -0.01 }, // Negative spread means premium
+   { id: "wire", label: "Direct Wire", sub: "$30 + Local Fee", fixedFee: 45, spread: 0.005 },
 ];
 
 const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
@@ -233,10 +234,15 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
                         </div>
                      </div>
 
-                     <div className="text-[11px] text-muted-foreground font-black uppercase tracking-widest flex items-center gap-2">
+                      <div className="text-[11px] text-muted-foreground font-black uppercase tracking-widest flex items-center gap-2">
                         <Globe className="size-3" /> Effective Rate: {results?.effectiveExchangeRate.toFixed(2)} PKR
-                     </div>
-                  </div>
+                      </div>
+                      {pathId === "binance" && (
+                         <div className="mt-2 p-2 bg-green-50 border border-green-100 rounded-lg text-[9px] text-green-700 font-bold uppercase flex items-center gap-2">
+                            <Zap className="size-3" /> P2P Premium: Selling above interbank rate
+                         </div>
+                      )}
+                   </div>
 
                   <div className="space-y-4 relative">
                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4">Fee Efficiency</div>

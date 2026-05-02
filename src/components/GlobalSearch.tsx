@@ -12,7 +12,7 @@ import {
   ArrowLeftRight, ReceiptSwissFranc, TrendingDown, Lock, Car, Activity,
   Weight, Utensils, Timer, Beer, Cigarette, Baby, Droplet, Target, CreditCard, CalendarPlus, CalendarCheck, Ruler, FileType,
   GraduationCap, Dumbbell, BadgeDollarSign, QrCode, BadgeCheck, Droplets,
-  Leaf, Sun, Wallet, Zap, Battery, Grid3X3, Share, Moon, Landmark, Globe,
+  Leaf, Sun, Wallet, Zap, Battery, Grid3X3, Share, Moon, Landmark, Globe, Smartphone,
 } from "lucide-react";
 
 const ICONS: Record<string, any> = {
@@ -22,7 +22,7 @@ const ICONS: Record<string, any> = {
   Droplet, Target, Clock, CreditCard, CalendarPlus, CalendarCheck, Ruler,
   FileType, GraduationCap, Dumbbell, BadgeDollarSign, QrCode, BadgeCheck,
   Droplets, Leaf, Sun, Wallet, Zap, Battery, Grid3X3, Share, FileText, Moon, Globe,
-  Activity, Landmark,
+  Activity, Landmark, Smartphone,
   "file-text": FileText, "book-open": GraduationCap
 };
 import { CALCULATORS } from "@/lib/calculators";

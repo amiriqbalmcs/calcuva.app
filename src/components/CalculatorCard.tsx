@@ -11,7 +11,7 @@ import {
   Zap, Battery, Grid3X3, Share, FileText, Moon, ShoppingCart, Settings,
   Beef, Stethoscope, Microscope, Brain, Plane, Shield, MapPin, Search,
   Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer, FileCode,
-  Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History, Globe
+  Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History, Globe, Smartphone
 } from "lucide-react";
 import { CalcMeta, CATEGORIES } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
@@ -38,7 +38,7 @@ const ICONS: Record<string, any> = {
   "book-open": FileType, "target": Target, "file-text": FileText,
   FileText, Moon, Beef, Stethoscope, Microscope, Brain, Plane, Shield, MapPin, 
   Search, Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer, 
-  FileCode, Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History, Globe
+  FileCode, Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History, Globe, Smartphone
 };
 
 const categoryStyles: Record<CalcMeta["category"], string> = {
