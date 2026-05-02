@@ -120,6 +120,9 @@ const PtaTaxCalculator = dynamic(() => import("@/components/calculators/PtaTaxCa
 const AiTokenCalculator = dynamic(() => import("@/components/calculators/AiTokenCalculator"), { loading });
 const CarRegistrationCalculator = dynamic(() => import("@/components/calculators/CarRegistrationCalculator"), { loading });
 const ZakatCalculator = dynamic(() => import("@/components/calculators/ZakatCalculator"), { loading });
+const SolarNetBilling = dynamic(() => import("@/components/calculators/SolarNetBilling"), { loading });
+const FreelanceTaxOptimizer = dynamic(() => import("@/components/calculators/FreelanceTaxOptimizer"), { loading });
+const AiEfficiencyRoi = dynamic(() => import("@/components/calculators/AiEfficiencyRoi"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -196,6 +199,9 @@ const componentMap: Record<string, any> = {
   "ai-api-token-cost-calculator": AiTokenCalculator,
   "pakistan-car-registration-fee-calculator": CarRegistrationCalculator,
   "zakat-calculator-pakistan-2026": ZakatCalculator,
+  "solar-net-billing-calculator-pakistan": SolarNetBilling,
+  "freelance-tax-residency-optimizer": FreelanceTaxOptimizer,
+  "ai-agent-efficiency-roi-calculator": AiEfficiencyRoi,
 };
 
 export async function generateStaticParams() {

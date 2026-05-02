@@ -593,6 +593,36 @@ export const CALCULATORS: CalcMeta[] = [
     relatedSlugs: ["salary-income-tax-calculator-2026", "loan-emi-calculator"],
     hideCurrencySwitcher: true,
   },
+  {
+    slug: "solar-net-billing-calculator-pakistan",
+    title: "Solar Net Billing (Buyback) Calculator 2026",
+    short: "Calculate your savings under the 2026 Net Billing system.",
+    description: "Don't get confused by the new solar rules. Calculate your actual bill reduction using differentiated rates for exported and self-consumed solar units in Pakistan.",
+    icon: "Sun", category: "finance",
+    keywords: ["solar net billing calculator", "solar buyback rate pakistan", "solar savings calculator 2026", "net billing vs net metering", "lesco solar rates", "k-electric solar credit"],
+    relatedSlugs: ["solar-roi-simulator-pakistan", "electricity-bill-predictor-pakistan"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "freelance-tax-residency-optimizer",
+    title: "Freelance Tax & Residency Optimizer 2026",
+    short: "Optimize your remote income tax and withdrawal arbitrage.",
+    description: "Compare Filer vs Non-Filer tax, SECP registration, and US LLC benefits. Find the best withdrawal path (Wise vs Payoneer) to maximize your PKR earnings in 2026.",
+    icon: "Coins", category: "business",
+    keywords: ["freelance tax pakistan 2026", "filer vs non filer tax", "remote work tax optimization", "wise vs payoneer fees 2026", "secp vs sole proprietor tax"],
+    relatedSlugs: ["freelance-rate-calculator", "freelance-fee-optimizer"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "ai-agent-efficiency-roi-calculator",
+    title: "AI Agent Efficiency & ROI Calculator",
+    short: "Measure the dollar value of AI productivity gains.",
+    description: "Calculate how much your AI agents (Claude 4.7, GPT-5.4) are actually saving your business by comparing labor costs saved vs API token expenses.",
+    icon: "Zap", category: "business",
+    keywords: ["ai roi calculator", "ai agent productivity estimator", "llm cost savings", "claude 4.7 vs gpt-5.4 roi", "ai efficiency calculator for business"],
+    relatedSlugs: ["ai-api-token-cost-calculator", "profit-margin-calculator"],
+    hideCurrencySwitcher: true,
+  },
 ];
 
 export const calculatorBySlug = (slug: string) => CALCULATORS.find((c) => c.slug === slug);
