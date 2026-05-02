@@ -308,6 +308,7 @@ const MacroCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
 
         </div>
       </div>
+
     </CalculatorPage>
   );
 };

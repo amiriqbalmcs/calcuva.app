@@ -29,6 +29,11 @@ Your body operates on a 24-hour internal clock.
 2. **The 90-Minute Cycle**: Sleep occurs in cycles. Waking up at the end of a cycle (usually 1.5 hours) feels more refreshing than waking up in the middle of deep sleep.
 3. **The Recovery Window**: Our calculator provides a "Recovery Recommendation." Usually, adding 1-2 hours to your normal schedule for 3-4 days is the most effective way to clear a debt without disrupting your future rhythm.
 
+#### Expert Recovery Strategies
+*   **Sleep Architecture**: Understand that your brain prioritizes deep sleep in the first half of the night and REM sleep in the second. Missing the end of your sleep often means missing emotional processing time.
+*   **The Cost of Deficit**: Being awake for 17 hours straight is equivalent to a blood alcohol level of 0.05%. Sleep debt isn't just about feeling tired; it's about significant cognitive impairment.
+*   **The Recovery Weekend Myth**: While "catching up" on weekends helps, it doesn't fully reverse the inflammation and metabolic disruption caused by 5 days of under-sleeping.
+
 #### Expert Strategy: The "Sleep Hygiene" Audit
 If you are struggling to pay off your sleep debt, audit your environment:
 *   **Light Pollution**: Blue light from phones suppresses melatonin. Try to "unplug" 60 minutes before your target sleep time.

@@ -5,16 +5,40 @@ import {
   ChevronRight, Landmark, Receipt, TrendingUp, Home, Activity, Baby, Droplet, 
   Calendar, Ruler, GraduationCap, ReceiptSwissFranc, TrendingDown, UserRound, 
   Briefcase, FileType, PiggyBank, Weight, Utensils, Coins, Banknote, Timer, 
-  Target, CalendarPlus, Calculator, Car, Flame, Beer, Cigarette, Percent
+  Target, CalendarPlus, Calculator, Car, Flame, Beer, Cigarette, Percent,
+  Heart, ArrowLeftRight, Lock, Activity as ActivityIcon, CreditCard, CalendarCheck,
+  Dumbbell, BadgeDollarSign, QrCode, BadgeCheck, Droplets, Leaf, Sun, Wallet,
+  Zap, Battery, Grid3X3, Share, FileText, Moon, ShoppingCart, Settings,
+  Beef, Stethoscope, Microscope, Brain, Plane, Shield, MapPin, Search,
+  Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer, FileCode,
+  Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History, Globe
 } from "lucide-react";
 import { CalcMeta, CATEGORIES } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
 const ICONS: Record<string, any> = {
-  Landmark, Receipt, TrendingUp, Home, Activity, Baby, Droplet, Calendar, Ruler, 
+  Landmark, Receipt, TrendingUp, Home, Activity, Baby, Droplet, Calendar, Ruler,
   GraduationCap, ReceiptSwissFranc, TrendingDown, UserRound, Briefcase, FileType,
-  PiggyBank, Weight, Utensils, Coins, Banknote, Timer, Target, CalendarPlus, 
-  Calculator, Car, Flame, Beer, Cigarette, Percent
+  PiggyBank, Weight, Utensils, Coins, Banknote, Timer, Target, CalendarPlus,
+  Calculator, Car, Flame, Beer, Cigarette, Percent, Heart, ArrowLeftRight, Lock,
+  ActivitySquare: ActivityIcon, CreditCard, CalendarCheck, Dumbbell, BadgeDollarSign,
+  QrCode, BadgeCheck, Droplets, Leaf, Sun, Wallet, Zap, Battery, Grid3X3, Share,
+  "trending-up": TrendingUp, "trending-down": TrendingDown, "scale": Ruler,
+  "calculator": Calculator, "activity": Activity, "award": BadgeCheck,
+  "alert-circle": Target, "banknote": Banknote, "heart": Heart, "baby": Baby,
+  "zap": Zap, "droplets": Droplets, "beef": Beef, "pie-chart": Grid3X3,
+  "timer": Timer, "clock": Timer, "stethoscope": Activity, "microscope": Activity,
+  "brain": Activity, "briefcase": Briefcase, "graduation-cap": GraduationCap,
+  "plane": Car, "car": Car, "home": Home, "shopping-cart": ShoppingCart,
+  "user": UserRound, "users": UserRound, "settings": Settings, "shield": Lock,
+  "fast-forward": Zap, "utensils": Utensils, "calendar": Calendar, "map-pin": MapPin,
+  "dna": Dna, "waves": Waves, "heart-pulse": HeartPulse, "dumbbell": Dumbbell,
+  "apple": Utensils, "line-chart": LineChart, "bar-chart": BarChart3,
+  "gauge": Gauge, "moon": Moon, "sun": Sun, "globe": Globe, "history": History,
+  "book-open": FileType, "target": Target, "file-text": FileText,
+  FileText, Moon, Beef, Stethoscope, Microscope, Brain, Plane, Shield, MapPin, 
+  Search, Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer, 
+  FileCode, Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History, Globe
 };
 
 const categoryStyles: Record<CalcMeta["category"], string> = {

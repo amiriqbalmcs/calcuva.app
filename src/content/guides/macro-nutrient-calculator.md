@@ -48,5 +48,10 @@ Many users forget about fiber and alcohol.
 *   **Fiber**: Aim for 14g per 1,000 calories. It improves digestion and lowers the "net carb" impact on blood sugar.
 *   **Alcohol**: If you drink, you must "subtract" those 7 kcal/g from your Carb or Fat total for that day to stay on track.
 
+#### Expert Strategy: Beyond the Basics
+*   **Protein Thresholds**: While the RDA is low, clinical research suggests that to prevent muscle loss during a cut, you need at least **1.2g of protein per kg** of body weight. For athletes, this climbs to 2.2g.
+*   **The Fat Loss Plateau**: If your weight hasn't moved in 2 weeks, your metabolism has likely adapted. Instead of cutting more calories, try a "Maintenance Week" to reset your leptin levels.
+*   **Metabolic Adaptation**: Your body becomes more efficient as you lose weight, meaning you burn fewer calories at rest. Recalculate your macros every 5-10 lbs of weight loss to stay in a true deficit.
+
 #### The Road to Sustainability
 The "Perfect Macro Split" is the one you can follow for 12 weeks, not 12 days. Don't be afraid to adjust your fat/carb ratios based on your personal preference. As long as your **Total Calories** and **Minimum Protein** targets are met, your body composition will improve. Use our [Macro Calculator] every 5kg of weight change to ensure your targets stay aligned with your evolving biology.

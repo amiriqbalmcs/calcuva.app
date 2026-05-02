@@ -9,6 +9,7 @@ import {
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 import { calculatorBySlug } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
@@ -55,7 +56,7 @@ const SleepDebtCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
         <div className="lg:col-span-8 space-y-6">
           <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden group shadow-sm">
-            <div className="p-6 md:p-8 border-b border-border/40 flex items-center justify-between bg-background relative overflow-hidden">
+            <div className="p-6 md:p-8 border-b border-border/40 flex flex-col md:flex-row md:items-center justify-between bg-background relative overflow-hidden gap-6">
               <div className="absolute top-0 left-0 w-1 h-full bg-foreground" />
               <div className="flex items-center gap-3 relative z-10">
                 <Clock className="size-5 text-muted-foreground/60" />
@@ -64,13 +65,18 @@ const SleepDebtCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                   <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Log your actual hours per night</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4 px-4 py-2 bg-secondary/10 rounded-xl border border-border/40">
-                 <Label className="text-[10px] font-bold uppercase tracking-wider">Goal</Label>
-                 <Input 
-                    type="number" 
-                    value={targetHours} 
-                    onChange={(e) => setTargetHours(Number(e.target.value) || 0)}
-                    className="w-12 h-8 bg-background border-border/60 text-center font-bold p-0 text-xs rounded-lg"
+              <div className="flex flex-col gap-2 min-w-[180px] bg-secondary/5 p-4 rounded-2xl border border-border/40 relative z-10">
+                 <div className="flex justify-between items-center">
+                    <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Sleep Goal</Label>
+                    <span className="text-xs font-black text-foreground bg-background px-2 py-0.5 rounded border border-border/40">{targetHours}h</span>
+                 </div>
+                 <Slider 
+                    value={[targetHours]} 
+                    onValueChange={(vals) => setTargetHours(vals[0])}
+                    max={12}
+                    min={4}
+                    step={0.5}
+                    className="w-full"
                  />
               </div>
             </div>
@@ -167,6 +173,7 @@ const SleepDebtCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
           </div>
         </div>
       </div>
+
     </CalculatorPage>
   );
 };

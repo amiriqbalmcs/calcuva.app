@@ -543,6 +543,16 @@ export const CALCULATORS: CalcMeta[] = [
     keywords: ["social share preview", "og tag debugger", "meta tag generator", "facebook link preview", "whatsapp link preview", "twitter card validator", "linkedin post preview"],
     relatedSlugs: ["qr-code-generator", "word-character-counter-tool"],
   },
+  {
+    slug: "university-merit-aggregate-calculator",
+    title: "University Merit (Aggregate) Calculator",
+    short: "Calculate your aggregate merit for NUST, UET, FAST, and GIKI.",
+    description: "Calculate your university admission merit score based on Matric, Inter, and Entry Test scores. Supports custom weights for all major universities like NUST (NET), UET (ECAT), FAST, and GIKI.",
+    icon: "GraduationCap", category: "education",
+    keywords: ["merit calculator", "aggregate calculator", "university admission merit", "nust merit calculator", "uet aggregate calculator", "fast university merit", "how to calculate merit", "aggregate calculator pakistan", "admission aggregate"],
+    relatedSlugs: ["hec-cgpa-converter", "board-percentage-calculator", "academic-grade-calculator"],
+    hideCurrencySwitcher: true,
+  },
 ];
 
 export const calculatorBySlug = (slug: string) => CALCULATORS.find((c) => c.slug === slug);

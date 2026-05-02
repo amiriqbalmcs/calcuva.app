@@ -7,6 +7,7 @@ import { Menu, X, Calculator, History, Clock, Sun, Moon } from "lucide-react";
 import { CALCULATORS, CATEGORIES, CategoryKey } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
+import { GlobalSearch } from "./GlobalSearch";
 
 const navItems: { label: string; href: string; key?: CategoryKey }[] = [
   { label: "Home", href: "/" },
@@ -88,8 +89,8 @@ export const SiteHeader = () => {
           </div>
         </Link>
 
-        <div className="flex items-center gap-6">
-          <nav className="hidden md:flex items-center gap-1">
+        <div className="flex items-center gap-3 lg:gap-6">
+          <nav className="hidden md:flex items-center gap-0.5">
             {navItems.map((item) => {
               const isActive = pathname === item.href || (item.key && pathname === `/category/${item.key}`);
               return (
@@ -97,7 +98,7 @@ export const SiteHeader = () => {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] rounded-lg transition-all",
+                    "px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] rounded-lg transition-all",
                     isActive 
                       ? "text-foreground bg-secondary shadow-sm ring-1 ring-border/40" 
                       : "text-muted-foreground hover:text-foreground hover:bg-secondary/40"
@@ -109,18 +110,18 @@ export const SiteHeader = () => {
             })}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-2 lg:gap-4">
+             <GlobalSearch />
              {historyTools.length > 0 && (
                 <div className="relative group/history">
-                  <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary/50 text-muted-foreground hover:text-foreground text-[10px] font-black uppercase tracking-[0.2em] transition-all ring-1 ring-border/20 shadow-sm">
-                     <History className="size-3" />
-                     History
+                  <button className="flex items-center justify-center size-9 rounded-lg bg-secondary/50 text-muted-foreground hover:text-foreground transition-all ring-1 ring-border/20 shadow-sm">
+                     <History className="size-4" />
                   </button>
                    <div className="absolute right-0 top-full pt-3 w-64 opacity-0 translate-y-2 pointer-events-none group-hover/history:opacity-100 group-hover/history:translate-y-0 group-hover/history:pointer-events-auto transition-all duration-300 z-[100]">
                       <div className="bg-card/95 backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl p-2">
                          <div className="px-3 py-2 border-b border-border/40 mb-1">
                             <span className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.3em] flex items-center gap-2">
-                               <Clock className="size-2.5" /> Recent Tools
+                               <Clock className="size-2.5" />
                             </span>
                          </div>
                          {historyTools.map((t: any) => (
@@ -157,6 +158,7 @@ export const SiteHeader = () => {
           </div>
 
           <div className="flex items-center gap-1 md:hidden">
+            <GlobalSearch />
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

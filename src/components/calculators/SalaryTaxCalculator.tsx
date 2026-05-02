@@ -61,6 +61,7 @@ const SalaryTaxCalculator = ({ calc: initialCalc, guideHtml, faqs, relatedArticl
       const monthlyTakeHome = monthlySalary - monthlyTax;
       const annualTakeHome = annualSalary - tax;
 
+
       return {
          annualSalary,
          annualTax: tax,

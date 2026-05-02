@@ -147,6 +147,12 @@ export const ExportButton = ({ title }: Props) => {
       await new Promise(r => setTimeout(r, 1500));
       
       // Capture as high-quality image first
+      // Temporarily disable cross-origin stylesheets to avoid SecurityError
+      const taintedSheets = Array.from(document.styleSheets).filter(s => {
+        try { return !s.cssRules; } catch (e) { return true; }
+      });
+      taintedSheets.forEach(s => s.disabled = true);
+
       const dataUrl = await toPng(env.wrapper, {
         quality: 1,
         pixelRatio: 3, // Higher ratio for crisp PDF
@@ -155,6 +161,8 @@ export const ExportButton = ({ title }: Props) => {
           return true;
         },
       });
+
+      taintedSheets.forEach(s => s.disabled = false);
 
       // Replace document content with the captured image for printing
       env.iframeDoc.body.innerHTML = `
@@ -204,9 +212,17 @@ export const ExportButton = ({ title }: Props) => {
         },
       };
 
+      // Temporarily disable cross-origin stylesheets to avoid SecurityError
+      const taintedSheets = Array.from(document.styleSheets).filter(s => {
+        try { return !s.cssRules; } catch (e) { return true; }
+      });
+      taintedSheets.forEach(s => s.disabled = true);
+
       const dataUrl = format === 'png' 
         ? await toPng(env.wrapper, options) 
         : await toJpeg(env.wrapper, options);
+      
+      taintedSheets.forEach(s => s.disabled = false);
       
       document.body.removeChild(env.iframe);
 
@@ -237,6 +253,7 @@ export const ExportButton = ({ title }: Props) => {
     }
   };
 
+
   return (
     <div className="no-print">
       <DropdownMenu>
@@ -258,6 +275,8 @@ export const ExportButton = ({ title }: Props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl shadow-2xl border-border/50 backdrop-blur-xl">
           <div className="px-2 py-1.5 mb-1 text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Select Format</div>
+          
+
           <DropdownMenuItem onClick={handlePrint} className="gap-3 py-3 cursor-pointer rounded-xl hover:bg-finance-soft hover:text-finance focus:bg-finance-soft focus:text-finance transition-colors">
             <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0">
               <FileText className="size-4" />
@@ -287,6 +306,7 @@ export const ExportButton = ({ title }: Props) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
     </div>
   );
 };

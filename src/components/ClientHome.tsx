@@ -104,7 +104,7 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
             <h3 className="text-xs font-bold uppercase tracking-widest font-mono">Trending Now</h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-            {["loan-emi-calculator", "calorie-deficit-calculator", "compound-interest-calculator", "bmi-tdee-calculator"].map(slug => {
+            {["salary-income-tax-calculator-2026", "university-merit-aggregate-calculator", "calorie-deficit-calculator", "compound-interest-calculator"].map(slug => {
               const c = CALCULATORS.find(c => c.slug === slug);
               return c ? <CalculatorCard key={c.slug} calc={c} /> : null;
             })}
