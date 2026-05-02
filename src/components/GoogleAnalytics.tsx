@@ -2,20 +2,24 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
-export const GoogleAnalytics = ({ ga_id }: { ga_id: string }) => {
+const AnalyticsInner = ({ ga_id }: { ga_id: string }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     if (ga_id && typeof window !== "undefined" && (window as any).gtag) {
       (window as any).gtag("config", ga_id, {
-        page_path: pathname + searchParams.toString(),
+        page_path: pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : ""),
       });
     }
   }, [pathname, searchParams, ga_id]);
 
+  return null;
+};
+
+export const GoogleAnalytics = ({ ga_id }: { ga_id: string }) => {
   return (
     <>
       <Script
@@ -36,6 +40,9 @@ export const GoogleAnalytics = ({ ga_id }: { ga_id: string }) => {
           `,
         }}
       />
+      <Suspense fallback={null}>
+        <AnalyticsInner ga_id={ga_id} />
+      </Suspense>
     </>
   );
 };
