@@ -5,7 +5,9 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { SITE_URL } from "@/lib/constants";
+import { SITE_URL, GA_ID } from "@/lib/constants";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,6 +39,10 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/favicon-concept.png",
+    apple: "/favicon-concept.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -67,6 +73,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased min-h-screen flex flex-col bg-background text-foreground">
         <Providers>
+          <GoogleAnalytics ga_id={GA_ID} />
           <SiteHeader />
           <main className="flex-1">
             {children}
@@ -74,6 +81,23 @@ export default function RootLayout({
           <SiteFooter />
           <Analytics />
           <SpeedInsights />
+          <Script
+            id="organization-schema"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Calcuva",
+                "url": SITE_URL,
+                "logo": `${SITE_URL}/logo.png`,
+                "sameAs": [
+                  "https://twitter.com/calcuva",
+                  "https://facebook.com/calcuva"
+                ]
+              })
+            }}
+          />
         </Providers>
       </body>
     </html>

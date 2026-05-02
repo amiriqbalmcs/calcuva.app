@@ -118,7 +118,7 @@ const SocialSharePreviewCalculator = dynamic(() => import("@/components/calculat
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
-  "income-tax-calculator": SalaryTaxCalculator,
+  "income-tax-calculator": TaxBracketCalculator,
   "sip-investment-calculator": SipCompoundCalculator,
   "rent-vs-buy-calculator": RentVsBuyCalculator,
   "age-calculator": AgeCalculator,

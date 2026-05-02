@@ -70,7 +70,7 @@ const LoveCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
     }
   }
 
-  const handleShare = () => {
+  const handleCopy = () => {
     let text = `Love Match: ${name1} + ${name2} = ${score}%! ${message}. Test your crush at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -136,11 +136,11 @@ const LoveCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
                   <RefreshCw className="size-3" /> Reset
                 </button>
                 <button
-                  onClick={handleShare}
+                  onClick={handleCopy}
                   className="h-11 rounded-xl bg-red-500 text-white border border-red-400 hover:bg-red-600 transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg hover:shadow-red-500/20"
                 >
-                  {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-                  {copied ? "Copied" : "Share"}
+                  {copied ? <CheckCircle2 className="size-3" /> : <Copy className="size-3" />}
+                  {copied ? "Copied" : "Copy Result"}
                 </button>
               </div>
             </div>
@@ -184,7 +184,7 @@ const LoveCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
                       </div>
                     </div>
                     <button 
-                      onClick={handleShare} 
+                      onClick={handleCopy} 
                       className={cn(
                         "p-3 rounded-xl transition-all border shadow-sm absolute top-0 right-0",
                         copied ? "bg-red-500 text-white border-red-500" : "bg-background text-foreground border-border hover:bg-secondary"

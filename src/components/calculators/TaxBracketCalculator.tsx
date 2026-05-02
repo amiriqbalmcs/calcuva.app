@@ -53,9 +53,9 @@ const brackets2024 = {
     { rate: 0.37, min: 731201, max: Infinity },
   ]
 };
-const calc = calculatorBySlug("tax-bracket-calculator");
 
-export default function TaxBracketCalculator({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) {
+export default function TaxBracketCalculator({ calc: initialCalc, guideHtml, faqs, relatedArticles }: { calc?: any; guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) {
+  const calc = initialCalc || calculatorBySlug("tax-bracket-calculator");
   if (!calc) return null;
   const { currency } = useCurrency();
   const [income, setIncome] = useUrlState<number>("i", 75000);
@@ -111,7 +111,7 @@ export default function TaxBracketCalculator({ guideHtml, faqs, relatedArticles 
         { name: "Federal Tax", value: totalTax, color: "hsl(var(--destructive))" },
       ]
     };
-  }, [income, filingStatus]);
+  }, [income, filingStatus, formatNumber]);
 
   const handleCopy = () => {
     let text = `Effective Tax Rate: ${(results.effectiveRate * 100).toFixed(1)}% | Estimated Tax: ${formatCurrency(results.totalTax, currency.code)}. Audit at ${window.location.href}`;

@@ -13,9 +13,8 @@ import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("salary-income-tax-calculator-2026");
-
-const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+const SalaryTaxCalculator = ({ calc: initialCalc, guideHtml, faqs, relatedArticles }: { calc?: any; guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+   const calc = initialCalc || calculatorBySlug("salary-income-tax-calculator-2026");
    if (!calc) return null;
 
    const [monthlySalary, setMonthlySalary] = useState<number>(189000);
@@ -89,8 +88,8 @@ const SalaryTaxCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                            <Landmark className="size-6 text-foreground" />
                         </div>
                         <div className="space-y-0.5">
-                           <h3 className="text-lg font-bold tracking-tight text-foreground uppercase">Income Tax Configuration</h3>
-                           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">FBR Official Salary Slabs (Pakistan)</p>
+                           <h3 className="text-lg font-bold tracking-tight text-foreground uppercase">{calc.title.includes('Pakistan') ? 'Income Tax Configuration' : calc.title}</h3>
+                           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">{calc.title.includes('Pakistan') ? 'FBR Official Salary Slabs (Pakistan)' : 'Salary Tax Analysis'}</p>
                         </div>
                      </div>
                   </div>

@@ -59,7 +59,7 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
     return { coins, finalValue, profit, roi, totalFees: initialFee + exitFee, insight, icon };
   }, [investment, buyPrice, sellPrice, fee]);
 
-  const handleShare = () => {
+  const handleCopy = () => {
     const text = `Crypto Trade: ${result.roi.toFixed(1)}% ROI | ${formatCurrency(result.profit, currency.code)} Profit. Track your portfolio at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -135,11 +135,11 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
               </div>
 
               <button
-                onClick={handleShare}
+                onClick={handleCopy}
                 className="w-full h-11 rounded-xl bg-background border border-border/60 hover:bg-foreground hover:text-background transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm"
               >
-                {copied ? <CheckCircle2 className="size-3" /> : <Share className="size-3" />}
-                {copied ? "Link Copied" : "Share Position"}
+                {copied ? <CheckCircle2 className="size-3" /> : <Copy className="size-3" />}
+                {copied ? "Result Copied" : "Copy Analysis"}
               </button>
             </div>
           </div>
@@ -182,7 +182,7 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
                   </div>
                 </div>
                 <button
-                  onClick={handleShare}
+                  onClick={handleCopy}
                   className={cn(
                     "p-3 rounded-xl transition-all border shadow-sm",
                     copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
