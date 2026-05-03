@@ -75,9 +75,9 @@ export function EmbedDialog({ isOpen, onClose, slug, title, isWholeSite }: Embed
             <div className="p-4 rounded-2xl bg-signal/5 border border-signal/10 space-y-2">
               <div className="flex items-center gap-2 text-signal">
                 <Shield className="size-4" />
-                <span className="text-[10px] font-bold uppercase tracking-wider font-mono">Safe & Secure</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider font-mono">Premium Quality</span>
               </div>
-              <p className="text-[11px] text-muted-foreground leading-relaxed">No ads or tracking scripts. A private, premium experience for your users.</p>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">A professional, distraction-free calculation engine for your audience.</p>
             </div>
           </div>
         </div>
