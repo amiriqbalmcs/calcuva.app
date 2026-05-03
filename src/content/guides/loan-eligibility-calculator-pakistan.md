@@ -24,13 +24,23 @@ Banks look at your **Disposable Income**. If you earn Rs. 100,000, a bank won't 
 *   **Housing Finance**: To encourage homeownership, the SBP allows a higher threshold of up to **65% DTI** in certain schemes.
 Our calculator allows you to adjust this ratio to see how it impacts your maximum loan amount.
 
-#### Salary Brackets and Loan Types
-*   **Lower Tier (Rs. 35k - 75k)**: Ideal for small hatchback car financing or personal loans.
-*   **Middle Tier (Rs. 75k - 200k)**: Eligible for sedan financing and small apartment/plot financing.
-*   **Upper Tier (Rs. 200k+)**: High eligibility for luxury car financing and large-scale home construction loans.
+#### Salaried vs. Self-Employed (SEP/SEB) Math
+The math changes based on your employment type:
+1.  **Salaried Individuals**: Eligibility is based on your **Net Take-Home Pay** (after tax and deductions). Banks view this as stable and offer lower markup rates.
+2.  **Self-Employed Professionals (SEP) / Businessmen (SEB)**: Eligibility is calculated based on **Average Bank Statement Inflow** or audited financial statements. Banks typically apply a "Haircut" (reducing your reported income by 20-30%) to account for business volatility.
+
+#### 2026 Housing Schemes: Low-Cost Finance
+By 2026, the SBP has introduced specialized **Markup Subsidy Schemes** for first-time homeowners. 
+*   **Tier 1**: Small houses/apartments (up to 5 Marla) often have fixed rates for the first 5 years.
+*   **Eligibility Boost**: These schemes often allow a slightly higher DTI because the monthly EMI is subsidized, making homeownership accessible even for middle-income brackets.
+
+#### The Importance of Your e-CIB Score
+Before running your numbers, check your **e-CIB (Electronic Credit Information Bureau)** report. 
+*   **Clean Record**: Even a single late payment on a credit card 2 years ago can drop your score.
+*   **Utilization**: If you use 90% of your credit card limit every month, banks see you as "Credit Hungry," which can lead to a lower loan eligibility amount or a higher markup rate (Spread).
 
 #### Expert Strategy: Boosting Your Eligibility
-If the calculator shows you aren't eligible for the amount you need, consider these three steps:
+If the calculator shows you aren't eligible for the amount you need, consider these steps:
 1. **Clubbing Income**: As mentioned, add a co-applicant to increase the "Net Salary" pool.
 2. **Clear Small Debts**: Pay off credit card balances or small personal loans. Reducing your "Existing EMIs" directly increases the room for your new loan.
 3. **Increase Tenure**: Extending a home loan from 10 years to 20 years reduces the monthly EMI, which might bring it within your 50% DTI limit.
@@ -38,8 +48,8 @@ If the calculator shows you aren't eligible for the amount you need, consider th
 #### The "Hidden" Costs of Financing
 When planning, don't just look at the EMI. Remember to account for:
 *   **Processing Fees**: Usually 0.5% to 1% of the loan amount.
-*   **Insurance (Takaful)**: Mandatory for car and home loans.
-*   **Pre-payment Charges**: If you pay off the loan early, banks may charge a 2-5% penalty.
+*   **Insurance (Takaful)**: Mandatory for car and home loans to protect the bank's asset.
+*   **Valuation & Legal Fees**: For home loans, you must pay for a bank-approved surveyor to value the property.
 
-#### Conclusion: Be Bank-Ready
-Don't wait for a bank rejection. Use Calcuva to audit your financial profile first. By understanding your DTI ratio and max loan capacity, you can walk into any bank in Pakistan with the confidence that your application meets their internal merit criteria.
+***
+*Produced by the Calcuva Finance Team. Helping you navigate Pakistan's banking sector in 2026.*

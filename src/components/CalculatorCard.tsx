@@ -47,6 +47,7 @@ const categoryStyles: Record<CalcMeta["category"], string> = {
   education: "bg-education-soft text-education dark:bg-education/20 dark:text-education",
   utility: "bg-utility-soft text-utility dark:bg-utility/20 dark:text-utility",
   business: "bg-business-soft text-business dark:bg-business/20 dark:text-business",
+  sustainability: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400",
 };
 
 export const CalculatorCard = ({ calc }: { calc: CalcMeta }) => {

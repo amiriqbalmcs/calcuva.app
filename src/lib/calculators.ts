@@ -1,4 +1,4 @@
-export type CategoryKey = "finance" | "health" | "education" | "utility" | "business";
+export type CategoryKey = "finance" | "health" | "education" | "utility" | "business" | "sustainability";
 
 export interface CalcMeta {
   slug: string;
@@ -18,6 +18,7 @@ export const CATEGORIES: Record<CategoryKey, { label: string; code: string; desc
   education: { label: "Education", code: "ED", description: "Academic performance and grade calculation." },
   utility: { label: "Utility", code: "UT", description: "Everyday converters and date calculators." },
   business: { label: "Business", code: "BS", description: "Profitability, margins, and startup metrics." },
+  sustainability: { label: "Sustainability", code: "SUS", description: "Climate impact, resource tracking, and eco-metrics." },
 };
 
 export const CALCULATORS: CalcMeta[] = [
@@ -621,6 +622,66 @@ export const CALCULATORS: CalcMeta[] = [
     icon: "Zap", category: "business",
     keywords: ["ai roi calculator", "ai agent productivity estimator", "llm cost savings", "claude 4.7 vs gpt-5.4 roi", "ai efficiency calculator for business"],
     relatedSlugs: ["ai-api-token-cost-calculator", "profit-margin-calculator"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "urban-cooling-tree-multiplier",
+    title: "Urban Cooling & Tree Multiplier 2026",
+    short: "Calculate how trees can lower your home's temperature.",
+    description: "Determine the exact number of indigenous trees needed to reduce heat-island effects around your property and save on AC cooling costs.",
+    icon: "Trees", category: "sustainability",
+    keywords: ["urban cooling tree calculator", "best trees for cooling lahore", "amaltas vs neem cooling impact", "natural house cooling pakistan", "tree plantation impact calculator"],
+    relatedSlugs: ["solar-net-billing-calculator-pakistan", "electricity-bill-predictor-pakistan"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "ai-water-footprint-calculator",
+    title: "AI Water Footprint Calculator",
+    short: "Measure the water cost of your digital AI habits.",
+    description: "Every AI prompt has a water cost for data center cooling. Calculate your personal AI water footprint and learn how to use tech sustainably.",
+    icon: "Droplets", category: "sustainability",
+    keywords: ["ai water consumption calculator", "water footprint of gpt-5", "claude 4.7 water cost per prompt", "sustainable ai usage", "digital water footprint tool"],
+    relatedSlugs: ["ai-agent-efficiency-roi-calculator", "ai-api-token-cost-calculator"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "plastic-to-oxygen-impact-map",
+    title: "Plastic-to-Oxygen Impact Map",
+    short: "Convert plastic savings into oxygen & ocean protection.",
+    description: "See the real-world impact of your zero-waste journey. Translates saved plastic bottles and bags into oxygen produced by equivalent trees.",
+    icon: "Globe", category: "sustainability",
+    keywords: ["plastic saving impact calculator", "zero waste oxygen equivalency", "ocean protection calculator", "plastic vs trees impact", "sustainability progress tracker"],
+    relatedSlugs: ["urban-cooling-tree-multiplier", "dietary-land-use-restoration"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "ev-grid-cleanliness-auditor",
+    title: "EV Grid Cleanliness Auditor 2026",
+    short: "Is your EV actually clean? Check your local grid source.",
+    description: "Calculate the 'True Green' score of your electric vehicle by factoring in your local energy grid's dependence on coal vs renewables in 2026.",
+    icon: "Zap", category: "sustainability",
+    keywords: ["ev carbon footprint pakistan", "grid cleanliness auditor", "electric car vs petrol 2026", "ev emissions calculator", "sustainable ev charging times"],
+    relatedSlugs: ["solar-net-billing-calculator-pakistan", "fuel-cost-calculator"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "dietary-land-use-restoration",
+    title: "Dietary Land Use & Restoration Tool",
+    short: "Calculate the forest area saved by your diet choices.",
+    description: "Measure how much land and forest can be restored by small shifts in your weekly diet. Translates meat reduction into square meters of biodiversity.",
+    icon: "Leaf", category: "sustainability",
+    keywords: ["dietary land use calculator", "forest restoration diet tool", "meat vs plant land footprint", "sustainable eating impact", "biodiversity support calculator"],
+    relatedSlugs: ["urban-cooling-tree-multiplier", "plastic-to-oxygen-impact-map"],
+    hideCurrencySwitcher: true,
+  },
+  {
+    slug: "microplastic-ocean-protection",
+    title: "Microplastic & Ocean Protection Tool",
+    short: "Measure microplastics saved by better laundry habits.",
+    description: "Predict how many microplastic particles you prevent from entering the ocean by optimizing your laundry temperature and frequency.",
+    icon: "Waves", category: "sustainability",
+    keywords: ["microplastic calculator", "laundry water protection", "prevent ocean pollution tool", "sustainable washing machine habits", "microplastic fiber savings"],
+    relatedSlugs: ["dietary-land-use-restoration", "ai-water-footprint-calculator"],
     hideCurrencySwitcher: true,
   },
 ];

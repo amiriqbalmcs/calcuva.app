@@ -59,9 +59,9 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
         <div className="lg:col-span-8 space-y-6">
           <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden group shadow-sm">
             <div className="p-6 md:p-8 border-b border-border/40 flex items-center justify-between bg-background relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-health" />
+              <div className="absolute top-0 left-0 w-1 h-full bg-health dark:bg-emerald-500" />
               <div className="flex items-center gap-3 relative z-10">
-                <Globe className="size-5 text-health" />
+                <Globe className="size-5 text-health dark:text-emerald-400" />
                 <div className="space-y-0.5">
                   <h3 className="text-sm font-bold tracking-tight">Lifestyle Inputs</h3>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Estimate your annual consumption</p>
@@ -103,7 +103,7 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
                           key={label}
                           onClick={() => setDiet(i)}
                           className={cn("px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all", 
-                             diet === i ? "bg-health border-health text-white shadow-lg" : "bg-background border-border/40 text-muted-foreground hover:border-health/40")}>
+                             diet === i ? "bg-health dark:bg-emerald-600 border-health dark:border-emerald-700 text-white shadow-lg" : "bg-background border-border/40 text-muted-foreground hover:border-health/40 dark:hover:border-emerald-500/40")}>
                           {label}
                        </button>
                     ))}
@@ -131,8 +131,8 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
                           {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
                        </button>
                     </div>
-                   <div className="text-7xl font-mono font-bold tracking-tighter tabular-nums text-health">
-                      {result.total.toFixed(1)}<span className="text-2xl ml-1 opacity-20">Tons</span>
+                   <div className="text-7xl font-mono font-bold tracking-tighter tabular-nums text-health dark:text-emerald-400">
+                      {result.total.toFixed(1)}<span className="text-2xl ml-1 opacity-20 dark:opacity-40">Tons</span>
                    </div>
                    <div className="text-[10px] font-medium text-muted-foreground">
                       Average per person: ~4.7 Tons CO2e
@@ -161,8 +161,8 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
                       ))}
                    </div>
 
-                   <div className="p-5 rounded-2xl bg-health/5 border border-health/10 space-y-3">
-                      <div className="flex items-center gap-2 text-health">
+                   <div className="p-5 rounded-2xl bg-health/5 dark:bg-emerald-950/20 border border-health/10 dark:border-emerald-500/20 space-y-3">
+                      <div className="flex items-center gap-2 text-health dark:text-emerald-400">
                          <Leaf className="size-4" />
                          <span className="text-[10px] font-bold uppercase tracking-widest">Sustainability Tip</span>
                       </div>

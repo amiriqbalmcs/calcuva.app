@@ -57,6 +57,7 @@ const categoryStyles: Record<CalcMeta["category"], string> = {
   education: "bg-education-soft text-education dark:bg-education/20 dark:text-education border-education/20",
   utility: "bg-utility-soft text-utility dark:bg-utility/20 dark:text-utility border-utility/20",
   business: "bg-business-soft text-business dark:bg-business/20 dark:text-business border-business-soft/20",
+  sustainability: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border-emerald-500/10",
 };
 
 const categoryGradients: Record<CalcMeta["category"], string> = {
@@ -65,6 +66,7 @@ const categoryGradients: Record<CalcMeta["category"], string> = {
   education: "from-education/5 via-transparent to-transparent",
   utility: "from-utility/5 via-transparent to-transparent",
   business: "from-business/5 via-transparent to-transparent",
+  sustainability: "from-emerald-500/5 via-transparent to-transparent",
 };
 
 interface PostSummary {

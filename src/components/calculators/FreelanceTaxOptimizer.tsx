@@ -249,10 +249,6 @@ const FreelanceTaxOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml
                 </div>
              </div>
 
-             <Button className="w-full h-14 rounded-2xl bg-health text-background font-black uppercase tracking-[0.2em] group transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-health/10">
-                Optimize My Tax
-                <ArrowRight className="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
-             </Button>
           </div>
         </div>
       </div>

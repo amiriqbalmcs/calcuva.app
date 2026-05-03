@@ -21,6 +21,7 @@ const categoryStyles: Record<CategoryKey, string> = {
   education: "bg-education-soft text-education border-education/10",
   utility: "bg-utility-soft text-utility border-utility/10",
   business: "bg-business-soft text-business border-business/10",
+  sustainability: "bg-emerald-50 text-emerald-600 border-emerald-500/10",
 };
 
 export const GuideCard = ({ guide }: GuideCardProps) => {

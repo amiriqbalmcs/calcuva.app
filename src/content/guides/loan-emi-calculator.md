@@ -8,13 +8,9 @@ faqs:
   - q: "How is loan interest calculated in Calcuva?"
     a: "Our engine uses the 'Reducing Balance' method. Unlike flat-rate interest, this method calculates interest on the remaining principal at the end of each month. As you pay off the principal, the interest component of your next EMI decreases."
   - q: "Does making pre-payments save money?"
-    a: "Yes, significantly. Because interest is calculated on the outstanding balance, any extra principal payment reduces the balance immediately, preventing future interest from accruing on that amount. Early-tenure pre-payments are the most effective."
+    a: "Yes, significantly. Because interest is calculated on the outstanding balance, any extra principal payment reduces the balance immediately, preventing future interest from accruing on that amount."
   - q: "What is an Amortization Schedule?"
     a: "An amortization schedule is a complete table of periodic loan payments, showing the amount of principal and the amount of interest that comprise each payment until the loan is paid off at the end of its term."
-  - q: "Should I choose a shorter tenure with higher EMI?"
-    a: "Mathematically, yes. A shorter tenure reduces the total interest paid. However, ensures the higher EMI does not exceed 40% of your take-home pay to maintain financial liquidity."
-  - q: "Can I use this for mortgages and car loans?"
-    a: "Yes. The underlying math for a home mortgage, auto loan, or personal loan is identical (amortizing reducing balance). Simply adjust the interest rate and tenure accordingly."
 ---
 
 ### The Architecture of Modern Debt
@@ -37,8 +33,21 @@ Calcuva calculates your EMI using the standard international formula:
 *   **R**: Monthly interest rate (Annual Rate / 12 / 100)
 *   **N**: Number of monthly installments
 
-#### Critical Pitfalls: The Tenure Trap
-Banks often offer "Lower EMIs" by extending the tenure to 30 years. While this helps with monthly cash flow, the total interest cost can often exceed the original loan amount. We recommend a "Max Tenure" of 15–20 years for home loans and 3–5 years for auto loans to ensure you are building equity, not just paying the bank.
+#### 2026 Strategy: Fixed vs. Floating Rates
+In the volatile markets of 2026, choosing the right interest structure is vital:
+1.  **Fixed Rates**: Your EMI stays the same for the entire tenure. This protects you against rising interest rates (like KIBOR or SOFR surges) but prevents you from benefiting if rates fall.
+2.  **Floating (Variable) Rates**: Linked to a benchmark (e.g., 6-month KIBOR). Your EMI or tenure is adjusted periodically. In a falling-rate environment, your "Total Interest Paid" decreases automatically.
+
+#### Warning: Negative Amortization
+In some high-interest environments, if your EMI is too low (e.g., an "Interest-Only" period), it might not even cover the monthly interest. This results in **Negative Amortization**, where your loan balance actually *increases* every month despite you making payments. Use our calculator to ensure your EMI is high enough to attack the principal from Day 1.
+
+#### The Impact of KIBOR & Global Benchmarks
+For our Pakistani users, your EMI is typically "KIBOR + Spread." 
+*   **Benchmark Shift**: In 2026, banks have shifted toward more frequent recalibrations. A 1% rise in KIBOR can increase the EMI of a Rs. 10 million home loan by thousands of rupees. 
+*   **Mitigation**: Use our **[Loan Eligibility Calculator](/calculators/loan-eligibility-calculator-pakistan)** to ensure you have at least a 10% "Income Buffer" to absorb benchmark fluctuations.
 
 #### Strategy: The Prepayment Buffer
-We advise users to maintain a **Prepayment Buffer**. By paying one extra EMI per year, you can reduce a 20-year loan to approximately 16 years. Use our [Amortization Overview](#) below to visualize how your principal (the signal) eventually overtakes the interest (the noise).
+We advise users to maintain a **Prepayment Buffer**. By paying one extra EMI per year, you can reduce a 20-year loan to approximately 16 years. Use our **[Amortization Schedule](#)** tool to visualize how your principal (the signal) eventually overtakes the interest (the noise).
+
+***
+*Produced by the Calcuva Finance Team. Mastering the math of debt for the 2026 economy.*

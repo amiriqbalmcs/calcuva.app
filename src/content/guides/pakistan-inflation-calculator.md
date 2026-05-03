@@ -11,8 +11,6 @@ faqs:
     a: "In 2023, Pakistan saw record-breaking inflation (peaking over 30%) due to a combination of currency devaluation, removal of fuel subsidies, and global commodity price increases."
   - q: "How does inflation affect my savings?"
     a: "If the inflation rate is 20% and your bank savings account only gives you 15% profit, you are actually losing 5% of your 'real' money value every year."
-  - q: "What is 'Purchasing Power'?"
-    a: "Purchasing power is the amount of goods or services that one unit of currency can buy. When inflation rises, purchasing power falls."
 ---
 
 ### The Silent Thief: Understanding Inflation in Pakistan
@@ -24,10 +22,22 @@ Over the last 15 years, the Pakistani economy has faced multiple inflation cycle
 *   **The Hyper-Inflation Shock (2022-2023)**: A combination of global and local factors pushed annual inflation to historic highs of 30.8% in 2023.
 This means that a salary that felt "comfortable" in 2018 now barely covers basic utilities and groceries in 2026.
 
-#### Calculating "Real Value" vs "Face Value"
-*   **Face Value**: The number printed on your note (e.g., Rs. 5000).
-*   **Real Value**: What that note can actually buy (e.g., how many liters of petrol or kg of flour).
-Our calculator uses the **Consumer Price Index (CPI)** to adjust for these changes. If you bought a plot for Rs. 10 Lakh in 2012 and sold it for Rs. 20 Lakh in 2024, you might think you doubled your money. However, after adjusting for inflation, your "real" profit might be much lower—or even a loss in terms of purchasing power.
+#### Shrinkflation & Skimpflation: The 2026 Reality
+Beyond the numbers on the CPI, two "invisible" forms of inflation are affecting Pakistani consumers:
+1.  **Shrinkflation**: Paying the same price for a smaller product (e.g., a chocolate bar reducing from 50g to 40g while the price remains Rs. 100).
+2.  **Skimpflation**: Paying the same price for a product with lower-quality ingredients (e.g., using cheaper oils or less durable materials to maintain a price point).
+Our calculator helps you see the **Raw Purchasing Power** loss, which often mirrors these hidden trends.
+
+#### Core vs. Headline Inflation
+When reading news about SBP (State Bank of Pakistan) interest rate decisions in 2026, you will hear two terms:
+*   **Headline Inflation**: The total inflation including volatile food and energy prices.
+*   **Core Inflation**: Inflation excluding food and energy. This is a better measure of long-term economic trends.
+Investors use **Core Inflation** to decide if it's a good time to buy long-term bonds or real estate. Use our tool to see how these benchmarks have shifted over the decades.
+
+#### The "Cost of Inaction"
+The biggest risk in a high-inflation environment is **Inaction**. 
+*   **Cash Drag**: Holding large amounts of idle cash in PKR is a guaranteed loss. 
+*   **Opportunity Cost**: If inflation is 18%, every day your money sits in a non-interest-bearing account, you are effectively paying an "Inflation Tax" of 0.05% daily.
 
 #### Expert Strategy: Beating Inflation
 In a high-inflation environment like Pakistan, "saving" in a standard bank account is often not enough. To protect your wealth, consider:
@@ -35,8 +45,8 @@ In a high-inflation environment like Pakistan, "saving" in a standard bank accou
 2. **National Savings Certificates**: Schemes like Behbood or Defence Savings Certificates often offer rates designed to hedge against inflation.
 3. **Mutual Funds**: Shariah-compliant income funds often target returns that exceed the CPI baseline.
 
-#### Why the "Average" Inflation can be Misleading
-Official inflation is an average of a "basket of goods." If you spend more on imported items, fuel, or electricity, your **Personal Inflation Rate** might be higher than the national average. Use our tool to compare specific years to understand how your lifestyle costs have shifted.
-
 #### Conclusion: Knowledge is Protection
 You cannot stop inflation, but you can plan for it. By using Calcuva to track the historical purchasing power of the PKR, you can make smarter decisions about your salary negotiations, investment timelines, and long-term financial goals.
+
+***
+*Produced by the Calcuva Economics Team. Tracking the pulse of the Pakistani economy in 2026.*

@@ -15,18 +15,54 @@ faqs:
     a: "The most effective way is to pay more than the minimum. Even an extra $50 a month can significantly reduce your total interest and shorten your payoff timeline by years."
 ---
 
-Credit cards are one of the most expensive forms of debt due to high interest rates, often ranging from 15% to 30%. Because interest is usually compounded daily, a high balance can grow faster than many people can keep up with.
+Credit cards are one of the most expensive forms of debt due to high interest rates, often ranging from 15% to 30% in the 2026 market. Because interest is usually compounded daily, a high balance can grow faster than many people can keep up with.
 
-## How Interest is Calculated
+This guide explains the mechanics of credit card interest and how to use the Calcuva Payoff Calculator to build a strategic exit plan.
 
-Most credit card companies use the **Average Daily Balance** method. They take your balance each day of the billing cycle, add them up, and divide by the number of days. They then apply the periodic interest rate (APR divided by 365) to this average.
+## The Math of Daily Periodic Rates (DPR)
 
-## The Danger of Minimum Payments
+While your credit card statement displays an **Annual Percentage Rate (APR)**, the bank actually calculates your interest much more frequently. They use a **Daily Periodic Rate (DPR)**.
 
-Minimum payments are designed to keep you in debt. Because they often only cover the interest plus a tiny fraction of the principal, the balance decreases very slowly. If your interest rate is high enough and your payment is low enough, you might even experience **Negative Amortization**, where your debt grows every month because the payment doesn't even cover the interest.
+To find your DPR:  
+**APR / 365 = DPR**
 
-## Strategies for Payoff
+For a card with a 24% APR:  
+**0.24 / 365 = 0.000657 (or 0.0657% per day)**
 
-1.  **The Avalanche Method**: Pay off the card with the highest interest rate first while making minimum payments on others. This saves the most money on interest.
-2.  **The Snowball Method**: Pay off the smallest balance first to gain psychological momentum.
-3.  **Consolidation**: If your credit score is good, transferring your balance to a 0% APR card can give you a window to pay down the principal without new interest charges.
+This may seem like a tiny number, but when applied to a $5,000 balance, you are being charged roughly **$3.28 in interest every single day**. Over a 30-day month, that’s $98.50 in interest alone.
+
+## The "Minimum Payment Trap" Explained
+
+Minimum payments are mathematically designed to keep you in debt for as long as possible. Typically, banks set the minimum payment as:
+*   **Interest + 1% of the Principal** OR
+*   **A flat fee (e.g., $35)**
+
+If you only pay the minimum, you are barely scratching the surface of the principal amount you actually spent. Our calculator shows that a $5,000 balance at 22% interest, with only minimum payments, could take **over 20 years** to pay off and cost you **over $10,000 in interest**—double the original amount borrowed.
+
+## The Grace Period: Your Only Free Lunch
+
+In 2026, most credit cards still offer a **Grace Period** (usually 21–25 days). If you pay your **entire statement balance** by the due date, the bank does not charge you any interest on new purchases. 
+
+**Warning**: Once you carry a balance (even $1) past the due date, you lose the grace period. From that point on, interest begins accruing on new purchases the moment you swipe the card. The only way to regain the grace period is to pay the balance in full and wait for a statement cycle to reset.
+
+## Strategic Payoff Methods
+
+### 1. The Debt Avalanche (Mathematical Efficiency)
+Focus every extra dollar on the card with the **highest interest rate**, regardless of the balance. Mathematically, this minimizes the total interest paid over time and results in the fastest path to zero debt.
+
+### 2. The Debt Snowball (Psychological Momentum)
+Focus on paying off the **smallest balance** first. While you might pay more in total interest than the Avalanche method, the "quick wins" of closing accounts provide the psychological boost needed to stay disciplined for the long haul.
+
+### 3. Balance Transfer Arbitrage
+In 2026, several banks offer "0% Introductory APR" for 12–18 months on balance transfers. If you have a high-interest balance, moving it to a 0% card can save you thousands. However, beware of the **Balance Transfer Fee** (usually 3–5%), which is added to your total debt immediately. Use our calculator to see if the fee is worth the interest savings.
+
+## How to Use the Calcuva Payoff Calculator
+
+1.  **Enter your Current Balance**: The total amount you currently owe.
+2.  **Enter your Interest Rate (APR)**: Found on your monthly statement.
+3.  **Enter your Monthly Payment**: Be honest about what you can afford.
+4.  **Analyze the Results**: Look at the **Total Interest Paid** and the **Payoff Date**. 
+
+Try increasing your monthly payment by just $50. You will likely see your payoff date jump forward by months or even years.
+
+*Debt doesn't have to be permanent. Take control of the math today.*

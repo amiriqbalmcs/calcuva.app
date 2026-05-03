@@ -238,11 +238,6 @@ const SolarNetBilling = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
                 </div>
              </div>
 
-             <Button className="w-full h-14 rounded-2xl bg-foreground text-background font-black uppercase tracking-[0.2em] group transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl">
-                Download PDF Report
-                <Download className="ml-2 size-4 group-hover:translate-y-0.5 transition-transform" />
-             </Button>
-
              <p className="text-[9px] text-muted-foreground leading-relaxed text-center font-medium italic opacity-60">
                *Calculation based on 2026 Net Billing Tariff updates for Pakistan.
              </p>

@@ -27,7 +27,22 @@ While most boards have moved toward a standardized **1100-mark system**, there a
 #### Understanding the A-1 Grade
 In Pakistan, the "A-1" grade is the gold standard. It requires a percentage of **80% or higher**.
 *   **880/1100**: This is the magic number. Scoring 880 marks or above secures your A-1 grade and significantly boosts your chances for merit-based scholarships and university admissions.
-*   **The 90% Club**: With the recent "Covid-era" grading shifts, competitive merit for medical colleges often requires 950+ marks (90%+).
+*   **The 90% Club**: With the recent grading shifts, competitive merit for medical colleges often requires 950+ marks (90%+).
+
+#### The Nuance of Practical & Grace Marks
+A significant portion of your marks in Science streams comes from **Practicals (Labs)**. Usually, 15-30 marks per science subject are allocated to lab work. 
+*   **Grace Marks**: Most boards have a policy where if a student is failing by 1 or 2 marks in a single subject, they are awarded "Grace Marks" to pass. However, these marks do not significantly impact your overall percentage.
+*   **Position Holder Threshold**: To secure a "Position" in a board result, you typically need 95%+, which in an 1100-mark system means scoring 1045 or above.
+
+#### 2026: The Shift to Conceptual Grading (SLOs)
+By 2026, the Federal Board and several Punjab boards have shifted toward **SLO-based examinations**. This means rote memorization (Ratta) no longer guarantees an A-1 grade. 
+*   **Analytical Testing**: Questions are now designed to test the application of concepts rather than direct textbook reproduction.
+*   **GPA System Transition**: There is an ongoing transition from marks to a **10-point GPA system** in Pakistan boards. Use our **[GPA to Percentage Calculator](/calculators/gpa-to-percentage-calculator)** if your board has already made the switch.
+
+#### Scholarship Eligibility (PEEF & Others)
+Maintaining a high board percentage opens doors to financial aid:
+1.  **PEEF (Punjab Education Endowment Fund)**: Usually requires a minimum of 60% in Matric or Inter for deserving students.
+2.  **HEC Need-Based Scholarships**: Higher percentages (70%+) improve your priority ranking for these grants during university admission.
 
 #### Expert Strategy: The "Improvement" Decision
 If your percentage falls in the B or C category (60-70%), you face a critical choice:
@@ -39,5 +54,5 @@ Remember, your board percentage is only part of the story. Most universities use
 `Aggregate = (Board % x 0.50) + (Entry Test % x 0.50)`
 By knowing your board percentage accurately via Calcuva, you can calculate exactly how many marks you need in your entry test to reach the 80%+ aggregate required for top-tier programs.
 
-#### Conclusion: Beyond the Marks
-While board marks are essential for the "Merit List," they are a test of your discipline and memory. Use Calcuva to stay informed about your standing, plan your next steps, and ensure that your hard work translates into the best possible academic future.
+***
+*Produced by the Calcuva Education Team. Empowering Pakistani students for the 2026 academic landscape.*

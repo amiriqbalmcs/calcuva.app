@@ -123,6 +123,12 @@ const ZakatCalculator = dynamic(() => import("@/components/calculators/ZakatCalc
 const SolarNetBilling = dynamic(() => import("@/components/calculators/SolarNetBilling"), { loading });
 const FreelanceTaxOptimizer = dynamic(() => import("@/components/calculators/FreelanceTaxOptimizer"), { loading });
 const AiEfficiencyRoi = dynamic(() => import("@/components/calculators/AiEfficiencyRoi"), { loading });
+const UrbanCooling = dynamic(() => import("@/components/calculators/UrbanCooling"), { loading });
+const AiWaterFootprint = dynamic(() => import("@/components/calculators/AiWaterFootprint"), { loading });
+const PlasticImpactMap = dynamic(() => import("@/components/calculators/PlasticImpactMap"), { loading });
+const EvGridAuditor = dynamic(() => import("@/components/calculators/EvGridAuditor"), { loading });
+const DietaryLandUse = dynamic(() => import("@/components/calculators/DietaryLandUse"), { loading });
+const MicroplasticProtection = dynamic(() => import("@/components/calculators/MicroplasticProtection"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -202,6 +208,12 @@ const componentMap: Record<string, any> = {
   "solar-net-billing-calculator-pakistan": SolarNetBilling,
   "freelance-tax-residency-optimizer": FreelanceTaxOptimizer,
   "ai-agent-efficiency-roi-calculator": AiEfficiencyRoi,
+  "urban-cooling-tree-multiplier": UrbanCooling,
+  "ai-water-footprint-calculator": AiWaterFootprint,
+  "plastic-to-oxygen-impact-map": PlasticImpactMap,
+  "ev-grid-cleanliness-auditor": EvGridAuditor,
+  "dietary-land-use-restoration": DietaryLandUse,
+  "microplastic-ocean-protection": MicroplasticProtection,
 };
 
 export async function generateStaticParams() {

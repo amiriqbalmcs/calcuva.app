@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X, Calculator, History, Clock, Sun, Moon } from "lucide-react";
+import { Menu, X, Calculator, Sun, Moon } from "lucide-react";
 import { CALCULATORS, CATEGORIES, CategoryKey } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
@@ -14,6 +14,7 @@ const navItems: { label: string; href: string; key?: CategoryKey }[] = [
   { label: "Finance", href: "/category/finance", key: "finance" },
   { label: "Health", href: "/category/health", key: "health" },
   { label: "Business", href: "/category/business", key: "business" },
+  { label: "Sustainability", href: "/category/sustainability", key: "sustainability" },
   { label: "Education", href: "/category/education", key: "education" },
   { label: "Utility", href: "/category/utility", key: "utility" },
   { label: "Guides", href: "/guides" },
@@ -24,7 +25,6 @@ export const SiteHeader = () => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [history, setHistory] = useState<string[]>([]);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -39,34 +39,6 @@ export const SiteHeader = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Initialize history on mount
-  useEffect(() => {
-    const stored = localStorage.getItem('calc_history');
-    if (stored) {
-      try {
-        setHistory(JSON.parse(stored));
-      } catch (e) {
-        console.error("Failed to parse history", e);
-      }
-    }
-  }, []);
-
-  // Track history updates
-  useEffect(() => {
-    const isCalc = pathname.startsWith('/calculators/');
-    if (!isCalc) return;
-
-    const slug = pathname.split('/').filter(Boolean).pop();
-    if (!slug || slug === 'calculators') return;
-
-    const stored = JSON.parse(localStorage.getItem('calc_history') || '[]');
-    const updated = [slug, ...stored.filter((s: string) => s !== slug)].slice(0, 5);
-    
-    localStorage.setItem('calc_history', JSON.stringify(updated));
-    setHistory(updated);
-  }, [pathname]);
-
-  const historyTools = history.map(slug => CALCULATORS.find(c => c.slug === slug)).filter(Boolean);
 
   return (
     <header 
@@ -112,37 +84,6 @@ export const SiteHeader = () => {
 
           <div className="hidden md:flex items-center gap-2 lg:gap-4">
              <GlobalSearch />
-             {historyTools.length > 0 && (
-                <div className="relative group/history">
-                  <button className="flex items-center justify-center size-9 rounded-lg bg-secondary/50 text-muted-foreground hover:text-foreground transition-all ring-1 ring-border/20 shadow-sm">
-                     <History className="size-4" />
-                  </button>
-                   <div className="absolute right-0 top-full pt-3 w-64 opacity-0 translate-y-2 pointer-events-none group-hover/history:opacity-100 group-hover/history:translate-y-0 group-hover/history:pointer-events-auto transition-all duration-300 z-[100]">
-                      <div className="bg-card/95 backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl p-2">
-                         <div className="px-3 py-2 border-b border-border/40 mb-1">
-                            <span className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.3em] flex items-center gap-2">
-                               <Clock className="size-2.5" />
-                            </span>
-                         </div>
-                         {historyTools.map((t: any) => (
-                           <Link 
-                             key={t.slug} 
-                             href={`/calculators/${t.slug}`}
-                             className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-secondary transition-all group/tool"
-                           >
-                             <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0 group-hover/tool:bg-background transition-colors">
-                               <Calculator className="size-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                             </div>
-                             <div className="min-w-0">
-                                <div className="text-[11px] font-bold truncate group-hover:text-foreground transition-colors">{t.title}</div>
-                                <div className="text-[9px] text-muted-foreground font-black uppercase tracking-wider truncate">{t.category}</div>
-                             </div>
-                           </Link>
-                         ))}
-                      </div>
-                   </div>
-               </div>
-             )}
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
