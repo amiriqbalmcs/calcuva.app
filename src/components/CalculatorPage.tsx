@@ -290,7 +290,7 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
             </section>
           )}
 
-          {relatedArticles && relatedArticles.length > 0 && (
+          {!isEmbed && relatedArticles && relatedArticles.length > 0 && (
             <section className="mt-24 sm:mt-32 border-t border-border/50 pt-16 no-print">
               <div className="flex items-center gap-3 mb-10 text-signal">
                 <div className="size-8 rounded-lg bg-signal/10 flex items-center justify-center border border-signal/20">
@@ -314,38 +314,40 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
             </section>
           )}
 
-          <section className="mt-24 sm:mt-32 border-t border-border/50 pt-16 no-print">
-            <div className="flex items-center gap-3 mb-10 text-signal">
-              <div className="size-8 rounded-lg bg-signal/10 flex items-center justify-center border border-signal/20">
-                <Lightbulb className="size-4" />
+          {!isEmbed && (
+            <section className="mt-24 sm:mt-32 border-t border-border/50 pt-16 no-print">
+              <div className="flex items-center gap-3 mb-10 text-signal">
+                <div className="size-8 rounded-lg bg-signal/10 flex items-center justify-center border border-signal/20">
+                  <Lightbulb className="size-4" />
+                </div>
+                <h3 className="text-xs font-bold uppercase tracking-[0.2em] font-mono">Other Tools You Might Like</h3>
               </div>
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] font-mono">Other Tools You Might Like</h3>
-            </div>
 
-            <div className="grid sm:grid-cols-3 gap-8">
-              {relatedTools.map((t) => {
-                const RelatedIcon = ICONS[t.icon] || Landmark;
-                return (
-                  <Link
-                    key={t.slug}
-                    href={`/calculators/${t.slug}`}
-                    className="surface-card p-8 transition-all duration-500 flex flex-col gap-5 group hover:border-signal/40 hover:shadow-2xl hover:shadow-signal/10"
-                  >
-                    <div className={cn("size-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm", categoryStyles[t.category])}>
-                      <RelatedIcon className="size-6" />
-                    </div>
-                    <div>
-                      <h4 className="text-base font-bold mb-2 group-hover:text-signal transition-colors">{t.title}</h4>
-                      <p className="text-sm text-muted-foreground line-clamp-2 font-medium leading-relaxed">{t.short}</p>
-                    </div>
-                    <div className="mt-auto flex items-center text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground group-hover:text-signal transition-all pt-4">
-                      Initialize Tool <ArrowRight className="size-3 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
+              <div className="grid sm:grid-cols-3 gap-8">
+                {relatedTools.map((t) => {
+                  const RelatedIcon = ICONS[t.icon] || Landmark;
+                  return (
+                    <Link
+                      key={t.slug}
+                      href={`/calculators/${t.slug}`}
+                      className="surface-card p-8 transition-all duration-500 flex flex-col gap-5 group hover:border-signal/40 hover:shadow-2xl hover:shadow-signal/10"
+                    >
+                      <div className={cn("size-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm", categoryStyles[t.category])}>
+                        <RelatedIcon className="size-6" />
+                      </div>
+                      <div>
+                        <h4 className="text-base font-bold mb-2 group-hover:text-signal transition-colors">{t.title}</h4>
+                        <p className="text-sm text-muted-foreground line-clamp-2 font-medium leading-relaxed">{t.short}</p>
+                      </div>
+                      <div className="mt-auto flex items-center text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground group-hover:text-signal transition-all pt-4">
+                        Initialize Tool <ArrowRight className="size-3 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          )}
 
           {!isEmbed && !guideHtml && seoContent && (
             <article className="mt-24 sm:mt-32 pb-20 border-t border-border/50 pt-16 no-print">
