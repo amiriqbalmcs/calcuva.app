@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Download, Check, CheckCircle2, Zap, FileCode } from "lucide-react";
+import { X, Download, Check, CheckCircle2, Zap, FileCode, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SITE_URL } from "@/lib/constants";
 
@@ -68,16 +68,16 @@ export function EmbedDialog({ isOpen, onClose, slug, title, isWholeSite }: Embed
             <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 space-y-2">
               <div className="flex items-center gap-2 text-emerald-600">
                 <CheckCircle2 className="size-4" />
-                <span className="text-[10px] font-bold uppercase tracking-wider font-mono">SEO Friendly</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider font-mono">Fully Responsive</span>
               </div>
-              <p className="text-[11px] text-muted-foreground leading-relaxed">The embed code includes a backlink to help your SEO authority.</p>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">Adapts perfectly to any screen size (mobile, tablet, or desktop).</p>
             </div>
             <div className="p-4 rounded-2xl bg-signal/5 border border-signal/10 space-y-2">
               <div className="flex items-center gap-2 text-signal">
-                <Zap className="size-4" />
-                <span className="text-[10px] font-bold uppercase tracking-wider font-mono">Instant Load</span>
+                <Shield className="size-4" />
+                <span className="text-[10px] font-bold uppercase tracking-wider font-mono">Safe & Secure</span>
               </div>
-              <p className="text-[11px] text-muted-foreground leading-relaxed">Fully responsive and works on all website builders like WordPress.</p>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">No ads or tracking scripts. A private, premium experience for your users.</p>
             </div>
           </div>
         </div>
