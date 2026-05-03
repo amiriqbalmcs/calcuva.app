@@ -1,7 +1,8 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   ChevronRight, Landmark, Receipt, TrendingUp, Home, Activity, Baby, Droplet,
   Calendar, Ruler, GraduationCap, ReceiptSwissFranc, TrendingDown, UserRound,
@@ -19,6 +20,7 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Seo } from "./Seo";
 import { CalcMeta, CATEGORIES, CALCULATORS } from "@/lib/calculators";
+import { EmbedDialog } from "./EmbedDialog";
 import { cn } from "@/lib/utils";
 import { Lightbulb, ArrowRight } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -88,6 +90,10 @@ interface Props {
 }
 
 export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, relatedArticles, hideHeaderCurrency }: Props) => {
+  const searchParams = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "true";
+  const [isEmbedDialogOpen, setIsEmbedDialogOpen] = useState(false);
+
   if (!calc) return <>{children}</>;
   const { currency } = useCurrency();
   const cat = CATEGORIES[calc.category] || { label: "General", color: "bg-foreground/10 text-foreground", code: "GEN" };
@@ -130,49 +136,76 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
           ]
         }}
       />
-      <div className="relative min-h-screen">
-        <div className={cn("fixed inset-0 bg-gradient-to-br -z-10 opacity-60 pointer-events-none", categoryGradients[calc.category])} />
+      <div className={cn("relative min-h-screen", isEmbed && "min-h-0")}>
+        {!isEmbed && <div className={cn("fixed inset-0 bg-gradient-to-br -z-10 opacity-60 pointer-events-none", categoryGradients[calc.category])} />}
 
-        <div className="container-wide pt-20 sm:pt-28 pb-20">
-          <div className="print-header">
-            <div className="flex items-center gap-2">
-              <div className="size-8 rounded-md bg-black flex items-center justify-center text-white"><Calculator className="size-4" /></div>
-              <span className="text-xl font-bold">Calcuva Analysis</span>
-            </div>
-            <div className="text-right">
-              <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{calc.slug.toUpperCase()} TOOL</div>
-              <div className="text-xs font-bold font-mono">{now}</div>
-            </div>
-          </div>
-
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono uppercase tracking-widest mb-10 no-print">
-            <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-            <ChevronRight className="size-3 opacity-50" />
-            <Link href={`/category/${calc.category}`} className="hover:text-foreground transition-colors">{cat.label}</Link>
-            <ChevronRight className="size-3 opacity-50" />
-            <span className="text-foreground/80 truncate font-bold">{calc.title.replace(/ Calculator$/, "")}</span>
-          </nav>
-
-          <header className="flex flex-col md:flex-row md:items-start justify-between gap-8 mb-12 sm:mb-16">
-            <div className="flex items-start gap-5">
-              <div className={cn("size-16 rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-black/5", categoryStyles[calc.category])}>
-                <Icon className="size-8" />
+        <div className={cn("container-wide pb-20", isEmbed ? "pt-4 px-4" : "pt-20 sm:pt-28")}>
+          {!isEmbed && (
+            <div className="print-header">
+              <div className="flex items-center gap-2">
+                <div className="size-8 rounded-md bg-black flex items-center justify-center text-white"><Calculator className="size-4" /></div>
+                <span className="text-xl font-bold">Calcuva Analysis</span>
               </div>
-              <div className="min-w-0">
-                <div className="font-mono text-[10px] font-bold tracking-[0.2em] text-muted-foreground/60 mb-2">{cat.code} · {cat.label.toUpperCase()} ENGINE</div>
-                <h1 className="text-4xl sm:text-5xl font-semibold tracking-tighter leading-tight">{calc.title}</h1>
-                <p className="text-muted-foreground mt-3 max-w-2xl text-base sm:text-lg font-medium leading-relaxed">{calc.description}</p>
+              <div className="text-right">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{calc.slug.toUpperCase()} TOOL</div>
+                <div className="text-xs font-bold font-mono">{now}</div>
               </div>
             </div>
-            <div className="no-print flex items-center justify-center md:justify-end gap-3 w-full md:w-auto">
-              {hasCurrency && !hideHeaderCurrency && <CurrencySwitcher />}
-              <ExportButton title={calc.title} />
-            </div>
-          </header>
+          )}
+
+          {!isEmbed && (
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono uppercase tracking-widest mb-10 no-print">
+              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+              <ChevronRight className="size-3 opacity-50" />
+              <Link href={`/category/${calc.category}`} className="hover:text-foreground transition-colors">{cat.label}</Link>
+              <ChevronRight className="size-3 opacity-50" />
+              <span className="text-foreground/80 truncate font-bold">{calc.title.replace(/ Calculator$/, "")}</span>
+            </nav>
+          )}
+
+          {!isEmbed && (
+            <header className="flex flex-col md:flex-row md:items-start justify-between gap-8 mb-12 sm:mb-16">
+              <div className="flex items-start gap-5">
+                <div className={cn("size-16 rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-black/5", categoryStyles[calc.category])}>
+                  <Icon className="size-8" />
+                </div>
+                <div className="min-w-0">
+                  <div className="font-mono text-[10px] font-bold tracking-[0.2em] text-muted-foreground/60 mb-2">{cat.code} · {cat.label.toUpperCase()} ENGINE</div>
+                  <h1 className="text-4xl sm:text-5xl font-semibold tracking-tighter leading-tight">{calc.title}</h1>
+                  <p className="text-muted-foreground mt-3 max-w-2xl text-base sm:text-lg font-medium leading-relaxed">{calc.description}</p>
+                </div>
+              </div>
+              <div className="no-print flex items-center justify-center md:justify-end gap-3 w-full md:w-auto">
+                {hasCurrency && !hideHeaderCurrency && <CurrencySwitcher />}
+                <button
+                  onClick={() => setIsEmbedDialogOpen(true)}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/50 border border-border/50 hover:bg-secondary hover:border-border transition-all text-xs font-bold font-mono uppercase tracking-wider"
+                >
+                  <FileCode className="size-3.5" />
+                  Embed
+                </button>
+                <ExportButton title={calc.title} />
+              </div>
+            </header>
+          )}
 
           <section className="animate-fade-up relative z-10">{children}</section>
 
-          {guideHtml && (
+          {isEmbed && (
+            <div className="mt-8 flex justify-center">
+              <Link
+                href={`/calculators/${calc.slug}`}
+                target="_blank"
+                className="flex items-center gap-2 text-[10px] font-bold font-mono uppercase tracking-widest text-muted-foreground hover:text-signal transition-colors group"
+              >
+                <Calculator className="size-3" />
+                Powered by Calcuva
+                <ArrowRight className="size-2.5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </div>
+          )}
+
+          {!isEmbed && guideHtml && (
             <section className="mt-28 sm:mt-40 pt-20 border-t border-border/30 no-print">
               <div className="flex flex-col md:flex-row gap-12 items-start">
                 <aside className="md:w-1/4 sticky top-32 space-y-10 hidden md:block">
@@ -314,13 +347,20 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
             </div>
           </section>
 
-          {!guideHtml && seoContent && (
+          {!isEmbed && !guideHtml && seoContent && (
             <article className="mt-24 sm:mt-32 pb-20 border-t border-border/50 pt-16 no-print">
               {seoContent}
             </article>
           )}
         </div>
       </div>
+
+      <EmbedDialog
+        isOpen={isEmbedDialogOpen}
+        onClose={() => setIsEmbedDialogOpen(false)}
+        slug={calc.slug}
+        title={calc.title}
+      />
     </>
   );
 };

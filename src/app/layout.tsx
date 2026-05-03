@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { LayoutWrapper } from "@/components/LayoutWrapper";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SITE_URL, GA_ID } from "@/lib/constants";
@@ -74,11 +75,9 @@ export default function RootLayout({
       <body className="antialiased min-h-screen flex flex-col bg-background text-foreground">
         <Providers>
           <GoogleAnalytics ga_id={GA_ID} />
-          <SiteHeader />
-          <main className="flex-1">
+          <LayoutWrapper>
             {children}
-          </main>
-          <SiteFooter />
+          </LayoutWrapper>
           <Analytics />
           <SpeedInsights />
           <Script

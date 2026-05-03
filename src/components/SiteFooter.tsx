@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { CALCULATORS, CATEGORIES, CategoryKey } from "@/lib/calculators";
-import { Calculator, Shield, Cpu, BookOpen, Mail } from "lucide-react";
+import { Calculator, Shield, Cpu, BookOpen, Mail, FileCode } from "lucide-react";
 import { SITE_NAME, SITE_DOMAIN } from "@/lib/constants";
+import { useState } from "react";
+import { EmbedDialog } from "./EmbedDialog";
 
 export const SiteFooter = () => {
+  const [isEmbedOpen, setIsEmbedOpen] = useState(false);
   const grouped = (Object.keys(CATEGORIES) as CategoryKey[]).map((cat) => ({
     cat,
     label: CATEGORIES[cat].label,
@@ -92,12 +95,25 @@ export const SiteFooter = () => {
             <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             <Link href="/disclaimer" className="hover:text-rose-500 transition-colors">Disclaimer</Link>
+            <button
+              onClick={() => setIsEmbedOpen(true)}
+              className="flex items-center gap-1.5 hover:text-signal transition-colors group"
+            >
+              <FileCode className="size-3 group-hover:scale-110 transition-transform" />
+              Embed Toolkit
+            </button>
           </div>
           <div className="text-[10px] font-mono font-bold text-muted-foreground tracking-widest bg-secondary/50 px-4 py-2 rounded-xl border border-border/40">
             © {new Date().getFullYear()} CALCUVA · YOUR SMART TOOLKIT
           </div>
         </div>
       </div>
+
+      <EmbedDialog
+        isOpen={isEmbedOpen}
+        onClose={() => setIsEmbedOpen(false)}
+        isWholeSite={true}
+      />
     </footer>
   );
 };
