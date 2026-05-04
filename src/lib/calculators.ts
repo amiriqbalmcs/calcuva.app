@@ -1,4 +1,4 @@
-export type CategoryKey = "finance" | "health" | "education" | "utility" | "business" | "sustainability";
+export type CategoryKey = "finance" | "health" | "education" | "utility" | "business" | "sustainability" | "benchmarks";
 
 export interface CalcMeta {
   slug: string;
@@ -18,7 +18,8 @@ export const CATEGORIES: Record<CategoryKey, { label: string; code: string; desc
   education: { label: "Education", code: "ED", description: "Academic performance and grade calculation." },
   utility: { label: "Utility", code: "UT", description: "Everyday converters and date calculators." },
   business: { label: "Business", code: "BS", description: "Profitability, margins, and startup metrics." },
-  sustainability: { label: "Sustainability", code: "SUS", description: "Climate impact, resource tracking, and eco-metrics." },
+  sustainability: { label: "Sustainability", code: "SS", description: "Environmental impact and green energy tools." },
+  benchmarks: { label: "Benchmarks", code: "BM", description: "Cognitive tests, typing speed, and human performance." },
 };
 
 export const CALCULATORS: CalcMeta[] = [
@@ -698,7 +699,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Car GPS Speedometer & Performance Tracker",
     short: "Real-time car speed, 0-60 timer, and trip analytics for your vehicle.",
     description: "Turn your phone into a high-precision GPS speedometer. Track live speed, measure 0-60 performance, log trip distance, and use HUD (Head-Up Display) mode for windshield projection.",
-    icon: "Navigation", category: "utility",
+    icon: "Car", category: "utility",
     keywords: ["gps speedometer", "live car speed", "0-60 timer", "hud speedometer", "trip tracker", "performance box"],
     relatedSlugs: ["car-loan-vs-lease-calculator", "unit-converter"],
   },
@@ -795,11 +796,74 @@ export const CALCULATORS: CalcMeta[] = [
   {
     slug: "human-reaction-time-test",
     title: "Human Reaction Time Test",
-    short: "Test your visual reaction speed and compare with the global average.",
-    description: "Measure your brain's processing speed with this interactive reaction test. Click as fast as you can when the screen turns green to see how you rank against others.",
-    icon: "Zap", category: "health",
+    short: "Measure your brain's processing speed with this interactive reaction test.",
+    description: "Measure your reaction speed with this simple test. Click the screen as fast as you can when it turns from red to green to see your score.",
+    icon: "Zap", category: "benchmarks",
     keywords: ["reaction time test", "human benchmark", "click speed test", "reflex test", "brain speed"],
     relatedSlugs: ["sleep-debt-calculator", "water-intake-sleep-calculator"],
+  },
+  {
+    slug: "sequence-memory-test",
+    title: "Sequence Memory (Pattern) Test",
+    short: "Repeat the pattern as it gets longer. How far can you go?",
+    description: "Test your memory by repeating a sequence of tiles that light up. Every time you get it right, the pattern adds one more step to make it harder.",
+    icon: "Brain", category: "benchmarks",
+    keywords: ["sequence memory test", "memory matrix", "brain training online", "short term memory test", "simon says game"],
+    relatedSlugs: ["human-reaction-time-test", "visual-memory-test"],
+  },
+  {
+    slug: "aim-trainer",
+    title: "Aim Trainer Test",
+    short: "How quickly can you hit all the targets?",
+    description: "Test your aim and speed with this interactive aim trainer. Click all 30 targets as fast as you can to see your average click time and accuracy score.",
+    icon: "Target", category: "benchmarks",
+    keywords: ["aim trainer", "fps aim test", "mouse accuracy test", "reaction speed test", "gaming reflexes"],
+    relatedSlugs: ["human-reaction-time-test", "typing-speed-test"],
+  },
+  {
+    slug: "number-memory-test",
+    title: "Number Memory Test",
+    short: "Remember the longest number you can.",
+    description: "Test your memory by remembering a sequence of numbers that gets longer every time you get it right. See if you can beat the average score of 7 digits.",
+    icon: "Hash", category: "benchmarks",
+    keywords: ["number memory test", "digit span test", "iq memory test", "brain training numbers", "short term memory"],
+    relatedSlugs: ["verbal-memory-test", "sequence-memory-test"],
+  },
+  {
+    slug: "verbal-memory-test",
+    title: "Verbal Memory Test",
+    short: "Keep as many words in short term memory as possible.",
+    description: "Test your verbal memory by keeping track of words. You will be shown words one by one—you just have to say if you have seen the word before or if it is new.",
+    icon: "BookOpen", category: "benchmarks",
+    keywords: ["verbal memory test", "word recognition test", "language memory", "brain games online", "memory benchmark"],
+    relatedSlugs: ["number-memory-test", "chimp-test"],
+  },
+  {
+    slug: "chimp-test",
+    title: "Chimpanzee Memory Test",
+    short: "Are you smarter than a chimpanzee?",
+    description: "Test your memory against a famous chimpanzee experiment. Numbers appear on a grid and hide behind squares—click them in the right order to win.",
+    icon: "Grid3X3", category: "benchmarks",
+    keywords: ["chimp test", "chimpanzee memory", "working memory test", "grid pattern memory", "iq test online"],
+    relatedSlugs: ["visual-memory-test", "sequence-memory-test"],
+  },
+  {
+    slug: "visual-memory-test",
+    title: "Visual Memory Test",
+    short: "Remember an increasingly large board of squares.",
+    description: "Test your visual memory by remembering where the squares light up on the board. The grid gets bigger and more difficult as you move to higher levels.",
+    icon: "LayoutGrid", category: "benchmarks",
+    keywords: ["visual memory test", "spatial memory", "grid memory game", "brain training", "pattern recognition"],
+    relatedSlugs: ["chimp-test", "sequence-memory-test"],
+  },
+  {
+    slug: "typing-speed-test",
+    title: "Typing Speed Test (WPM)",
+    short: "How many words per minute can you type?",
+    description: "Test your typing speed and accuracy with this easy WPM test. Type the text as fast as you can to see your typing speed and character accuracy score.",
+    icon: "Keyboard", category: "benchmarks",
+    keywords: ["typing speed test", "wpm test online", "typing accuracy", "keyboard speed test", "fast typing"],
+    relatedSlugs: ["aim-trainer", "human-reaction-time-test"],
   },
 ];
 

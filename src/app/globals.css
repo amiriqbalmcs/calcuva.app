@@ -47,6 +47,10 @@
   --color-utility-soft: hsl(var(--utility-soft));
   --color-business: hsl(var(--business));
   --color-business-soft: hsl(var(--business-soft));
+  --color-sustainability: hsl(var(--sustainability));
+  --color-sustainability-soft: hsl(var(--sustainability-soft));
+  --color-benchmarks: hsl(var(--benchmarks));
+  --color-benchmarks-soft: hsl(var(--benchmarks-soft));
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -87,6 +91,14 @@
       transform: translateY(0);
     }
   }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  --animate-shake: shake 0.15s ease-in-out 0s 2;
 }
 
 @layer base {
@@ -122,6 +134,10 @@
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 217 91% 50%;
+    --sustainability: 158 64% 42%;
+    --sustainability-soft: 158 64% 95%;
+    --benchmarks: 271 81% 56%;
+    --benchmarks-soft: 271 81% 96%;
     --radius: 0.875rem;
     --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.04);
     --shadow-md: 0 4px 12px -2px hsl(222 47% 11% / 0.06);
@@ -173,6 +189,10 @@
     --border: 217 33% 17%;
     --input: 217 33% 17%;
     --ring: 217 91% 60%;
+    --sustainability: 158 64% 52%;
+    --sustainability-soft: 158 50% 14%;
+    --benchmarks: 271 81% 68%;
+    --benchmarks-soft: 271 50% 15%;
   }
 }
 

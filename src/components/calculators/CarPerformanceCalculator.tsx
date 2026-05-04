@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import {
   Navigation, MapPin, Monitor, RotateCcw, Play, Square,
-  Clock, Activity, Trophy, TrendingUp, AlertCircle, Info
+  Clock, Activity, Trophy, TrendingUp, AlertCircle, Info, Car
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { CALCULATORS } from "@/lib/calculators";
@@ -20,15 +20,15 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
 
   if (!calc) return null;
 
-  const [unit, setUnit] = useState<"mph" | "kmh">("mph");
+  const [unit, setUnit] = useState<"mph" | "kmh" | "knots" | "fpm">("mph");
   const [hudMode, setHudMode] = useState(false);
   const [isTracking, setIsTracking] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [speed, setSpeed] = useState(0);
-  const [maxSpeed, setMaxSpeed] = useState(0);
-  const [avgSpeed, setAvgSpeed] = useState(0);
-  const [distance, setDistance] = useState(0);
+  const [speed, setSpeed] = useState(0); // m/s
+  const [maxSpeed, setMaxSpeed] = useState(0); // m/s
+  const [distance, setDistance] = useState(0); // meters
+  const [elapsedTime, setElapsedTime] = useState(0); // seconds
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   // Car Performance State (0-60 / 0-100)
@@ -56,6 +56,17 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
     }
   };
 
+  // Timer Logic
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isTracking) {
+      interval = setInterval(() => {
+        setElapsedTime(prev => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTracking]);
+
   const toggleTracking = useCallback(async () => {
     if (isTracking) {
       if (watchId.current !== null) navigator.geolocation.clearWatch(watchId.current);
@@ -75,28 +86,32 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
       watchId.current = navigator.geolocation.watchPosition(
         (position) => {
           const rawSpeed = position.coords.speed || 0;
-          const currentSpeed = unit === "mph" ? rawSpeed * 2.23694 : rawSpeed * 3.6;
+          const accuracy = position.coords.accuracy || 0;
+          if (accuracy > 60) return;
 
-          setSpeed(Math.max(0, currentSpeed));
-          setMaxSpeed(prev => Math.max(prev, currentSpeed));
+          const filteredSpeed = rawSpeed > 0.3 ? rawSpeed : 0;
+          setSpeed(filteredSpeed);
+          if (filteredSpeed > 0) setMaxSpeed(prev => Math.max(prev, filteredSpeed));
           setCoords({ lat: position.coords.latitude, lng: position.coords.longitude });
+
+          const currentSpeedConverted = unit === "mph" ? filteredSpeed * 2.23694 : filteredSpeed * 3.6;
 
           // Performance Timing Logic
           const targetSpeed = unit === "mph" ? 60 : 100;
-          if (!isPerfTracking && currentSpeed > 1 && currentSpeed < 5) {
+          if (!isPerfTracking && currentSpeedConverted > 1 && currentSpeedConverted < 5) {
             setIsPerfTracking(true);
             setPerfStartTime(performance.now());
             setPerfTime(null);
-          } else if (isPerfTracking && currentSpeed >= targetSpeed) {
+          } else if (isPerfTracking && currentSpeedConverted >= targetSpeed) {
             if (perfStartTime) setPerfTime((performance.now() - perfStartTime) / 1000);
             setIsPerfTracking(false);
             setPerfStartTime(null);
-          } else if (isPerfTracking && currentSpeed < 1) {
+          } else if (isPerfTracking && currentSpeedConverted < 1) {
             setIsPerfTracking(false);
             setPerfStartTime(null);
           }
 
-          if (lastPos.current) {
+          if (lastPos.current && filteredSpeed > 0.3) {
             const d = calculateDistance(
               lastPos.current.lat, lastPos.current.lng,
               position.coords.latitude, position.coords.longitude
@@ -104,11 +119,6 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
             setDistance(prev => prev + d);
           }
           lastPos.current = { lat: position.coords.latitude, lng: position.coords.longitude, time: position.timestamp };
-
-          speedHistory.current.push(currentSpeed);
-          if (speedHistory.current.length > 100) speedHistory.current.shift();
-          const avg = speedHistory.current.reduce((a, b) => a + b, 0) / speedHistory.current.length;
-          setAvgSpeed(avg);
         },
         (err) => { setError(err.message); setIsTracking(false); releaseWakeLock(); },
         GPS_OPTIONS
@@ -136,16 +146,34 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
 
   const resetStats = () => {
     setMaxSpeed(0);
-    setAvgSpeed(0);
     setDistance(0);
+    setElapsedTime(0);
     setPerfTime(null);
-    speedHistory.current = [];
     lastPos.current = null;
   };
 
-  const displayDistance = unit === "mph" 
-    ? (distance * 0.000621371).toFixed(2) + " mi" 
-    : (distance / 1000).toFixed(2) + " km";
+  const convertSpeed = (ms: number) => {
+    switch (unit) {
+      case "kmh": return ms * 3.6;
+      case "mph": return ms * 2.23694;
+      case "knots": return ms * 1.94384;
+      case "fpm": return ms * 196.85;
+      default: return ms;
+    }
+  };
+
+  const formatTime = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return [h, m, s].map(v => v.toString().padStart(2, '0')).join(':');
+  };
+
+  const displaySpeed = convertSpeed(speed);
+  const displayMaxSpeed = convertSpeed(maxSpeed);
+  const displayAvgSpeed = elapsedTime > 0 ? convertSpeed(distance / elapsedTime) : 0;
+  const displayDistance = unit === "knots" ? distance * 0.000539957 : unit === "kmh" ? distance / 1000 : unit === "fpm" ? distance * 3.28084 : distance * 0.000621371;
+  const distanceUnit = unit === "knots" ? "nm" : unit === "kmh" ? "km" : unit === "fpm" ? "ft" : "mi";
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -160,20 +188,20 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
 
           <div className="relative z-10 flex flex-col items-center gap-2">
             <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
-              <Navigation className={cn("size-3", isTracking && "animate-pulse text-blue-500")} />
+              <Car className={cn("size-3", isTracking && "animate-pulse text-blue-500")} />
               {isTracking ? "Live Car Performance Active" : "Car Performance Tracker"}
             </div>
           </div>
 
           <div className="relative z-10 flex flex-col items-center py-4 w-full">
             <div className="flex items-baseline justify-center w-full">
-              <span className={cn("text-[12rem] md:text-[20rem] font-mono font-bold tracking-tighter leading-none tabular-nums transition-all duration-150", speed > 0 ? "text-foreground" : "text-muted-foreground/20")}>
-                {Math.round(speed)}
+              <span className={cn("text-[10rem] md:text-[18rem] font-mono font-bold tracking-tighter leading-none tabular-nums transition-all duration-150", speed > 0 ? "text-foreground" : "text-muted-foreground/20")}>
+                {Math.round(displaySpeed)}
               </span>
               <div className="flex flex-col gap-2 ml-2 md:ml-4 self-center mb-12 md:mb-20">
-                <span className="text-xl md:text-3xl font-bold uppercase tracking-widest text-muted-foreground/30">{unit}</span>
-                <div className="flex gap-1">
-                  {["mph", "kmh"].map((u) => (
+                <span className="text-xl md:text-2xl font-bold uppercase tracking-widest text-muted-foreground/30">{unit}</span>
+                <div className="grid grid-cols-2 gap-1">
+                  {["mph", "kmh", "knots", "fpm"].map((u) => (
                     <button key={u} onClick={() => setUnit(u as any)} className={cn("px-2 py-1 text-[8px] font-bold uppercase tracking-tighter rounded border", unit === u ? "bg-foreground text-background border-foreground" : "border-border/40 text-muted-foreground")}>
                       {u}
                     </button>
@@ -208,7 +236,7 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
               <span>{isTracking ? "STOP" : "START GPS"}</span>
             </button>
 
-            <button onClick={resetStats} className="h-10 md:h-12 px-3 md:px-6 rounded-xl border border-border/60 bg-background text-muted-foreground flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest">
+            <button onClick={() => { setMaxSpeed(0); setDistance(0); setElapsedTime(0); setPerfTime(null); }} className="h-10 md:h-12 px-3 md:px-6 rounded-xl border border-border/60 bg-background text-muted-foreground flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest">
               <RotateCcw className="size-3 md:size-4" />
               <span className="hidden sm:inline">Reset</span>
             </button>
@@ -227,10 +255,10 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
         {/* Car Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {[
-            { label: "Top Speed", value: Math.round(maxSpeed), unit: unit, icon: TrendingUp, color: "text-red-500" },
-            { label: "Avg Speed", value: Math.round(avgSpeed), unit: unit, icon: Activity, color: "text-blue-500" },
-            { label: "Trip Range", value: displayDistance, unit: "", icon: MapPin, color: "text-green-500" },
-            { label: "Live Coords", value: coords ? `${coords.lat.toFixed(3)}, ${coords.lng.toFixed(3)}` : "---", unit: "", icon: Navigation, color: "text-orange-500" },
+            { label: "Top Speed", value: Math.round(displayMaxSpeed), unit: unit, icon: TrendingUp, color: "text-red-500" },
+            { label: "Avg Speed", value: Math.round(displayAvgSpeed), unit: unit, icon: Activity, color: "text-blue-500" },
+            { label: "Trip Timer", value: formatTime(elapsedTime), unit: "H:M:S", icon: Clock, color: "text-green-500" },
+            { label: "Trip Range", value: displayDistance.toFixed(2), unit: distanceUnit, icon: MapPin, color: "text-orange-500" },
           ].map((stat, i) => (
             <div key={i} className="surface-card p-4 md:p-6 border-border/40 bg-secondary/5 rounded-2xl shadow-sm relative overflow-hidden group">
               <stat.icon className="absolute -bottom-2 -right-2 size-12 text-muted-foreground/5 transition-transform group-hover:scale-110" />

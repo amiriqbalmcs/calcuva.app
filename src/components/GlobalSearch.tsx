@@ -3,29 +3,20 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Calculator,
-  Search,
-  TrendingUp,
-  FileText,
-  Sparkles,
-  PiggyBank, Coins, Percent, Flame, Home, Heart, Banknote, Receipt,
+  Calculator, Search, TrendingUp, FileText, Sparkles, PiggyBank, Coins, Percent, Flame, Home, Heart, Banknote, Receipt,
   ArrowLeftRight, ReceiptSwissFranc, TrendingDown, Lock, Car, Activity,
   Weight, Utensils, Timer, Beer, Cigarette, Baby, Droplet, Target, CreditCard, CalendarPlus, CalendarCheck, Ruler, FileType,
-  GraduationCap, Dumbbell, BadgeDollarSign, QrCode, BadgeCheck, Droplets,
+  GraduationCap, Dumbbell, BadgeDollarSign, QrCode, BadgeCheck, Droplets, Calendar, Briefcase,
   Leaf, Sun, Wallet, Zap, Battery, Grid3X3, Share, Moon, Landmark, Globe, Smartphone,
+  Beef, Stethoscope, Microscope, Brain, Plane, Shield, MapPin,
+  Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer,
+  FileCode, Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History,
+  Bike, Snowflake, Footprints, Anchor, ArrowUpCircle, Navigation, Train,
+  Hash, BookOpen, LayoutGrid, Keyboard
 } from "lucide-react";
 
-const ICONS: Record<string, any> = {
-  Calculator, PiggyBank, Coins, Percent, Flame, Home, Heart, Banknote, Receipt,
-  TrendingUp, ArrowLeftRight, ReceiptSwissFranc, TrendingDown, Lock, Car,
-  ActivitySquare: Activity, Weight, Utensils, Timer, Beer, Cigarette, Baby,
-  Droplet, Target, CreditCard, CalendarPlus, CalendarCheck, Ruler,
-  FileType, GraduationCap, Dumbbell, BadgeDollarSign, QrCode, BadgeCheck,
-  Droplets, Leaf, Sun, Wallet, Zap, Battery, Grid3X3, Share, FileText, Moon, Globe,
-  Activity, Landmark, Smartphone,
-  "file-text": FileText, "book-open": GraduationCap
-};
-import { CALCULATORS } from "@/lib/calculators";
+import { CALCULATORS, CategoryKey, CATEGORIES } from "@/lib/calculators";
+import { cn } from "@/lib/utils";
 import {
   CommandDialog,
   CommandEmpty,
@@ -36,6 +27,45 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { Badge } from "@/components/ui/badge";
+
+const ICONS: Record<string, any> = {
+  Landmark, Receipt, TrendingUp, Home, Activity, Baby, Droplet, Calendar, Ruler,
+  GraduationCap, ReceiptSwissFranc, TrendingDown, UserRound: Calculator, Briefcase, FileType,
+  PiggyBank, Weight, Utensils, Coins, Banknote, Timer, Target, CalendarPlus,
+  Calculator, Car, Flame, Beer, Cigarette, Percent, Heart, ArrowLeftRight, Lock,
+  ActivitySquare: Activity, CreditCard, CalendarCheck, Dumbbell, BadgeDollarSign,
+  QrCode, BadgeCheck, Droplets, Leaf, Sun, Wallet, Zap, Battery, Grid3X3, Share,
+  "trending-up": TrendingUp, "trending-down": TrendingDown, "scale": Ruler,
+  "calculator": Calculator, "activity": Activity, "award": BadgeCheck,
+  "alert-circle": Target, "banknote": Banknote, "heart": Heart, "baby": Baby,
+  "zap": Zap, "droplets": Droplets, "beef": Beef, "pie-chart": Grid3X3,
+  "timer": Timer, "clock": Timer, "stethoscope": Activity, "microscope": Activity,
+  "brain": Brain, "briefcase": Briefcase, "graduation-cap": GraduationCap,
+  "plane": Plane, "car": Car, "home": Home, "shopping-cart": Calculator,
+  "user": Calculator, "users": Calculator, "settings": Calculator, "shield": Lock,
+  "fast-forward": Zap, "utensils": Utensils, "calendar": Calendar, "map-pin": MapPin,
+  "dna": Dna, "waves": Waves, "heart-pulse": HeartPulse, "dumbbell": Dumbbell,
+  "apple": Utensils, "line-chart": LineChart, "bar-chart": BarChart3,
+  "gauge": Gauge, "moon": Moon, "sun": Sun, "globe": Globe, "history": History,
+  "book-open": BookOpen, "target": Target, "file-text": FileText,
+  "bike": Bike, "snowflake": Snowflake, "footprints": Footprints,
+  "anchor": Anchor, "arrow-up-circle": ArrowUpCircle, "navigation": Navigation, "train": Train,
+  "hash": Hash, "layout-grid": LayoutGrid, "keyboard": Keyboard, "grid-3x3": Grid3X3,
+  FileText, Moon, Beef, Stethoscope, Microscope, Brain, Plane, Shield, MapPin,
+  Search, Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer,
+  FileCode, Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History, Globe, Smartphone,
+  Navigation, Train, Bike, Snowflake, Footprints, Anchor, ArrowUpCircle, Hash, BookOpen, LayoutGrid, Keyboard
+};
+
+const categoryStyles: Record<CategoryKey, string> = {
+  finance: "bg-finance-soft text-finance dark:bg-finance/20 dark:text-finance",
+  health: "bg-health-soft text-health dark:bg-health/20 dark:text-health",
+  education: "bg-education-soft text-education dark:bg-education/20 dark:text-education",
+  utility: "bg-utility-soft text-utility dark:bg-utility/20 dark:text-utility",
+  business: "bg-business-soft text-business dark:bg-business/20 dark:text-business",
+  sustainability: "bg-sustainability-soft text-sustainability dark:bg-sustainability/20 dark:text-sustainability",
+  benchmarks: "bg-benchmarks-soft text-benchmarks dark:bg-benchmarks/20 dark:text-benchmarks",
+};
 
 export function GlobalSearch() {
   const [open, setOpen] = useState(false);
@@ -88,10 +118,10 @@ export function GlobalSearch() {
                 onSelect={() => runCommand(() => router.push(`/calculators/${t.slug}`))}
                 className="flex items-center gap-3 p-3 cursor-pointer"
               >
-                <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                <div className={cn("size-8 rounded-lg flex items-center justify-center shrink-0", categoryStyles[t.category as CategoryKey])}>
                   {(() => {
                     const ToolIcon = ICONS[t.icon] || Calculator;
-                    return <ToolIcon className="size-4 text-muted-foreground" />;
+                    return <ToolIcon className="size-4" />;
                   })()}
                 </div>
                 <div className="flex flex-col flex-1">
@@ -114,10 +144,10 @@ export function GlobalSearch() {
                 onSelect={() => runCommand(() => router.push(`/calculators/${t.slug}`))}
                 className="flex items-center gap-3 p-3 cursor-pointer"
               >
-                <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                <div className={cn("size-8 rounded-lg flex items-center justify-center shrink-0", categoryStyles[t.category as CategoryKey])}>
                   {(() => {
                     const ToolIcon = ICONS[t.icon] || Calculator;
-                    return <ToolIcon className="size-4 text-muted-foreground" />;
+                    return <ToolIcon className="size-4" />;
                   })()}
                 </div>
                 <div className="flex flex-col">

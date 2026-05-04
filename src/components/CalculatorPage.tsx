@@ -14,7 +14,8 @@ import {
   HelpCircle, Apple, Zap as ZapIcon, Beef, PieChart, Clock, Stethoscope, Microscope,
   Brain, Plane, ShoppingCart, User, Users, Settings, Shield, MapPin, Search,
   Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer, FileCode,
-  Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge
+  Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Bike, Snowflake, Footprints,
+  Anchor, ArrowUpCircle, Navigation, Train
 } from "lucide-react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -40,6 +41,7 @@ const ICONS: Record<string, any> = {
   Apple, ZapIcon, Beef, PieChart, Clock, Stethoscope, Microscope, Brain, Plane,
   ShoppingCart, User, Users, Settings, Shield, MapPin, Search, Plus, Minus, X, Check,
   CheckCircle2, Share2, Download, Printer, FileCode, Dna, Waves, HeartPulse,
+  Navigation, Train, Bike, Snowflake, Footprints, Anchor, ArrowUpCircle,
   LineChart, BarChart3, Gauge, "trending-up": TrendingUp, "trending-down": TrendingDown,
   "scale": Ruler, "activity": Activity, "award": BadgeCheck, "alert-circle": HelpCircle,
   "banknote": Banknote, "heart": Heart, "baby": Baby, "zap": Zap, "droplets": Droplets,
@@ -50,7 +52,14 @@ const ICONS: Record<string, any> = {
   "utensils": Utensils, "calendar": Calendar, "map-pin": MapPin, "dna": Dna, "waves": Waves,
   "heart-pulse": HeartPulse, "dumbbell": Dumbbell, "apple": Apple, "line-chart": LineChart,
   "bar-chart": BarChart3, "gauge": Gauge, "moon": Moon, "sun": Sun, "globe": Globe,
-  "history": History, "target": Target
+  "history": History, "target": Target,
+  "bike": Bike, "cycling": Bike, "bicycle": Bike,
+  "snowflake": Snowflake, "ski": Snowflake, "snowboard": Snowflake,
+  "footprints": Footprints, "running": Footprints,
+  "anchor": Anchor, "boat": Anchor, "marine": Anchor,
+  "arrow-up-circle": ArrowUpCircle, "elevator": ArrowUpCircle,
+  "navigation": Navigation, "gps": Navigation,
+  "train": Train, "rail": Train
 };
 
 const categoryStyles: Record<CalcMeta["category"], string> = {
@@ -60,6 +69,7 @@ const categoryStyles: Record<CalcMeta["category"], string> = {
   utility: "bg-utility-soft text-utility dark:bg-utility/20 dark:text-utility border-utility/20",
   business: "bg-business-soft text-business dark:bg-business/20 dark:text-business border-business-soft/20",
   sustainability: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border-emerald-500/10",
+  benchmarks: "bg-purple-50 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400 border-purple-500/10",
 };
 
 const categoryGradients: Record<CalcMeta["category"], string> = {
@@ -69,6 +79,7 @@ const categoryGradients: Record<CalcMeta["category"], string> = {
   utility: "from-utility/5 via-transparent to-transparent",
   business: "from-business/5 via-transparent to-transparent",
   sustainability: "from-emerald-500/5 via-transparent to-transparent",
+  benchmarks: "from-purple-500/5 via-transparent to-transparent",
 };
 
 interface PostSummary {

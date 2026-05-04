@@ -12,19 +12,30 @@ const TrainSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
   const calc = useMemo(() => CALCULATORS.find(c => c.slug === "train-speed-test-live"), []);
   if (!calc) return null;
 
-  const [unit, setUnit] = useState<"kmh" | "mph">("kmh");
+  const [unit, setUnit] = useState<"kmh" | "mph" | "knots" | "fpm">("kmh");
   const [hudMode, setHudMode] = useState(false);
   const [isTracking, setIsTracking] = useState(false);
-  const [speed, setSpeed] = useState(0);
-  const [maxSpeed, setMaxSpeed] = useState(0);
-  const [avgSpeed, setAvgSpeed] = useState(0);
-  const [distance, setDistance] = useState(0);
+  const [speed, setSpeed] = useState(0); // m/s
+  const [maxSpeed, setMaxSpeed] = useState(0); // m/s
+  const [distance, setDistance] = useState(0); // meters
+  const [elapsedTime, setElapsedTime] = useState(0); // seconds
   const [error, setError] = useState<string | null>(null);
 
   const watchId = useRef<number | null>(null);
   const wakeLock = useRef<any>(null);
   const lastPos = useRef<{ lat: number; lng: number; time: number } | null>(null);
   const speedHistory = useRef<number[]>([]);
+
+  // Timer Logic
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isTracking) {
+      interval = setInterval(() => {
+        setElapsedTime(prev => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTracking]);
 
   const toggleTracking = useCallback(async () => {
     if (isTracking) {
@@ -39,10 +50,14 @@ const TrainSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
       setError(null);
       watchId.current = navigator.geolocation.watchPosition((position) => {
         const rawSpeed = position.coords.speed || 0;
-        const currentSpeed = unit === "kmh" ? rawSpeed * 3.6 : rawSpeed * 2.23694;
-        setSpeed(Math.max(0, currentSpeed));
-        setMaxSpeed(prev => Math.max(prev, currentSpeed));
-        if (lastPos.current) {
+        const accuracy = position.coords.accuracy || 0;
+        if (accuracy > 60) return;
+
+        const filteredSpeed = rawSpeed > 0.3 ? rawSpeed : 0;
+        setSpeed(filteredSpeed);
+        if (filteredSpeed > 0) setMaxSpeed(prev => Math.max(prev, filteredSpeed));
+
+        if (lastPos.current && filteredSpeed > 0.3) {
           const R = 6371e3;
           const φ1 = lastPos.current.lat * Math.PI/180;
           const φ2 = position.coords.latitude * Math.PI/180;
@@ -53,12 +68,34 @@ const TrainSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
           setDistance(prev => prev + (R * c));
         }
         lastPos.current = { lat: position.coords.latitude, lng: position.coords.longitude, time: position.timestamp };
-        speedHistory.current.push(currentSpeed);
-        if (speedHistory.current.length > 100) speedHistory.current.shift();
-        setAvgSpeed(speedHistory.current.reduce((a, b) => a + b, 0) / speedHistory.current.length);
       }, (err) => { setError(err.message); setIsTracking(false); }, GPS_OPTIONS);
     }
-  }, [isTracking, unit]);
+  }, [isTracking]);
+
+  const convertSpeed = (ms: number) => {
+    switch (unit) {
+      case "kmh": return ms * 3.6;
+      case "mph": return ms * 2.23694;
+      case "knots": return ms * 1.94384;
+      case "fpm": return ms * 196.85;
+      default: return ms;
+    }
+  };
+
+  const formatTime = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return [h, m, s].map(v => v.toString().padStart(2, '0')).join(':');
+  };
+
+  const displaySpeed = convertSpeed(speed);
+  const displayMaxSpeed = convertSpeed(maxSpeed);
+  const displayDistance = unit === "knots" ? distance * 0.000539957 : unit === "kmh" ? distance / 1000 : unit === "fpm" ? distance * 3.28084 : distance * 0.000621371;
+  const distanceUnit = unit === "knots" ? "nm" : unit === "kmh" ? "km" : unit === "fpm" ? "ft" : "mi";
+
+  // Average speed calculation (based on distance over elapsed time)
+  const displayAvgSpeed = elapsedTime > 0 ? convertSpeed(distance / elapsedTime) : 0;
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -73,11 +110,11 @@ const TrainSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
           </div>
           <div className="relative z-10 flex flex-col items-center py-4 w-full">
             <div className="flex items-baseline justify-center w-full">
-              <span className={cn("text-[12rem] md:text-[20rem] font-mono font-bold tracking-tighter leading-none tabular-nums", speed > 0 ? "text-foreground" : "text-muted-foreground/20")}>{Math.round(speed)}</span>
+              <span className={cn("text-[10rem] md:text-[18rem] font-mono font-bold tracking-tighter leading-none tabular-nums", speed > 0 ? "text-foreground" : "text-muted-foreground/20")}>{Math.round(displaySpeed)}</span>
               <div className="flex flex-col gap-2 ml-2 md:ml-4 self-center mb-10 md:mb-16">
-                <span className="text-xl md:text-3xl font-bold uppercase tracking-widest text-muted-foreground/30">{unit}</span>
-                <div className="flex gap-1">
-                  {["kmh", "mph"].map((u) => (
+                <span className="text-xl md:text-2xl font-bold uppercase tracking-widest text-muted-foreground/30">{unit}</span>
+                <div className="grid grid-cols-2 gap-1">
+                  {["kmh", "mph", "knots", "fpm"].map((u) => (
                     <button key={u} onClick={() => setUnit(u as any)} className={cn("px-2 py-1 text-[8px] font-bold uppercase rounded border", unit === u ? "bg-foreground text-background" : "border-border/40 text-muted-foreground")}>{u}</button>
                   ))}
                 </div>
@@ -87,16 +124,16 @@ const TrainSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
           <div className="relative z-20 flex items-center justify-center gap-2 md:gap-8 w-full border-t border-border/10 pt-8">
             <button onClick={() => setHudMode(!hudMode)} className={cn("h-10 md:h-12 px-3 md:px-6 rounded-xl border flex items-center gap-2 font-bold text-[10px] uppercase", hudMode ? "bg-blue-500 text-white" : "bg-background text-muted-foreground")}><Monitor className="size-3 md:size-4" /><span className="hidden sm:inline">HUD Mode</span></button>
             <button onClick={toggleTracking} className={cn("h-12 md:h-16 px-6 md:px-14 rounded-xl border flex items-center gap-3 font-bold text-xs uppercase shadow-lg", isTracking ? "bg-red-500 text-white" : "bg-foreground text-background")}>{isTracking ? <Square className="size-4 fill-current" /> : <Play className="size-4 fill-current" />}<span>{isTracking ? "STOP" : "START GPS"}</span></button>
-            <button onClick={() => { setMaxSpeed(0); setDistance(0); }} className="h-10 md:h-12 px-3 md:px-6 rounded-xl border border-border/60 bg-background text-muted-foreground flex items-center gap-2 font-bold text-[10px] uppercase"><RotateCcw className="size-3 md:size-4" /><span className="hidden sm:inline">Reset</span></button>
+            <button onClick={() => { setMaxSpeed(0); setDistance(0); setElapsedTime(0); }} className="h-10 md:h-12 px-3 md:px-6 rounded-xl border border-border/60 bg-background text-muted-foreground flex items-center gap-2 font-bold text-[10px] uppercase"><RotateCcw className="size-3 md:size-4" /><span className="hidden sm:inline">Reset</span></button>
           </div>
           {error && <div className="absolute top-6 w-full flex justify-center px-6"><div className="bg-red-500 text-white px-4 py-2 rounded-lg text-[10px] font-bold flex items-center gap-2 shadow-lg"><AlertCircle className="size-3" />{error}</div></div>}
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {[
-            { label: "Max Rail Speed", value: Math.round(maxSpeed), unit: unit, icon: Train, color: "text-blue-500" },
-            { label: "Avg Speed", value: Math.round(avgSpeed), unit: unit, icon: Activity, color: "text-green-500" },
-            { label: "Trip Distance", value: (unit === "kmh" ? distance/1000 : distance*0.000621).toFixed(2), unit: unit === "kmh" ? "km" : "mi", icon: MapPin, color: "text-orange-500" },
-            { label: "Live GPS", value: "Active", unit: "", icon: Navigation, color: "text-red-500" },
+            { label: "Max Rail Speed", value: Math.round(displayMaxSpeed), unit: unit, icon: Train, color: "text-blue-500" },
+            { label: "Avg Speed", value: Math.round(displayAvgSpeed), unit: unit, icon: Activity, color: "text-green-500" },
+            { label: "Trip Distance", value: displayDistance.toFixed(2), unit: distanceUnit, icon: MapPin, color: "text-orange-500" },
+            { label: "Trip Timer", value: formatTime(elapsedTime), unit: "H:M:S", icon: Activity, color: "text-red-500" },
           ].map((stat, i) => (
             <div key={i} className="surface-card p-4 md:p-6 border-border/40 bg-secondary/5 rounded-2xl shadow-sm relative overflow-hidden group">
               <stat.icon className="absolute -bottom-2 -right-2 size-12 text-muted-foreground/5 transition-transform group-hover:scale-110" />

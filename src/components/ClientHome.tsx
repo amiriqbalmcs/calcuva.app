@@ -14,7 +14,8 @@ const categoryStyles: Record<CategoryKey, string> = {
   education: "bg-education-soft text-education dark:bg-education/20 dark:text-education",
   utility: "bg-utility-soft text-utility dark:bg-utility/20 dark:text-utility",
   business: "bg-business-soft text-business dark:bg-business/20 dark:text-business",
-  sustainability: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400",
+  sustainability: "bg-sustainability-soft text-sustainability dark:bg-sustainability/20 dark:text-sustainability",
+  benchmarks: "bg-benchmarks-soft text-benchmarks dark:bg-benchmarks/20 dark:text-benchmarks",
 };
 
 interface ClientHomeProps {
@@ -68,7 +69,7 @@ export const ClientHome = ({ guides, posts }: ClientHomeProps) => {
         <section className="container-wide relative pt-16 sm:pt-28 pb-16 sm:pb-24">
           <div className="flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-widest text-muted-foreground animate-fade-up">
             <Sparkles className="size-3.5 text-signal" />
-            <span>70+ Smart Online Tools</span>
+            <span>100+ Smart Online Tools</span>
           </div>
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tighter max-w-[20ch] animate-fade-up">
             Calculate anything in{" "}

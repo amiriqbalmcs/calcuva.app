@@ -42,6 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 // Lazy load calculators with skeleton loading state
 const loading = () => <CalculatorSkeleton />;
+
 const AgeCalculator = dynamic(() => import("@/components/calculators/AgeCalculator"), { loading });
 const BmiTdeeCalculator = dynamic(() => import("@/components/calculators/BmiTdeeCalculator"), { loading });
 const GpaPercentageCalculator = dynamic(() => import("@/components/calculators/GpaPercentageCalculator"), { loading });
@@ -135,6 +136,20 @@ const TrainSpeedometer = dynamic(() => import("@/components/calculators/TrainSpe
 const FlightSpeedometer = dynamic(() => import("@/components/calculators/FlightSpeedometer"), { loading });
 const BoatSpeedometer = dynamic(() => import("@/components/calculators/BoatSpeedometer"), { loading });
 const ReactionTimeTest = dynamic(() => import("@/components/calculators/ReactionTimeTest"), { loading });
+const RollerCoasterSpeedometer = dynamic(() => import("@/components/calculators/RollerCoasterSpeedometer"), { loading });
+const ElevatorSpeedometer = dynamic(() => import("@/components/calculators/ElevatorSpeedometer"), { loading });
+const CyclingSpeedometer = dynamic(() => import("@/components/calculators/CyclingSpeedometer"), { loading });
+const EscooterSpeedometer = dynamic(() => import("@/components/calculators/EscooterSpeedometer"), { loading });
+const SkiSpeedometer = dynamic(() => import("@/components/calculators/SkiSpeedometer"), { loading });
+const RunningSpeedometer = dynamic(() => import("@/components/calculators/RunningSpeedometer"), { loading });
+const HorseSpeedometer = dynamic(() => import("@/components/calculators/HorseSpeedometer"), { loading });
+const SequenceMemoryTest = dynamic(() => import("@/components/calculators/SequenceMemoryTest"), { loading });
+const AimTrainer = dynamic(() => import("@/components/calculators/AimTrainer"), { loading });
+const NumberMemoryTest = dynamic(() => import("@/components/calculators/NumberMemoryTest"), { loading });
+const VerbalMemoryTest = dynamic(() => import("@/components/calculators/VerbalMemoryTest"), { loading });
+const ChimpTest = dynamic(() => import("@/components/calculators/ChimpTest"), { loading });
+const VisualMemoryTest = dynamic(() => import("@/components/calculators/VisualMemoryTest"), { loading });
+const TypingSpeedTest = dynamic(() => import("@/components/calculators/TypingSpeedTest"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -225,14 +240,21 @@ const componentMap: Record<string, any> = {
   "train-speed-test-live": TrainSpeedometer,
   "flight-speed-tracker-gps": FlightSpeedometer,
   "boat-speed-tracker-knots": BoatSpeedometer,
-  "roller-coaster-speed-tracker": GpsSpeedometer,
-  "high-speed-elevator-test": GpsSpeedometer,
-  "cycling-speedometer-online": GpsSpeedometer,
-  "e-scooter-speedometer": GpsSpeedometer,
-  "ski-snowboard-speed-tracker": GpsSpeedometer,
-  "running-speedometer-test": GpsSpeedometer,
-  "horse-riding-speed-tracker": GpsSpeedometer,
+  "roller-coaster-speed-tracker": RollerCoasterSpeedometer,
+  "high-speed-elevator-test": ElevatorSpeedometer,
+  "cycling-speedometer-online": CyclingSpeedometer,
+  "e-scooter-speedometer": EscooterSpeedometer,
+  "ski-snowboard-speed-tracker": SkiSpeedometer,
+  "running-speedometer-test": RunningSpeedometer,
+  "horse-riding-speed-tracker": HorseSpeedometer,
+  "sequence-memory-test": SequenceMemoryTest,
   "human-reaction-time-test": ReactionTimeTest,
+  "aim-trainer": AimTrainer,
+  "number-memory-test": NumberMemoryTest,
+  "verbal-memory-test": VerbalMemoryTest,
+  "chimp-test": ChimpTest,
+  "visual-memory-test": VisualMemoryTest,
+  "typing-speed-test": TypingSpeedTest,
 };
 
 export async function generateStaticParams() {
