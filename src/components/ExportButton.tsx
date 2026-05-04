@@ -262,7 +262,7 @@ export const ExportButton = ({ title }: Props) => {
             disabled={loading}
             aria-label="Share Analysis"
             className={cn(
-              "flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95",
+              "flex items-center gap-2 px-6 h-11 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95",
               loading 
                 ? "bg-secondary text-muted-foreground border-border cursor-wait" 
                 : "bg-foreground text-background hover:bg-foreground/90 hover:shadow-black/10"
