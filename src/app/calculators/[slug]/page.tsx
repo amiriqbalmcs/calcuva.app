@@ -129,6 +129,12 @@ const PlasticImpactMap = dynamic(() => import("@/components/calculators/PlasticI
 const EvGridAuditor = dynamic(() => import("@/components/calculators/EvGridAuditor"), { loading });
 const DietaryLandUse = dynamic(() => import("@/components/calculators/DietaryLandUse"), { loading });
 const MicroplasticProtection = dynamic(() => import("@/components/calculators/MicroplasticProtection"), { loading });
+const CarPerformanceCalculator = dynamic(() => import("@/components/calculators/CarPerformanceCalculator"), { loading });
+const GpsSpeedometer = dynamic(() => import("@/components/calculators/GpsSpeedometer"), { loading });
+const TrainSpeedometer = dynamic(() => import("@/components/calculators/TrainSpeedometer"), { loading });
+const FlightSpeedometer = dynamic(() => import("@/components/calculators/FlightSpeedometer"), { loading });
+const BoatSpeedometer = dynamic(() => import("@/components/calculators/BoatSpeedometer"), { loading });
+const ReactionTimeTest = dynamic(() => import("@/components/calculators/ReactionTimeTest"), { loading });
 
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
@@ -214,6 +220,19 @@ const componentMap: Record<string, any> = {
   "ev-grid-cleanliness-auditor": EvGridAuditor,
   "dietary-land-use-restoration": DietaryLandUse,
   "microplastic-ocean-protection": MicroplasticProtection,
+  "gps-speedometer-online": GpsSpeedometer,
+  "car-performance-speed-test": CarPerformanceCalculator,
+  "train-speed-test-live": TrainSpeedometer,
+  "flight-speed-tracker-gps": FlightSpeedometer,
+  "boat-speed-tracker-knots": BoatSpeedometer,
+  "roller-coaster-speed-tracker": GpsSpeedometer,
+  "high-speed-elevator-test": GpsSpeedometer,
+  "cycling-speedometer-online": GpsSpeedometer,
+  "e-scooter-speedometer": GpsSpeedometer,
+  "ski-snowboard-speed-tracker": GpsSpeedometer,
+  "running-speedometer-test": GpsSpeedometer,
+  "horse-riding-speed-tracker": GpsSpeedometer,
+  "human-reaction-time-test": ReactionTimeTest,
 };
 
 export async function generateStaticParams() {
