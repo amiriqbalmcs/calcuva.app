@@ -188,14 +188,7 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
               </div>
               <div className="no-print flex items-center justify-center md:justify-end gap-3 w-full md:w-auto">
                 {hasCurrency && !hideHeaderCurrency && <CurrencySwitcher />}
-                <button
-                  onClick={() => setIsEmbedDialogOpen(true)}
-                  className="inline-flex items-center gap-2 px-4 h-11 rounded-xl bg-secondary/50 border border-border/50 hover:bg-secondary hover:border-border transition-all text-xs font-bold font-mono uppercase tracking-wider"
-                >
-                  <FileCode className="size-3.5" />
-                  Embed
-                </button>
-                <ExportButton title={calc.title} />
+                <ExportButton title={calc.title} onEmbedClick={() => setIsEmbedDialogOpen(true)} />
               </div>
             </header>
           )}

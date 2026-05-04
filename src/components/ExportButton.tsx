@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, FileText, CheckCircle2, Image as ImageIcon, ChevronDown } from "lucide-react";
+import { Download, FileText, CheckCircle2, Image as ImageIcon, ChevronDown, FileCode } from "lucide-react";
 import { useState } from "react";
 import { toPng, toJpeg } from "html-to-image";
 import { cn } from "@/lib/utils";
@@ -15,9 +15,10 @@ import { SITE_NAME, SITE_DOMAIN, TWITTER_HANDLE } from "@/lib/constants";
 
 interface Props {
   title: string;
+  onEmbedClick?: () => void;
 }
 
-export const ExportButton = ({ title }: Props) => {
+export const ExportButton = ({ title, onEmbedClick }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const generateMockupEnvironment = async () => {
@@ -276,6 +277,17 @@ export const ExportButton = ({ title }: Props) => {
         <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl shadow-2xl border-border/50 backdrop-blur-xl">
           <div className="px-2 py-1.5 mb-1 text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Select Format</div>
           
+          {onEmbedClick && (
+            <DropdownMenuItem onClick={onEmbedClick} className="gap-3 py-3 cursor-pointer rounded-xl hover:bg-signal/10 hover:text-signal focus:bg-signal/10 focus:text-signal transition-colors">
+              <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                <FileCode className="size-4" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs">Embed Tool</span>
+                <span className="text-[9px] opacity-70">Add to your website</span>
+              </div>
+            </DropdownMenuItem>
+          )}
 
           <DropdownMenuItem onClick={handlePrint} className="gap-3 py-3 cursor-pointer rounded-xl hover:bg-finance-soft hover:text-finance focus:bg-finance-soft focus:text-finance transition-colors">
             <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0">
