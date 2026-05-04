@@ -20,6 +20,7 @@ const ElevatorSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
   const [maxG, setMaxG] = useState(0);
   const [distance, setDistance] = useState(0); // meters
   const [elapsedTime, setElapsedTime] = useState(0); // seconds
+  const [altitude, setAltitude] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const watchId = useRef<number | null>(null);
