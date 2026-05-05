@@ -122,30 +122,9 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
   return (
     <>
       <Seo
-        title={`${calc.title} — Free Online Tool | Calcuva`}
+        title={`${calc.title} — Free Online Tool`}
         description={calc.description}
         faqs={faqs}
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "WebApplication",
-              "name": calc.title,
-              "applicationCategory": "UtilitiesApplication",
-              "operatingSystem": "Any",
-              "description": calc.description,
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-            },
-            {
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                { "@type": "ListItem", "position": 1, "name": "Home", "item": baseUrl },
-                { "@type": "ListItem", "position": 2, "name": cat.label, "item": `${baseUrl}/category/${calc.category}` },
-                { "@type": "ListItem", "position": 3, "name": calc.title, "item": `${baseUrl}/calculators/${calc.slug}` }
-              ]
-            }
-          ]
-        }}
       />
       <div className={cn("relative min-h-screen", isEmbed && "min-h-0")}>
         {!isEmbed && <div className={cn("fixed inset-0 bg-gradient-to-br -z-10 opacity-60 pointer-events-none", categoryGradients[calc.category])} />}

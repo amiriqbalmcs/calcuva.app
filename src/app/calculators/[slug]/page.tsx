@@ -15,13 +15,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const calc = CALCULATORS.find(c => c.slug === slug);
   if (!calc) return {};
 
-  const title = `${calc.title} — Free Online Tool | Calcuva`;
+  const title = `${calc.title} — Free Online Tool`;
   const description = calc.description;
   const url = `${BASE_URL}/calculators/${calc.slug}`;
+  const keywords = [...calc.slug.split('-'), calc.category, "calculator", "online tool"];
 
   return {
     title,
     description,
+    keywords,
     alternates: { canonical: url },
     openGraph: {
       title,
@@ -292,6 +294,37 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
   return (
     <ErrorBoundary>
       <Suspense fallback={<CalculatorSkeleton />}>
+        <script
+          id="calculator-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebApplication",
+                  "name": meta.title,
+                  "applicationCategory": meta.category === "finance" ? "FinanceApplication" : meta.category === "health" ? "HealthApplication" : "UtilitiesApplication",
+                  "operatingSystem": "Any",
+                  "description": meta.description,
+                  "url": `${BASE_URL}/calculators/${meta.slug}`,
+                  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+                },
+                ...(guideFaqs ? [{
+                  "@type": "FAQPage",
+                  "mainEntity": guideFaqs.map(f => ({
+                    "@type": "Question",
+                    "name": f.q,
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": f.a
+                    }
+                  }))
+                }] : [])
+              ]
+            })
+          }}
+        />
         <Calculator calc={meta} guideHtml={guideHtml} faqs={guideFaqs} relatedArticles={relatedArticles} />
       </Suspense>
     </ErrorBoundary>

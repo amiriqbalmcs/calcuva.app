@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Calcuva",
   },
   description: "Fast, accurate, and 100% free online calculators for finance, health, business, and everyday math. No signups. No tracking. Just results.",
-  keywords: ["calculator", "online calculator", "free calculator", "finance calculator", "health calculator", "bmi calculator", "loan calculator", "tax calculator"],
+  keywords: ["calculator", "online tool", "free calculator", "finance", "health", "business", "productivity", "math"],
   authors: [{ name: "Calcuva" }],
   creator: "Calcuva",
   verification: {
@@ -41,8 +41,12 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/favicon-concept.png",
-    apple: "/favicon-concept.png",
+    icon: [
+      { url: "/favicon-concept.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/favicon-concept.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   appleWebApp: {
     capable: true,
@@ -61,7 +65,6 @@ export const viewport = {
   ],
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
 };
 
 
@@ -90,6 +93,13 @@ export default function RootLayout({
                 "name": "Calcuva",
                 "url": SITE_URL,
                 "logo": `${SITE_URL}/logo.png`,
+                "description": "High-fidelity, professional online tools and calculators for finance, health, and productivity.",
+                "foundingDate": "2024",
+                "founder": {
+                  "@type": "Person",
+                  "name": "Calcuva Engineering Team",
+                  "jobTitle": "Product Specialists"
+                },
                 "sameAs": [
                   "https://twitter.com/calcuva",
                   "https://facebook.com/calcuva"

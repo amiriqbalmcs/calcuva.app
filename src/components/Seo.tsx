@@ -16,8 +16,6 @@ interface Props {
  */
 export const Seo = ({ title, description, canonicalPath, jsonLd, faqs }: Props) => {
   useEffect(() => {
-    document.title = title;
-
     const setMeta = (name: string, content: string) => {
       let el = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
       if (!el) {
