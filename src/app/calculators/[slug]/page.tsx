@@ -153,6 +153,11 @@ const ChimpTest = dynamic(() => import("@/components/calculators/ChimpTest"), { 
 const VisualMemoryTest = dynamic(() => import("@/components/calculators/VisualMemoryTest"), { loading });
 const TypingSpeedTest = dynamic(() => import("@/components/calculators/TypingSpeedTest"), { loading });
 
+const WifiQrCodeGenerator = dynamic(() => import("@/components/calculators/WifiQrCodeGenerator"), { loading });
+const VCardQrCodeGenerator = dynamic(() => import("@/components/calculators/VCardQrCodeGenerator"), { loading });
+const WhatsappQrCodeGenerator = dynamic(() => import("@/components/calculators/WhatsappQrCodeGenerator"), { loading });
+const CryptoQrCodeGenerator = dynamic(() => import("@/components/calculators/CryptoQrCodeGenerator"), { loading });
+
 const componentMap: Record<string, any> = {
   "loan-emi-calculator": LoanEmiCalculator,
   "income-tax-calculator": TaxBracketCalculator,
@@ -257,6 +262,10 @@ const componentMap: Record<string, any> = {
   "chimp-test": ChimpTest,
   "visual-memory-test": VisualMemoryTest,
   "typing-speed-test": TypingSpeedTest,
+  "wifi-qr-code-generator": WifiQrCodeGenerator,
+  "vcard-qr-code-generator": VCardQrCodeGenerator,
+  "whatsapp-qr-code-generator": WhatsappQrCodeGenerator,
+  "crypto-qr-code-generator": CryptoQrCodeGenerator,
 };
 
 export async function generateStaticParams() {
