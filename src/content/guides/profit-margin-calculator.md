@@ -1,5 +1,7 @@
 ---
 title: "The Profitability Blueprint: Mastering Margins and Markups"
+category: "business"
+excerpt: "Find your gross profit margin and markup percentages to set the right selling price for your business products."
 calculator: "profit-margin-calculator"
 keywords: ["profit margin calculator", "gross vs net margin", "markup strategy", "business math for retail", "operating profit", "e-commerce margins"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Why did my margin drop when sales increased?"
     a: "This is often due to 'Margin Erosion'—increased marketing costs, bulk-buy discounts, or rising logistics expenses that weren't factored into the original price."
 ---
-
 ### The Architecture of Business Survival
 Revenue is vanity; profit is sanity. While most entrepreneurs focus on "top-line" sales, the health of a business is determined entirely by its **Profit Margin**. A $1 Million company with a 2% margin is significantly more fragile than a $100,000 company with a 30% margin. Calcuva provides a clinical environment to audit your pricing strategy and protect your bottom line.
 

@@ -2,12 +2,13 @@
 
 import { useMemo, useState } from "react";
 import {
-  Target, TrendingUp, Info, BookOpen, 
+  Target, TrendingUp, Info, BookOpen,
   ChevronRight, Calculator, Scale, RefreshCcw, Activity,
   Sparkles, Globe, Copy, Award, AlertCircle, Banknote, ShieldCheck,
   TrendingDown, Plus, Trash2, ArrowRight, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,7 @@ import { calculatorBySlug } from "@/lib/calculators";
 import { useCurrency } from "@/context/CurrencyContext";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("debt-payoff-calculator");
+const calc = calculatorBySlug("debt-payoff-calculator")!;
 
 interface Debt {
   id: string;
@@ -34,8 +35,6 @@ const newDebt = (n = 1): Debt => ({
 });
 
 const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
-
   const { currency } = useCurrency();
   const [debts, setDebts] = useState<Debt[]>([
     { id: "d-1", name: "Credit Card A", balance: 3500, rate: 24, minPayment: 120 },
@@ -61,7 +60,7 @@ const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
       let totalMonths = 0;
       let totalInterest = 0;
       let isInfinite = false;
-      
+
       if (strategy === "snowball") {
         currentDebts.sort((a, b) => a.balance - b.balance);
       } else {
@@ -78,7 +77,7 @@ const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
           isInfinite = true;
           break;
         }
-        
+
         currentDebts.forEach(d => {
           if (d.currentBalance > 0) {
             const interest = (d.currentBalance * (d.rate / 100)) / 12;
@@ -128,10 +127,80 @@ const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
       .map(d => d.id);
   }, [debts]);
 
+  if (!calc) return null;
+
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-        <div className="lg:col-span-8 space-y-6">
+
+        {/* Results Panel */}
+        <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
+          <div className="surface-card p-8 bg-background border-border/60 shadow-md space-y-8">
+            <div className="space-y-2 border-b border-border/40 pb-6">
+              <div className="flex items-center justify-between">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Total Initial Debt</div>
+                <button
+                  onClick={handleCopy}
+                  className={cn(
+                    "p-2 rounded-lg transition-all border shadow-sm",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                >
+                  {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                </button>
+              </div>
+              <div className="text-3xl font-mono font-bold tracking-tight text-foreground">
+                {currency.symbol} {results?.totalInitialDebt.toLocaleString()}
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Snowball Method</div>
+              </div>
+              <div className="space-y-1">
+                {results?.snowball.isInfinite ? (
+                  <div className="text-xl font-bold text-destructive">Never (Int. {">"} Pay)</div>
+                ) : (
+                  <div className="text-4xl font-mono font-bold tracking-tighter text-foreground">{results?.snowball.totalMonths} <span className="text-lg opacity-40">Months</span></div>
+                )}
+                <div className="text-xs font-medium text-muted-foreground">Total Interest: {currency.symbol} {Math.round(results?.snowball.totalInterest || 0).toLocaleString()}</div>
+              </div>
+            </div>
+
+            <div className="space-y-6 pt-8 border-t border-border/40">
+              <div className="flex justify-between items-center">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Avalanche Method</div>
+                <span className="bg-health/10 text-health px-2 py-0.5 rounded text-[8px] font-black tracking-widest uppercase">Fastest</span>
+              </div>
+              <div className="space-y-1">
+                {results?.avalanche.isInfinite ? (
+                  <div className="text-xl font-bold text-destructive">Never (Int. {">"} Pay)</div>
+                ) : (
+                  <div className="text-4xl font-mono font-bold tracking-tighter text-health">{results?.avalanche.totalMonths} <span className="text-lg opacity-40">Months</span></div>
+                )}
+                <div className="text-xs font-medium text-muted-foreground">Total Interest: {currency.symbol} {Math.round(results?.avalanche.totalInterest || 0).toLocaleString()}</div>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-foreground/5 border border-border/30 space-y-3 mt-4">
+              <div className="flex items-center gap-2 text-foreground/60">
+                <Activity className="size-4" />
+                <span className="text-[10px] font-bold uppercase tracking-widest">Strategy Analysis</span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium">
+                {results?.avalanche.isInfinite
+                  ? "Warning: Your monthly payments are less than the monthly interest. Your debt will grow forever unless you increase your extra payment."
+                  : results && results.avalanche.totalInterest < results.snowball.totalInterest
+                    ? `Avalanche is the winner. It clears your debt in the same time but saves you ${currency.symbol} ${Math.round(results.snowball.totalInterest - results.avalanche.totalInterest).toLocaleString()} in wasted interest fees.`
+                    : "Both methods provide the same payoff timeline and interest cost for your current debt profile."}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Input Panel */}
+        <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
           <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden group shadow-sm">
             <div className="p-6 md:p-8 border-b border-border/40 flex items-center justify-between bg-background relative overflow-hidden">
               <div className="absolute top-0 left-0 w-1 h-full bg-foreground" />
@@ -157,11 +226,11 @@ const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                 <div key={d.id} className="p-6 grid grid-cols-12 gap-6 items-end hover:bg-background transition-all relative group">
                   <div className="col-span-12 md:col-span-4 space-y-2">
                     <div className="flex items-center gap-2">
-                       <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Debt Name</Label>
-                       <div className="flex gap-1">
-                          <span className="text-[8px] px-1 bg-secondary text-muted-foreground rounded border border-border/40 font-mono">#{snowballOrder.indexOf(d.id) + 1} Snow</span>
-                          <span className="text-[8px] px-1 bg-health/10 text-health rounded border border-health/20 font-mono">#{avalancheOrder.indexOf(d.id) + 1} Ava</span>
-                       </div>
+                      <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Debt Name</Label>
+                      <div className="flex gap-1">
+                        <span className="text-[8px] px-1 bg-secondary text-muted-foreground rounded border border-border/40 font-mono">#{snowballOrder.indexOf(d.id) + 1} Snow</span>
+                        <span className="text-[8px] px-1 bg-health/10 text-health rounded border border-health/20 font-mono">#{avalancheOrder.indexOf(d.id) + 1} Ava</span>
+                      </div>
                     </div>
                     <Input
                       value={d.name}
@@ -206,88 +275,31 @@ const DebtPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
             </div>
 
             <div className="p-8 bg-foreground/5 border-t border-border/40">
-               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div className="space-y-1">
-                     <h4 className="text-sm font-bold">Extra Monthly Payment</h4>
-                     <p className="text-xs text-muted-foreground font-medium">Amount you can pay on top of all minimums.</p>
-                  </div>
-                  <div className="relative w-full md:w-48">
-                     <Input
-                        type="number"
-                        value={extraPayment}
-                        onChange={(e) => setExtraPayment(Number(e.target.value) || 0)}
-                        className="h-14 bg-background border-border/60 font-mono text-2xl font-bold rounded-xl shadow-lg pl-14 text-center"
-                     />
-                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 font-mono text-xs">{currency.symbol}</div>
-                  </div>
-               </div>
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="space-y-1">
+                  <h4 className="text-sm font-bold">Extra Monthly Payment</h4>
+                  <p className="text-xs text-muted-foreground font-medium">Amount you can pay on top of all minimums.</p>
+                </div>
+                <div className="relative w-full md:w-48">
+                  <Input
+                    type="number"
+                    value={extraPayment}
+                    onChange={(e) => setExtraPayment(Number(e.target.value) || 0)}
+                    className="h-14 bg-background border-border/60 font-mono text-2xl font-bold rounded-xl shadow-lg pl-14 text-center"
+                  />
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 font-mono text-xs">{currency.symbol}</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="lg:col-span-4 space-y-6">
-          <div className="surface-card p-8 bg-background border-border/60 shadow-md space-y-8">
-             <div className="space-y-2 border-b border-border/40 pb-6">
-                <div className="flex items-center justify-between">
-                   <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Total Initial Debt</div>
-                   <button 
-                      onClick={handleCopy}
-                      className={cn(
-                         "p-2 rounded-lg transition-all border shadow-sm",
-                         copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
-                      )}
-                   >
-                      {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
-                   </button>
-                </div>
-                <div className="text-3xl font-mono font-bold tracking-tight text-foreground">
-                   {currency.symbol} {results?.totalInitialDebt.toLocaleString()}
-                </div>
-             </div>
-
-             <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                   <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Snowball Method</div>
-                </div>
-                <div className="space-y-1">
-                   {results?.snowball.isInfinite ? (
-                      <div className="text-xl font-bold text-destructive">Never (Int. {">"} Pay)</div>
-                   ) : (
-                      <div className="text-4xl font-mono font-bold tracking-tighter text-foreground">{results?.snowball.totalMonths} <span className="text-lg opacity-40">Months</span></div>
-                   )}
-                   <div className="text-xs font-medium text-muted-foreground">Total Interest: {currency.symbol} {Math.round(results?.snowball.totalInterest || 0).toLocaleString()}</div>
-                </div>
-             </div>
-
-             <div className="space-y-6 pt-8 border-t border-border/40">
-                <div className="flex justify-between items-center">
-                   <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Avalanche Method</div>
-                   <span className="bg-health/10 text-health px-2 py-0.5 rounded text-[8px] font-black tracking-widest uppercase">Fastest</span>
-                </div>
-                <div className="space-y-1">
-                   {results?.avalanche.isInfinite ? (
-                      <div className="text-xl font-bold text-destructive">Never (Int. {">"} Pay)</div>
-                   ) : (
-                      <div className="text-4xl font-mono font-bold tracking-tighter text-health">{results?.avalanche.totalMonths} <span className="text-lg opacity-40">Months</span></div>
-                   )}
-                   <div className="text-xs font-medium text-muted-foreground">Total Interest: {currency.symbol} {Math.round(results?.avalanche.totalInterest || 0).toLocaleString()}</div>
-                </div>
-             </div>
-
-             <div className="p-5 rounded-2xl bg-foreground/5 border border-border/30 space-y-3 mt-4">
-                <div className="flex items-center gap-2 text-foreground/60">
-                   <Activity className="size-4" />
-                   <span className="text-[10px] font-bold uppercase tracking-widest">Strategy Analysis</span>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-medium">
-                   {results?.avalanche.isInfinite 
-                     ? "Warning: Your monthly payments are less than the monthly interest. Your debt will grow forever unless you increase your extra payment."
-                     : results && results.avalanche.totalInterest < results.snowball.totalInterest 
-                     ? `Avalanche is the winner. It clears your debt in the same time but saves you ${currency.symbol} ${Math.round(results.snowball.totalInterest - results.avalanche.totalInterest).toLocaleString()} in wasted interest fees.`
-                     : "Both methods provide the same payoff timeline and interest cost for your current debt profile."}
-                </p>
-             </div>
-          </div>
+          {calc.howTo && (
+            <HowToGuide
+              id='how-to-use'
+              steps={calc.howTo!.steps}
+              proTip={calc.howTo!.proTip}
+            />
+          )}
         </div>
       </div>
     </CalculatorPage>

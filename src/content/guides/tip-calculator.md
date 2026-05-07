@@ -14,7 +14,6 @@ faqs:
   - q: "How can I calculate a 15% tip in my head?"
     a: "Take the total, move the decimal one place to the left to get 10%. Then, cut that 10% amount in half to get 5%. Add the 10% and 5% numbers together."
 ---
-
 Tipping customs vary wildly by country, but in places like the United States, tipping is a standard and expected part of the service industry. Calculating tips and splitting bills can quickly become difficult at the end of a meal, especially with larger groups.
 
 ## Tipping Standards

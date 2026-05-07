@@ -14,9 +14,10 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
+import { HowToGuide } from "@/components/HowToGuide";
 import { calculatorBySlug, type CalcMeta } from "@/lib/calculators";
 
-const calc = calculatorBySlug("ai-api-token-cost-calculator");
+const calc = calculatorBySlug("ai-api-token-cost-calculator")!;
 
 const MODELS = [
   { id: "claude-4-7-opus", name: "Claude 4.7 Opus", provider: "Anthropic", input: 5.00, output: 25.00 },
@@ -110,150 +111,11 @@ export default function AiTokenCalculator({
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
-      <div className="grid lg:grid-cols-12 gap-8 items-start">
-        <div className="lg:col-span-8 space-y-8">
-          <div className="surface-card p-8 bg-background border-border/40 shadow-sm space-y-8">
-            <div className="flex items-center gap-4 border-b border-border/40 pb-6 mb-6">
-               <div className="size-10 rounded-xl bg-secondary flex items-center justify-center">
-                  <Sparkles className="size-5 text-foreground" />
-               </div>
-               <div>
-                  <h3 className="text-sm font-black uppercase tracking-widest text-foreground">API Configuration</h3>
-                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">Select model and token volume</p>
-               </div>
-            </div>
-        {/* Model Selection */}
-        <div className="space-y-2">
-          <Label>Select AI Model</Label>
-          <Select value={modelId} onValueChange={setModelId}>
-            <SelectTrigger className="h-12 border-slate-200 focus:ring-primary/20">
-              <SelectValue placeholder="Choose a model" />
-            </SelectTrigger>
-            <SelectContent>
-              {MODELS.map((m) => (
-                <SelectItem key={m.id} value={m.id}>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{m.name}</span>
-                    <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest bg-secondary px-1.5 py-0.5 rounded ml-2">{m.provider}</span>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {modelId === "custom" && (
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Input Price ($ per 1M)</Label>
-              <Input
-                type="number"
-                value={customInputPrice}
-                onChange={(e) => setCustomInputPrice(e.target.value)}
-                className="h-12"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Output Price ($ per 1M)</Label>
-              <Input
-                type="number"
-                value={customOutputPrice}
-                onChange={(e) => setCustomOutputPrice(e.target.value)}
-                className="h-12"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Token Counts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <Label className="flex items-center gap-2">
-              Input Tokens (Prompt)
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Info className="size-3.5 text-muted-foreground" />
-                  </TooltipTrigger>
-                  <TooltipContent>How many tokens you send to the model.</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </Label>
-            <Input
-              type="number"
-              value={inputTokens}
-              onChange={(e) => setInputTokens(e.target.value)}
-              className="h-12 border-slate-200"
-            />
-            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{(parseFloat(inputTokens)/1000000).toFixed(2)}M Tokens</p>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="flex items-center gap-2">
-              Output Tokens (Completion)
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Info className="size-3.5 text-muted-foreground" />
-                  </TooltipTrigger>
-                  <TooltipContent>How many tokens the model generates.</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </Label>
-            <Input
-              type="number"
-              value={outputTokens}
-              onChange={(e) => setOutputTokens(e.target.value)}
-              className="h-12 border-slate-200"
-            />
-            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{(parseFloat(outputTokens)/1000000).toFixed(2)}M Tokens</p>
-          </div>
-        </div>
-
-        {/* Features / Toggles */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-100 transition-all hover:border-primary/20">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-bold flex items-center gap-2">
-                <Zap className="size-3.5 text-amber-500 fill-amber-500" />
-                Batch API Mode
-              </Label>
-              <p className="text-[11px] text-muted-foreground">Process within 24h for 50% discount.</p>
-            </div>
-            <Switch checked={useBatch} onCheckedChange={setUseBatch} />
-          </div>
-
-          <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-100 transition-all hover:border-primary/20">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-bold flex items-center gap-2">
-                <Sparkles className="size-3.5 text-blue-500" />
-                Prompt Caching
-              </Label>
-              <p className="text-[11px] text-muted-foreground">Reuse context for 50% input discount.</p>
-            </div>
-            <Switch checked={useCaching} onCheckedChange={setUseCaching} />
-          </div>
-        </div>
-
-        {/* Savings Tip */}
-        {selectedModel && (selectedModel.id.includes("pro") || selectedModel.id.includes("opus") || selectedModel.id === "gpt-5-4-omni") ? (
-          <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 flex gap-4 animate-in fade-in slide-in-from-bottom-2">
-            <TrendingDown className="size-5 text-blue-600 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="text-xs font-bold text-blue-900">Cost Optimization Tip</p>
-              <p className="text-[11px] text-blue-700 leading-relaxed">
-                You are using a flagship model. Switching to <strong>{selectedModel.provider} {selectedModel.id.includes("gpt") ? "Flash-Lite" : "Flash"}</strong> could save you up to <strong>90%</strong> on this workload while maintaining high performance for simple tasks.
-              </p>
-            </div>
-          </div>
-        ) : null}
-
-          </div>
-        </div>
-
-        {/* Results Sidebar */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="surface-card p-8 bg-background border-border/60 shadow-xl space-y-8 sticky top-28 overflow-hidden">
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-7xl mx-auto">
+        
+        {/* Results Panel (Summary) */}
+        <div className="lg:col-span-4 space-y-8 order-1 lg:order-2">
+          <div className="surface-card p-8 bg-background border-border/60 shadow-xl space-y-8 sticky top-28 overflow-hidden rounded-3xl">
             <div className="space-y-6 border-b border-border/40 pb-10">
                <div className="space-y-2">
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Est. Total Cost</p>
@@ -291,9 +153,147 @@ export default function AiTokenCalculator({
                 Tokens per $1: {(1 / (results.total / (parseFloat(inputTokens) + parseFloat(outputTokens)))).toLocaleString(undefined, { maximumFractionDigits: 0 })}
               </p>
             </div>
+
+          </div>
+        </div>
+
+        {/* Input Panel (Main) */}
+        <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-8 bg-background border-border/40 shadow-sm space-y-10 rounded-3xl">
+            <div className="flex items-center gap-4 border-b border-border/40 pb-6 mb-6">
+               <div className="size-10 rounded-xl bg-secondary flex items-center justify-center">
+                  <Sparkles className="size-5 text-foreground" />
+               </div>
+               <div>
+                  <h3 className="text-sm font-black uppercase tracking-widest text-foreground">API Configuration</h3>
+                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">Select model and token volume</p>
+               </div>
+            </div>
+            
+            {/* Model Selection */}
+            <div className="space-y-4">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Select AI Model</Label>
+              <Select value={modelId} onValueChange={setModelId}>
+                <SelectTrigger className="h-14 border-slate-200 focus:ring-primary/20 rounded-2xl text-lg font-medium">
+                  <SelectValue placeholder="Choose a model" />
+                </SelectTrigger>
+                <SelectContent>
+                  {MODELS.map((m) => (
+                    <SelectItem key={m.id} value={m.id}>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{m.name}</span>
+                        <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest bg-secondary px-1.5 py-0.5 rounded ml-2">{m.provider}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {modelId === "custom" && (
+              <div className="grid grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-2">
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Input Price ($/1M)</Label>
+                  <Input
+                    type="number"
+                    value={customInputPrice}
+                    onChange={(e) => setCustomInputPrice(e.target.value)}
+                    className="h-12 rounded-xl"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Output Price ($/1M)</Label>
+                  <Input
+                    type="number"
+                    value={customOutputPrice}
+                    onChange={(e) => setCustomOutputPrice(e.target.value)}
+                    className="h-12 rounded-xl"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Token Counts */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                  Input Tokens (Prompt)
+                  <Info className="size-3.5 text-muted-foreground" />
+                </Label>
+                <Input
+                  type="number"
+                  value={inputTokens}
+                  onChange={(e) => setInputTokens(e.target.value)}
+                  className="h-14 border-slate-200 rounded-2xl text-xl font-mono font-bold"
+                />
+                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{(parseFloat(inputTokens)/1000000).toFixed(2)}M Tokens</p>
+              </div>
+
+              <div className="space-y-4">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                  Output Tokens (Completion)
+                  <Info className="size-3.5 text-muted-foreground" />
+                </Label>
+                <Input
+                  type="number"
+                  value={outputTokens}
+                  onChange={(e) => setOutputTokens(e.target.value)}
+                  className="h-14 border-slate-200 rounded-2xl text-xl font-mono font-bold"
+                />
+                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{(parseFloat(outputTokens)/1000000).toFixed(2)}M Tokens</p>
+              </div>
+            </div>
+
+            {/* Features / Toggles */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-border/40">
+              <div className="flex items-center justify-between p-6 rounded-2xl bg-slate-50 border border-slate-100 transition-all hover:border-primary/20">
+                <div className="space-y-1">
+                  <Label className="text-sm font-bold flex items-center gap-2">
+                    <Zap className="size-3.5 text-amber-500 fill-amber-500" />
+                    Batch API Mode
+                  </Label>
+                  <p className="text-[11px] text-muted-foreground font-medium">Process within 24h for 50% discount.</p>
+                </div>
+                <Switch checked={useBatch} onCheckedChange={setUseBatch} />
+              </div>
+
+              <div className="flex items-center justify-between p-6 rounded-2xl bg-slate-50 border border-slate-100 transition-all hover:border-primary/20">
+                <div className="space-y-1">
+                  <Label className="text-sm font-bold flex items-center gap-2">
+                    <Sparkles className="size-3.5 text-blue-500" />
+                    Prompt Caching
+                  </Label>
+                  <p className="text-[11px] text-muted-foreground font-medium">Reuse context for 50% input discount.</p>
+                </div>
+                <Switch checked={useCaching} onCheckedChange={setUseCaching} />
+              </div>
+            </div>
+
+            {/* Savings Tip */}
+            {selectedModel && (selectedModel.id.includes("pro") || selectedModel.id.includes("opus") || selectedModel.id === "gpt-5-4-omni") && (
+              <div className="p-6 rounded-2xl bg-blue-50 border border-blue-100 flex gap-4 animate-in fade-in slide-in-from-bottom-4">
+                <TrendingDown className="size-5 text-blue-600 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <p className="text-xs font-bold text-blue-900 uppercase tracking-widest">Cost Optimization Tip</p>
+                  <p className="text-[11px] text-blue-700 leading-relaxed font-medium">
+                    You are using a flagship model. Switching to <strong>{selectedModel.provider} {selectedModel.id.includes("gpt") ? "Flash-Lite" : "Flash"}</strong> could save you up to <strong>90%</strong> on this workload while maintaining high performance for simple tasks.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      {calc.howTo && (
+        <div id="how-to-use" className="mt-12 pt-12 border-t border-border/40">
+          <HowToGuide 
+            steps={calc.howTo!.steps} 
+            proTip={calc.howTo!.proTip} 
+            variant="horizontal"
+          />
+        </div>
+      )}
     </CalculatorPage>
   );
 }

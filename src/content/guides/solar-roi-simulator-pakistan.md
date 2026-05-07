@@ -1,6 +1,7 @@
 ---
 title: "Solar ROI & Net-Metering Guide Pakistan 2026"
-description: "Is solar still worth it in 2026? Calculate your solar payback period, understand NEPRA net-metering fixed charges, and simulate monthly savings."
+keywords: ["solar roi calculator pakistan", "net metering simulator", "solar payback period", "electricity bill savings solar", "solar inverter sizing"]
+excerpt: "Is solar still worth it in 2026? Calculate your solar payback period, understand NEPRA net-metering fixed charges, and simulate monthly savings."
 category: "solar"
 calculator: "solar-roi-simulator-pakistan"
 lastUpdated: "2026-05-02"
@@ -16,7 +17,6 @@ faqs:
   - q: "What is the 'Self-Consumption' ratio?"
     a: "This is the percentage of solar power used directly by your home during the day. A higher ratio (e.g., 60-70%) leads to a much faster ROI than a low ratio where most power is exported at lower rates."
 ---
-
 ## The Solar Revolution of 2026: Navigating a Shifting Economic Landscape
 
 In 2026, solar energy in Pakistan is no longer just an "environmental choice"—it is a critical financial hedge. With the national grid facing mounting circular debt and unit prices reaching unprecedented levels, the rooftop solar prosumer has become the most stable element in the energy market. However, the "Golden Age" of simple net-metering has evolved into a more complex **Net-Billing** framework.

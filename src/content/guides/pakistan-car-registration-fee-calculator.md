@@ -1,6 +1,7 @@
 ---
 title: "Car Registration Fees in Pakistan 2026: Punjab, Sindh & Islamabad Guide"
-description: "Everything you need to know about registering a new or used car in 2026. Detailed breakdown of FBR Withholding Tax, provincial excise fees, and Filer vs Non-Filer impacts."
+keywords: ["car registration fee pakistan 2026", "punjab car registration calculator", "sindh excise registration rates", "islamabad car registration tax", "filer vs non-filer car tax", "advance income tax on cars"]
+excerpt: "Everything you need to know about registering a new or used car in 2026. Detailed breakdown of FBR Withholding Tax, provincial excise fees, and Filer vs Non-Filer impacts."
 category: "finance"
 calculator: "pakistan-car-registration-fee-calculator"
 lastUpdated: "2026-05-02"
@@ -16,7 +17,6 @@ faqs:
   - q: "What happens if I delay my car registration?"
     a: "The Excise departments apply a 'Late Fee Penalty' if the registration is not completed within 30 days of the invoice date. This penalty increases monthly and can reach up to Rs. 20,000 for high-end vehicles."
 ---
-
 ## Navigating Car Registration in Pakistan's 2026 Economy
 
 Buying a vehicle in Pakistan in 2026 is a significant investment, often second only to purchasing a home. However, the sticker price at the dealership is only the beginning. The "On-Road" cost includes a complex array of federal and provincial taxes that have seen major revisions in the 2025-26 budget.

@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import { Train, Navigation, MapPin, Monitor, RotateCcw, Play, Square, Activity, Info, AlertCircle } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { CALCULATORS } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
@@ -59,12 +60,12 @@ const TrainSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
 
         if (lastPos.current && filteredSpeed > 0.3) {
           const R = 6371e3;
-          const φ1 = lastPos.current.lat * Math.PI/180;
-          const φ2 = position.coords.latitude * Math.PI/180;
-          const Δφ = (position.coords.latitude-lastPos.current.lat) * Math.PI/180;
-          const Δλ = (position.coords.longitude-lastPos.current.lng) * Math.PI/180;
-          const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          const φ1 = lastPos.current.lat * Math.PI / 180;
+          const φ2 = position.coords.latitude * Math.PI / 180;
+          const Δφ = (position.coords.latitude - lastPos.current.lat) * Math.PI / 180;
+          const Δλ = (position.coords.longitude - lastPos.current.lng) * Math.PI / 180;
+          const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           setDistance(prev => prev + (R * c));
         }
         lastPos.current = { lat: position.coords.latitude, lng: position.coords.longitude, time: position.timestamp };
@@ -99,50 +100,129 @@ const TrainSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
-      <div className={cn("max-w-6xl mx-auto space-y-8", hudMode && "rotate-x-180 scale-x-[-1] opacity-90 brightness-150")}>
-        <div className="surface-card p-6 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden shadow-sm flex flex-col items-center justify-between min-h-[500px] md:min-h-[600px] rounded-2xl">
-          <Train className="absolute inset-0 size-96 text-muted-foreground opacity-[0.03] -rotate-12 m-auto" />
-          <div className="relative z-10 flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
-              <Navigation className={cn("size-3", isTracking && "animate-pulse text-blue-500")} />
-              {isTracking ? "Live Train Speed Active" : "Train Speedometer"}
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+
+        {/* Results Panel (Speedometer & Stats) */}
+        <div className={cn("lg:col-span-8 space-y-8 order-1 lg:order-2", hudMode && "rotate-x-180 scale-x-[-1] opacity-90 brightness-150")}>
+          <div className="surface-card p-6 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden shadow-sm flex flex-col items-center justify-between min-h-[500px] md:min-h-[600px] rounded-3xl">
+            <Train className="absolute inset-0 size-96 text-muted-foreground opacity-[0.03] -rotate-12 m-auto" />
+            <div className="relative z-10 flex flex-col items-center gap-2">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
+                <Navigation className={cn("size-3", isTracking && "animate-pulse text-blue-500")} />
+                {isTracking ? "Live Train Speed Active" : "Train Speedometer"}
+              </div>
             </div>
-          </div>
-          <div className="relative z-10 flex flex-col items-center py-4 w-full">
-            <div className="flex items-baseline justify-center w-full">
-              <span className={cn("text-[10rem] md:text-[18rem] font-mono font-bold tracking-tighter leading-none tabular-nums", speed > 0 ? "text-foreground" : "text-muted-foreground/20")}>{Math.round(displaySpeed)}</span>
-              <div className="flex flex-col gap-2 ml-2 md:ml-4 self-center mb-10 md:mb-16">
-                <span className="text-xl md:text-2xl font-bold uppercase tracking-widest text-muted-foreground/30">{unit}</span>
-                <div className="grid grid-cols-2 gap-1">
-                  {["kmh", "mph", "knots", "fpm"].map((u) => (
-                    <button key={u} onClick={() => setUnit(u as any)} className={cn("px-2 py-1 text-[8px] font-bold uppercase rounded border", unit === u ? "bg-foreground text-background" : "border-border/40 text-muted-foreground")}>{u}</button>
-                  ))}
+            <div className="relative z-10 flex flex-col items-center py-4 w-full">
+              <div className="flex items-baseline justify-center w-full">
+                <span className={cn("text-[10rem] md:text-[18rem] font-mono font-bold tracking-tighter leading-none tabular-nums transition-all duration-150", speed > 0 ? "text-foreground" : "text-muted-foreground/20")}>{Math.round(displaySpeed)}</span>
+                <div className="flex flex-col gap-1 ml-2 md:ml-4 self-center mb-10 md:mb-16">
+                  <span className="text-xl md:text-2xl font-bold uppercase tracking-widest text-muted-foreground/30">{unit}</span>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="relative z-20 flex items-center justify-center gap-2 md:gap-8 w-full border-t border-border/10 pt-8">
-            <button onClick={() => setHudMode(!hudMode)} className={cn("h-10 md:h-12 px-3 md:px-6 rounded-xl border flex items-center gap-2 font-bold text-[10px] uppercase", hudMode ? "bg-blue-500 text-white" : "bg-background text-muted-foreground")}><Monitor className="size-3 md:size-4" /><span className="hidden sm:inline">HUD Mode</span></button>
-            <button onClick={toggleTracking} className={cn("h-12 md:h-16 px-6 md:px-14 rounded-xl border flex items-center gap-3 font-bold text-xs uppercase shadow-lg", isTracking ? "bg-red-500 text-white" : "bg-foreground text-background")}>{isTracking ? <Square className="size-4 fill-current" /> : <Play className="size-4 fill-current" />}<span>{isTracking ? "STOP" : "START GPS"}</span></button>
-            <button onClick={() => { setMaxSpeed(0); setDistance(0); setElapsedTime(0); }} className="h-10 md:h-12 px-3 md:px-6 rounded-xl border border-border/60 bg-background text-muted-foreground flex items-center gap-2 font-bold text-[10px] uppercase"><RotateCcw className="size-3 md:size-4" /><span className="hidden sm:inline">Reset</span></button>
-          </div>
-          {error && <div className="absolute top-6 w-full flex justify-center px-6"><div className="bg-red-500 text-white px-4 py-2 rounded-lg text-[10px] font-bold flex items-center gap-2 shadow-lg"><AlertCircle className="size-3" />{error}</div></div>}
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {[
-            { label: "Max Rail Speed", value: Math.round(displayMaxSpeed), unit: unit, icon: Train, color: "text-blue-500" },
-            { label: "Avg Speed", value: Math.round(displayAvgSpeed), unit: unit, icon: Activity, color: "text-green-500" },
-            { label: "Trip Distance", value: displayDistance.toFixed(2), unit: distanceUnit, icon: MapPin, color: "text-orange-500" },
-            { label: "Trip Timer", value: formatTime(elapsedTime), unit: "H:M:S", icon: Activity, color: "text-red-500" },
-          ].map((stat, i) => (
-            <div key={i} className="surface-card p-4 md:p-6 border-border/40 bg-secondary/5 rounded-2xl shadow-sm relative overflow-hidden group">
-              <stat.icon className="absolute -bottom-2 -right-2 size-12 text-muted-foreground/5 transition-transform group-hover:scale-110" />
-              <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground mb-2 block">{stat.label}</span>
-              <div className="flex items-baseline gap-2 relative z-10"><span className="text-2xl md:text-3xl font-mono font-bold tracking-tighter tabular-nums">{stat.value}</span><span className="text-[10px] font-bold text-muted-foreground uppercase opacity-40">{stat.unit}</span></div>
+            <div className="relative z-20 flex items-center justify-center gap-2 md:gap-8 w-full border-t border-border/10 pt-8">
+              <button onClick={() => setHudMode(!hudMode)} className={cn("h-10 md:h-12 px-3 md:px-6 rounded-xl border flex items-center gap-2 font-bold text-[10px] uppercase transition-all", hudMode ? "bg-blue-500 text-white shadow-md border-blue-600" : "bg-background text-muted-foreground border-border/60 hover:bg-secondary")}><Monitor className="size-3 md:size-4" /><span className="hidden sm:inline">HUD Mode</span></button>
+              <button onClick={toggleTracking} className={cn("h-12 md:h-16 px-6 md:px-14 rounded-xl border flex items-center gap-3 font-bold text-xs uppercase shadow-lg transition-all hover:scale-105 active:scale-95", isTracking ? "bg-red-500 text-white border-red-600" : "bg-foreground text-background border-foreground")}>{isTracking ? <Square className="size-4 fill-current" /> : <Play className="size-4 fill-current" />}<span>{isTracking ? "STOP" : "START GPS"}</span></button>
+              <button onClick={() => { setMaxSpeed(0); setDistance(0); setElapsedTime(0); }} className="h-10 md:h-12 px-3 md:px-6 rounded-xl border border-border/60 bg-background text-muted-foreground flex items-center gap-2 font-bold text-[10px] uppercase transition-all hover:bg-secondary"><RotateCcw className="size-3 md:size-4" /><span className="hidden sm:inline">Reset</span></button>
             </div>
-          ))}
+            {error && <div className="absolute top-6 w-full flex justify-center px-6 animate-in slide-in-from-top-4"><div className="bg-red-500 text-white px-4 py-2 rounded-lg text-[10px] font-bold flex items-center gap-2 shadow-lg"><AlertCircle className="size-3" />{error}</div></div>}
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[
+              { label: "Max Rail Speed", value: Math.round(displayMaxSpeed), unit: unit, icon: Train, color: "text-blue-500" },
+              { label: "Avg Speed", value: Math.round(displayAvgSpeed), unit: unit, icon: Activity, color: "text-green-500" },
+              { label: "Trip Distance", value: displayDistance.toFixed(2), unit: distanceUnit, icon: MapPin, color: "text-orange-500" },
+              { label: "Trip Timer", value: formatTime(elapsedTime), unit: "H:M:S", icon: Activity, color: "text-red-500" },
+            ].map((stat, i) => (
+              <div key={i} className="surface-card p-4 md:p-6 border-border/40 bg-background rounded-2xl shadow-sm relative overflow-hidden group">
+                <stat.icon className="absolute -bottom-2 -right-2 size-12 text-muted-foreground/5 transition-transform group-hover:scale-110" />
+                <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground mb-2 block">{stat.label}</span>
+                <div className="flex items-baseline gap-2 relative z-10"><span className="text-2xl md:text-3xl font-mono font-bold tracking-tighter tabular-nums">{stat.value}</span><span className="text-[10px] font-bold text-muted-foreground uppercase opacity-40">{stat.unit}</span></div>
+              </div>
+            ))}
+          </div>
+
+          <div className="surface-card p-6 border-border/30 bg-background rounded-2xl shadow-sm">
+            <div className="flex items-center gap-3 mb-2">
+              <Info className="size-4 text-muted-foreground" />
+              <h4 className="text-[10px] font-bold uppercase tracking-widest">Train Speed Info</h4>
+            </div>
+            <p className="text-xs text-muted-foreground leading-relaxed">Track your train's real-time velocity using high-precision GPS. Perfect for checking the speed of high-speed rail, subways, or local trains directly from your seat.</p>
+          </div>
         </div>
-        <div className="surface-card p-6 border-border/30 bg-background rounded-2xl shadow-sm"><div className="flex items-center gap-3"><Info className="size-4 text-muted-foreground" /><h4 className="text-[10px] font-bold uppercase tracking-widest">Train Speed Info</h4></div><p className="text-xs text-muted-foreground leading-relaxed">Track your train's real-time velocity using high-precision GPS. Perfect for checking the speed of high-speed rail, subways, or local trains directly from your seat.</p></div>
+
+        {/* Sidebar Panel */}
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-6 md:p-8 space-y-8 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Train className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Rail Settings</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Session Parameters</p>
+            </div>
+
+            <div className="space-y-6 relative z-10">
+              <div className="space-y-3">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Speed Unit</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {["kmh", "mph", "knots", "fpm"].map((u) => (
+                    <button
+                      key={u}
+                      onClick={() => setUnit(u as any)}
+                      className={cn(
+                        "h-11 rounded-xl border font-bold text-[10px] uppercase tracking-widest transition-all",
+                        unit === u
+                          ? "bg-foreground text-background border-foreground"
+                          : "bg-background text-muted-foreground border-border/60 hover:bg-secondary"
+                      )}
+                    >
+                      {u}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={() => setHudMode(!hudMode)}
+                  className={cn(
+                    "w-full h-11 rounded-xl border transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2",
+                    hudMode
+                      ? "bg-blue-500 text-white border-blue-500"
+                      : "bg-background text-muted-foreground border-border/60 hover:bg-secondary"
+                  )}
+                >
+                  <Monitor className="size-3" />
+                  HUD: {hudMode ? "Active" : "Disabled"}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="surface-card p-6 border-signal/20 bg-signal/[0.03] text-signal relative overflow-hidden group">
+            <Activity className="absolute -bottom-4 -right-4 size-20 opacity-10 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1">
+                <Activity className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider opacity-80">Precision Note</h4>
+                <p className="text-xs leading-relaxed font-medium">
+                  GPS signal may be weaker inside metal train carriages. Sit near a window for the most stable speed reading.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {calc.howTo && (
+            <HowToGuide
+              id='how-to-use'
+              steps={calc.howTo!.steps}
+              proTip={calc.howTo!.proTip}
+            />
+          )}
+        </div>
       </div>
     </CalculatorPage>
   );

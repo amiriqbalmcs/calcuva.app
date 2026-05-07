@@ -1,5 +1,6 @@
 ---
 title: "AI Water Footprint: Measuring the Hidden Cost of Intelligence in 2026"
+excerpt: "Every AI prompt has a water cost for data center cooling. Calculate your personal AI water footprint and learn how to use tech sustainably."
 category: "sustainability"
 calculator: "ai-water-footprint-calculator"
 keywords: ["ai water consumption calculator", "water footprint of gpt-5", "claude 4.7 water cost per prompt", "sustainable ai usage", "digital water footprint tool"]
@@ -11,7 +12,6 @@ faqs:
   - q: "How many liters of water does GPT-4 use per query?"
     a: "Standard benchmarks suggest roughly 500ml of water is consumed for every 10-50 prompts, depending on the model size and the location of the data center."
 ---
-
 ## AI Water Footprint: Measuring the Hidden Cost of Intelligence in 2026
 
 As Artificial Intelligence becomes as common as electricity in our daily workflows, we often forget that every query, every image generation, and every line of code written by an AI agent has a physical, biological cost. In 2026, the primary environmental cost of intelligence isn't just electricity—it's **Water**.

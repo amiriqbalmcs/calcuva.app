@@ -1,5 +1,7 @@
 ---
 title: "Downhill Velocity: The Science of Ski and Snowboard Speed Tracking"
+category: "utility"
+excerpt: "Measure your peak velocity on the ski slopes. Our GPS tracker records your maximum downhill speed, average pace, and total run distance for skiing and snowboarding."
 calculator: "ski-snowboard-speed-tracker"
 keywords: ["ski speed tracker", "snowboard speedometer", "how fast am i skiing", "downhill speed app", "winter sports gps", "max ski speed"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Does it work in remote mountain areas?"
     a: "Yes. GPS doesn't need cell service. As long as you have a clear view of the sky, it will track your speed anywhere on the mountain."
 ---
-
 ## Alpine Telemetry: Tracking the Thrill of the Descent
 For skiers and snowboarders, the "Speed Run" is the ultimate challenge. Whether you are carving on groomed corduroy or charging down a steep face, the Calcuva **Ski & Snowboard Speed Tracker** provides the data to quantify your performance.
 

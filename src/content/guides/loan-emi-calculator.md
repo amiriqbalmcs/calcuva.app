@@ -1,5 +1,7 @@
 ---
 title: "Global Loan & EMI Analysis: A Masterclass in Debt Strategy"
+category: "finance"
+excerpt: "Multi-currency debt forecaster for home, car, or personal loans. Includes full amortization schedules and interest savings analysis."
 calculator: "loan-emi-calculator"
 keywords: ["loan emi calculator", "mortgage math", "prepayment strategy", "debt reduction", "amortization guide", "reducing balance interest"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "What is an Amortization Schedule?"
     a: "An amortization schedule is a complete table of periodic loan payments, showing the amount of principal and the amount of interest that comprise each payment until the loan is paid off at the end of its term."
 ---
-
 ### The Architecture of Modern Debt
 Understanding your **Equated Monthly Installment (EMI)** is the first step toward financial freedom. An EMI is more than just a monthly bill; it is a precisely engineered balance between principal repayment and interest expense. In the early stages of a long-term loan (like a 20-year mortgage), your payments are heavily skewed toward interest—a phenomenon known as **Front-Loaded Interest**.
 

@@ -16,7 +16,6 @@ faqs:
   - q: "Should I charge for project management time?"
     a: "Absolutely. Any time spent communicating with the client, attending meetings, or managing the project timeline is billable and should be factored into your rate."
 ---
-
 ## The Freelancer's Math: Moving Beyond the Salary Mindset
 
 Transitioning from a traditional salary to a freelance career is one of the most exciting moves a professional can make in 2026. However, it is also where many "fail by math." The most common mistake is simply dividing your old annual salary by 2,000 (the typical number of working hours in a year) and setting that as your hourly rate.

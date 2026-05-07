@@ -6,6 +6,7 @@ import {
   Settings2, Activity, Target, Zap, History, Sparkles, Banknote, Receipt, Copy
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { ResultGrid, ResultStat } from "@/components/ResultStat";
 import { SeoBlock } from "@/components/SeoBlock";
 import { Label } from "@/components/ui/label";
@@ -72,96 +73,8 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
 
-        {/* Trade Parameters */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
-            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-
-            <div className="space-y-1 relative z-10">
-              <h3 className="text-sm font-bold tracking-tight">Trade Details</h3>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Setup</p>
-            </div>
-
-            <div className="space-y-8 relative z-10">
-              {/* Capital */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Initial Investment</Label>
-                  <span className="text-xs font-mono font-medium">{formatCurrency(investment, currency.code)}</span>
-                </div>
-                <div className="relative group">
-                  <Input
-                    type="number"
-                    value={investment}
-                    onChange={(e) => setInvestment(Number(e.target.value) || 0)}
-                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg shadow-sm"
-                  />
-                  <Coins className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground opacity-20" />
-                </div>
-              </div>
-
-              {/* Entry/Exit Price */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Entry Price</Label>
-                  <Input
-                    type="number"
-                    value={buyPrice}
-                    onChange={(e) => setBuyPrice(Number(e.target.value) || 0)}
-                    className="h-11 bg-background/50 border-border/40 font-bold focus:border-foreground/20 rounded-xl"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Exit Price</Label>
-                  <Input
-                    type="number"
-                    value={sellPrice}
-                    onChange={(e) => setSellPrice(Number(e.target.value) || 0)}
-                    className="h-11 bg-background/50 border-border/40 font-bold focus:border-foreground/20 rounded-xl"
-                  />
-                </div>
-              </div>
-
-              {/* Fees */}
-              <div className="space-y-3">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Trading Fee (%)</Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={fee}
-                  onChange={(e) => setFee(Number(e.target.value) || 0)}
-                  className="h-11 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm"
-                />
-              </div>
-
-              <button
-                onClick={handleCopy}
-                className="w-full h-11 rounded-xl bg-background border border-border/60 hover:bg-foreground hover:text-background transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm"
-              >
-                {copied ? <CheckCircle2 className="size-3" /> : <Copy className="size-3" />}
-                {copied ? "Result Copied" : "Copy Analysis"}
-              </button>
-            </div>
-          </div>
-
-          <div className="surface-card p-6 border-border/30 bg-business/5 text-business relative overflow-hidden group shadow-sm">
-            <Sparkles className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
-            <div className="flex gap-4 items-start relative z-10">
-              <div className="mt-1">
-                <ShieldCheck className="size-5" />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-[10px] font-bold uppercase tracking-wider text-business/80">Fee Check</h4>
-                <p className="text-xs leading-relaxed font-medium">
-                  Your total fees (buying and selling) are {formatCurrency(result.totalFees, currency.code)}. Make sure your profit covers this!
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Results Panel */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
 
           {/* Executive Summary */}
           <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
@@ -280,6 +193,102 @@ const CryptoProfitCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
             </div>
           </div>
 
+        </div>
+
+        {/* Trade Parameters */}
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Trade Details</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Setup</p>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Capital */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Initial Investment</Label>
+                  <span className="text-xs font-mono font-medium">{formatCurrency(investment, currency.code)}</span>
+                </div>
+                <div className="relative group">
+                  <Input
+                    type="number"
+                    value={investment}
+                    onChange={(e) => setInvestment(Number(e.target.value) || 0)}
+                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-base rounded-lg shadow-sm"
+                  />
+                  <Coins className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground opacity-20" />
+                </div>
+              </div>
+
+              {/* Entry/Exit Price */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Entry Price</Label>
+                  <Input
+                    type="number"
+                    value={buyPrice}
+                    onChange={(e) => setBuyPrice(Number(e.target.value) || 0)}
+                    className="h-11 bg-background/50 border-border/40 font-bold focus:border-foreground/20 rounded-xl"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Exit Price</Label>
+                  <Input
+                    type="number"
+                    value={sellPrice}
+                    onChange={(e) => setSellPrice(Number(e.target.value) || 0)}
+                    className="h-11 bg-background/50 border-border/40 font-bold focus:border-foreground/20 rounded-xl"
+                  />
+                </div>
+              </div>
+
+              {/* Fees */}
+              <div className="space-y-3">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Trading Fee (%)</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={fee}
+                  onChange={(e) => setFee(Number(e.target.value) || 0)}
+                  className="h-11 bg-background border-border/60 font-bold text-lg rounded-xl shadow-sm"
+                />
+              </div>
+
+              <button
+                onClick={handleCopy}
+                className="w-full h-11 rounded-xl bg-background border border-border/60 hover:bg-foreground hover:text-background transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm"
+              >
+                {copied ? <CheckCircle2 className="size-3" /> : <Copy className="size-3" />}
+                {copied ? "Result Copied" : "Copy Analysis"}
+              </button>
+            </div>
+          </div>
+
+          <div className="surface-card p-6 border-border/30 bg-business/5 text-business relative overflow-hidden group shadow-sm">
+            <Sparkles className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1">
+                <ShieldCheck className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-business/80">Fee Check</h4>
+                <p className="text-xs leading-relaxed font-medium">
+                  Your total fees (buying and selling) are {formatCurrency(result.totalFees, currency.code)}. Make sure your profit covers this!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {calc.howTo && (
+            <HowToGuide
+              id='how-to-use'
+              steps={calc.howTo!.steps}
+              proTip={calc.howTo!.proTip}
+            />
+          )}
         </div>
       </div>
     </CalculatorPage>

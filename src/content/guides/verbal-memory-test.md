@@ -1,5 +1,7 @@
 ---
 title: "Verbal Memory Test: Master Word Recognition and Brain Speed"
+category: "benchmarks"
+excerpt: "Test your verbal memory by keeping track of words. You will be shown words one by one—you just have to say if you have seen the word before or if it is new."
 calculator: "verbal-memory-test"
 keywords: ["verbal memory test", "human benchmark", "word recognition test", "memory game online", "brain training words", "linguistic recall", "short term verbal memory", "word memory test", "humanbenchmark"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Does reading improve verbal memory?"
     a: "Yes! Exposure to a wide vocabulary and complex sentence structures through reading helps your brain process and 'file' words more efficiently."
 ---
-
 ## Linguistic Recall: Testing Your Word Recognition Benchmark
 Can your brain keep track of a rapidly growing list of information? The Calcuva **Verbal Memory Test** is a cognitive benchmark that measures your word recognition and linguistic short-term memory. As a vital part of the **human benchmark** ecosystem, this test challenges your brain to distinguish between familiar and novel data in real-time.
 

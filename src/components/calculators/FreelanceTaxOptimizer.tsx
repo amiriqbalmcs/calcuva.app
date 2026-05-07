@@ -10,15 +10,13 @@ import {
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { HowToGuide } from "@/components/HowToGuide";
 import { calculatorBySlug } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("freelance-tax-residency-optimizer");
+const calc = calculatorBySlug("freelance-tax-residency-optimizer")!;
 
 const FreelanceTaxOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
-
   const [monthlyIncome, setMonthlyIncome] = useState<number>(3000); // USD
   const [exchangeRate, setExchangeRate] = useState<number>(285);
   const [isFiler, setIsFiler] = useState<boolean>(true);
@@ -58,10 +56,12 @@ const FreelanceTaxOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml
     setTimeout(() => setCopied(false), 2000);
   };
 
+  if (!calc) return null;
+
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
-      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-        <div className="lg:col-span-8 space-y-6">
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-7xl mx-auto">
+        <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
           <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden shadow-sm">
             <div className="p-8 border-b border-border/40 bg-background flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -189,7 +189,7 @@ const FreelanceTaxOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml
           </div>
         </div>
 
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
           <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-28 overflow-hidden">
              <div className="absolute top-0 right-0 size-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
@@ -252,6 +252,16 @@ const FreelanceTaxOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml
           </div>
         </div>
       </div>
+
+      {calc.howTo && (
+        <div id="how-to-use" className="mt-12 pt-12 border-t border-border/40">
+          <HowToGuide 
+            steps={calc.howTo!.steps} 
+            proTip={calc.howTo!.proTip} 
+            variant="horizontal"
+          />
+        </div>
+      )}
     </CalculatorPage>
   );
 };

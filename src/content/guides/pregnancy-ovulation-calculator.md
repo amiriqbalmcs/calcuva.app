@@ -1,5 +1,7 @@
 ---
 title: "The Biology of Timing: A Deep Dive into Gestational and Ovulation Math"
+category: "health"
+excerpt: "Calculate your estimated due date from last menstrual period and project the ovulation window for cycle planning."
 calculator: "pregnancy-ovulation-calculator"
 keywords: ["pregnancy calculator", "ovulation tracker guide", "due date math", "fertile window calculation", "gestational age weeks", "reproductive math"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "How is 'Gestational Age' different from 'Fetal Age'?"
     a: "Gestational age starts from the first day of your last period. Fetal age starts from the actual day of conception (usually 2 weeks later). Doctors use Gestational Age as the universal standard."
 ---
-
 ### The Mathematics of Creation
 Pregnancy is one of the few biological processes that follows a remarkably predictable mathematical timeline. From the moment of ovulation to the final developmental milestones of the third trimester, the journey of gestation is measured in **Precision Weeks**. Understanding this timeline is not just about counting down to a due date; it is about aligning with the biological sequences that ensure a healthy outcome for both mother and child.
 

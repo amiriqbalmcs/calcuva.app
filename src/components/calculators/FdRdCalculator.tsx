@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { 
-  Share, CheckCircle2, PiggyBank, Info, Settings2, Copy, 
-  TrendingUp, Wallet, Landmark, Zap, Target, Activity, 
+import {
+  Share, CheckCircle2, PiggyBank, Info, Settings2, Copy,
+  TrendingUp, Wallet, Landmark, Zap, Target, Activity,
   ArrowUpRight, Sparkles, History, Banknote
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -76,12 +77,109 @@ const FdRdCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-        
+
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
+
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <TrendingUp className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Target className="size-3" />
+                    Projected Maturity Valuation
+                  </div>
+                  <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums text-health">
+                    {formatCurrency(result.maturity, currency.code)}
+                  </div>
+                </div>
+                <button
+                  onClick={handleCopy}
+                  className={cn(
+                    "p-3 rounded-xl transition-all border shadow-sm",
+                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                  )}
+                >
+                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
+                </button>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Zap className="size-3 text-health" />
+                    Est. Interest Earned
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
+                    {formatCurrency(result.interest, currency.code)}
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Banknote className="size-3" />
+                    Total Contributions
+                  </div>
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
+                    {formatCurrency(result.invested, currency.code)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Performance Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { l: "Multiplier", v: (result.maturity / result.invested).toFixed(2), i: Activity, unit: "x" },
+              { l: "Time Horizon", v: years, i: History, unit: "yrs" },
+              { l: "Interest Weight", v: ((result.interest / result.maturity) * 100).toFixed(1), i: Target, unit: "%" },
+              { l: "Monthly Accrual", v: (result.interest / (years * 12)).toFixed(0), i: Zap, unit: currency.code }
+            ].map((item, idx) => (
+              <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                <div className="flex items-center gap-2 mb-3">
+                  <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                </div>
+                <div className="text-xl font-mono font-medium tabular-nums leading-tight">
+                  {item.v}
+                  <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Expert Insights */}
+          <div className="grid md:grid-cols-2 gap-6 pt-2">
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+              <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+              <div className="flex items-center gap-2 relative z-10">
+                <History className="size-3 text-health" /> Capital Preservation
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                Fixed deposits are the cornerstone of a low-risk portfolio, providing a guaranteed rate of return that is immune to equity market volatility.
+              </p>
+            </div>
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+              <Zap className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+              <div className="flex items-center gap-2 relative z-10">
+                <TrendingUp className="size-3 text-health" /> Compounding Velocity
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                The frequency of compounding plays a critical role in effective annual yield. Shorter intervals (monthly) maximize your total interest accrual.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
         {/* Input Panel */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
           <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-            
+
             <div className="space-y-1 relative z-10">
               <h3 className="text-sm font-bold tracking-tight">Savings Architecture</h3>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Yield Configuration</p>
@@ -102,10 +200,10 @@ const FdRdCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
                   <span className="text-[10px] font-bold text-health">{formatCurrency(amount, currency.code)}</span>
                 </div>
                 <div className="relative group">
-                  <Input 
-                    type="number" 
-                    value={amount} 
-                    onChange={(e) => setAmount(Number(e.target.value) || 0)} 
+                  <Input
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(Number(e.target.value) || 0)}
                     className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12"
                   />
                   <Wallet className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/40" />
@@ -158,103 +256,14 @@ const FdRdCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Results Panel */}
-        <div className="lg:col-span-8 space-y-8">
-          
-          {/* Executive Summary */}
-          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
-            <TrendingUp className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
-            
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-8">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                    <Target className="size-3" />
-                    Projected Maturity Valuation
-                  </div>
-                  <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums text-health">
-                    {formatCurrency(result.maturity, currency.code)}
-                  </div>
-                </div>
-                <button 
-                  onClick={handleCopy} 
-                  className={cn(
-                    "p-3 rounded-xl transition-all border shadow-sm",
-                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
-                  )}
-                >
-                  {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
-                </button>
-              </div>
-              
-              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                    <Zap className="size-3 text-health" />
-                    Est. Interest Earned
-                  </div>
-                  <div className="text-3xl md:text-4xl font-mono font-bold text-health tabular-nums">
-                    {formatCurrency(result.interest, currency.code)}
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                    <Banknote className="size-3" />
-                    Total Contributions
-                  </div>
-                  <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
-                    {formatCurrency(result.invested, currency.code)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Performance Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-             {[
-               { l: "Multiplier", v: (result.maturity / result.invested).toFixed(2), i: Activity, unit: "x" },
-               { l: "Time Horizon", v: years, i: History, unit: "yrs" },
-               { l: "Interest Weight", v: ((result.interest / result.maturity) * 100).toFixed(1), i: Target, unit: "%" },
-               { l: "Monthly Accrual", v: (result.interest / (years * 12)).toFixed(0), i: Zap, unit: currency.code }
-             ].map((item, idx) => (
-               <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
-                 <div className="flex items-center gap-2 mb-3">
-                    <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
-                 </div>
-                 <div className="text-xl font-mono font-medium tabular-nums leading-tight">
-                    {item.v}
-                    <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
-                 </div>
-               </div>
-             ))}
-          </div>
-
-          {/* Expert Insights */}
-          <div className="grid md:grid-cols-2 gap-6 pt-2">
-             <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
-                <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
-                <div className="flex items-center gap-2 relative z-10">
-                  <History className="size-3 text-health" /> Capital Preservation
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
-                  Fixed deposits are the cornerstone of a low-risk portfolio, providing a guaranteed rate of return that is immune to equity market volatility.
-                </p>
-             </div>
-             <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
-                <Zap className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
-                <div className="flex items-center gap-2 relative z-10">
-                  <TrendingUp className="size-3 text-health" /> Compounding Velocity
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
-                  The frequency of compounding plays a critical role in effective annual yield. Shorter intervals (monthly) maximize your total interest accrual.
-                </p>
-             </div>
-          </div>
-
+          {calc.howTo && (
+            <HowToGuide
+              id='how-to-use'
+              steps={calc.howTo!.steps}
+              proTip={calc.howTo!.proTip}
+            />
+          )}
         </div>
       </div>
     </CalculatorPage>

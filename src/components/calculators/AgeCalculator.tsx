@@ -10,16 +10,16 @@ import {
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { HowToGuide } from "@/components/HowToGuide";
 import { calculatorBySlug } from "@/lib/calculators";
 import { formatNumber } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
 import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("age-calculator");
+const calc = calculatorBySlug("age-calculator")!;
 
 const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
   const [birth, setBirth] = useUrlState<string>("b", "1995-06-15");
   const [target, setTarget] = useUrlState<string>("t", new Date().toISOString().split('T')[0]);
   const [now, setNow] = useState(new Date());
@@ -29,6 +29,8 @@ const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
     const i = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(i);
   }, []);
+
+  if (!calc) return null;
 
   const result = useMemo(() => {
     const b = new Date(birth);
@@ -81,7 +83,7 @@ const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
 
         {/* Input Panel */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
           <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
 
@@ -150,10 +152,19 @@ const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
               </div>
             </div>
           </div>
+
+          {calc.howTo && (
+            <HowToGuide 
+              id="how-to-use"
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="sidebar" 
+            />
+          )}
         </div>
 
         {/* Results Panel */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
 
           {/* Executive Summary */}
           {result ? (

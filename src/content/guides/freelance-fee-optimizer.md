@@ -1,6 +1,7 @@
 ---
 title: "Freelance Fee & Arbitrage Guide 2026: Upwork, Wise, and Bank Spreads"
-description: "Stop losing 5% of your income to hidden fees. Learn how to optimize your Upwork and Fiverr withdrawals to Pakistan using Wise, Payoneer, and direct bank paths."
+keywords: ["freelance fee calculator", "upwork vs fiverr fees", "payoneer withdrawal fee pakistan", "wise vs payoneer", "bank exchange rate calculator"]
+excerpt: "Stop losing 5% of your income to hidden fees. Learn how to optimize your Upwork and Fiverr withdrawals to Pakistan using Wise, Payoneer, and direct bank paths."
 category: "finance"
 calculator: "freelance-fee-optimizer"
 lastUpdated: "2026-05-02"
@@ -16,7 +17,6 @@ faqs:
   - q: "What is the 0.25% Export Tax for Freelancers in 2026?"
     a: "Under the 2025-26 fiscal regime, IT exporters and freelancers registered with PSEB (Pakistan Software Export Board) pay a reduced final withholding tax of 0.25% on their incoming remittances, provided they are active taxpayers."
 ---
-
 ## The Freelancer's Guide to Fee Arbitrage in 2026
 
 For the Pakistani freelancer in 2026, earning in USD, EUR, or GBP is a badge of honor and a critical hedge against local inflation. However, the journey from "Client Payment" to "PKR in Bank" is a gauntlet of hidden costs. Between platform commissions, intermediary bank fees, and currency conversion spreads, a $1,000 contract can easily shrink to $880 before it reaches your wallet.

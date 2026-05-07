@@ -1,5 +1,7 @@
 ---
 title: "The Human Speed Limit: Mastering Your Reaction Time Test"
+category: "benchmarks"
+excerpt: "Measure your reaction speed with this simple test. Click the screen as fast as you can when it turns from red to green to see your score."
 calculator: "human-reaction-time-test"
 keywords: ["reaction time test", "human benchmark", "human reaction speed", "aim trainer", "reflex test online", "gaming reaction time", "average human reaction speed", "reaction test", "reaction time", "humanbenchmark", "reflex test"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Why did I get a 'Too Early' error?"
     a: "The test is designed to measure 'Reaction,' not 'Prediction.' If you click before the screen turns green, the round is invalidated to ensure the integrity of your data."
 ---
-
 ## Neuro-Performance: The Science of Human Reaction Speed
 In sports, gaming, and emergency driving, a fraction of a second is the difference between success and failure. The Calcuva **Reaction Time Test** is a clinical-grade instrument designed to measure the efficiency of your central nervous system (CNS). Often referred to as a **Human Benchmark**, this test provides an objective snapshot of your neurological health and processing speed.
 

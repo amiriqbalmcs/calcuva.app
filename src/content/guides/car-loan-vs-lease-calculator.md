@@ -1,5 +1,7 @@
 ---
 title: "The Automotive Economics Guide: Deciding Between Loan and Lease"
+category: "finance"
+excerpt: "Evaluate the monthly payments, total interest, and long-term equity of buying a car with a loan versus the lower payments and lack of ownership in a lease."
 calculator: "car-loan-vs-lease-calculator"
 keywords: ["car loan vs lease calculator", "auto finance guide", "car depreciation math", "monthly payment comparison", "residual value", "leasing vs buying a car"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "When does 'Buying' become cheaper than 'Leasing'?"
     a: "The 'Breakeven Point' is usually Year 4. Once the loan is paid off and you own the asset, your 'Monthly Cost' drops to near zero (excluding maintenance), while a leaser must start a new payment."
 ---
-
 ### The Architecture of the Driveway
 For the average household, a car is the second largest expense after housing. However, unlike a home, a car is a **Depreciating Asset**. The decision to Buy (Loan) or Lease is a choice between **Equity** and **Cash Flow**. Calcuva's Automotive Engine helps you peel back the layers of dealer financing to find the most efficient path to mobility.
 

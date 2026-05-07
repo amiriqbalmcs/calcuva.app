@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { ResultGrid, ResultStat } from "@/components/ResultStat";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
@@ -82,7 +83,7 @@ const LoveCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
 
         {/* Input Architecture */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
           <div className="surface-card p-6 md:p-8 space-y-10 bg-gradient-to-b from-red-500/[0.02] to-pink-500/[0.02] border-red-500/20 relative overflow-hidden group shadow-sm">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-red-500/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
             
@@ -160,10 +161,19 @@ const LoveCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
               </div>
             </div>
           </div>
+
+          {calc.howTo && (
+            <HowToGuide 
+              id="how-to-use"
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="sidebar" 
+            />
+          )}
         </div>
 
         {/* Results Panel */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
           
           {hasInput ? (
             <>

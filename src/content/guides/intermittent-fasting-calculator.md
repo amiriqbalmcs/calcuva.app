@@ -1,5 +1,7 @@
 ---
 title: "The Fasting Masterclass: Mastering Metabolic Flexibility and Autophagy"
+category: "health"
+excerpt: "Calculate your 16:8, 18:6, or 20:4 fasting schedules and track your progress toward your health and weight loss targets."
 calculator: "intermittent-fasting-calculator"
 keywords: ["intermittent fasting calculator", "fasting schedules 16:8", "autophagy guide", "insulin sensitivity", "weight loss fasting", "omad calculator"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Can women follow the same protocols as men?"
     a: "Women are more sensitive to caloric restriction. We recommend 'Crescendo Fasting' (fasting 2–3 alternate days per week) or a more relaxed 14:10 window to protect hormonal health."
 ---
-
 ### The Evolution of the Eating Window
 Intermittent Fasting (IF) is not a "diet" in the traditional sense; it is a **Metabolic Scheduling Strategy**. By intentionally dividing your day into a Fasting Window and an Eating Window, you shift your body from "Burning Glucose" (Sugar) to "Burning Lipids" (Fat). This process, known as **Metabolic Flexibility**, is one of the most powerful levers for longevity and cognitive clarity.
 

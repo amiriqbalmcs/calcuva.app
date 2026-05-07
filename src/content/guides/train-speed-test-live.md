@@ -1,5 +1,7 @@
 ---
 title: "Tracking the Rails: The Science of High-Speed Train Telemetry"
+category: "utility"
+excerpt: "Curious how fast your train is going? Use our live GPS train speedometer to track real-time rail speed, max velocity, and total trip distance directly from your seat."
 calculator: "train-speed-test-live"
 keywords: ["train speed test", "live train speedometer", "how fast is my train", "rail speed tracker", "tgv speed tracker", "shinkansen speedometer"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Why is my train slower than the advertised speed?"
     a: "Trains only hit their peak speeds on specific sections of 'High-Speed Track.' Factors like track curvature, station approaches, and shared freight lines often require lower operating speeds."
 ---
-
 ## Rail Telemetry: Measuring the World's Fastest Trains
 There is a unique thrill in watching the landscape blur at 300 km/h. Whether you are riding the **Shinkansen in Japan, the TGV in France, or an Acela in the US**, the Calcuva **Live Train Speedometer** provides a real-time window into the performance of your journey.
 

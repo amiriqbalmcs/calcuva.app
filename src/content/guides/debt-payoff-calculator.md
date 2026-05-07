@@ -1,5 +1,7 @@
 ---
 title: "Winning the War on Debt: Snowball vs Avalanche Guide"
+category: "finance"
+excerpt: "Strategic debt payoff tool to compare the Snowball method (lowest balance first) vs Avalanche method (highest interest first)."
 calculator: "debt-payoff-calculator"
 keywords: ["debt snowball vs avalanche", "debt payoff calculator", "get out of debt tool", "credit card payoff strategy", "save interest calculator", "debt reduction plan"]
 faqs:
@@ -14,7 +16,6 @@ faqs:
   - q: "Can I use both methods?"
     a: "Yes. You can start with the Snowball to clear a few small, annoying debts, and then switch to Avalanche once you have more breathing room to target high-interest credit cards."
 ---
-
 ### Breaking the Cycle of Debt
 Debt can feel like an anchor, holding you back from your financial goals. Whether it's credit card balances, personal loans, or "Committee" payouts that have gone sour, having a plan is the only way out. Calcuva provides a **Strategic Comparison Engine** to show you the two most effective ways to become debt-free.
 

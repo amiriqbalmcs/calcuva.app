@@ -1,5 +1,6 @@
 ---
 title: "EV Grid & Emission Auditor: 2026 Guide to 'True Green' Driving"
+excerpt: "Calculate the 'True Green' score of your electric vehicle by factoring in your local energy grid's dependence on coal vs renewables in 2026."
 category: "sustainability"
 calculator: "ev-grid-cleanliness-auditor"
 keywords: ["ev carbon footprint pakistan", "grid cleanliness auditor", "electric car vs petrol 2026", "ev emissions calculator", "sustainable ev charging times"]
@@ -17,7 +18,6 @@ faqs:
   - q: "Can I use V2G (Vehicle-to-Grid) to lower my emissions?"
     a: "Absolutely. In 2026, many EV owners use V2G technology to feed power back into the grid during peak evening hours when the grid is 'dirty.' By discharging your clean solar-stored energy back to the grid, you actually create a negative carbon footprint for those hours."
 ---
-
 ## EV Grid & Emission Auditor: 2026 Guide to "True Green" Driving
 
 Driving an Electric Vehicle (EV) in 2026 is a massive step forward, but the environmental benefit isn't "zero" by default. The real impact depends on **when** and **where** you charge. Many drivers assume that because their tailpipe emits nothing, their driving is perfectly sustainable. However, the "Long Tailpipe" theory still holds true: an EV is only as clean as the electricity that powers it.

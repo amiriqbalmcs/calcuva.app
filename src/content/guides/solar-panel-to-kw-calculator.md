@@ -1,6 +1,8 @@
 ---
 title: "Solar Panel to kW Calculator: How to Calculate System Capacity"
-description: "Confused about how many kW your solar panels generate? Learn how to convert panel quantity and wattage into total system capacity and daily energy output."
+keywords: ["solar panel to kw converter", "how many kw is 10 solar panels", "calculate solar peak capacity", "solar panel wattage converter", "solar system capacity tool"]
+calculator: "solar-panel-to-kw-calculator"
+excerpt: "Confused about how many kW your solar panels generate? Learn how to convert panel quantity and wattage into total system capacity and daily energy output."
 category: "utility"
 faqs:
   - q: "How do I calculate total solar kW?"
@@ -10,7 +12,6 @@ faqs:
   - q: "How much space does a 5kW system need?"
     a: "A 5kW system using 550W panels requires approximately 220-250 square feet of clear roof area."
 ---
-
 ## Understanding Solar Peak Capacity (kWp)
 
 When people talk about a "5kW Solar System" or a "10kW Solar System," they are referring to the **Total Peak Capacity (kWp)** of the solar panels under standard test conditions. In 2026, as panel technology reaches new heights of efficiency, understanding how individual panel wattage scales into a total system is crucial for both sizing your inverter and estimating your electricity bill savings.

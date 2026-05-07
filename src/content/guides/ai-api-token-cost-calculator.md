@@ -1,6 +1,8 @@
 ---
 title: "Understanding AI API Token Costs: GPT-4o, Claude 3.5 & Gemini 2.5"
-description: "Master LLM cost estimation for 2026. Learn how tokens work, the difference between input/output pricing, and how to use Batch APIs and caching to save 50%+ on costs."
+keywords: ["ai api pricing 2026", "gpt-4o cost calculator", "claude 3.5 sonnet price", "token cost estimator", "llm cost comparison", "openai batch api discount"]
+calculator: "ai-api-token-cost-calculator"
+excerpt: "Master LLM cost estimation for 2026. Learn how tokens work, the difference between input/output pricing, and how to use Batch APIs and caching to save 50%+ on costs."
 category: "business"
 lastUpdated: "2026-05-02"
 faqs:
@@ -13,7 +15,6 @@ faqs:
   - q: "What is a 'System Prompt' and how does it affect cost?"
     a: "A System Prompt is the instruction set that defines the AI's behavior. If it's very long (e.g., 2,000 words), it is sent with every single user message, which can exponentially increase your 'Input' token costs if not cached."
 ---
-
 ## The Economics of Generative AI in 2026
 
 In 2026, Large Language Models (LLMs) have become as fundamental to business infrastructure as cloud computing or databases. However, unlike traditional servers where you pay for uptime, AI costs are primarily driven by **throughput**—specifically, the number of **Tokens** processed.

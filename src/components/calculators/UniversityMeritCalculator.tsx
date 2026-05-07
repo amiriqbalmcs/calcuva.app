@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { GraduationCap, Info, TrendingUp, BookOpen, Calculator as CalcIcon } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { calculatorBySlug } from "@/lib/calculators";
+import { HowToGuide } from "@/components/HowToGuide";
+
 
 const calc = calculatorBySlug("university-merit-aggregate-calculator")!;
 
@@ -83,8 +85,82 @@ export default function UniversityMeritCalculator({ guideHtml, faqs, relatedArti
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
         
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
+          {merit !== null ? (
+            <div className="surface-card p-8 md:p-12 border-2 border-primary/20 bg-primary/5 relative overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03] -mr-8 -mt-8">
+                <GraduationCap className="size-48" />
+              </div>
+              
+              <div className="relative z-10 text-center space-y-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Your Admissions Aggregate</p>
+                <div className="text-7xl md:text-8xl font-black text-primary tracking-tighter">
+                  {merit.toFixed(4)}<span className="text-3xl ml-1">%</span>
+                </div>
+                <div className="flex justify-center gap-2">
+                  <div className="px-4 py-2 bg-background/50 rounded-full text-[10px] font-bold text-muted-foreground uppercase border border-border/50">
+                    Formula: {customMatric}% / {customInter}% / {customTest}%
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                <div className="p-4 rounded-2xl bg-background/60 border border-border/50 space-y-2">
+                  <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Matric Contrib.</div>
+                  <div className="text-xl font-bold">{((parseFloat(matricMarks)/parseFloat(matricTotal)) * parseFloat(customMatric)).toFixed(2)}%</div>
+                </div>
+                <div className="p-4 rounded-2xl bg-background/60 border border-border/50 space-y-2">
+                  <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Inter Contrib.</div>
+                  <div className="text-xl font-bold">{((parseFloat(interMarks)/parseFloat(interTotal)) * parseFloat(customInter)).toFixed(2)}%</div>
+                </div>
+                <div className="p-4 rounded-2xl bg-background/60 border border-border/50 space-y-2">
+                  <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Test Contrib.</div>
+                  <div className="text-xl font-bold">{((parseFloat(testMarks)/parseFloat(testTotal)) * parseFloat(customTest)).toFixed(2)}%</div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="surface-card p-12 border-dashed border-2 flex flex-col items-center justify-center text-center space-y-4 opacity-60">
+              <div className="size-16 bg-muted rounded-2xl flex items-center justify-center">
+                <CalcIcon className="size-8 text-muted-foreground" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-bold">Ready to Calculate</h3>
+                <p className="text-xs text-muted-foreground max-w-[240px]">Enter your marks on the left to see your admission aggregate.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Weightage Index Card */}
+          <div className="surface-card p-8 space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold flex items-center gap-2">
+                  <Info className="size-4 text-primary" /> University Weightage Index
+                </h3>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Standard Ratios (Matric : Inter : Test)</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.entries(PRESETS).filter(([k]) => k !== "custom").map(([key, p]) => (
+                <div key={key} className="p-4 rounded-2xl border border-border/60 hover:border-primary/30 transition-all group flex items-center justify-between">
+                  <span className="text-sm font-bold group-hover:text-primary transition-colors">{p.name}</span>
+                  <div className="flex gap-1.5">
+                    <span className="px-2 py-1 bg-secondary/50 rounded text-[10px] font-black text-muted-foreground">{p.matricWeight}</span>
+                    <span className="px-2 py-1 bg-secondary/50 rounded text-[10px] font-black text-muted-foreground">{p.interWeight}</span>
+                    <span className="px-2 py-1 bg-primary/10 rounded text-[10px] font-black text-primary">{p.testWeight}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Input Panel */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+
           <div className="surface-card p-6 md:p-8 space-y-8 bg-secondary/5 border-border/40 relative overflow-hidden group">
             <div className="space-y-1 relative z-10">
               <h3 className="text-sm font-bold tracking-tight">Academic Profile</h3>
@@ -188,80 +264,20 @@ export default function UniversityMeritCalculator({ guideHtml, faqs, relatedArti
               </Button>
             </div>
           </div>
-        </div>
 
-        {/* Results Panel */}
-        <div className="lg:col-span-8 space-y-8">
-          {merit !== null ? (
-            <div className="surface-card p-8 md:p-12 border-2 border-primary/20 bg-primary/5 relative overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="absolute top-0 right-0 p-8 opacity-[0.03] -mr-8 -mt-8">
-                <GraduationCap className="size-48" />
-              </div>
-              
-              <div className="relative z-10 text-center space-y-4">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Your Admissions Aggregate</p>
-                <div className="text-7xl md:text-8xl font-black text-primary tracking-tighter">
-                  {merit.toFixed(4)}<span className="text-3xl ml-1">%</span>
-                </div>
-                <div className="flex justify-center gap-2">
-                  <div className="px-4 py-2 bg-background/50 rounded-full text-[10px] font-bold text-muted-foreground uppercase border border-border/50">
-                    Formula: {customMatric}% / {customInter}% / {customTest}%
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-                <div className="p-4 rounded-2xl bg-background/60 border border-border/50 space-y-2">
-                  <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Matric Contrib.</div>
-                  <div className="text-xl font-bold">{((parseFloat(matricMarks)/parseFloat(matricTotal)) * parseFloat(customMatric)).toFixed(2)}%</div>
-                </div>
-                <div className="p-4 rounded-2xl bg-background/60 border border-border/50 space-y-2">
-                  <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Inter Contrib.</div>
-                  <div className="text-xl font-bold">{((parseFloat(interMarks)/parseFloat(interTotal)) * parseFloat(customInter)).toFixed(2)}%</div>
-                </div>
-                <div className="p-4 rounded-2xl bg-background/60 border border-border/50 space-y-2">
-                  <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Test Contrib.</div>
-                  <div className="text-xl font-bold">{((parseFloat(testMarks)/parseFloat(testTotal)) * parseFloat(customTest)).toFixed(2)}%</div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="surface-card p-12 border-dashed border-2 flex flex-col items-center justify-center text-center space-y-4 opacity-60">
-              <div className="size-16 bg-muted rounded-2xl flex items-center justify-center">
-                <CalcIcon className="size-8 text-muted-foreground" />
-              </div>
-              <div className="space-y-1">
-                <h3 className="font-bold">Ready to Calculate</h3>
-                <p className="text-xs text-muted-foreground max-w-[240px]">Enter your marks on the left to see your admission aggregate.</p>
-              </div>
-            </div>
+          {calc.howTo && (
+            <HowToGuide 
+              id="how-to-use"
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="sidebar" 
+            />
           )}
-
-          {/* Weightage Index Card */}
-          <div className="surface-card p-8 space-y-8">
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <h3 className="text-sm font-bold flex items-center gap-2">
-                  <Info className="size-4 text-primary" /> University Weightage Index
-                </h3>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Standard Ratios (Matric : Inter : Test)</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(PRESETS).filter(([k]) => k !== "custom").map(([key, p]) => (
-                <div key={key} className="p-4 rounded-2xl border border-border/60 hover:border-primary/30 transition-all group flex items-center justify-between">
-                  <span className="text-sm font-bold group-hover:text-primary transition-colors">{p.name}</span>
-                  <div className="flex gap-1.5">
-                    <span className="px-2 py-1 bg-secondary/50 rounded text-[10px] font-black text-muted-foreground">{p.matricWeight}</span>
-                    <span className="px-2 py-1 bg-secondary/50 rounded text-[10px] font-black text-muted-foreground">{p.interWeight}</span>
-                    <span className="px-2 py-1 bg-primary/10 rounded text-[10px] font-black text-primary">{p.testWeight}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
+
+
+
+
       </div>
     </CalculatorPage>
   );

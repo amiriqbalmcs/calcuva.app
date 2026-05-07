@@ -6,8 +6,9 @@ import {
   Clock, Activity, Trophy, TrendingUp, AlertCircle, Info, Car
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
-import { CALCULATORS } from "@/lib/calculators";
+import { calculatorBySlug } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
+import { HowToGuide } from "@/components/HowToGuide";
 
 const GPS_OPTIONS = {
   enableHighAccuracy: true,
@@ -16,7 +17,7 @@ const GPS_OPTIONS = {
 };
 
 const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  const calc = useMemo(() => CALCULATORS.find(c => c.slug === "car-performance-speed-test"), []);
+  const calc = useMemo(() => calculatorBySlug("car-performance-speed-test"), []);
 
   if (!calc) return null;
 
@@ -177,9 +178,11 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
-      <div className={cn("max-w-6xl mx-auto space-y-8 transition-all duration-500", hudMode && "rotate-x-180 scale-x-[-1] opacity-90 brightness-150")}>
+      <div className={cn("max-w-6xl mx-auto grid lg:grid-cols-12 gap-8 items-start transition-all duration-500", hudMode && "rotate-x-180 scale-x-[-1] opacity-90 brightness-150")}>
         
-        {/* Main Performance Display */}
+        {/* Main Display Area */}
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
+          {/* Main Performance Display */}
         <div className="surface-card p-6 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm flex flex-col items-center justify-between min-h-[500px] md:min-h-[650px] rounded-2xl">
           
           <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
@@ -270,15 +273,28 @@ const CarPerformanceCalculator = ({ guideHtml, faqs, relatedArticles }: { guideH
             </div>
           ))}
         </div>
+      </div>
 
-        <div className="surface-card p-6 border-border/30 bg-background space-y-4 rounded-2xl shadow-sm">
-          <div className="flex items-center gap-3">
-            <Info className="size-4 text-muted-foreground" />
-            <h4 className="text-[10px] font-bold uppercase tracking-widest">Car Performance Safety</h4>
+        {/* Sidebar Area */}
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-6 border-border/30 bg-background space-y-4 rounded-2xl shadow-sm">
+            <div className="flex items-center gap-3">
+              <Info className="size-4 text-muted-foreground" />
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Car Performance Safety</h4>
+            </div>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Performance timers (0-60 mph) are intended for use on closed courses only. Do not operate your phone while driving. Use a secure dashboard mount and always obey local speed laws.
+            </p>
           </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Performance timers (0-60 mph) are intended for use on closed courses only. Do not operate your phone while driving. Use a secure dashboard mount and always obey local speed laws.
-          </p>
+
+          {calc.howTo && (
+            <HowToGuide 
+              id="how-to-use"
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="sidebar" 
+            />
+          )}
         </div>
 
       </div>

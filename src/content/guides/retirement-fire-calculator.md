@@ -1,5 +1,7 @@
 ---
 title: "The Road to Financial Independence: Mastering FIRE Math"
+category: "finance"
+excerpt: "Project your retirement corpus and the age you can retire based on your current savings, expenses, and investment returns."
 calculator: "retirement-fire-calculator"
 keywords: ["retirement calculator", "fire movement guide", "4 percent rule", "financial independence", "early retirement math", "retirement corpus planning"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Should I include my house in my FIRE number?"
     a: "It depends. If you plan to sell and downsize, include the equity. If you plan to live there, don't include it in your 'investable' corpus, as it doesn't generate income."
 ---
-
 ### The Architecture of Freedom
 Retirement is not an "Age"; it is a **Number**. In the traditional 40-year career model, we work until 65 because we don't know the math of independence. The **FIRE (Financial Independence, Retire Early)** framework shifts the focus from "working for money" to "making money work for you." Calcuva provides the computational roadmap to find your exact date of liberation.
 

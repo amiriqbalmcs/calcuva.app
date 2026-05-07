@@ -1,5 +1,6 @@
 ---
 title: "Microplastic Protection: 2026 Guide to Clean Water & Oceans"
+excerpt: "Predict how many microplastic particles you prevent from entering the ocean by optimizing your laundry temperature and frequency."
 category: "sustainability"
 calculator: "microplastic-ocean-protection"
 keywords: ["microplastic calculator", "laundry water protection", "prevent ocean pollution tool", "sustainable washing machine habits", "microplastic fiber savings"]
@@ -17,7 +18,6 @@ faqs:
   - q: "Can I install a permanent microplastic filter on my old washing machine?"
     a: "Yes. Several companies now offer retro-fit filters that attach to the discharge hose of any standard washing machine. These are highly effective and are becoming mandatory for new machines in several countries by 2027. Installing one today is one of the most impactful 'Green Tech' upgrades you can make for your home."
 ---
-
 ## Microplastic Protection: 2026 Guide to Clean Water & Oceans
 
 In 2026, the global environmental focus has shifted. While we still fight against the visible "Islands of Trash" in our oceans, we have realized that the more insidious threat is invisible: the billions of "Micro-Fibers" shed from our own clothing and household items every day. These particles, often smaller than a grain of salt, have infiltrated every corner of the planet, from the deepest ocean trenches to the summit of Mount Everest.

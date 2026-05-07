@@ -1,5 +1,7 @@
 ---
 title: "The Chronological Milestone Guide: Mastering Date Addition and Subtraction"
+category: "utility"
+excerpt: "Calculate what date it will be after a certain number of days, weeks, or months, or see the gap between two specific dates."
 calculator: "date-plus-minus-calculator"
 keywords: ["date calculator", "add days to date", "subtract days from date", "project timeline math", "gestational age weeks", "milestone planning"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "How do I find a date 6 months after today?"
     a: "Input today's date and '+6' in the months field. Our engine accounts for shorter months (like February) to ensure you land on a valid calendar day."
 ---
-
 ### The Architecture of Time Scheduling
 Time is the ultimate constraint in project management, law, and healthcare. Whether you are calculating an **Expiry Date** for a legal document, a **Release Date** for a software project, or a **Maturity Date** for an investment, precision in "Date Math" is non-negotiable. Calcuva provides a high-fidelity **Chronological Engine** that manages the complexities of the human calendar—including leap years and varying month lengths—with 100% accuracy.
 

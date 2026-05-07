@@ -1,5 +1,7 @@
 ---
 title: "Healthy Foundations: Understanding Ideal Body Weight (IBW) Formulas"
+category: "health"
+excerpt: "Find your ideal body weight based on height, age, and sex using Robinson, Miller, Devine, and Hamwi formulas."
 calculator: "ideal-weight-calculator"
 keywords: ["ideal body weight calculator", "ibw formula", "health standards", "miller vs devine formula", "clinical weight targets", "body frame size"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "How do I adjust for a 'Large Frame'?"
     a: "Standard formulas assume a medium frame. If you have a large frame (measured via wrist circumference), you can safely adjust your IBW target upward by ~10%."
 ---
-
 ### The Evolution of the "Ideal"
 What is a "healthy" weight? While the answer is individual, medical science has spent decades developing **Ideal Body Weight (IBW)** formulas to provide a data-driven baseline for clinical health. Originally designed for calculating medication dosages in hospitals, these formulas—**Robinson, Miller, Devine, and Hamwi**—have become the global gold standard for setting fitness and weight loss orientations.
 

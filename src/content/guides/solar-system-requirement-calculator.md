@@ -1,6 +1,6 @@
 ---
 title: "How to Calculate Your Solar System Size: A Complete Guide for 2026"
-description: "Learn how to estimate the ideal solar kW capacity for your home based on your appliance load, peak sun hours, and 2026 efficiency standards."
+excerpt: "Learn how to estimate the ideal solar kW capacity for your home based on your appliance load, peak sun hours, and 2026 efficiency standards."
 date: "2026-04-30"
 category: "utility"
 author: "Calcuva Editorial Team"
@@ -16,7 +16,6 @@ faqs:
   - q: "Should I oversize my solar system?"
     a: "In the 2026 'Net Billing' era, oversizing is less profitable due to low buyback rates. It is generally better to size for 80-90% of your total demand to maximize self-consumption ROI."
 ---
-
 ## Sizing Your Solar System in 2026
 
 Determining the correct solar system size is the most critical decision in your renewable energy journey. A system that is too small will leave you with significant grid bills, while an oversized system in the era of **Net Billing** (where export rates are much lower than import rates) will unnecessarily extend your payback period.

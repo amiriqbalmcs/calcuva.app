@@ -1,5 +1,7 @@
 ---
 title: "Precision Telemetry: The Ultimate Guide to GPS Speedometer Technology"
+category: "utility"
+excerpt: "Measure your real-time speed with our high-precision GPS speedometer. Perfect for cars, trains, buses, or walking. Features include max speed tracking, trip distance, and HUD mode."
 calculator: "gps-speedometer-online"
 keywords: ["gps speedometer online", "live speed tracker", "accurate speedometer", "mobile gps speedo", "web speedometer", "how gps speed works"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "What is HUD Mode?"
     a: "HUD (Head-Up Display) mirrors the screen so you can place your phone on the dashboard and see the speed reflected clearly on your windshield at night."
 ---
-
 ## The Science of Velocity: Understanding GPS Speed
 In the era of digital navigation, knowing your exact velocity is no longer limited to the dashboard of a car. Whether you are cycling, traveling on a bus, or testing a new e-scooter, Calcuva provides a **High-Precision Telemetry Engine** that turns your smartphone into a professional-grade speedometer.
 

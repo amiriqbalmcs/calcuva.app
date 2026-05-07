@@ -1,6 +1,7 @@
 ---
 title: "Pakistan Salary Tax Calculator 2025-26: FBR Tax Slabs Guide"
-description: "Understand the latest FBR income tax slabs for FY 2025-26. Calculate your monthly take-home salary and learn how the new budget affects your income."
+keywords: ["pakistan income tax calculator 2026", "fbr tax slabs 2025-26", "calculate monthly salary tax", "yearly income tax pakistan", "fbr budget 2026 tax rates"]
+excerpt: "Understand the latest FBR income tax slabs for FY 2025-26. Calculate your monthly take-home salary and learn how the new budget affects your income."
 category: "finance"
 calculator: "salary-income-tax-calculator-2026"
 faqs:
@@ -17,7 +18,6 @@ faqs:
   - q: "Are allowances like house rent and utility taxable in 2026?"
     a: "Generally, yes. Under the 2025-26 regime, almost all allowances form part of your gross taxable salary unless specifically exempted under the Second Schedule of the Income Tax Ordinance. Our calculator uses the 'Gross Salary' figure to ensure compliance."
 ---
-
 ## Understanding the New FBR Tax Slabs (FY 2025-2026)
 
 The Federal Board of Revenue (FBR) has implemented significant changes to the income tax structure for salaried individuals in Pakistan for the fiscal year 2025-26. These changes, enacted through the Finance Act 2025, aim to broaden the tax base and increase revenue while maintaining a progressive structure where high earners contribute a larger percentage of their income.

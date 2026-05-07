@@ -1,5 +1,7 @@
 ---
 title: "Nautical Precision: Mastering Marine Speed and Navigation"
+category: "utility"
+excerpt: "Navigate with precision using our marine GPS speedometer. Track boat speed in knots, calculate nautical miles, and monitor your heading and coordinates live on the water."
 calculator: "boat-speed-tracker-knots"
 keywords: ["boat speed tracker", "marine speedometer", "knots to mph", "nautical mile tracker", "speed over ground sog", "boat gps speedometer", "sailing speed app"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Does the compass show True North or Magnetic North?"
     a: "The GPS compass shows your **True Heading** (Track), which is the direction your boat is actually moving over the ground."
 ---
-
 ## Maritime Telemetry: Navigating with Digital Precision
 On the open water, your senses can be deceptive. Without fixed landmarks, it is nearly impossible to estimate your speed or distance. The Calcuva **Boat Speed & Nautical Tracker** provides the essential data required for safe and efficient passage, whether you are on a sailboat, a motorboat, or a cross-ocean ferry.
 

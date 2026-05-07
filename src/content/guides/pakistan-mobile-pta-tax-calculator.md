@@ -1,6 +1,7 @@
 ---
 title: "Pakistan Mobile PTA Tax Guide 2026: Everything You Need to Know"
-description: "A comprehensive guide on calculating PTA DIRBS taxes in Pakistan using the latest April 2026 FBR Valuation Ruling No. 2070. Learn about Passport vs CNIC registration."
+keywords: ["pta tax calculator 2026", "mobile tax pakistan", "iphone 17 pta tax", "fbr valuation ruling 2070", "pta tax on passport vs cnic", "dirbs tax calculator"]
+excerpt: "A comprehensive guide on calculating PTA DIRBS taxes in Pakistan using the latest April 2026 FBR Valuation Ruling No. 2070. Learn about Passport vs CNIC registration."
 category: "finance"
 calculator: "pakistan-mobile-pta-tax-calculator"
 lastUpdated: "2026-05-02"
@@ -16,7 +17,6 @@ faqs:
   - q: "Can I pay the PTA tax in installments?"
     a: "While the FBR requires a single payment for clearing customs, some Pakistani banks (like Bank Alfalah and Silkbank) now offer 'Easy Monthly Installment' (EMI) plans for PTA taxes paid via their mobile apps."
 ---
-
 ## Navigating the PTA DIRBS Ecosystem in 2026
 
 Bringing a high-end smartphone into Pakistan in 2026 is no longer a simple matter of plugging in a local SIM card. The **Pakistan Telecommunication Authority (PTA)** and the **Federal Board of Revenue (FBR)** have created one of the most sophisticated mobile tracking and taxation systems in the world: the **Device Identification Registration and Blocking System (DIRBS)**.

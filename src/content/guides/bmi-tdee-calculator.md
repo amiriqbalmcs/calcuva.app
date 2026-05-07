@@ -1,5 +1,7 @@
 ---
 title: "Biological Performance Tuning: The Complete Guide to BMI, BMR, and TDEE"
+category: "health"
+excerpt: "A comprehensive health forecaster providing your BMI category, Basal Metabolic Rate and TDEE based on activity level."
 calculator: "bmi-tdee-calculator"
 keywords: ["bmi-tdee calculator", "basal metabolic rate", "calorie maintenance", "metabolic adaptation", "fitness math", "weight management strategy"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Why has my weight loss stalled?"
     a: "This is often due to 'Metabolic Adaptation'. As you lose weight, your TDEE drops because there is less of you to move. You must recalculate your targets every 5kg of weight loss."
 ---
-
 ## Standardizing Your Human Metrics
 To improve your physical composition, you must first understand the **Thermodynamic Baseline** of your body. Our calculator combines three distinct biological markers—**BMI, BMR, and TDEE**—to provide a 360-degree view of your daily energy requirements.
 

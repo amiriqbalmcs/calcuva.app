@@ -1,5 +1,7 @@
 ---
 title: "The Purchasing Power Guard: Mastering Inflation and Currency Erosion"
+category: "finance"
+excerpt: "Calculate the real value of money across years based on average inflation rates and see the cumulative price increase."
 calculator: "inflation-calculator"
 keywords: ["inflation calculator", "consumer price index cpi", "purchasing power guide", "real vs nominal dollars", "cost of living math", "personal inflation rate"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "How do I beat inflation as an investor?"
     a: "By investing in assets that historically outpace inflation, such as Equities (Stocks), Real Estate, and Commodities. Cash 'stashed under a mattress' is the asset most vulnerable to inflation."
 ---
-
 ### The Architecture of Value Decay
 Inflation is the "Invisible Tax" on your wealth. While your bank balance may stay at $10,000, its **Purchasing Power**—what it can actually buy—is being constantly eroded by the increasing cost of goods. Calcuva's Inflation Engine allows you to "travel in time" to see the real value of your money across decades of economic history.
 

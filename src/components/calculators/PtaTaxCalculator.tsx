@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -29,12 +30,12 @@ const MODELS = [
   { label: "Other / Custom", value: 0, brand: "Custom" },
 ];
 
-export default function PtaTaxCalculator({ 
-  calc, 
-  guideHtml, 
-  faqs, 
-  relatedArticles 
-}: { 
+export default function PtaTaxCalculator({
+  calc,
+  guideHtml,
+  faqs,
+  relatedArticles
+}: {
   calc: CalcMeta;
   guideHtml?: string;
   faqs?: any[];
@@ -52,7 +53,7 @@ export default function PtaTaxCalculator({
   const results = useMemo(() => {
     const usdToPkr = 285;
     const pkrValue = currentValue * usdToPkr;
-    
+
     // FBR Commercial/Individual Tax Structure 2026
     let regulatoryDuty = 0;
     let salesTax = 0;
@@ -62,7 +63,7 @@ export default function PtaTaxCalculator({
     // Based on May 2026 FBR Valuation Ruling
     if (currentValue > 500) {
       // High-end Handsets
-      regulatoryDuty = pkrValue * 0.20; 
+      regulatoryDuty = pkrValue * 0.20;
       salesTax = 25000;
       withholdingTax = isFiler ? 11500 : 35000; // Updated 2026 Non-Filer rate
       mobileLevy = 9000;
@@ -104,29 +105,106 @@ export default function PtaTaxCalculator({
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start">
-        <div className="lg:col-span-8 space-y-8">
-          {/* Input Section */}
-          <div className="surface-card p-8 bg-background border-border/40 shadow-sm space-y-6">
-            <div className="flex items-center gap-4 border-b border-border/40 pb-6 mb-6">
-               <div className="size-10 rounded-xl bg-secondary flex items-center justify-center">
-                  <Smartphone className="size-5 text-foreground" />
-               </div>
-               <div>
-                  <h3 className="text-sm font-black uppercase tracking-widest text-foreground">Phone Configuration</h3>
-                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">Select model and registration type</p>
-               </div>
+
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
+          <div className="surface-card p-8 bg-background border-border/60 shadow-xl space-y-8 relative overflow-hidden group">
+            <Smartphone className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+
+            <div className="relative z-10 space-y-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-border/40 pb-8">
+                <div className="space-y-2">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                    <ShieldCheck className="size-3 text-health" />
+                    Total Payable PTA Tax
+                  </p>
+                  <p className="text-5xl md:text-6xl font-black tracking-tighter text-foreground tabular-nums">
+                    Rs. {Math.round(results.total).toLocaleString()}
+                  </p>
+                </div>
+                <div className="space-y-1 md:text-right">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Phone Value (PKR)</p>
+                  <p className="text-xl font-bold text-foreground/60 tabular-nums">
+                    Rs. {Math.round(results.pkrValue).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Detailed Breakdown</h4>
+                  <div className="space-y-4">
+                    {results.breakdown.map((item, i) => (
+                      <div key={i} className="flex flex-col gap-1 group/item">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-muted-foreground uppercase tracking-tight">{item.label}</span>
+                          <span className="text-sm font-mono font-bold text-foreground">Rs. {Math.round(item.value).toLocaleString()}</span>
+                        </div>
+                        <div className="w-full bg-secondary/30 h-1.5 rounded-full overflow-hidden">
+                          <div
+                            className="bg-finance h-full transition-all duration-1000 ease-out"
+                            style={{ width: `${(item.value / results.total) * 100}%` }}
+                          />
+                        </div>
+                        <p className="text-[9px] text-muted-foreground/60 font-medium italic opacity-0 group-hover/item:opacity-100 transition-opacity">
+                          {item.info}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="surface-card p-6 bg-secondary/5 border-border/30 rounded-2xl space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="size-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                        <AlertCircle className="size-4 text-amber-500" />
+                      </div>
+                      <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-600">Legal Compliance</h4>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed font-medium">
+                      Based on Valuation Ruling 2070 (April 2026). Handset value estimated at ${currentValue}. Tax rates are subject to FBR's real-time verification.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4 p-4 rounded-xl border border-health/20 bg-health/5">
+                    <TrendingDown className="size-5 text-health" />
+                    <div>
+                      <p className="text-[10px] font-bold text-health uppercase">Overseas Benefit</p>
+                      <p className="text-[9px] text-health/80 font-medium">
+                        {regType === "passport" ? "Passport discount applied (30-50% reduction)." : "Register via Passport to save up to 40% in taxes."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Input Panel */}
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-8 bg-secondary/5 border-border/40 space-y-8 relative overflow-hidden group">
+            <div className="flex items-center gap-4 border-b border-border/40 pb-6">
+              <div className="size-10 rounded-xl bg-background flex items-center justify-center shadow-sm">
+                <Smartphone className="size-5 text-foreground" />
+              </div>
+              <div>
+                <h3 className="text-sm font-black uppercase tracking-widest text-foreground">Phone Setup</h3>
+                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">Configuration Details</p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label>Select Phone Model</Label>
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Select Phone Model</Label>
                 <Select value={model} onValueChange={setModel}>
-                  <SelectTrigger className="h-12 border-slate-200 focus:ring-primary/20 transition-all">
+                  <SelectTrigger className="h-12 bg-background border-border/60 font-bold text-[11px] uppercase tracking-widest rounded-xl shadow-sm">
                     <SelectValue placeholder="Choose a model" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="rounded-xl border-border/40">
                     {MODELS.map((m) => (
-                      <SelectItem key={m.label} value={m.label}>
+                      <SelectItem key={m.label} value={m.label} className="text-[11px] font-bold uppercase">
                         {m.label} {m.value > 0 ? `($${m.value})` : ""}
                       </SelectItem>
                     ))}
@@ -135,37 +213,35 @@ export default function PtaTaxCalculator({
               </div>
 
               {model === "Other / Custom" && (
-                <div className="space-y-2 animate-in fade-in slide-in-from-top-2">
-                  <Label>Handset Value (USD)</Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Handset Value (USD)</Label>
+                  <div className="relative group">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 font-black">$</span>
                     <Input
                       type="number"
                       value={customValue}
                       onChange={(e) => setCustomValue(e.target.value)}
-                      className="pl-8 h-12 border-slate-200 focus:ring-primary/20"
-                      placeholder="Enter value in USD"
+                      className="pl-8 h-12 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-lg rounded-xl shadow-sm"
+                      placeholder="Value in USD"
                     />
                   </div>
                 </div>
               )}
 
               <div className="space-y-3">
-                <Label>Registration Type</Label>
-                <div className="grid grid-cols-2 gap-2 p-1.5 bg-secondary/50 rounded-xl border border-border/40">
+                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Registration Type</Label>
+                <div className="grid grid-cols-2 gap-2 p-1.5 bg-background/50 rounded-xl border border-border/40 shadow-inner">
                   <button
                     onClick={() => setRegType("passport")}
-                    className={`py-2 text-xs font-bold rounded-lg transition-all ${
-                      regType === "passport" ? "bg-white text-primary shadow-sm ring-1 ring-border/20" : "text-muted-foreground hover:bg-white/50"
-                    }`}
+                    className={`py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${regType === "passport" ? "bg-white text-foreground shadow-md ring-1 ring-border/20" : "text-muted-foreground hover:bg-white/50"
+                      }`}
                   >
                     Passport
                   </button>
                   <button
                     onClick={() => setRegType("cnic")}
-                    className={`py-2 text-xs font-bold rounded-lg transition-all ${
-                      regType === "cnic" ? "bg-white text-primary shadow-sm ring-1 ring-border/20" : "text-muted-foreground hover:bg-white/50"
-                    }`}
+                    className={`py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${regType === "cnic" ? "bg-white text-foreground shadow-md ring-1 ring-border/20" : "text-muted-foreground hover:bg-white/50"
+                      }`}
                   >
                     CNIC
                   </button>
@@ -173,21 +249,19 @@ export default function PtaTaxCalculator({
               </div>
 
               <div className="space-y-3">
-                <Label>Tax Filer Status</Label>
-                <div className="grid grid-cols-2 gap-2 p-1.5 bg-secondary/50 rounded-xl border border-border/40">
+                <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Tax Filer Status</Label>
+                <div className="grid grid-cols-2 gap-2 p-1.5 bg-background/50 rounded-xl border border-border/40 shadow-inner">
                   <button
                     onClick={() => setIsFiler(true)}
-                    className={`py-2 text-xs font-bold rounded-lg transition-all ${
-                      isFiler ? "bg-white text-primary shadow-sm ring-1 ring-border/20" : "text-muted-foreground hover:bg-white/50"
-                    }`}
+                    className={`py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${isFiler ? "bg-white text-foreground shadow-md ring-1 ring-border/20" : "text-muted-foreground hover:bg-white/50"
+                      }`}
                   >
                     Filer
                   </button>
                   <button
                     onClick={() => setIsFiler(false)}
-                    className={`py-2 text-xs font-bold rounded-lg transition-all ${
-                      !isFiler ? "bg-white text-primary shadow-sm ring-1 ring-border/20" : "text-muted-foreground hover:bg-white/50"
-                    }`}
+                    className={`py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${!isFiler ? "bg-white text-foreground shadow-md ring-1 ring-border/20" : "text-muted-foreground hover:bg-white/50"
+                      }`}
                   >
                     Non-Filer
                   </button>
@@ -195,42 +269,21 @@ export default function PtaTaxCalculator({
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Results Sidebar */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="surface-card p-8 bg-background border-border/60 shadow-xl space-y-6 sticky top-28">
-            <div className="space-y-6 border-b border-border/40 pb-6">
-               <div className="space-y-2">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Total Payable Tax</p>
-                  <p className="text-4xl font-black tracking-tighter text-foreground">Rs. {Math.round(results.total).toLocaleString()}</p>
-               </div>
-               <div className="space-y-1">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Phone Value (PKR)</p>
-                  <p className="text-sm font-bold text-foreground/60">Rs. {Math.round(results.pkrValue).toLocaleString()}</p>
-               </div>
-            </div>
-
-            <div className="space-y-3">
-              {results.breakdown.map((item, i) => (
-                <div key={i} className="flex items-center justify-between group">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-medium text-slate-500">{item.label}</span>
-                  </div>
-                  <span className="text-[11px] font-bold text-slate-900">Rs. {Math.round(item.value).toLocaleString()}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-4 rounded-xl bg-amber-50 border border-amber-100 space-y-2">
-              <p className="text-[10px] font-bold text-amber-900 uppercase flex items-center gap-2">
-                <AlertCircle className="size-3" /> FBR Note
-              </p>
-              <p className="text-[9px] text-amber-700 leading-relaxed font-medium">
-                Based on Valuation Ruling 2070 (April 2026). Handset value estimated at ${currentValue}.
-              </p>
-            </div>
+          <div className="surface-card p-6 bg-secondary/5 border-border/30 flex gap-4 items-start">
+            <Info className="size-5 text-muted-foreground shrink-0 mt-0.5" />
+            <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase tracking-tight">
+              PTA tax values are estimated. Final values are determined by FBR at the time of registration.
+            </p>
           </div>
+
+          {calc.howTo && (
+            <HowToGuide
+              id='how-to-use'
+              steps={calc.howTo!.steps}
+              proTip={calc.howTo!.proTip}
+            />
+          )}
         </div>
       </div>
     </CalculatorPage>

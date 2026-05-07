@@ -1,6 +1,7 @@
 ---
 title: "The Crypto Alpha Guide: Mastering Portfolio Profits and Exit Math"
-description: "A professional guide for the modern digital asset investor. Learn how to calculate net profits, account for gas fees, and build a multi-cycle exit strategy."
+keywords: ["crypto", "profit", "bitcoin", "investment", "trading"]
+excerpt: "A professional guide for the modern digital asset investor. Learn how to calculate net profits, account for gas fees, and build a multi-cycle exit strategy."
 category: "finance"
 calculator: "crypto-investment-profit-calculator"
 lastUpdated: "2026-05-02"
@@ -18,7 +19,6 @@ faqs:
   - q: "What is 'Market Cap' vs 'Price'?"
     a: "Price is what you pay for 1 coin. Market Cap (Price x Circulating Supply) is the true measure of a project's size. A 'cheap' coin at $0.0001 might be more 'expensive' than Bitcoin if it has trillions of tokens in supply."
 ---
-
 ## The Architecture of the Digital Asset Class in 2026
 
 Cryptocurrency remains the most volatile and potentially rewarding asset class of the 2020s. However, as we enter 2026, the market has matured beyond the "Wild West" era. Institutional participation, Bitcoin ETFs, and the integration of blockchain into national payment systems have turned crypto into a legitimate pillar of a diversified portfolio. 

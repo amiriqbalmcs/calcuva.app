@@ -1,14 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { 
-  Droplet, Moon, Activity, Sun, Thermometer, Clock, GlassWater, 
-  Coffee, Sparkles, Share, CheckCircle2, Info, User, Zap, 
+import {
+  Droplet, Moon, Activity, Sun, Thermometer, Clock, GlassWater,
+  Coffee, Sparkles, Share, CheckCircle2, Info, User, Zap,
   History, Target, Landmark, Globe, Ruler, Settings2, Copy,
-  Calendar, LayoutDashboard, ChevronRight, Waves, Bed, 
+  Calendar, LayoutDashboard, ChevronRight, Waves, Bed,
   CloudMoon, Sunrise, Timer, FastForward, Heart, Beaker, Brain
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -39,7 +40,7 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
 
   const water = useMemo(() => {
     const w = units === "metric" ? weightKg : weightLb * 0.453592;
-    let ml = w * 33; 
+    let ml = w * 33;
     ml += (activityMin / 30) * 350;
     if (climate === "hot") ml *= 1.15;
     const liters = ml / 1000;
@@ -51,8 +52,8 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
     const [h, m] = time.split(":").map(Number);
     const target = new Date();
     target.setHours(h, m, 0, 0);
-    const fall = 15; 
-    const cycles = [6, 5, 4, 3]; 
+    const fall = 15;
+    const cycles = [6, 5, 4, 3];
     return cycles.map((c) => {
       const offsetMin = (mode === "wake" ? -1 : 1) * (c * 90 + fall);
       const t = new Date(target.getTime() + offsetMin * 60 * 1000);
@@ -61,7 +62,7 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
   }, [time, mode]);
 
   const handleCopy = () => {
-    const text = tab === "water" 
+    const text = tab === "water"
       ? `Daily Hydration: ${water.liters.toFixed(2)}L (${water.cups} cups). Plan at ${window.location.href}`
       : `REM Sleep Cycles: Target ${mode === 'wake' ? 'Wake' : 'Sleep'} at ${time}. Plan at ${window.location.href}`;
     navigator.clipboard.writeText(text);
@@ -72,7 +73,7 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)} className="space-y-12">
-        
+
         {/* Navigation Interface */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 max-w-6xl mx-auto">
           <TabsList className="grid grid-cols-2 w-full md:w-[440px] bg-secondary/10 p-1 rounded-2xl h-14 border border-border/40">
@@ -83,9 +84,9 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
               <CloudMoon className="size-4" /> Sleep Cycles
             </TabsTrigger>
           </TabsList>
-          
-          <button 
-            onClick={handleCopy} 
+
+          <button
+            onClick={handleCopy}
             className={cn(
               "flex items-center gap-2 px-8 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all shadow-sm border h-14",
               copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
@@ -99,12 +100,12 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
         {/* HYDRATION ARCHITECTURE */}
         <TabsContent value="water" className="mt-0 focus-visible:outline-none outline-none">
           <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-            
+
             {/* Input Panel */}
-            <div className="lg:col-span-4 space-y-6">
+            <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
               <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
                 <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-                
+
                 <div className="space-y-1 relative z-10">
                   <h3 className="text-sm font-bold tracking-tight">Water Goal</h3>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Your Details</p>
@@ -124,13 +125,13 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                       <span className="text-[10px] font-bold text-health">{units === 'metric' ? weightKg : weightLb} {units === 'metric' ? 'kg' : 'lb'}</span>
                     </div>
                     <div className="relative group">
-                       <Input 
-                          type="number" 
-                          value={units === 'metric' ? weightKg : weightLb} 
-                          onChange={(e) => units === 'metric' ? setWeightKg(Number(e.target.value)) : setWeightLb(Number(e.target.value))} 
-                          className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12" 
-                        />
-                        <Beaker className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/40" />
+                      <Input
+                        type="number"
+                        value={units === 'metric' ? weightKg : weightLb}
+                        onChange={(e) => units === 'metric' ? setWeightKg(Number(e.target.value)) : setWeightLb(Number(e.target.value))}
+                        className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12"
+                      />
+                      <Beaker className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/40" />
                     </div>
                     {units === "metric" ? (
                       <Slider value={[weightKg]} min={40} max={200} step={1} onValueChange={([v]) => setWeightKg(v)} />
@@ -178,14 +179,23 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                   </div>
                 </div>
               </div>
+
+              {calc.howTo && (
+                <HowToGuide
+                  id="how-to-use"
+                  steps={calc.howTo!.steps}
+                  proTip={calc.howTo!.proTip}
+                  variant="sidebar"
+                />
+              )}
             </div>
 
             {/* Results Panel */}
-            <div className="lg:col-span-8 space-y-8">
+            <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
               {/* Executive Summary */}
               <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
                 <Waves className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
-                
+
                 <div className="relative z-10">
                   <div className="space-y-2 mb-8">
                     <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
@@ -196,7 +206,7 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                       {water.liters.toFixed(2)} <span className="text-xl md:text-2xl opacity-40 uppercase tracking-widest font-sans font-bold">Liters</span>
                     </div>
                   </div>
-                  
+
                   <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
@@ -248,23 +258,23 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
 
               {/* Meta stats grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
-                 {[
-                   { l: "Sips per hour", v: Math.round(water.ml / 16), i: Clock, unit: "ml" },
-                   { l: "Minimum Need", v: (water.ml * 0.7).toFixed(0), i: History, unit: "ml" },
-                   { l: "Pacing", v: "Optimum", i: Zap },
-                   { l: "Result", v: "Class A", i: Landmark }
-                 ].map((item, idx) => (
-                   <div key={idx} className="surface-card p-5 border-border/30 bg-secondary/5 hover:border-foreground/20 transition-colors group">
-                     <div className="flex items-center gap-2 mb-3">
-                        <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
-                     </div>
-                     <div className="text-lg font-mono font-medium tabular-nums leading-tight">
-                        {item.v}
-                        <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
-                     </div>
-                   </div>
-                 ))}
+                {[
+                  { l: "Sips per hour", v: Math.round(water.ml / 16), i: Clock, unit: "ml" },
+                  { l: "Minimum Need", v: (water.ml * 0.7).toFixed(0), i: History, unit: "ml" },
+                  { l: "Pacing", v: "Optimum", i: Zap },
+                  { l: "Result", v: "Class A", i: Landmark }
+                ].map((item, idx) => (
+                  <div key={idx} className="surface-card p-5 border-border/30 bg-secondary/5 hover:border-foreground/20 transition-colors group">
+                    <div className="flex items-center gap-2 mb-3">
+                      <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                    </div>
+                    <div className="text-lg font-mono font-medium tabular-nums leading-tight">
+                      {item.v}
+                      <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -273,12 +283,12 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
         {/* SLEEP ARCHITECTURE */}
         <TabsContent value="sleep" className="mt-0 focus-visible:outline-none outline-none">
           <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-            
+
             {/* Input Panel */}
-            <div className="lg:col-span-4 space-y-6">
+            <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
               <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
                 <CloudMoon className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-                
+
                 <div className="space-y-1 relative z-10">
                   <h3 className="text-sm font-bold tracking-tight">Sleep Times</h3>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Sleep Planner</p>
@@ -296,8 +306,8 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                   <div className="space-y-3">
                     <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Target Time</Label>
                     <div className="relative group">
-                       <Clock className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
-                       <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} className="h-12 pl-12 bg-background border-border/60 font-bold rounded-xl shadow-sm text-lg" />
+                      <Clock className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
+                      <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} className="h-12 pl-12 bg-background border-border/60 font-bold rounded-xl shadow-sm text-lg" />
                     </div>
                   </div>
 
@@ -312,7 +322,7 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                   </div>
                 </div>
               </div>
-              
+
               <div className="surface-card p-6 border-border/30 bg-health/5 relative overflow-hidden group">
                 <Bed className="absolute -bottom-4 -right-4 size-20 text-health/5 group-hover:rotate-12 transition-transform duration-700" />
                 <div className="flex gap-4 items-start relative z-10">
@@ -327,10 +337,19 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                   </div>
                 </div>
               </div>
+
+              {calc.howTo && (
+                <HowToGuide
+                  id="how-to-use"
+                  steps={calc.howTo!.steps}
+                  proTip={calc.howTo!.proTip}
+                  variant="sidebar"
+                />
+              )}
             </div>
 
             {/* Result Panel */}
-            <div className="lg:col-span-8 space-y-8">
+            <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
               <div className="surface-card bg-background border-border/60 shadow-lg relative overflow-hidden rounded-3xl">
                 <div className="p-8 border-b border-border/30 bg-secondary/5 flex items-center justify-between relative overflow-hidden">
                   <CloudMoon className="absolute -top-12 -right-12 size-48 text-foreground/[0.03] -rotate-12" />
@@ -342,7 +361,7 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                     <Timer className="size-5 text-foreground/40" />
                   </div>
                 </div>
-                
+
                 <div className="divide-y divide-border/20">
                   {sleep.map((s, i) => (
                     <div key={s.cycles} className={cn("flex items-center justify-between px-8 py-8 transition-all group", i === 0 ? "bg-health/[0.03]" : "hover:bg-secondary/10")}>
@@ -356,7 +375,7 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
                           <div className="text-xs font-bold text-health uppercase mt-1 tracking-tighter">{s.hours} Hours Total</div>
                         </div>
                       </div>
-                      
+
                       {i === 0 && (
                         <div className="flex items-center gap-2 bg-foreground text-background px-5 py-2 rounded-xl text-[9px] font-bold uppercase tracking-[0.15em] shadow-xl">
                           <Sparkles className="size-3" /> Best
@@ -369,35 +388,35 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
 
               {/* Recovery stats grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                 {[
-                   { l: "Cycle Length", v: "90", i: Timer, unit: "min" },
-                   { l: "Fall Asleep", v: "15", i: FastForward, unit: "min" },
-                   { l: "Cycle Type", v: "REM", i: Brain },
-                   { l: "Status", v: "Calibrated", i: Landmark }
-                 ].map((item, idx) => (
-                   <div key={idx} className="surface-card p-5 border-border/30 bg-secondary/5 hover:border-foreground/20 transition-colors group">
-                     <div className="flex items-center gap-2 mb-3">
-                        <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
-                     </div>
-                     <div className="text-lg font-mono font-medium tabular-nums leading-tight">
-                        {item.v}
-                        <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
-                     </div>
-                   </div>
-                 ))}
+                {[
+                  { l: "Cycle Length", v: "90", i: Timer, unit: "min" },
+                  { l: "Fall Asleep", v: "15", i: FastForward, unit: "min" },
+                  { l: "Cycle Type", v: "REM", i: Brain },
+                  { l: "Status", v: "Calibrated", i: Landmark }
+                ].map((item, idx) => (
+                  <div key={idx} className="surface-card p-5 border-border/30 bg-secondary/5 hover:border-foreground/20 transition-colors group">
+                    <div className="flex items-center gap-2 mb-3">
+                      <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                    </div>
+                    <div className="text-lg font-mono font-medium tabular-nums leading-tight">
+                      {item.v}
+                      <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Expert Insight */}
               <div className="surface-card p-8 border-border/30 space-y-4 bg-background relative overflow-hidden group">
-                 <Heart className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
-                 <div className="flex items-center gap-3 relative z-10">
-                    <User className="size-4 text-muted-foreground" />
-                    <h4 className="text-[10px] font-bold uppercase tracking-wider">Better Sleep</h4>
-                 </div>
-                 <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
-                   Try to get 5 full sleep cycles (7.5 hours) for the best rest. If you need to sleep less, try to wake up at the end of a cycle so you don't feel groggy.
-                 </p>
+                <Heart className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+                <div className="flex items-center gap-3 relative z-10">
+                  <User className="size-4 text-muted-foreground" />
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider">Better Sleep</h4>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                  Try to get 5 full sleep cycles (7.5 hours) for the best rest. If you need to sleep less, try to wake up at the end of a cycle so you don't feel groggy.
+                </p>
               </div>
             </div>
           </div>

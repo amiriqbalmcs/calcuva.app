@@ -1,5 +1,7 @@
 ---
 title: "The Chronological Engine: Mastering the Math of Time and Age"
+category: "utility"
+excerpt: "Precision chronological tool to find your exact age and life milestones. Accounts for leap years and different month lengths with down-to-the-second accuracy."
 calculator: "age-calculator"
 keywords: ["age calculator", "date of birth math", "chronological age", "leap year calculations", "days between dates", "time intervals"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "What is 'Biological Age' vs. 'Chronological Age'?"
     a: "Chronological age is your time on earth. Biological age refers to how old your cells 'feel' based on biomarkers. Our [BMI & TDEE](/calculators/bmi-tdee-calculator) tools help you manage the latter."
 ---
-
 ## The Complexity of Simple Time
 Calculating age seems straightforward until you account for the irregularities of the human calendar. With months varying from 28 to 31 days and the recursive logic of leap years, determining an exact "Year, Month, and Day" count requires a sophisticated algorithmic approach. Calcuva serves as a high-precision **Chronological Engine** for researchers, lawyers, and curious individuals alike.
 

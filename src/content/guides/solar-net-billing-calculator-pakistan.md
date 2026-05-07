@@ -1,6 +1,9 @@
 ---
 title: "Solar Net Billing (Buyback) Calculator Guide 2026"
-description: "Everything you need to know about calculating solar savings under Pakistan's new Net Billing rules, NEPRA regulations, and buyback rates."
+keywords: ["solar net billing calculator", "solar buyback rate pakistan", "solar savings calculator 2026", "net billing vs net metering", "lesco solar rates", "k-electric solar credit"]
+category: "finance"
+calculator: "solar-net-billing-calculator-pakistan"
+excerpt: "Everything you need to know about calculating solar savings under Pakistan's new Net Billing rules, NEPRA regulations, and buyback rates."
 date: "2026-05-02"
 faqs:
   - q: "What is the difference between Net Metering and Net Billing?"
@@ -12,7 +15,6 @@ faqs:
   - q: "Are fixed charges applicable on Net Billing?"
     a: "Yes, NEPRA has introduced fixed monthly charges based on the installed kW capacity of your solar system to cover grid maintenance costs."
 ---
-
 ## Understanding Solar Net Billing in 2026
 
 For years, Pakistan's solar industry thrived under a simple **Net Metering** regime. It was a straightforward 1:1 exchange: if you exported 10 units during the day and imported 10 units at night, your net bill for those units was zero. However, in early 2026, the National Electric Power Regulatory Authority (NEPRA) shifted the framework to **Net Billing**.

@@ -1,5 +1,7 @@
 ---
 title: "Rent vs Buy: Deciphering the Economics of Home Ownership"
+category: "finance"
+excerpt: "Weigh down payment, EMI, rent inflation and home appreciation to see which option costs less over your time horizon."
 calculator: "rent-vs-buy-calculator"
 keywords: ["rent vs buy calculator", "housing economics", "mortgage vs rent", "real estate investment", "price to rent ratio", "home ownership math"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "How do I calculate the 'Opportunity Cost'?"
     a: "Consider what your down payment could earn if invested in the stock market (e.g., 8-10%) instead of being locked in a home's equity."
 ---
-
 ### The Great Housing Debate
 The decision to Rent or Buy is often the most significant financial choice of a person's life. It is not just about a monthly payment; it is a complex comparison of **lifestyle flexibility** versus **equity accumulation**. While society often views renting as "flushing money away," a mathematical analysis reveals that a well-invested renter can sometimes outperform a homeowner.
 

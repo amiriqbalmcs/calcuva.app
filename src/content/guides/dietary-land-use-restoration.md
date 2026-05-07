@@ -1,5 +1,6 @@
 ---
 title: "Dietary Land Use & Restoration: 2026 Food Sustainability Guide"
+excerpt: "Measure how much land and forest can be restored by small shifts in your weekly diet. Translates meat reduction into square meters of biodiversity."
 category: "sustainability"
 calculator: "dietary-land-use-restoration"
 keywords: ["dietary land use calculator", "forest restoration diet tool", "meat vs plant land footprint", "sustainable eating impact", "biodiversity support calculator"]
@@ -17,7 +18,6 @@ faqs:
   - q: "Is organic farming always better for land use?"
     a: "Not necessarily. While organic farming is better for soil health and biodiversity, it often has lower yields per acre, meaning it requires *more* land to produce the same amount of food. The 'Optimal Diet' in 2026 balances high-yield sustainable technology with organic soil preservation."
 ---
-
 ## Dietary Land Use & Restoration: 2026 Food Sustainability Guide
 
 The food on your plate has a footprint that extends far beyond the kitchen. In 2026, with the global population hitting new peaks and fertile land shrinking due to desertification, "Land-Use Efficiency" has become the most critical metric in the fight against climate change. We have reached a point where the question is no longer just "What are you eating?" but "How much of the Earth's surface did it take to grow it?"

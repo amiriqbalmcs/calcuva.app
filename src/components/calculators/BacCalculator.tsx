@@ -8,6 +8,7 @@ import {
   User, Waves, Flame, Siren
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -17,10 +18,9 @@ import { useUrlState } from "@/hooks/useUrlState";
 import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("blood-alcohol-content-calculator");
+const calc = calculatorBySlug("blood-alcohol-content-calculator")!;
 
 const BacCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
   const [weight, setWeight] = useUrlState<number>("w", 80);
   const [sex, setSex] = useUrlState<"male" | "female">("s", "male");
   const [drinks, setDrinks] = useUrlState<number>("dk", 3);
@@ -64,12 +64,13 @@ const BacCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
     setTimeout(() => setCopied(false), 2000);
   };
 
+  if (!calc) return null;
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
         
         {/* Input Panel */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
           <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
             <Beer className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
             
@@ -139,10 +140,19 @@ const BacCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
               </div>
             </div>
           </div>
+
+          {calc.howTo && (
+            <HowToGuide 
+              id="how-to-use"
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="sidebar" 
+            />
+          )}
         </div>
 
         {/* Results Panel */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
           
           {/* Executive Summary */}
           <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">

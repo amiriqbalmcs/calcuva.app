@@ -1,5 +1,7 @@
 ---
 title: "The Computational Mind: Mastering Functions on a Scientific Calculator"
+category: "utility"
+excerpt: "A clean, high-precision web calculator for logarithms, trigonometry, roots and other complex mathematical operations."
 calculator: "scientific-calculator-online"
 keywords: ["scientific calculator guide", "pemdas order of operations", "trigonometry functions sin cos tan", "logarithmic math", "engineering calculator online", "math logic"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Can this handle Factorials (!)? "
     a: "Yes. A factorial (n!) is the product of all positive integers less than or equal to n. 5! = 5 x 4 x 3 x 2 x 1 = 120."
 ---
-
 ### The Architecture of Advanced Logic
 A **Scientific Calculator** is more than just a tool for addition; it is a gateway to the laws of the universe. While a simple calculator handles the arithmetic of the grocery store, a scientific calculator handles the trigonometry of construction, the logarithms of finance, and the exponential growth of biological systems. Calcuva provides a high-precision digital environment designed for students, engineers, and data analysts.
 

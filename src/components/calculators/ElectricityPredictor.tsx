@@ -11,12 +11,13 @@ import {
    ClipboardCheck, Clock, Calculator, Copy, ShieldAlert, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("electricity-bill-predictor-pakistan");
+const calc = calculatorBySlug("electricity-bill-predictor-pakistan")!;
 
 // ============================================================
 // NEPRA SLAB RATES — FY 2025-26 (effective July 1, 2025)
@@ -66,8 +67,6 @@ const APPLIANCES = [
 ];
 
 const ElectricityPredictor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-   if (!calc) return null;
-
    const [mode, setMode] = useState<"units" | "appliance">("units");
    const [units, setUnits] = useState<number>(350);
    const [load, setLoad] = useState<number>(2);
@@ -133,343 +132,320 @@ const ElectricityPredictor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
       setTimeout(() => setCopied(false), 2000);
    };
 
+   if (!calc) return null;
+
    return (
-      <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles} hideHeaderCurrency={true}>
-         <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-            <div className="lg:col-span-8 space-y-6">
-               {/* TABS */}
-               <div className="flex p-1.5 bg-secondary/20 rounded-2xl border border-border/40 max-w-md mx-auto sm:mx-0">
-                  <button
-                     onClick={() => setMode("units")}
-                     className={cn("flex-1 h-11 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all",
-                        mode === "units" ? "bg-background text-foreground shadow-sm ring-1 ring-border/60" : "text-muted-foreground hover:text-foreground")}
-                  >
-                     By Units
-                  </button>
-                  <button
-                     onClick={() => setMode("appliance")}
-                     className={cn("flex-1 h-11 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all",
-                        mode === "appliance" ? "bg-background text-foreground shadow-sm ring-1 ring-border/60" : "text-muted-foreground hover:text-foreground")}
-                  >
-                     By Appliances
-                  </button>
-               </div>
-
-               <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden shadow-sm">
-                  <div className="p-8 border-b border-border/40 bg-background flex items-center justify-between">
-                     <div className="flex items-center gap-4">
-                        <div className="size-12 rounded-2xl bg-secondary flex items-center justify-center">
-                           <Zap className="size-6 text-foreground" />
-                        </div>
-                        <div className="space-y-0.5">
-                           <h3 className="text-lg font-bold tracking-tight text-foreground uppercase">Usage Simulator</h3>
-                           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">FY 2025–26 NEPRA Official Rates</p>
-                        </div>
-                     </div>
-                     <button
-                        onClick={() => {
-                           setLoad(0);
-                           if (mode === "units") setUnits(0);
-                           else setAppliances(APPLIANCES.reduce((acc, a) => ({ ...acc, [a.id]: { qty: 0, hrs: 0, watts: a.watts } }), {}));
-                        }}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/10 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all border border-border/40 hover:border-destructive/20 text-[10px] font-black uppercase tracking-widest"
-                     >
-                        <Trash2 className="size-3.5" />
-                        Clear All
-                     </button>
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles} hideHeaderCurrency={true}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-7xl mx-auto">
+        
+        {/* Main Content Area (Results & Analysis) */}
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
+          
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <div className="absolute top-0 right-0 size-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <Zap className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+            
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 mb-10">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Receipt className="size-3 text-primary" /> Estimated Monthly Bill
                   </div>
+                  <h2 className="text-sm font-bold tracking-tight">Predicted Total Payable</h2>
+                </div>
+                <div className="flex flex-col items-start md:items-end gap-2 overflow-hidden">
+                  <div className="text-4xl sm:text-5xl md:text-6xl font-mono font-bold tracking-tighter text-foreground tabular-nums leading-none break-all">
+                    Rs. {Math.round(results.total).toLocaleString()}
+                  </div>
+                  <div className={cn(
+                    "px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2",
+                    results.total > 15000 ? "bg-destructive/10 text-destructive" : "bg-primary/10 text-primary"
+                  )}>
+                    {results.slab.label} · {Math.round(activeUnits)} Units
+                  </div>
+                </div>
+              </div>
 
-                  <div className="p-8 space-y-12">
-                      {/* SHARED SETTINGS */}
-                      <div className="grid sm:grid-cols-3 gap-6 pb-12 border-b border-border/40 items-start">
-                         <div className="space-y-4">
-                            <div className="h-5 flex items-center">
-                               <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Consumer Category</Label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Activity className="size-3" /> Effective Unit Rate
+                  </div>
+                  <div className="text-2xl font-mono font-bold text-foreground/80 tabular-nums">
+                    Rs. {results.avgRate.toFixed(2)}
+                  </div>
+                  <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-tight">Total bill divided by total units</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Scale className="size-3 text-primary" /> Base Energy Charge
+                  </div>
+                  <div className="text-2xl font-mono font-bold text-primary/80 tabular-nums">
+                    Rs. {Math.round(results.energyCharge).toLocaleString()}
+                  </div>
+                  <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-tight">Pure electricity cost at Rs. {results.slab.rate}/unit</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tax & Surcharge Breakdown */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { l: "GST (17%)", v: results.gst, i: Receipt, c: "text-destructive" },
+              { l: "Surcharges", v: results.njSurcharge + results.fcSurcharge + results.qtaSurcharge + results.fpaEstimate, i: Calculator, c: "text-destructive/80" },
+              { l: "Fixed Charges", v: results.fixedCharge, i: ShieldCheck, c: "text-muted-foreground" },
+            ].map((item, idx) => (
+              <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                <div className="flex items-center gap-2 mb-3">
+                  <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                </div>
+                <div className={cn("text-xl font-mono font-medium tabular-nums leading-tight", item.c)}>
+                  Rs. {Math.round(item.v).toLocaleString()}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mode Switcher & Dynamic Content */}
+          <div className="space-y-6">
+            <div className="flex p-1.5 bg-secondary/20 rounded-2xl border border-border/40 max-w-sm">
+              <button
+                onClick={() => setMode("units")}
+                className={cn("flex-1 h-11 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all",
+                  mode === "units" ? "bg-background text-foreground shadow-sm ring-1 ring-border/60" : "text-muted-foreground hover:text-foreground")}
+              >
+                Simple Input
+              </button>
+              <button
+                onClick={() => setMode("appliance")}
+                className={cn("flex-1 h-11 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all",
+                  mode === "appliance" ? "bg-background text-foreground shadow-sm ring-1 ring-border/60" : "text-muted-foreground hover:text-foreground")}
+              >
+                Appliance Simulator
+              </button>
+            </div>
+
+            {mode === "appliance" ? (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 gap-4">
+                  {APPLIANCES.map((a) => {
+                    const item = appliances[a.id];
+                    const itemUnits = (item.watts * item.qty * item.hrs * 30) / 1000;
+                    return (
+                      <div key={a.id} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-all flex flex-col sm:flex-row sm:items-center gap-6 group">
+                        <div className="flex items-center gap-4 sm:w-1/3">
+                          <div className="size-10 rounded-xl bg-secondary/10 flex items-center justify-center border border-border/40 group-hover:bg-primary/5 group-hover:border-primary/20 transition-all shrink-0">
+                            <a.icon className="size-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-xs font-bold text-foreground truncate uppercase tracking-tight">{a.name}</p>
+                            <span className="text-[9px] text-muted-foreground font-bold uppercase">{item.watts} Watts</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between sm:justify-end gap-6 flex-1">
+                          <div className="flex items-center gap-4">
+                            <div className="space-y-1 text-center">
+                              <Label className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Qty</Label>
+                              <input
+                                type="number"
+                                value={item.qty}
+                                onChange={(e) => setAppliances({ ...appliances, [a.id]: { ...item, qty: Number(e.target.value) } })}
+                                className="w-12 h-9 bg-secondary/10 rounded-xl text-center text-xs font-mono font-bold outline-none border border-border/40 focus:border-primary/40"
+                              />
                             </div>
-                            <select
-                               value={consumerCat}
-                               onChange={(e) => setConsumerCat(e.target.value)}
-                               className="w-full h-14 bg-background border border-border/60 rounded-2xl px-5 text-xs font-bold focus:ring-2 ring-primary/20 outline-none appearance-none cursor-pointer shadow-sm"
-                            >
-                               <option value="unprotected">Standard (Unprotected)</option>
-                               <option value="protected">Protected (&lt;200 units 6mo)</option>
-                               <option value="lifeline50">Lifeline (0–50)</option>
-                               <option value="lifeline100">Lifeline (51–100)</option>
-                            </select>
-                         </div>
-                         <div className="space-y-4">
-                            <div className="h-5 flex items-center">
-                               <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Meter Type</Label>
+                            <div className="space-y-1 text-center">
+                              <Label className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Hrs/Day</Label>
+                              <input
+                                type="number"
+                                value={item.hrs}
+                                onChange={(e) => setAppliances({ ...appliances, [a.id]: { ...item, hrs: Number(e.target.value) } })}
+                                className="w-12 h-9 bg-secondary/10 rounded-xl text-center text-xs font-mono font-bold outline-none border border-border/40 focus:border-primary/40"
+                              />
                             </div>
-                            <select
-                               value={consumerType}
-                               onChange={(e) => setConsumerType(e.target.value)}
-                               className="w-full h-14 bg-background border border-border/60 rounded-2xl px-5 text-xs font-bold focus:ring-2 ring-primary/20 outline-none appearance-none cursor-pointer shadow-sm"
-                            >
-                               <option value="residential">Residential (Domestic)</option>
-                               <option value="commercial">Commercial (Business)</option>
-                            </select>
-                         </div>
-                         <div className="space-y-4">
-                            <div className="h-5 flex items-center gap-2">
-                               <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Sanctioned Load (kW)</Label>
-                               <div className="group relative">
-                                  <Info className="size-3 text-muted-foreground/40 cursor-help" />
-                                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 bg-foreground text-background text-[9px] font-bold uppercase rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 shadow-xl leading-relaxed">
-                                     Your 'Sanctioned Load' from your bill. Fixed charges are calculated per kW.
-                                  </div>
-                               </div>
+                          </div>
+
+                          <div className="text-right border-l border-border/40 pl-6 min-w-[80px]">
+                            <div className="text-[10px] font-mono font-black text-foreground">
+                              {Math.round(itemUnits)} kWh
                             </div>
-                            <div className="relative">
-                               <Input
-                                  type="number"
-                                  value={load || ""}
-                                  onChange={(e) => setLoad(Number(e.target.value) || 0)}
-                                  className="h-14 bg-background border-border/60 font-mono text-xl font-bold rounded-2xl pl-5 pr-12 shadow-sm"
-                                  placeholder="1"
-                               />
-                               <div className="absolute right-5 top-1/2 -translate-y-1/2 text-muted-foreground/30 font-mono text-xs font-bold uppercase">kW</div>
-                            </div>
-                         </div>
+                          </div>
+                        </div>
                       </div>
-
-                      {mode === "units" ? (
-                         <div className="space-y-8">
-                            <div className="space-y-4">
-                               <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Monthly Units Consumed (kWh)</Label>
-                               <div className="relative group">
-                                  <Input
-                                     type="number"
-                                     value={units || ""}
-                                     onChange={(e) => setUnits(Number(e.target.value) || 0)}
-                                     className="h-24 bg-background border-border/60 font-mono text-6xl font-bold rounded-[2rem] pl-10 pr-24 focus:ring-4 ring-primary/5 transition-all shadow-inner"
-                                     placeholder="0"
-                                  />
-                                  <div className="absolute right-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-2xl font-bold">kWh</div>
-                               </div>
-                            </div>
-                         </div>
-                      ) : (
-                        <div className="space-y-6">
-                           <div className="grid grid-cols-1 gap-4">
-                              {APPLIANCES.map((a) => {
-                                 const item = appliances[a.id];
-                                 const itemUnits = (item.watts * item.qty * item.hrs * 30) / 1000;
-                                 const itemCost = itemUnits * results.slab.rate;
-                                 
-                                 return (
-                                    <div key={a.id} className="p-6 rounded-3xl bg-background border border-border/60 hover:border-foreground/20 transition-all flex flex-col sm:flex-row sm:items-center gap-6 group">
-                                       <div className="flex items-center gap-4 sm:w-1/3">
-                                          <div className="size-12 rounded-2xl bg-secondary/10 flex items-center justify-center border border-border/40 group-hover:bg-primary/5 group-hover:border-primary/20 transition-all shrink-0">
-                                             <a.icon className="size-6 text-muted-foreground group-hover:text-primary transition-colors" />
-                                          </div>
-                                          <div className="min-w-0">
-                                             <p className="text-xs font-bold text-foreground truncate">{a.name}</p>
-                                             <div className="flex items-center gap-2 mt-1">
-                                                <input
-                                                   type="number"
-                                                   value={item.watts}
-                                                   onChange={(e) => setAppliances({ ...appliances, [a.id]: { ...item, watts: Number(e.target.value) } })}
-                                                   className="w-16 h-6 bg-secondary/20 rounded-md text-center text-[10px] font-mono font-bold outline-none border border-border/40 focus:border-primary/40"
-                                                />
-                                                <span className="text-[9px] text-muted-foreground font-bold uppercase">Watts</span>
-                                             </div>
-                                          </div>
-                                       </div>
-
-                                       <div className="flex items-center justify-between sm:justify-end gap-6 flex-1">
-                                          <div className="flex items-center gap-4">
-                                             <div className="space-y-1 text-center">
-                                                <Label className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Qty</Label>
-                                                <input
-                                                   type="number"
-                                                   value={item.qty}
-                                                   onChange={(e) => setAppliances({ ...appliances, [a.id]: { ...item, qty: Number(e.target.value) } })}
-                                                   className="w-12 h-9 bg-secondary/10 rounded-xl text-center text-xs font-mono font-bold outline-none border border-border/40 focus:border-primary/40"
-                                                />
-                                             </div>
-                                             <div className="space-y-1 text-center">
-                                                <Label className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">Hrs/Day</Label>
-                                                <input
-                                                   type="number"
-                                                   value={item.hrs}
-                                                   onChange={(e) => setAppliances({ ...appliances, [a.id]: { ...item, hrs: Number(e.target.value) } })}
-                                                   className="w-12 h-9 bg-secondary/10 rounded-xl text-center text-xs font-mono font-bold outline-none border border-border/40 focus:border-primary/40"
-                                                />
-                                             </div>
-                                          </div>
-
-                                          <div className="text-right border-l border-border/40 pl-6 space-y-1">
-                                             <div className="text-[10px] font-mono font-black text-foreground">
-                                                {Math.round(itemUnits)} kWh
-                                             </div>
-                                             <div className="text-[10px] font-mono font-black text-health">
-                                                Rs.{Math.round(itemCost).toLocaleString()}
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 );
-                              })}
-                           </div>
-                           
-                           <div className="p-8 bg-primary/5 border border-primary/20 rounded-3xl flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm">
-                              <div className="flex flex-col">
-                                 <span className="text-[10px] font-black uppercase tracking-widest text-primary">Estimated Consumption</span>
-                                 <span className="text-3xl font-mono font-black text-foreground">{Math.round(applianceUnits)} kWh/Month</span>
-                              </div>
-                              <div className="flex flex-col sm:text-right">
-                                 <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Estimated Peak Load</span>
-                                 <span className="text-xl font-mono font-black text-foreground">
-                                    {(Object.values(appliances).reduce((s, a) => s + (a.watts * a.qty), 0) / 1000).toFixed(2)} kW
-                                 </span>
-                              </div>
-                           </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <div className="surface-card p-8 border-border/30 bg-secondary/5 space-y-6">
+                <div className="flex items-center gap-3">
+                  <Info className="size-4 text-primary" />
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-foreground">Slab Progress Indicator</p>
+                </div>
+                <div className="space-y-4">
+                  {results.slabs.map((s) => {
+                    const isActive = s.label === results.slab.label;
+                    return (
+                      <div key={s.label} className={cn(
+                        "p-4 rounded-2xl border transition-all relative overflow-hidden",
+                        isActive ? "bg-background border-primary shadow-sm" : "bg-background/50 border-border/30 opacity-40"
+                      )}>
+                        <div className="flex justify-between items-center relative z-10 mb-2">
+                          <div className="flex items-center gap-3">
+                            <div className="size-2 rounded-full" style={{ backgroundColor: s.color }} />
+                            <span className="text-[10px] font-bold uppercase tracking-tight text-foreground">{s.range} Units</span>
+                          </div>
+                          <span className="text-[10px] font-mono font-black">Rs. {s.rate}/unit</span>
                         </div>
-                     )}
+                        {isActive && (
+                          <div className="h-1 w-full bg-secondary/30 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-primary transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(var(--primary),0.4)]"
+                              style={{ width: `${Math.min(100, ((activeUnits - s.min + 1) / (s.max - s.min + 1)) * 100)}%` }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
 
-                     <div className="p-6 bg-foreground/[0.02] border border-border/40 rounded-3xl flex gap-4">
-                        <Info className="size-5 text-muted-foreground shrink-0 mt-1" />
-                        <div className="space-y-1">
-                           <p className="text-[11px] font-bold text-foreground uppercase tracking-tight">Verified 2026 Logic</p>
-                           <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase">
-                              Current prediction assumes NEPRA Slab Rates effective from July 1, 2025. Actual bills include monthly FPA and QTA surcharges notified separately.
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+          {/* Expert Guidance */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+              <Lightbulb className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+              <div className="flex items-center gap-2 relative z-10 text-[10px] font-bold uppercase tracking-widest text-foreground">
+                <TrendingDown className="size-3 text-primary" /> Energy Saving Tip
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                {activeUnits > 200 
+                  ? "You are currently in an 'Unprotected' slab. Reducing monthly usage below 200 units for 6 consecutive months can significantly lower your base rate." 
+                  : "Excellent! You are maintaining 'Protected' status. Keep your usage under 200 units to avoid sharp rate hikes."}
+              </p>
+            </div>
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+              <ShieldAlert className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+              <div className="flex items-center gap-2 relative z-10 text-[10px] font-bold uppercase tracking-widest text-foreground">
+                <AlertTriangle className="size-3 text-primary" /> Tax Note
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                FPA (Fuel Price Adjustment) and QTA (Quarterly Tariff Adjustment) are estimated based on 2026 averages. Final bills may vary based on DISCO notifications.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Sidebar Panel (Inputs) */}
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-6 md:p-8 space-y-8 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Activity className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+            
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Usage Parameters</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Configure Meter & Load</p>
             </div>
 
-            <div className="lg:col-span-4 space-y-6">
-               <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-28 overflow-hidden">
-                  <div className="absolute top-0 right-0 size-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-
-                  <div className="space-y-6 relative border-b border-border/40 pb-10">
-                     <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Monthly Bill</div>
-                           <button 
-                              onClick={handleCopy}
-                              className={cn(
-                                 "p-2 rounded-lg transition-all border shadow-sm",
-                                 copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
-                              )}
-                           >
-                              {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
-                           </button>
-                        </div>
-                        <div className={cn(
-                           "font-mono font-bold tracking-tighter text-foreground leading-none break-all",
-                           results.total > 99999 ? "text-3xl sm:text-4xl" : "text-4xl sm:text-5xl"
-                        )}>
-                           Rs.{Math.round(results?.total || 0).toLocaleString()}
-                        </div>
-                        <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">
-                           {Math.round(activeUnits)} Units · {results.slab.label}
-                        </p>
-                     </div>
-
-                     <div className="space-y-4 pt-4 border-t border-border/40">
-                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Effective Unit Rate</div>
-                        <div className="text-3xl font-mono font-bold tracking-tighter text-health leading-none">
-                           Rs.{results?.avgRate.toFixed(2)}
-                        </div>
-                     </div>
+            <div className="space-y-6 relative z-10">
+              
+              {/* Main Input (Units) */}
+              {mode === "units" && (
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Monthly Units (kWh)</Label>
+                  <div className="relative group">
+                    <Input 
+                      type="number" 
+                      value={units || ""} 
+                      onChange={(e) => setUnits(Number(e.target.value) || 0)} 
+                      className="h-16 bg-background border-border/60 font-mono text-2xl font-bold rounded-2xl pl-6 pr-16 focus:ring-primary/20 transition-all shadow-sm"
+                      placeholder="0"
+                    />
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 text-muted-foreground/40 font-mono text-sm font-bold">kWh</div>
                   </div>
+                </div>
+              )}
 
-                  <div className="space-y-3 relative">
-                     {/* ENERGY COST CARD */}
-                     <div className="surface-card p-4 bg-secondary/10 border-border/40 shadow-lg space-y-1.5 transition-all hover:scale-[1.02] border-2">
-                        <div className="flex items-center justify-between">
-                           <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Energy Cost</span>
-                           <Zap className="size-4 text-muted-foreground/40" />
-                        </div>
-                        <p className="text-2xl font-mono font-black text-foreground leading-none">
-                           Rs.{Math.round(results?.energyCharge || 0).toLocaleString()}
-                        </p>
-                        <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-tight">Pure consumption cost at current slabs</p>
-                     </div>
+              {/* Consumer Selection */}
+              <div className="space-y-4 pt-4 border-t border-border/20">
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Consumer Category</Label>
+                  <select
+                    value={consumerCat}
+                    onChange={(e) => setConsumerCat(e.target.value)}
+                    className="w-full h-12 bg-background border border-border/60 rounded-xl px-4 text-xs font-bold focus:ring-2 ring-primary/10 outline-none appearance-none cursor-pointer shadow-sm"
+                  >
+                    <option value="unprotected">Standard (Unprotected)</option>
+                    <option value="protected">Protected (&lt;200 units)</option>
+                    <option value="lifeline50">Lifeline (0–50)</option>
+                    <option value="lifeline100">Lifeline (51–100)</option>
+                  </select>
+                </div>
 
-                     {/* FIXED CHARGE CARD */}
-                     <div className="surface-card p-4 bg-secondary/10 border-border/40 shadow-lg space-y-1.5 transition-all hover:scale-[1.02] border-2">
-                        <div className="flex items-center justify-between">
-                           <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Fixed Charge</span>
-                           <ShieldCheck className="size-4 text-muted-foreground/40" />
-                        </div>
-                        <p className="text-2xl font-mono font-black text-foreground leading-none">
-                           Rs.{Math.round(results?.fixedCharge || 0).toLocaleString()}
-                        </p>
-                        <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-tight">Fixed service fees & monthly rentals</p>
-                     </div>
-
-                     {/* GST CARD */}
-                     <div className="surface-card p-4 bg-destructive/5 border-destructive/20 shadow-lg shadow-destructive/5 space-y-1.5 transition-all hover:scale-[1.02] border-2">
-                        <div className="flex items-center justify-between">
-                           <span className="text-[10px] font-black uppercase tracking-widest text-destructive/70">GST (17%)</span>
-                           <Receipt className="size-4 text-destructive" />
-                        </div>
-                        <p className="text-2xl font-mono font-black text-destructive leading-none">
-                           +Rs.{Math.round(results?.gst || 0).toLocaleString()}
-                        </p>
-                        <p className="text-[9px] text-destructive/60 font-bold uppercase tracking-tight">General Sales Tax on utility services</p>
-                     </div>
-
-                     {/* MISC TAXES CARD */}
-                     <div className="surface-card p-4 bg-destructive/5 border-destructive/20 shadow-lg shadow-destructive/5 space-y-1.5 transition-all hover:scale-[1.02] border-2">
-                        <div className="flex items-center justify-between">
-                           <span className="text-[10px] font-black uppercase tracking-widest text-destructive/70">Surcharges</span>
-                           <Calculator className="size-4 text-destructive" />
-                        </div>
-                        <p className="text-2xl font-mono font-black text-destructive leading-none">
-                           +Rs.{Math.round(results?.ed + results?.njSurcharge + results?.tvFee + results?.fcSurcharge + results?.qtaSurcharge + results?.fpaEstimate).toLocaleString()}
-                        </p>
-                        <p className="text-[9px] text-destructive/60 font-bold uppercase tracking-tight">Includes ED, FPA, QTA & surcharges</p>
-                     </div>
-
-                     {/* SLAB INDICATOR */}
-                     <div className="space-y-4 pt-4 border-t border-border/40">
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Slab Progress</p>
-                        <div className="space-y-3">
-                           {results.slabs.map((s) => {
-                              const isActive = s.label === results.slab.label;
-                              return (
-                                 <div key={s.label} className={cn("p-4 rounded-2xl border transition-all", isActive ? "bg-primary/5 border-primary/20 ring-1 ring-primary/10" : "bg-secondary/10 border-border/40 opacity-40")}>
-                                    <div className="flex justify-between items-center mb-2">
-                                       <div className="flex items-center gap-2">
-                                          <div className="size-2 rounded-full" style={{ backgroundColor: s.color }} />
-                                          <span className="text-[10px] font-bold uppercase tracking-tight text-foreground">{s.range} Units</span>
-                                       </div>
-                                       <span className="text-[10px] font-mono font-bold text-foreground">Rs.{s.rate}</span>
-                                    </div>
-                                    {isActive && (
-                                       <div className="h-1 w-full bg-background rounded-full overflow-hidden">
-                                          <div
-                                             className="h-full bg-primary transition-all duration-1000 ease-out"
-                                             style={{ width: `${Math.min(100, ((activeUnits - s.min + 1) / (s.max - s.min + 1)) * 100)}%` }}
-                                          />
-                                       </div>
-                                    )}
-                                 </div>
-                              );
-                           })}
-                        </div>
-                     </div>
-
-                     <div className="p-6 bg-primary/5 border border-primary/10 rounded-2xl flex gap-4">
-                        <Lightbulb className="size-5 text-primary shrink-0" />
-                        <div className="space-y-1">
-                           <p className="text-[10px] text-foreground font-bold uppercase">Slab Savings</p>
-                           <p className="text-[9px] text-muted-foreground leading-relaxed font-medium">
-                              {activeUnits > 200 ? "Warning: You are in an Unprotected slab. Reducing usage below 200 units could save you thousands in taxes." : "Tip: Maintain protected status by staying under 200 units consistently."}
-                           </p>
-                        </div>
-                     </div>
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Sanctioned Load (kW)</Label>
+                  <div className="relative">
+                    <Input 
+                      type="number" 
+                      value={load || ""} 
+                      onChange={(e) => setLoad(Number(e.target.value) || 0)} 
+                      className="h-12 bg-background border-border/60 font-mono text-sm font-bold rounded-xl pl-4 pr-12"
+                      placeholder="1"
+                    />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/30 font-mono text-[10px] font-bold uppercase tracking-tighter">kW</div>
                   </div>
-               </div>
+                </div>
+              </div>
+
+              {/* Summary Stats */}
+              <div className="pt-6 border-t border-border/20 space-y-4">
+                <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  <span>Current Mode</span>
+                  <span className="text-foreground">{mode === "units" ? "Manual Units" : "Appliance Sim"}</span>
+                </div>
+                <button 
+                  onClick={handleCopy}
+                  className={cn(
+                    "w-full h-11 rounded-xl flex items-center justify-center gap-3 font-bold text-[10px] uppercase tracking-[0.2em] transition-all shadow-md active:scale-95",
+                    copied ? "bg-foreground text-background" : "bg-slate-900 hover:bg-slate-800 text-white"
+                  )}
+                >
+                  {copied ? (
+                    <><CheckCircle2 className="size-3" /> Copied Prediction</>
+                  ) : (
+                    <><Copy className="size-3" /> Share Estimate</>
+                  )}
+                </button>
+              </div>
             </div>
-         </div>
-      </CalculatorPage>
+          </div>
+
+          <div className="p-6 bg-primary/5 border border-primary/10 rounded-3xl space-y-3">
+            <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary">
+              <ShieldCheck className="size-3" /> NEPRA Verified
+            </div>
+            <p className="text-[9px] text-muted-foreground leading-relaxed font-medium uppercase">
+              Calculations based on 2025-26 tariff structure. Includes GST, ED, FPA, and Surcharges as per latest regulations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {calc.howTo && (
+        <div className="mt-12 pt-12 border-t border-border/40">
+          <HowToGuide
+            id="how-to-use"
+            steps={calc.howTo!.steps}
+            proTip={calc.howTo!.proTip}
+            variant="horizontal"
+          />
+        </div>
+      )}
+    </CalculatorPage>
    );
 };
 

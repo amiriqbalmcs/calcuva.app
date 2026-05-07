@@ -1,6 +1,7 @@
 ---
 title: "Zakat Guide 2026: Rules, Nisab, and Calculation in Pakistan"
-description: "A complete guide on how to calculate Zakat on gold, silver, cash, and business assets. Includes the latest 2026 Nisab values for Pakistan."
+keywords: ["zakat calculator pakistan 2026", "nisab for zakat 2026 pakistan", "gold price for zakat", "zakat on property and investments", "islamic wealth tax calculator"]
+excerpt: "A complete guide on how to calculate Zakat on gold, silver, cash, and business assets. Includes the latest 2026 Nisab values for Pakistan."
 category: "finance"
 calculator: "zakat-calculator-pakistan-2026"
 lastUpdated: "2026-05-02"
@@ -16,7 +17,6 @@ faqs:
   - q: "What is the CZ-50 Affidavit?"
     a: "The CZ-50 is a legal form used in Pakistan to exempt your bank account from automatic Zakat deduction on the 1st of Ramadan. This allows you to distribute your Zakat personally to those you believe are most in need."
 ---
-
 ## Understanding Zakat in the 2026 Financial Landscape
 
 Zakat is one of the Five Pillars of Islam, representing a mandatory charitable contribution of 2.5% of an individual's accumulated wealth. While the spiritual essence of Zakat remains eternal, the practicalities of calculation in 2026 have evolved. With the rise of digital assets, fluctuating commodity prices, and complex investment vehicles, accurately determining your Zakat requires a modern approach.

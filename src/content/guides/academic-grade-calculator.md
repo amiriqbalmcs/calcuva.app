@@ -1,5 +1,7 @@
 ---
 title: "The Math of Success: The Ultimate Academic Grade & Final Exam Guide"
+category: "education"
+excerpt: "Determine your weighted average and find out exactly what score you need on your final exam to reach your target grade."
 calculator: "academic-grade-calculator"
 keywords: ["grade calculator", "final grade calculator", "weighted average guide", "how to calculate grades", "final exam score needed", "academic performance math"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "What is a 'Pass/Fail' threshold?"
     a: "Most academic institutions set a passing grade at 60% or 70%. You can set this as your 'Target Grade' to find the minimum score needed on your final exam to pass the class."
 ---
-
 ### Master Your Academic Strategy
 Grades are more than just numbers; they are a reflection of your consistency and strategy throughout a semester. Whether you are a high school student aiming for the Honor Roll or a university student managing a complex syllabus, understanding the **math of your grades** is the best way to reduce stress and improve your performance. Calcuva provides the "Strategic Roadmap" for your semester.
 

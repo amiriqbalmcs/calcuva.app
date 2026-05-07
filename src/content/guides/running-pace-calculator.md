@@ -14,7 +14,6 @@ faqs:
   - q: "What is a 'Negative Split'?"
     a: "A negative split is when you run the second half of a race faster than the first half. This is widely considered the most efficient way to set a new personal record."
 ---
-
 Whether you're training for your first 5K or your fifth marathon, understanding your pace is the most critical element of race strategy. Pacing is the art of managing your energy reserves to cross the finish line as fast as possible without "bonking" (running out of fuel).
 
 ## The Math of Pacing

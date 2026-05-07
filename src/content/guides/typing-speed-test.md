@@ -1,5 +1,7 @@
 ---
 title: "Typing Speed Test: Master Your Words Per Minute (WPM)"
+category: "benchmarks"
+excerpt: "Test your typing speed and accuracy with this easy WPM test. Type the text as fast as you can to see your typing speed and character accuracy score."
 calculator: "typing-speed-test"
 keywords: ["typing speed test", "wpm test online", "keyboard speed test", "typing accuracy test", "fast typing", "typing practice", "free typing test", "human benchmark", "humanbenchmark"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "How can I type faster?"
     a: "Learn 'Touch Typing.' This involves using all ten fingers and keeping your eyes on the screen rather than the keyboard. Consistent practice is the only way to build the necessary muscle memory."
 ---
-
 ## Digital Productivity: The Science of Fast Typing
 In the modern workplace, your keyboard is your voice. The Calcuva **Typing Speed Test** is a professional-grade tool designed to measure your raw speed (WPM) and your character precision. As a key part of the **human benchmark** suite, typing speed is one of the most practical measurements of your digital efficiency and cognitive-motor coordination.
 

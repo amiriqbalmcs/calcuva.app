@@ -1,6 +1,7 @@
 ---
 title: "Pakistan Electricity Bill Guide 2026: Mastering NEPRA Tariffs & Slabs"
-description: "A complete guide to the 2026 electricity billing system in Pakistan. Learn about protected categories, FPA, and how to predict your LESCO, K-Electric, or IESCO bills."
+keywords: ["pakistan electricity bill calculator 2026", "nepra tariff slabs", "lesco bill predictor", "k-electric 2026 rates", "electricity duty calculator"]
+excerpt: "A complete guide to the 2026 electricity billing system in Pakistan. Learn about protected categories, FPA, and how to predict your LESCO, K-Electric, or IESCO bills."
 category: "utility"
 calculator: "electricity-bill-predictor-pakistan"
 lastUpdated: "2026-05-02"
@@ -16,7 +17,6 @@ faqs:
   - q: "Why did I get a 'Quartely Adjustment' charge?"
     a: "Quarterly Tariff Adjustments (QTA) are periodically added to bills to cover the capacity payments made to independent power producers (IPPs). This is a fixed per-unit charge applied for a 3-month cycle."
 ---
-
 ## Decoding the 2026 Pakistan Electricity Bill
 
 In 2026, an electricity bill in Pakistan is more than just a request for payment; it is a complex financial document consisting of over 15 different line items. From base tariffs and progressive slabs to fuel adjustments and multiple federal taxes, the cost of a single "unit" can vary by as much as 400% depending on who you are and how much you consume.

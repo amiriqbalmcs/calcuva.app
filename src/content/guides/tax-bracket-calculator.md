@@ -1,6 +1,6 @@
 ---
 title: "Understanding Tax Brackets: Marginal vs Effective Rates 2026"
-description: "Master the math of progressive taxation. Learn how the 2025-26 FBR tax brackets work, the difference between marginal and effective rates, and why a raise never costs you money."
+excerpt: "Master the math of progressive taxation. Learn how the 2025-26 FBR tax brackets work, the difference between marginal and effective rates, and why a raise never costs you money."
 category: "finance"
 calculator: "tax-bracket-calculator"
 keywords: ["tax bracket guide", "marginal tax rate vs effective tax rate", "Pakistan income tax slabs 2026", "progressive tax system explained", "FBR tax math"]
@@ -14,7 +14,6 @@ faqs:
   - q: "Can a salary increase actually lead to less take-home pay due to tax?"
     a: "In a standard progressive tax system like Pakistan's or the US's, no. Since the higher rate only applies to the *additional* income, you will always have more net income after a raise than you did before."
 ---
-
 The concept of "Tax Brackets" is often shrouded in mystery and anxiety, yet it is the single most important mathematical framework in modern economics. Whether you are a salaried professional in Karachi or a freelancer in Lahore, understanding how these brackets—or "slabs"—actually function is the key to mastering your personal finances in 2026.
 
 In this guide, we will dismantle the myths, explain the calculation logic of the 2025-26 FBR regime, and show you how to calculate your real tax burden like a pro.

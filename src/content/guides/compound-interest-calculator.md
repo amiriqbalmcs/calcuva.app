@@ -14,7 +14,6 @@ faqs:
   - q: "What is APY?"
     a: "Annual Percentage Yield (APY) is the real rate of return earned on a savings deposit or investment taking into account the effect of compounding interest, which makes it slightly higher than your stated interest rate."
 ---
-
 Compound interest is often called the *eighth wonder of the world*, and for good reason. It is the core mathematical engine that grows wealth exponentially over time. By reinvesting your earnings, you generate further returns, not just on your initial capital, but on the accumulated interest.
 
 In the volatile economic climate of 2026, understanding the math of compounding is the difference between falling behind and achieving true financial independence.

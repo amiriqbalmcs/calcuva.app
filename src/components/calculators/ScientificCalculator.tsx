@@ -11,11 +11,11 @@ import { CalculatorPage } from "@/components/CalculatorPage";
 import { calculatorBySlug } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 import { SITE_DOMAIN } from "@/lib/constants";
+import { HowToGuide } from "@/components/HowToGuide";
 
-const calc = calculatorBySlug("scientific-calculator-online");
+const calc = calculatorBySlug("scientific-calculator-online")!;
 
 const ScientificCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
   const [display, setDisplay] = useState("0");
   const [log, setLog] = useState<string[]>([]);
   const [lastOp, setLastOp] = useState(false);
@@ -83,6 +83,7 @@ const ScientificCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
     </button>
   );
 
+  if (!calc) return null;
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
@@ -243,6 +244,17 @@ const ScientificCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
           </div>
         </div>
       </div>
+
+      {calc.howTo && (
+        <div className="mt-12 pt-12 border-t border-border/40">
+          <HowToGuide
+            id="how-to-use"
+            steps={calc.howTo!.steps}
+            proTip={calc.howTo!.proTip}
+            variant="horizontal"
+          />
+        </div>
+      )}
     </CalculatorPage>
   );
 };

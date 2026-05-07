@@ -7,16 +7,15 @@ import {
   Sparkles, Globe, Copy, Award, AlertCircle, HeartPulse, Droplet, CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { calculatorBySlug } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("blood-sugar-hba1c-converter");
+const calc = calculatorBySlug("blood-sugar-hba1c-converter")!;
 
 const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
-
   const [glucose, setGlucose] = useState<number>(126);
   const [unit, setUnit] = useState<"mgdl" | "mmol">("mgdl");
   const [copied, setCopied] = useState(false);
@@ -42,116 +41,171 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
     setTimeout(() => setCopied(false), 2000);
   };
 
+  if (!calc) return null;
+
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
-      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-        <div className="lg:col-span-7 space-y-6">
-          <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden group shadow-sm">
-            <div className="p-6 md:p-8 border-b border-border/40 flex items-center justify-between bg-background relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-foreground" />
-              <div className="flex items-center gap-3 relative z-10">
-                <HeartPulse className="size-5 text-muted-foreground/60" />
-                <div className="space-y-0.5">
-                  <h3 className="text-sm font-bold tracking-tight">Glucose Input</h3>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Enter your 3-month average blood sugar</p>
-                </div>
-              </div>
-              <div className="flex bg-secondary/10 p-1 rounded-xl border border-border/40">
-                 <button 
-                    onClick={() => setUnit("mgdl")}
-                    className={cn("px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all", 
-                       unit === "mgdl" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground opacity-50")}>mg/dL</button>
-                 <button 
-                    onClick={() => setUnit("mmol")}
-                    className={cn("px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all", 
-                       unit === "mmol" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground opacity-50")}>mmol/L</button>
-              </div>
-            </div>
+      <div className="w-full max-w-7xl mx-auto space-y-12 sm:px-6 lg:px-8">
+        
+        {/* Main Interface: Side-by-Side Results & Inputs */}
+        <div className="grid lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Right Column: Results Dashboard */}
+          <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
+            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-3xl">
+               <div className="absolute top-0 right-0 size-32 bg-red-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
-            <div className="p-10 space-y-8">
-               <div className="relative group">
-                  <Input
-                     type="number"
-                     value={glucose}
-                     onChange={(e) => setGlucose(Number(e.target.value) || 0)}
-                     className="h-24 bg-background border-border/60 font-mono text-5xl font-bold rounded-3xl shadow-sm text-center tabular-nums focus:ring-foreground transition-all"
-                  />
-                  <div className="absolute top-4 right-8 text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-40">
-                     Average Level
+               <div className="space-y-6 relative border-b border-border/40 pb-10">
+                   <div className="flex items-center justify-between">
+                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Estimated HbA1c</div>
+                      <button 
+                         onClick={handleCopy}
+                         className={cn(
+                            "p-2 rounded-lg transition-all border shadow-sm",
+                            copied ? "bg-red-600 text-white border-red-700" : "bg-background text-foreground border-border hover:bg-secondary"
+                         )}
+                      >
+                         {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                      </button>
+                   </div>
+                  <div className={cn("text-8xl font-mono font-bold tracking-tighter transition-colors", result.color)}>
+                     {result.hba1c.toFixed(1)}<span className="text-3xl ml-1 opacity-20">%</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className={cn("px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2",
+                       result.hba1c >= 5.7 ? "bg-red-500/10 text-red-600 dark:text-red-400" : "bg-health/10 text-health"
+                    )}>
+                      <Activity className="size-3" /> {result.risk}
+                    </div>
+                  </div>
+               </div>
+
+                <div className="space-y-8 relative">
+                  <div className="p-6 rounded-3xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-4">
+                     <div className="flex items-center gap-2 text-red-700/60 dark:text-red-400/60">
+                        <TrendingUp className="size-4" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Clinical Indicators</span>
+                     </div>
+                     <div className="space-y-4">
+                        <div className="space-y-1.5">
+                          <div className="flex justify-between text-[9px] font-bold uppercase text-red-800 dark:text-red-400">
+                              <span>Health Risk Level</span>
+                              <span>{result.hba1c.toFixed(1)}%</span>
+                          </div>
+                          <div className="h-1.5 w-full bg-red-100 dark:bg-red-950 rounded-full overflow-hidden flex">
+                              <div className="h-full bg-health w-[57%]" />
+                              <div className="h-full bg-amber-500 w-[8%]" />
+                              <div className="h-full bg-red-600 w-[35%]" />
+                          </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div className="p-6 bg-slate-900 text-white rounded-2xl flex gap-4 shadow-xl">
+                     <HeartPulse className="size-5 text-red-400 shrink-0" />
+                     <div className="space-y-1">
+                        <p className="text-[10px] font-bold uppercase tracking-widest">Medical Insight</p>
+                        <p className="text-[9px] text-slate-300 leading-relaxed font-medium">
+                          {result.hba1c >= 6.5 
+                            ? "This result is in the diabetic range. Consult a physician for a formal lab test."
+                            : "Your result is in the healthy range. Maintain balanced nutrition to sustain metabolic health."}
+                        </p>
+                     </div>
                   </div>
                </div>
             </div>
           </div>
 
-          <div className="surface-card p-6 border-border/30 bg-foreground/5 relative overflow-hidden group">
-            <Sparkles className="absolute -bottom-4 -right-4 size-24 text-foreground/5 group-hover:rotate-12 transition-transform duration-700" />
-            <div className="flex gap-4 items-start relative z-10">
-              <div className="mt-1 text-foreground/60">
-                <Info className="size-5" />
+          {/* Left Column: Inputs Panel */}
+          <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
+            <div className="surface-card bg-red-500/5 dark:bg-red-500/10 border-red-500/20 overflow-hidden shadow-sm rounded-3xl">
+              <div className="p-8 border-b border-red-500/10 dark:border-red-500/20 bg-background flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div className="flex items-center gap-4">
+                  <div className="size-12 rounded-2xl bg-red-500/10 dark:bg-red-500/20 flex items-center justify-center">
+                    <Droplet className="size-6 text-red-600 dark:text-red-400" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <h3 className="text-lg font-bold tracking-tight text-foreground uppercase">Glucose Input</h3>
+                    <p className="text-[10px] text-red-600/60 dark:text-red-400/60 uppercase tracking-widest font-bold">Enter your 3-month average blood sugar</p>
+                  </div>
+                </div>
+
+                <div className="flex bg-secondary/10 p-1.5 rounded-2xl border border-border/40">
+                   <button 
+                      onClick={() => setUnit("mgdl")}
+                      className={cn("px-6 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all", 
+                         unit === "mgdl" ? "bg-background shadow-lg text-foreground" : "text-muted-foreground opacity-50")}>mg/dL</button>
+                   <button 
+                      onClick={() => setUnit("mmol")}
+                      className={cn("px-6 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all", 
+                         unit === "mmol" ? "bg-background shadow-lg text-foreground" : "text-muted-foreground opacity-50")}>mmol/L</button>
+                </div>
               </div>
-              <div className="space-y-1">
-                <h4 className="text-[10px] font-bold uppercase tracking-wider">Clinical Definition</h4>
-                <p className="text-xs text-muted-foreground leading-relaxed font-medium">
-                  HbA1c measures the percentage of your hemoglobin that is coated with sugar. It reflects your average blood sugar levels over the past 2-3 months.
-                </p>
+              
+              <div className="p-12 space-y-10">
+                 <div className="relative group max-w-md mx-auto">
+                    <Input
+                       type="number"
+                       value={glucose || ""}
+                       onChange={(e) => setGlucose(Number(e.target.value) || 0)}
+                       className="h-32 bg-background border-border/60 font-mono text-6xl font-bold rounded-[40px] shadow-sm text-center tabular-nums focus:ring-4 ring-red-500/5 transition-all"
+                    />
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[10px] font-black text-red-600/40 uppercase tracking-[0.3em]">
+                       Average Level
+                    </div>
+                 </div>
+              </div>
+
+              <div className="p-8 bg-red-500/5 dark:bg-red-500/10 border-t border-red-500/10 dark:border-red-500/20 grid sm:grid-cols-2 gap-6">
+                 <div className="flex gap-4 items-center">
+                    <div className="size-10 rounded-xl bg-background dark:bg-secondary border border-red-100 dark:border-red-500/20 flex items-center justify-center">
+                      <Scale className="size-5 text-red-500 dark:text-red-400" />
+                    </div>
+                    <div>
+                      <div className="text-[9px] font-black uppercase tracking-widest text-red-600/70 dark:text-red-400/70">Equivalent mg/dL</div>
+                      <div className="text-xl font-mono font-bold text-red-800 dark:text-red-300">{Math.round(result.mgdl)}</div>
+                    </div>
+                 </div>
+                 <div className="flex gap-4 items-center">
+                    <div className="size-10 rounded-xl bg-background dark:bg-secondary border border-red-100 dark:border-red-500/20 flex items-center justify-center">
+                      <Target className="size-5 text-red-500 dark:text-red-400" />
+                    </div>
+                    <div>
+                      <div className="text-[9px] font-black uppercase tracking-widest text-red-600/70 dark:text-red-400/70">Health Score</div>
+                      <div className="text-xl font-mono font-bold text-red-800 dark:text-red-300">{result.hba1c < 5.7 ? "Excellent" : result.hba1c < 6.5 ? "Fair" : "At Risk"}</div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+
+            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-3xl">
+              <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                <Sparkles className="size-4 text-red-600" /> Scientific Insights
+              </h4>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="p-5 rounded-3xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-2">
+                  <p className="text-[11px] font-black text-red-900 dark:text-red-400 uppercase">HbA1c Logic</p>
+                  <p className="text-[10px] text-red-800/60 dark:text-red-400/60 leading-relaxed font-medium">HbA1c measures the percentage of hemoglobin coated with sugar, reflecting your average levels over 90 days.</p>
+                </div>
+                <div className="p-5 rounded-3xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-2">
+                  <p className="text-[11px] font-black text-red-900 dark:text-red-400 uppercase">Metabolic Health</p>
+                  <p className="text-[10px] text-red-800/60 dark:text-red-400/60 leading-relaxed font-medium">Consistent average glucose is a key indicator of long-term cardiovascular and metabolic wellness.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-5 space-y-6">
-          <div className="surface-card p-8 bg-background border-border/60 shadow-md relative overflow-hidden group">
-             <div className="space-y-10 relative z-10">
-                <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                       <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-                          <Droplet className="size-3" /> Estimated HbA1c
-                       </div>
-                       <button 
-                          onClick={handleCopy}
-                          className={cn(
-                             "p-2 rounded-lg transition-all border shadow-sm",
-                             copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
-                          )}
-                       >
-                          {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
-                       </button>
-                    </div>
-                   <div className={cn("text-8xl font-mono font-bold tracking-tighter tabular-nums transition-colors", result.color)}>
-                      {result.hba1c.toFixed(1)}<span className="text-3xl ml-1 opacity-20">%</span>
-                   </div>
-                </div>
-
-                <div className="space-y-6 pt-8 border-t border-border/40">
-                   <div className="flex justify-between items-center">
-                      <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Classification</div>
-                      <div className={cn("text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full border", 
-                         result.hba1c >= 6.5 ? "bg-destructive/5 border-destructive/20" : "bg-health/5 border-health/20"
-                      )}>{result.risk}</div>
-                   </div>
-
-                   <div className="p-6 rounded-2xl bg-foreground/5 border border-border/30 space-y-4">
-                      <div className="space-y-2">
-                         <div className="flex justify-between text-[10px] font-bold text-muted-foreground uppercase">
-                            <span>Diagnostic Range</span>
-                            <span>{result.hba1c.toFixed(1)}%</span>
-                         </div>
-                         <div className="h-2 w-full bg-secondary/30 rounded-full overflow-hidden flex">
-                            <div className="h-full bg-health w-[57%]" />
-                            <div className="h-full bg-amber-500 w-[8%]" />
-                            <div className="h-full bg-destructive w-[35%]" />
-                         </div>
-                      </div>
-                      <p className="text-[10px] text-muted-foreground leading-relaxed font-medium">
-                         {result.hba1c >= 6.5 
-                           ? "This result is in the diabetic range. Please consult a healthcare professional for a formal lab test and diagnosis."
-                           : "Your result is in the healthy range. Maintain a balanced diet and regular exercise to sustain metabolic health."}
-                      </p>
-                   </div>
-                </div>
-             </div>
+        {/* How-To Section */}
+        {calc.howTo && (
+          <div id="how-to-use" className="mt-12 pt-12 border-t border-border/40">
+            <HowToGuide 
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="horizontal"
+            />
           </div>
-        </div>
+        )}
       </div>
     </CalculatorPage>
   );

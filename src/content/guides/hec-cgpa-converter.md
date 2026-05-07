@@ -1,5 +1,7 @@
 ---
 title: "Global Grading Rosetta Stone: The HEC CGPA to Percentage Guide"
+category: "education"
+excerpt: "Official CGPA to percentage converter for Pakistani universities including NUST, FAST, LUMS, and UET based on HEC guidelines."
 calculator: "hec-cgpa-converter"
 keywords: ["hec cgpa converter", "cgpa to percentage pakistan", "nust gpa calculator", "fast university gpa", "hec grading scale", "university of punjab gpa conversion"]
 faqs:
@@ -14,7 +16,6 @@ faqs:
   - q: "Can I use this for US university admissions?"
     a: "Yes. Most US universities require your Pakistani CGPA to be converted to a percentage first, or they use WES (World Education Services) which often aligns with the HEC 4.0 standard."
 ---
-
 ### Navigating the Pakistani Academic Landscape
 In Pakistan, your CGPA is your primary academic currency. However, when applying for government jobs, scholarships, or international admissions, you are often asked for your "Percentage." Because every university—from **NUST** and **FAST** to **LUMS** and **UET**—has slightly different grading cultures, a one-size-fits-all conversion is often inaccurate. Calcuva provides the **HEC-Standardized Rosetta Stone** for your grades.
 

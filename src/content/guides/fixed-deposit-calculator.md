@@ -1,5 +1,7 @@
 ---
 title: "The FD Masterclass: Maximizing Returns with Term Deposits"
+category: "finance"
+excerpt: "Plan your savings by calculating the interest and total maturity value for fixed deposits or time-based savings with various compounding options."
 calculator: "fixed-deposit-calculator"
 keywords: ["fd calculator", "fixed deposit interest", "cumulative vs simple interest", "tax on fd", "fd laddering", "savings strategy"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Is my principal safe in an FD?"
     a: "In most countries, a baseline amount of bank deposits is insured by the government (e.g., up to $250k in the US via FDIC or 5 Lakhs in India via DICGC)."
 ---
-
 ### The Bedrock of Financial Safety
 A **Fixed Deposit (FD)**, also known as a Term Deposit, is the "safe haven" of the financial world. While the stock market fluctuates, an FD provides a contractual guarantee: you know exactly how much you will have on the **Maturity Date**. For conservative investors or those saving for a short-term goal (like a wedding or a house down payment), the FD is an indispensable tool.
 

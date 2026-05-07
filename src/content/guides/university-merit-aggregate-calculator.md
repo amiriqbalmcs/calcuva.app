@@ -1,6 +1,8 @@
 ---
 title: "University Admission Merit Strategy Guide"
-calculator: "university-merit-calculator"
+category: "education"
+excerpt: "Calculate your university admission merit score based on Matric, Inter, and Entry Test scores. Supports custom weights for all major universities like NUST (NET), UET (ECAT), FAST, and GIKI."
+calculator: "university-merit-aggregate-calculator"
 keywords: ["university merit calculator", "aggregate calculator pakistan", "admission merit calculator", "nust aggregate calculator", "uet merit calculator", "fast university aggregate"]
 faqs:
   - q: "What is an 'Aggregate Score'?"
@@ -12,7 +14,6 @@ faqs:
   - q: "What are the FAST University weightage rules?"
     a: "FAST usually follows: 50% Entry Test, 40% Intermediate (Part 1), and 10% Matric."
 ---
-
 ### Master the Admission Game
 Securing admission into Pakistan's top engineering and medical universities is less about intelligence and more about **strategic weightage management**. In 2026, where a difference of 0.001% can mean the difference between getting into NUST or sitting on a waiting list, understanding the math is your greatest competitive advantage.
 

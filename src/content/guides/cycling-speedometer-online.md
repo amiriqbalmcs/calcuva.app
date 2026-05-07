@@ -1,5 +1,7 @@
 ---
 title: "The Digital Cyclocomputer: Mastering Your Cycling Velocity"
+category: "utility"
+excerpt: "Turn your smartphone into a professional cycling computer. Track live bike speed, average pace, max velocity, and total distance with our high-precision GPS bike speedometer."
 calculator: "cycling-speedometer-online"
 keywords: ["cycling speedometer online", "bike speed tracker", "bicycle gps speedometer", "cycling stats app", "measure bike speed phone", "live cycling telemetry"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "How do I mount my phone safely?"
     a: "Use a dedicated handlebar mount with a mechanical lock. Avoid 'silicone strap' mounts for high-speed road cycling as they can vibrate, affecting the GPS sensor's precision."
 ---
-
 ## Pedal Power: The Science of Cycling Performance
 For the modern cyclist, data is the key to improvement. Whether you are a road racer aiming for a new PR or a commuter tracking your daily route, the Calcuva **Cycling GPS Speedometer** turns your smartphone into a professional-grade cyclocomputer.
 

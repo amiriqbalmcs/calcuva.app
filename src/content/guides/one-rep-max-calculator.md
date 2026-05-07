@@ -14,7 +14,6 @@ faqs:
   - q: "How often should I test my 1RM?"
     a: "Direct testing should be rare (every 12-16 weeks). However, you can use estimation formulas weekly to track progress based on your training sets."
 ---
-
 Your One-Rep Max (1RM) is the maximum amount of weight you can lift for a single repetition of a given exercise with proper form. It is the gold standard for measuring absolute strength in movements like the squat, bench press, and deadlift.
 
 ## The Science of Estimation: Why We Use Math Instead of Ego

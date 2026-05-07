@@ -14,7 +14,6 @@ faqs:
   - q: "Should I change my passwords frequently?"
     a: "Current cybersecurity advice from NIST suggests that you should only change your password if there is evidence of a compromise. Frequent forced changes often lead to users choosing weaker, predictable passwords."
 ---
-
 In the age of automated "brute-force" attacks and AI-driven social engineering, having a secure password is no longer a luxury—it’s your first line of defense. In 2026, hackers use specialized "GPU Farms" to try billions of combinations per second, making simple passwords like "Password123" or "MyDogName!" obsolete in less than a second.
 
 ## Entropy: The Math of Randomness

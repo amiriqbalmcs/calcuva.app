@@ -14,7 +14,6 @@ faqs:
   - q: "Can I stack a 20% off and 10% off coupon to get 30% off?"
     a: "Usually no. Retailers typically apply stacked discounts sequentially. So a 20% discount is applied first, and the 10% discount is applied to that newly reduced price, resulting in a total discount of 28%, not 30%."
 ---
-
 Retailers use various psychological pricing strategies and discounts to drive sales. Whether you're shopping Black Friday deals or utilizing employee discounts, calculating the actual final cost is essential to maintaining a budget.
 
 ## How Discounts Work: The Basic Formula

@@ -16,7 +16,6 @@ faqs:
   - q: "What is 'Starvation Mode'?"
     a: "Metabolic Adaptation (often called starvation mode) is the body's natural response to prolonged caloric restriction, where it reduces NEAT and BMR to conserve energy. This is why small, sustainable deficits are better than extreme ones."
 ---
-
 ## Fat Loss is a Physics Problem
 
 At its most fundamental level, weight loss is governed by the First Law of Thermodynamics: energy cannot be created or destroyed, only transformed. In the context of the human body, this means that if you provide your body with less energy (calories) than it requires to function, it *must* pull that energy from its internal storage—primarily body fat.

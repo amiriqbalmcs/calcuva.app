@@ -1,5 +1,7 @@
 ---
 title: "The Human Engine: Tracking Your Running Velocity and Pace"
+category: "utility"
+excerpt: "Optimize your training with our live running speedometer. Track your current sprinting speed, average running pace, and total distance using high-precision mobile GPS."
 calculator: "running-speedometer-test"
 keywords: ["running speedometer", "live running pace", "how fast am i running", "sprint speed tracker", "jogging speed app", "human running velocity"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Will it track my route on a map?"
     a: "Our current focus is on **Real-Time Telemetry** (Speed, Max Speed, Distance). This provides a cleaner, lower-latency experience than heavy map-based apps."
 ---
-
 ## Human Velocity: Quantifying Your Running Performance
 Running is the purest form of human movement. Whether you are training for a 5K, perfecting your marathon pace, or testing your top-end sprint speed, the Calcuva **Running GPS Speedometer** provides the live data you need to optimize your stride.
 

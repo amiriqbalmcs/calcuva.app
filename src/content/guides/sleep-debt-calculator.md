@@ -1,5 +1,7 @@
 ---
 title: "The Science of Rest: Sleep Debt & Recovery Guide"
+category: "health"
+excerpt: "Track your sleep hours over the week to identify cumulative sleep debt and get a scientifically-backed recovery schedule."
 calculator: "sleep-debt-calculator"
 keywords: ["sleep debt calculator", "sleep deficit tool", "how to recover sleep", "circadian rhythm tracker", "health sleep hours", "mental focus sleep"]
 faqs:
@@ -14,7 +16,6 @@ faqs:
   - q: "Does caffeine help with sleep debt?"
     a: "Caffeine masks the symptoms of sleepiness by blocking adenosine receptors, but it doesn't solve the underlying biological need for rest or clear the 'debt'."
 ---
-
 ### Reclaiming Your Vitality
 In our 24/7 world of work, social media, and late-night binging, sleep is often the first thing we sacrifice. However, sleep is not a luxury; it is a biological requirement for brain detoxification, memory consolidation, and metabolic health. Calcuva helps you **Visualize the Deficit** so you can plan your recovery.
 

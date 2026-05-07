@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { CalcMeta } from "@/lib/calculators";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -81,27 +82,113 @@ export const SolarPanelToKwCalculator = ({
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
-      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+      <div className="w-full max-w-7xl mx-auto space-y-12 sm:px-6 lg:px-8">
         
-        {/* Input Configuration */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="surface-card p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden">
-            
+        {/* Main Interface: Side-by-Side Results & Inputs */}
+        <div className="grid lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Right Column: Results Dashboard */}
+          <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
+            <div className="space-y-6 sticky top-32">
+              
+              {/* Main Capacity Card */}
+              <div className="surface-card p-10 space-y-8 bg-background border-border/60 shadow-xl relative overflow-hidden group rounded-3xl">
+                <Zap className="absolute -top-6 -right-6 size-32 text-foreground/[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+                
+                <div className="space-y-6 relative z-10">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Array Capacity</span>
+                      <div className="flex items-center gap-2">
+                        <div className="size-2 rounded-full bg-primary animate-pulse" />
+                        <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{results.systemClass}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button 
+                         onClick={handleCopy}
+                         className={cn(
+                            "p-2 rounded-lg transition-all border shadow-sm",
+                            copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
+                         )}
+                      >
+                         {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p className="text-6xl font-mono font-black leading-none tracking-tighter text-foreground">
+                      {results.totalKW.toFixed(2)}<span className="text-xl font-sans opacity-20 ml-1">kW</span>
+                    </p>
+                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.3em]">Peak Power Potential</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 pt-6 border-t border-border/40 relative">
+                    <div className="space-y-1">
+                       <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Area Need</p>
+                       <p className="text-xl font-mono font-bold text-foreground">{results.areaSqFt}<span className="text-[9px] opacity-40 ml-1">ft²</span></p>
+                    </div>
+                    <div className="space-y-1">
+                       <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Panel Count</p>
+                       <p className="text-xl font-mono font-bold text-primary">{panelQty}<span className="text-[9px] text-foreground opacity-40 ml-1 font-sans">Units</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Energy Production Cards */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="surface-card p-6 bg-health/5 border-health/20 shadow-lg shadow-health/5 space-y-2 rounded-2xl">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-health/70">Daily</span>
+                    <Sun className="size-4 text-health" />
+                  </div>
+                  <p className="text-2xl font-mono font-black text-health">
+                    {results.dailyKWh.toFixed(1)}<span className="text-[10px] font-sans opacity-40 ml-1">kWh</span>
+                  </p>
+                </div>
+
+                <div className="surface-card p-6 bg-signal/5 border-signal/20 shadow-lg shadow-signal/5 space-y-2 rounded-2xl">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-signal/70">Monthly</span>
+                    <CalendarDays className="size-4 text-signal" />
+                  </div>
+                  <p className="text-2xl font-mono font-black text-signal">
+                    {results.monthlyKWh.toFixed(0)}<span className="text-[10px] font-sans opacity-40 ml-1">kWh</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {/* Main Panel (Inputs) */}
+        <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-8 space-y-10 bg-secondary/5 border-border/40 overflow-hidden rounded-3xl">
+            <div className="flex items-center gap-4">
+               <div className="size-12 rounded-2xl bg-foreground/5 flex items-center justify-center">
+                  <Layers className="size-6 text-foreground/60" />
+               </div>
+               <div className="space-y-1">
+                  <h3 className="text-lg font-bold tracking-tight">Array Configuration</h3>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Define your panel specifications</p>
+               </div>
+            </div>
+
             {/* Panel Quantity */}
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <Label className="text-sm font-bold tracking-tight">Number of Panels</Label>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">How many units in your array?</p>
+                  <Label className="text-sm font-bold tracking-tight uppercase tracking-wider">Number of Panels</Label>
+                  <p className="text-[10px] text-muted-foreground font-medium">Total physical modules</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <Input 
                     type="number" 
                     value={panelQty} 
                     onChange={(e) => setPanelQty(Number(e.target.value))}
-                    className="w-24 h-12 text-center font-mono text-lg font-black bg-background border-2 border-border/40 rounded-xl focus:border-primary transition-all"
+                    className="w-28 h-14 text-center font-mono text-2xl font-black bg-background border-border/40 rounded-2xl focus:border-primary transition-all"
                   />
-                  <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Units</span>
                 </div>
               </div>
 
@@ -120,7 +207,7 @@ export const SolarPanelToKwCalculator = ({
                     key={q} 
                     variant={panelQty === q ? "default" : "outline"}
                     onClick={() => setPanelQty(q)}
-                    className="h-9 px-4 text-[10px] font-bold uppercase tracking-widest rounded-xl transition-all"
+                    className="h-10 px-6 text-[10px] font-bold uppercase tracking-widest rounded-xl transition-all"
                   >
                     {q} Panels
                   </Button>
@@ -131,20 +218,19 @@ export const SolarPanelToKwCalculator = ({
             <div className="h-px bg-border/20" />
 
             {/* Panel Wattage */}
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <Label className="text-sm font-bold tracking-tight">Panel Wattage (Wp)</Label>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Wattage per individual panel</p>
+                  <Label className="text-sm font-bold tracking-tight uppercase tracking-wider">Panel Wattage (Wp)</Label>
+                  <p className="text-[10px] text-muted-foreground font-medium">Power rating per panel</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <Input 
                     type="number" 
                     value={panelWattage} 
                     onChange={(e) => setPanelWattage(Number(e.target.value))}
-                    className="w-24 h-12 text-center font-mono text-lg font-black bg-background border-2 border-border/40 rounded-xl focus:border-primary transition-all"
+                    className="w-28 h-14 text-center font-mono text-2xl font-black bg-background border-border/40 rounded-2xl focus:border-primary transition-all"
                   />
-                  <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Watts</span>
                 </div>
               </div>
 
@@ -163,7 +249,7 @@ export const SolarPanelToKwCalculator = ({
                     key={p.value} 
                     variant={panelWattage === p.value ? "default" : "outline"}
                     onClick={() => setPanelWattage(p.value)}
-                    className="h-9 px-4 text-[10px] font-bold uppercase tracking-widest rounded-xl transition-all"
+                    className="h-10 px-6 text-[10px] font-bold uppercase tracking-widest rounded-xl transition-all"
                   >
                     {p.label}
                   </Button>
@@ -172,126 +258,57 @@ export const SolarPanelToKwCalculator = ({
             </div>
           </div>
 
-          <div className="surface-card p-6 bg-primary/5 border-primary/20 space-y-4">
-            <div className="flex items-center gap-2 text-primary">
-              <TrendingUp className="size-4" />
-              <span className="text-[10px] font-bold uppercase tracking-wider">Market Insight</span>
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed font-medium">
-              In 2026, **580W and 600W N-Type TopCon** panels are the most efficient choices for Pakistani residential projects, offering better performance in high temperatures compared to older 540W modules.
-            </p>
-          </div>
-        </div>
-
-        {/* Results Analysis */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="space-y-4 relative z-10">
-            
-            {/* Main Capacity Card */}
-            <div className="surface-card p-8 space-y-8 bg-background border-border/60 shadow-xl relative overflow-hidden group">
-              <Zap className="absolute -top-6 -right-6 size-32 text-foreground/[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-              
-              <div className="space-y-6 relative z-10">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Total Array Capacity</span>
-                    <div className="flex items-center gap-2">
-                      <div className="size-2 rounded-full bg-primary animate-pulse" />
-                      <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{results.systemClass}</span>
-                    </div>
+          <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-3xl">
+             <div className="flex items-center gap-3 mb-4">
+                <div className="size-10 rounded-xl bg-secondary/50 flex items-center justify-center">
+                  <Ruler className="size-5 text-foreground/60" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-wider">Installation Space Guide</h4>
+                  <p className="text-[10px] text-muted-foreground">Approximate roof area requirements</p>
+                </div>
+             </div>
+             
+             <div className="grid sm:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between text-xs">
+                     <span className="text-muted-foreground font-medium">Standard Square Feet</span>
+                     <span className="font-bold">{results.areaSqFt} ft²</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button 
-                       onClick={handleCopy}
-                       className={cn(
-                          "p-2 rounded-lg transition-all border shadow-sm",
-                          copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
-                       )}
-                    >
-                       {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
-                    </button>
-                    <div className="size-10 rounded-2xl bg-secondary/50 flex items-center justify-center">
-                      <Cpu className="size-5 text-muted-foreground" />
-                    </div>
+                  <div className="flex items-center justify-between text-xs">
+                     <span className="text-muted-foreground font-medium">Approx. Marla (Residential)</span>
+                     <span className="font-bold">{(results.areaSqFt / 225).toFixed(2)} Marla</span>
+                  </div>
+                  <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
+                     <div 
+                       className="h-full bg-primary transition-all duration-1000" 
+                       style={{ width: `${Math.min((results.areaSqFt / 1000) * 100, 100)}%` }} 
+                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <p className="text-6xl sm:text-7xl font-mono font-black leading-none tracking-tighter text-foreground">
-                    {results.totalKW.toFixed(2)}<span className="text-2xl font-sans opacity-20 ml-2">kW</span>
+                <div className="p-5 bg-primary/5 border border-primary/20 rounded-2xl flex gap-4">
+                  <TrendingUp className="size-5 text-primary shrink-0 mt-1" />
+                  <p className="text-[11px] text-muted-foreground leading-relaxed font-medium">
+                    In 2026, **N-Type TopCon** panels offer the best roof-space-to-wattage ratio for residential projects in Pakistan.
                   </p>
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.3em]">Direct Peak Power Potential</p>
                 </div>
-
-                <div className="grid grid-cols-2 gap-4 pt-6 border-t border-border/40 relative">
-                  <div className="space-y-1">
-                     <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Array Area</p>
-                     <p className="text-xl font-mono font-bold text-foreground">{results.areaSqFt} <span className="text-[10px] opacity-40">SqFt</span></p>
-                  </div>
-                  <div className="space-y-1">
-                     <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Total Watts</p>
-                     <p className="text-xl font-mono font-bold text-primary">{(results.totalKW * 1000).toLocaleString()}<span className="text-[10px] text-foreground opacity-40 ml-1 font-sans">W</span></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Energy Production Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="surface-card p-6 bg-health/5 border-health/20 shadow-lg shadow-health/5 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-health/70">Daily Avg</span>
-                  <Sun className="size-4 text-health" />
-                </div>
-                <p className="text-3xl font-mono font-black text-health">
-                  {results.dailyKWh.toFixed(1)} <span className="text-xs font-sans opacity-40">kWh</span>
-                </p>
-                <p className="text-[8px] text-health/60 font-bold uppercase">Estimated daily generation</p>
-              </div>
-
-              <div className="surface-card p-6 bg-signal/5 border-signal/20 shadow-lg shadow-signal/5 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-signal/70">Monthly Avg</span>
-                  <CalendarDays className="size-4 text-signal" />
-                </div>
-                <p className="text-3xl font-mono font-black text-signal">
-                  {results.monthlyKWh.toFixed(0)} <span className="text-xs font-sans opacity-40">kWh</span>
-                </p>
-                <p className="text-[8px] text-signal/60 font-bold uppercase">Monthly grid offsets</p>
-              </div>
-            </div>
-
-            <div className="surface-card p-8 bg-secondary/5 border-border/40 space-y-6">
-               <div className="flex items-center gap-3">
-                  <div className="size-8 rounded-xl bg-background border border-border flex items-center justify-center">
-                    <Ruler className="size-4 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider">Installation Space Guide</h4>
-                    <p className="text-[10px] text-muted-foreground">Approximate roof area needed</p>
-                  </div>
-               </div>
-               
-               <div className="space-y-3">
-                 <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground font-medium">Standard Square Feet</span>
-                    <span className="font-bold">{results.areaSqFt} ft²</span>
-                 </div>
-                 <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground font-medium">Approx. Marla (Residential)</span>
-                    <span className="font-bold">{(results.areaSqFt / 225).toFixed(2)} Marla</span>
-                 </div>
-                 <div className="h-2 bg-secondary rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-primary transition-all duration-1000" 
-                      style={{ width: `${Math.min((results.areaSqFt / 1000) * 100, 100)}%` }} 
-                    />
-                 </div>
-               </div>
-            </div>
+             </div>
           </div>
         </div>
+      </div>
 
+      <div id="how-to-use" className="pt-8 border-t border-border/40">
+            <div className="mb-6">
+              <h3 className="text-lg font-bold tracking-tight">How to Use Solar Panel to kW Calculator</h3>
+              <p className="text-xs text-muted-foreground uppercase tracking-widest font-bold opacity-60">Step-by-Step Guide</p>
+            </div>
+            <HowToGuide 
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="horizontal"
+            />
+          </div>
       </div>
     </CalculatorPage>
   );

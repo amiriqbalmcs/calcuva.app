@@ -1,5 +1,7 @@
 ---
 title: "The Time Value of PKR: Pakistan Inflation & Purchasing Power Guide"
+category: "finance"
+excerpt: "Compare the value of Pakistani Rupee (PKR) between any two years from 2010 to 2025 using historical CPI data."
 calculator: "pakistan-inflation-calculator"
 keywords: ["pakistan inflation calculator", "pkr purchasing power", "inflation rate pakistan history", "value of 1000 pkr", "real value of money pakistan", "pbs cpi data calculator"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "How does inflation affect my savings?"
     a: "If the inflation rate is 20% and your bank savings account only gives you 15% profit, you are actually losing 5% of your 'real' money value every year."
 ---
-
 ### The Silent Thief: Understanding Inflation in Pakistan
 Inflation is often called the "silent thief" because it reduces the value of your money without you ever losing a single note. In Pakistan, the volatility of the Rupee (PKR) makes understanding inflation critical for anyone trying to save for a home, a car, or retirement. Calcuva provides a **Historical Audit** of your money's value using official data from the **Pakistan Bureau of Statistics (PBS)**.
 

@@ -1,5 +1,7 @@
 ---
 title: "The Cognitive Matrix: Mastering the Sequence Memory Test"
+category: "benchmarks"
+excerpt: "Test your memory by repeating a sequence of tiles that light up. Every time you get it right, the pattern adds one more step to make it harder."
 calculator: "sequence-memory-test"
 keywords: ["sequence memory test", "human benchmark", "pattern recognition", "improve short term memory", "brain training games", "visual memory exercise", "memory matrix online", "humanbenchmark"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Is this test related to IQ?"
     a: "Working memory is a component of general intelligence (g-factor). While a high score doesn't define IQ, it is a strong indicator of cognitive processing speed and focus."
 ---
-
 ## Cognitive Foundations: How Your Brain Tracks Sequences
 How many steps ahead can you think? The Calcuva **Sequence Memory Test** (often called a Memory Matrix or Simon Says Test) is a direct measure of your **visuo-spatial working memory**. This is the specialized part of your brain responsible for temporarily holding and manipulating information about your environment in a specific temporal order. As a pillar of the **human benchmark** suite, this test measures the "bandwidth" of your brain's processing unit.
 

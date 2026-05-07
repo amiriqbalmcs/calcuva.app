@@ -1,5 +1,7 @@
 ---
 title: "Pakistan Board Exam Guide: Matric & Inter Percentage Calculator"
+category: "education"
+excerpt: "Result calculator for Matric and Intermediate students across Punjab, Sindh, KPK, and Federal boards with grade and division analysis."
 calculator: "board-percentage-calculator"
 keywords: ["board result calculator", "matric percentage pakistan", "inter percentage calculator", "punjab board grading", "federal board marks", "bise result calculator", "fbise percentage calculator"]
 faqs:
@@ -14,7 +16,6 @@ faqs:
   - q: "Which board is the most difficult in Pakistan?"
     a: "The Federal Board (FBISE) and Aga Khan Board (AKU-EB) are often considered more conceptual and rigorous, whereas provincial boards (like BISE Lahore) are more traditional in their assessment."
 ---
-
 ### Your Roadmap to Board Exam Success
 The **Matric (SSC)** and **Intermediate (HSSC)** examinations are the most critical milestones in a Pakistani student's academic journey. These marks determine your eligibility for top colleges, engineering universities (like NUST/UET), and medical schools (via MDCAT). Calcuva provides the definitive tool to analyze your results across all 20+ educational boards in Pakistan.
 

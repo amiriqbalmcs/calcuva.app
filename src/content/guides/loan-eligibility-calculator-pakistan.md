@@ -1,5 +1,7 @@
 ---
 title: "Pakistan Loan Eligibility: Home & Car Loan Calculator Guide"
+category: "finance"
+excerpt: "Calculate your maximum loan amount and monthly EMI eligibility using standard Pakistani bank DTI (Debt-to-Income) ratios."
 calculator: "loan-eligibility-calculator-pakistan"
 keywords: ["loan eligibility pakistan", "home loan calculator pakistan", "car loan salary requirement", "bank loan eligibility", "dti ratio pakistan", "sbp consumer finance regulations"]
 faqs:
@@ -14,7 +16,6 @@ faqs:
   - q: "How much down payment is required for a car loan?"
     a: "Standard regulations require a minimum 15-30% down payment (equity) for a car loan. For used cars, the down payment requirement can be as high as 50%."
 ---
-
 ### Unlocking Your Future: Loan Eligibility in Pakistan
 Buying your first home in a project like **DHA** or **Bahria Town**, or financing a new car, is a major life decision. In Pakistan, the banking system follows strict guidelines set by the **State Bank of Pakistan (SBP)** to ensure borrowers don't take on more debt than they can handle. Calcuva simplifies these complex regulations into a single, easy-to-understand **Eligibility Score**.
 

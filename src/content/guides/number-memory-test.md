@@ -1,5 +1,7 @@
 ---
 title: "Number Memory Test: Boost Your Digit Span and Human Benchmark"
+category: "benchmarks"
+excerpt: "Test your memory by remembering a sequence of numbers that gets longer every time you get it right. See if you can beat the average score of 7 digits."
 calculator: "number-memory-test"
 keywords: ["number memory test", "human benchmark", "digit span test", "short term memory test", "memory capacity", "iq memory test", "remember numbers", "brain training numbers", "humanbenchmark"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Why do the numbers get longer?"
     a: "The test is designed to find your 'breaking point.' By increasing the length by one digit each round, we can precisely measure the maximum capacity of your short-term memory."
 ---
-
 ## Cognitive Capacity: Mastering the Digit Span Benchmark
 How much information can your brain hold at once? The Calcuva **Number Memory Test** is a standardized psychological tool used to measure your "digit span"—the length of a sequence of numbers you can recall in perfect order. As a cornerstone of the **human benchmark** suite, this test provides a raw look at your brain's working memory capacity.
 

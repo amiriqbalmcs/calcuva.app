@@ -1,6 +1,8 @@
 ---
 title: "Social Share Preview: The Ultimate Guide to Meta Tags"
-description: "Learn how to optimize your website for social media. Discover how Open Graph (OG) tags and Twitter cards affect your click-through rates on WhatsApp, Facebook, and X."
+keywords: ["social share preview", "og tag debugger", "meta tag generator", "facebook link preview", "whatsapp link preview", "twitter card validator", "linkedin post preview"]
+calculator: "social-share-preview-tool"
+excerpt: "Learn how to optimize your website for social media. Discover how Open Graph (OG) tags and Twitter cards affect your click-through rates on WhatsApp, Facebook, and X."
 category: "business"
 faqs:
   - q: "What is an Open Graph (OG) tag?"
@@ -10,7 +12,6 @@ faqs:
   - q: "What is the best size for an OG image in 2026?"
     a: "The industry standard is 1200x630 pixels. This ensures high-quality display on high-DPI mobile screens and desktop platforms."
 ---
-
 ## Why Social Sharing Previews Matter
 
 In 2026, over **70% of web traffic** is generated through social sharing on platforms like WhatsApp, Telegram, and X (Twitter). When a user shares your link, the "preview card" that appears is the first thing others see. 
@@ -60,19 +61,3 @@ Our **[Social Share Preview Tool](/calculators/social-share-preview-tool)** isn'
 3.  **Identify Missing Tags**: If your `og:image` is missing or your title is too long, the tool will alert you in real-time.
 4.  **Simulate Cropping**: See how your image looks in Square (WhatsApp), Wide (X), and Tall (LinkedIn) formats.
 5.  **Generate Clean Code**: Once you are happy with the preview, click "Generate Tags" to get a copy-paste ready block of HTML.
-
-### Frequently Asked Questions (FAQ)
-
-**Q: Why is my old image still showing after I updated it?**
-**A:** Platforms like Facebook and LinkedIn "Cache" (store) your metadata. You need to use their official "Debugger" tools to force them to re-crawl your site. Search for "Facebook Sharing Debugger" or "LinkedIn Post Inspector."
-
-**Q: Can I use a PNG or WebP for my OG image?**
-**A:** Yes, but **JPEG** remains the most compatible across 100% of platforms. WebP is supported by most modern apps in 2026, but some older versions of WhatsApp may fail to show the preview.
-
-**Q: Should my OG title be the same as my SEO title?**
-**A:** Not necessarily. Your SEO title is optimized for keywords (e.g., "Best Pizza Lahore - Order Online"). Your OG title should be optimized for clicks (e.g., "The Secret to the Crispiest Pizza in Lahore").
-
-**Q: Does my image need to be hosted on the same domain?**
-**A:** It is better for performance, but not required. You can use an image from a CDN (Content Delivery Network), but ensure it is served over HTTPS.
-
-By mastering the math of social previews, you ensure that every share of your content is a professional invitation to your brand. Don't leave your click-through rate to chance.

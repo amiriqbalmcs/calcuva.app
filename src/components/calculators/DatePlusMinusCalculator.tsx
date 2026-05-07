@@ -2,13 +2,14 @@
 
 import { useMemo, useState } from "react";
 import { format, addDays, subDays, isWeekend, getDayOfYear, getISOWeek } from "date-fns";
-import { 
-  Share, CheckCircle2, CalendarDays, Info, Briefcase, Calendar, 
+import { CalendarDays, Info, Briefcase, Calendar, 
   Clock, ArrowRight, ArrowLeft, Zap, Target, History, Activity,
   Settings2, ChevronRight, Calculator, Scale, RefreshCcw, Watch,
-  Copy, Ruler, Gauge, LayoutDashboard, Binary, Sparkles, Landmark
+  Copy, Ruler, Gauge, LayoutDashboard, Binary, Sparkles, Landmark,
+  CheckCircle2
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -19,10 +20,9 @@ import { useUrlState } from "@/hooks/useUrlState";
 import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("date-plus-minus-calculator");
+const calc = calculatorBySlug("date-plus-minus-calculator")!;
 
 const DatePlusMinusCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
   const [date, setDate] = useUrlState<string>("sd", "2026-01-01");
   const [amount, setAmount] = useUrlState<number>("n", 30);
   const [mode, setMode] = useUrlState<"add" | "sub">("m", "add");
@@ -67,12 +67,13 @@ const DatePlusMinusCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
     setTimeout(() => setCopied(false), 2000);
   };
 
+  if (!calc) return null;
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
         
         {/* Date Settings */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
           <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
             
@@ -155,10 +156,19 @@ const DatePlusMinusCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
               </div>
             </div>
           </div>
+
+          {calc.howTo && (
+            <HowToGuide 
+              id="how-to-use"
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="sidebar" 
+            />
+          )}
         </div>
 
         {/* Results Panel */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
           
           {/* Executive Summary */}
           {result ? (

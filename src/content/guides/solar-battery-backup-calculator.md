@@ -1,6 +1,7 @@
 ---
 title: "Solar Battery Backup Guide: Lithium vs. Tubular Runtime Explained"
-description: "How to calculate how long your batteries will last. Learn about Depth of Discharge (DoD), battery capacity (Ah), and load impact on backup hours for 2026 systems."
+keywords: ["solar battery backup calculator", "5kwh lithium battery runtime", "10kwh solar battery backup hours", "lithium vs tubular battery backup", "solar storage sizing calculator"]
+excerpt: "How to calculate how long your batteries will last. Learn about Depth of Discharge (DoD), battery capacity (Ah), and load impact on backup hours for 2026 systems."
 date: "2026-04-30"
 category: "utility"
 author: "Calcuva Editorial Team"
@@ -18,7 +19,6 @@ faqs:
   - q: "What is the lifespan difference between Lithium and Tubular?"
     a: "In the 2026 market, Lithium batteries are rated for 3,000 to 6,000 cycles (10-15 years), whereas high-quality Tubular batteries last for 800 to 1,200 cycles (3-5 years) if maintained perfectly."
 ---
-
 ## The Science of Backup: Navigating the 2026 Energy Storage Market
 
 In 2026, the shift toward solar energy in Pakistan has moved from "Alternative" to "Mandatory." However, the most misunderstood component of any solar system is the battery bank. Whether you are running a small UPS for your home office or a massive 10kW industrial system, knowing your **Backup Runtime** is critical for operational stability.

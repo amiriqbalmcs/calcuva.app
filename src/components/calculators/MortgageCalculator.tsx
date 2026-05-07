@@ -6,7 +6,7 @@ import {
   Share, CheckCircle2, AlertCircle, Info, Landmark, Calculator, 
   Receipt, TrendingDown, Wallet, History, Target, Activity, 
   Zap, Globe, Ruler, Gauge, Sparkles, LayoutDashboard, Copy, Settings2,
-  TrendingUp, Banknote, Calendar
+  TrendingUp, Banknote, Calendar, Home
 } from "lucide-react";
 import { HowToGuide } from "@/components/HowToGuide";
 import { CalculatorPage } from "@/components/CalculatorPage";
@@ -14,18 +14,16 @@ import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { calculatorBySlug } from "@/lib/calculators";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { calculatorBySlug, type CalcMeta } from "@/lib/calculators";
 import { formatCurrency } from "@/lib/format";
 import { useUrlState } from "@/hooks/useUrlState";
 import { useCurrency } from "@/context/CurrencyContext";
 import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("loan-emi-calculator")!;
-
 const PIE_COLORS = ["hsl(var(--foreground))", "hsl(var(--muted-foreground) / 0.15)"];
 
-// Internal icon helpers for redesign
 const PieChartIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" />
@@ -38,12 +36,28 @@ const BarChartIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+const MortgageCalculator = ({ calc: initialCalc, guideHtml, faqs, relatedArticles }: { calc: CalcMeta; guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
+  const calc = initialCalc || calculatorBySlug("mortgage-calculator")!;
   const { currency } = useCurrency();
-  const [principal, setPrincipal] = useUrlState<number>("p", 250000);
-  const [rate, setRate] = useUrlState<number>("r", 7.5);
-  const [years, setYears] = useUrlState<number>("y", 20);
+  
+  // States
+  const [homePrice, setHomePrice] = useUrlState<number>("hp", 500000);
+  const [downPayment, setDownPayment] = useUrlState<number>("dp", 100000);
+  const [dpType, setDpType] = useUrlState<"amount" | "percent">("dpt", "amount");
+  const [rate, setRate] = useUrlState<number>("r", 6.5);
+  const [years, setYears] = useUrlState<number>("y", 30);
   const [copied, setCopied] = useState(false);
+
+  // Derived Principal
+  const principal = useMemo(() => {
+    if (dpType === "percent") {
+      return Math.max(0, homePrice - (homePrice * (downPayment / 100)));
+    }
+    return Math.max(0, homePrice - downPayment);
+  }, [homePrice, downPayment, dpType]);
+
+  const dpAmount = homePrice - principal;
+  const dpPercent = homePrice > 0 ? (dpAmount / homePrice) * 100 : 0;
 
   const result = useMemo(() => {
     const n = Math.max(1, years * 12);
@@ -63,7 +77,9 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
         pPaid += principalM;
         iPaid += interestM;
       }
-      yearly.push({ year: y, principal: pPaid, interest: iPaid, balance: Math.max(0, balance) });
+      if (y % Math.max(1, Math.floor(years / 10)) === 0 || y === years) {
+        yearly.push({ year: y, principal: pPaid, interest: iPaid, balance: Math.max(0, balance) });
+      }
     }
     return { emi, total, interest, yearly };
   }, [principal, rate, years]);
@@ -73,28 +89,31 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
     let rank: "good" | "warning" | "risk" = "good";
     let text = "";
 
-    if (interestRatio > 1.5) {
+    if (interestRatio > 1.2) {
       rank = "risk";
-      text = "High Interest Warning: You're paying much more in interest than the actual loan amount. Try to pay off the loan faster or look for a lower rate to save money.";
-    } else if (interestRatio > 0.8) {
+      text = "High Interest Ratio: You are paying significant interest. Consider a larger down payment or a shorter term to save on total costs.";
+    } else if (interestRatio > 0.7) {
       rank = "warning";
-      text = "High Interest Cost: You're paying a lot in interest. Even a small extra payment each month could save you a lot of money over time.";
+      text = "Standard Interest Load: A typical mortgage structure. Even small extra monthly payments can cut years off your mortgage.";
     } else {
       rank = "good";
-      text = "Good Loan Balance: You're paying off the loan amount quickly compared to the interest, which helps you own your home or car sooner.";
+      text = "Efficient Financing: Your interest cost is well-managed. You are building equity in your home quickly.";
     }
 
     return { rank, text };
   }, [result.interest, principal]);
 
   const handleCopy = () => {
-    const resultText = `Loan Details: ${formatCurrency(result.emi, currency.code)} Monthly | Total Cost ${formatCurrency(result.total, currency.code)}. Calculate yours at ${window.location.href}`;
+    const resultText = `Mortgage Summary: ${formatCurrency(result.emi, currency.code)}/mo | Home Price ${formatCurrency(homePrice, currency.code)} | ${dpPercent.toFixed(1)}% Down. Calculate yours at ${window.location.href}`;
     navigator.clipboard.writeText(resultText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const pieData = [{ name: "Loan Amount", value: principal }, { name: "Interest", value: result.interest }];
+  const pieData = [
+    { name: "Principal", value: principal }, 
+    { name: "Interest", value: result.interest }
+  ];
 
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
@@ -106,34 +125,63 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
             
             <div className="space-y-1 relative z-20">
-              <h3 className="text-sm font-bold tracking-tight">Loan Settings</h3>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Set Your Loan Terms</p>
+              <h3 className="text-sm font-bold tracking-tight">Mortgage Settings</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Home Purchase Details</p>
             </div>
 
             <div className="space-y-8 relative z-10">
-              {/* Principal */}
+              {/* Home Price */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Loan Amount</Label>
-                  <span className="text-xs font-mono font-medium">{formatCurrency(principal, currency.code)}</span>
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Home Price</Label>
+                  <span className="text-xs font-mono font-medium">{formatCurrency(homePrice, currency.code)}</span>
                 </div>
                 <div className="relative group">
                   <Input 
                     type="number" 
-                    value={principal} 
-                    onChange={(e) => setPrincipal(Number(e.target.value) || 0)} 
+                    value={homePrice} 
+                    onChange={(e) => setHomePrice(Number(e.target.value) || 0)} 
                     className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-medium text-base rounded-lg shadow-sm"
                   />
-                  <Wallet className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground opacity-20" />
+                  <Home className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground opacity-20" />
                 </div>
                 <Slider 
-                  value={[principal]} 
-                  min={1000} 
-                  max={2000000} 
-                  step={5000} 
-                  onValueChange={([v]) => setPrincipal(v)} 
+                  value={[homePrice]} 
+                  min={50000} 
+                  max={5000000} 
+                  step={10000} 
+                  onValueChange={([v]) => setHomePrice(v)} 
                   className="pt-2"
                 />
+              </div>
+
+              {/* Down Payment */}
+              <div className="space-y-3 p-4 rounded-xl bg-background border border-border/40 shadow-sm">
+                <div className="flex justify-between items-center mb-4">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Down Payment</Label>
+                  <Tabs value={dpType} onValueChange={(v) => setDpType(v as any)}>
+                    <TabsList className="h-7 bg-secondary/50 p-1">
+                      <TabsTrigger value="amount" className="text-[10px] px-3">{currency.symbol}</TabsTrigger>
+                      <TabsTrigger value="percent" className="text-[10px] px-3">%</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </div>
+                <div className="relative">
+                  <Input 
+                    type="number" 
+                    value={downPayment} 
+                    onChange={(e) => setDownPayment(Number(e.target.value) || 0)} 
+                    className="h-11 bg-background border-border/60 focus:border-foreground/20 transition-all font-medium text-base rounded-lg"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground opacity-40">
+                    {dpType === "percent" ? "%" : currency.code}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center pt-2">
+                  <span className="text-[9px] font-bold text-muted-foreground uppercase">
+                    {dpType === "percent" ? formatCurrency(dpAmount, currency.code) : `${dpPercent.toFixed(1)}% of price`}
+                  </span>
+                </div>
               </div>
 
               {/* Rate and Tenure */}
@@ -149,7 +197,7 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
                   />
                 </div>
                 <div className="space-y-3">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Loan Years</Label>
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Loan Term (Years)</Label>
                   <Input 
                     type="number" 
                     value={years} 
@@ -160,9 +208,9 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
               </div>
               <Slider 
                 value={[years]} 
-                min={1} 
+                min={5} 
                 max={40} 
-                step={1} 
+                step={5} 
                 onValueChange={([v]) => setYears(v)} 
                 className="pt-2"
               />
@@ -184,7 +232,7 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
                 {insights.rank === "good" ? <CheckCircle2 className="size-5" /> : <AlertCircle className="size-5" />}
               </div>
               <div className="space-y-1">
-                <h4 className="text-[10px] font-bold uppercase tracking-wider">Loan Tip</h4>
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Mortgage Insight</h4>
                 <p className="text-xs text-muted-foreground leading-relaxed font-medium">
                   {insights.text}
                 </p>
@@ -214,7 +262,7 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                     <Calculator className="size-3" />
-                    Monthly Payment (EMI)
+                    Monthly Payment (Principal + Interest)
                   </div>
                   <div className="text-5xl md:text-6xl font-mono font-bold tracking-tighter tabular-nums">
                     {formatCurrency(result.emi, currency.code)}
@@ -244,10 +292,10 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                     <Banknote className="size-3" />
-                    Total Amount to Pay
+                    Loan Amount (Principal)
                   </div>
                   <div className="text-3xl md:text-4xl font-mono font-bold text-foreground tabular-nums">
-                    {formatCurrency(result.total, currency.code)}
+                    {formatCurrency(principal, currency.code)}
                   </div>
                 </div>
               </div>
@@ -258,7 +306,7 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
           <div className="grid md:grid-cols-2 gap-6">
             <div className="surface-card p-6 bg-secondary/5 border-border/30 relative overflow-hidden group">
               <PieChartIcon className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
-              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-6 relative z-10">Money Breakdown</h4>
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-6 relative z-10">Cost Breakdown</h4>
               <div className="h-[200px] relative z-10">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -273,17 +321,17 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
                 </ResponsiveContainer>
               </div>
               <div className="flex gap-4 justify-center text-[9px] font-bold uppercase tracking-widest mt-4 relative z-10">
-                <div className="flex items-center gap-1.5"><div className="size-1.5 rounded-full bg-foreground" /> Loan Amount</div>
+                <div className="flex items-center gap-1.5"><div className="size-1.5 rounded-full bg-foreground" /> Principal</div>
                 <div className="flex items-center gap-1.5"><div className="size-1.5 rounded-full bg-muted-foreground/20" /> Interest</div>
               </div>
             </div>
 
             <div className="surface-card p-6 bg-secondary/5 border-border/30 relative overflow-hidden group">
               <BarChartIcon className="absolute -bottom-4 -right-4 size-24 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
-              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-6 relative z-10">Loan Progress</h4>
+              <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-6 relative z-10">Payoff Progress</h4>
               <div className="h-[200px] relative z-10">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={result.yearly.filter((_, i) => i % (years > 20 ? 3 : 1) === 0)}>
+                  <BarChart data={result.yearly}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} opacity={0.1} />
                     <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fontSize: 9, fontWeight: 700, opacity: 0.4 }} />
                     <YAxis hide />
@@ -296,17 +344,17 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <div className="text-[9px] text-center text-muted-foreground uppercase font-bold tracking-widest mt-4 opacity-40 relative z-10">Yearly Principal vs Interest</div>
+              <div className="text-[9px] text-center text-muted-foreground uppercase font-bold tracking-widest mt-4 opacity-40 relative z-10">Yearly Equity vs Interest</div>
             </div>
           </div>
 
           {/* Detailed Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
              {[
-               { l: "Total Cost Ratio", v: (result.total / principal).toFixed(2), i: Activity, unit: "x" },
-               { l: "Total Months", v: years * 12, i: History, unit: "Mth" },
-               { l: "Loan Share", v: (principal / result.total * 100).toFixed(1), i: Target, unit: "%" },
-               { l: "Cost Per Day", v: (result.emi / 30).toFixed(0), i: Zap, unit: currency.code }
+               { l: "Total Payment", v: formatCurrency(result.total, currency.code), i: Banknote },
+               { l: "Total Interest %", v: ((result.interest / result.total) * 100).toFixed(1), i: TrendingUp, unit: "%" },
+               { l: "Down Payment %", v: dpPercent.toFixed(1), i: Target, unit: "%" },
+               { l: "Years to Payoff", v: years, i: History, unit: "Yrs" }
              ].map((item, idx) => (
                <div key={idx} className="surface-card p-5 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
                  <div className="flex items-center gap-2 mb-3">
@@ -314,33 +362,33 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
                     <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
                  </div>
                  <div className="text-xl font-mono font-medium tabular-nums leading-tight">
-                    {item.v}
-                    <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>
+                    {typeof item.v === "number" ? item.v : item.v}
+                    {item.unit && <span className="text-[10px] ml-1 opacity-40 uppercase">{item.unit}</span>}
                  </div>
                </div>
              ))}
           </div>
 
-          {/* Expert Insights */}
+          {/* Professional Advice */}
           <div className="grid md:grid-cols-2 gap-6 pt-4">
             <div className="surface-card p-6 border-border/30 space-y-3 bg-background/50 relative overflow-hidden group">
               <Landmark className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
               <div className="flex items-center gap-2 relative z-10">
                 <Landmark className="size-4 text-muted-foreground" />
-                <h4 className="text-[10px] font-bold uppercase tracking-wider">Monthly Budget Tip</h4>
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Home Budget Tip</h4>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed relative z-10">
-                Try to keep your loan payments under 40% of your monthly income to stay financially safe and handle unexpected costs.
+                Lenders typically recommend that your total housing costs (mortgage, taxes, insurance) stay below 28% of your gross monthly income.
               </p>
             </div>
             <div className="surface-card p-6 border-border/30 space-y-3 bg-background/50 relative overflow-hidden group">
               <Zap className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:-rotate-12 transition-transform duration-500" />
               <div className="flex items-center gap-2 relative z-10">
                 <Zap className="size-4 text-muted-foreground" />
-                <h4 className="text-[10px] font-bold uppercase tracking-wider">Pay Off Faster</h4>
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Equity Growth</h4>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed relative z-10">
-                Paying just one extra month's payment each year can cut years off your loan and save you thousands in interest.
+                Making a 20% down payment helps you avoid Private Mortgage Insurance (PMI) and gives you immediate significant equity in your home.
               </p>
             </div>
           </div>
@@ -350,5 +398,4 @@ const LoanEmiCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: s
   );
 };
 
-
-export default LoanEmiCalculator;
+export default MortgageCalculator;

@@ -1,5 +1,7 @@
 ---
 title: "Equestrian Velocity: Tracking the Speed of Horse and Rider"
+category: "utility"
+excerpt: "Track your equestrian performance with our GPS horse speedometer. Measure speeds during trot, canter, and gallop, and log your total trail distance in real-time."
 calculator: "horse-riding-speed-tracker"
 keywords: ["horse riding speed tracker", "equestrian speedometer", "how fast is my horse", "canter speed app", "gallop velocity tracker", "horse racing gps"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Can I use this for endurance riding?"
     a: "Yes! Tracking your average speed and total distance is critical for managing your horse's stamina during long-distance endurance competitions."
 ---
-
 ## Equestrian Telemetry: Monitoring the Gallop
 The bond between horse and rider is built on feel, but performance is built on data. Whether you are training for the track, competing in endurance events, or simply enjoying a trail ride, the Calcuva **Horse Riding Speed Tracker** provides the professional-grade telemetry you need to monitor your horse's effort.
 

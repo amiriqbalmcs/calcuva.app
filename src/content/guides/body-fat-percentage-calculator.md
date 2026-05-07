@@ -1,5 +1,7 @@
 ---
 title: "Body Composition Architecture: The Science of Fat vs. Lean Mass"
+category: "health"
+excerpt: "Determine your body composition and fat-to-lean mass ratio using standardized photographic and anthropometric measurements."
 calculator: "body-fat-percentage-calculator"
 keywords: ["body fat percentage", "navy body fat method", "fat vs lean mass", "composition math", "fitness standards", "waist to hip ratio"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Is the 'Waist-to-Hip Ratio' important?"
     a: "Yes. It is a secondary marker for cardiovascular health. A ratio above 0.90 for men or 0.85 for women suggests a higher risk of metabolic syndrome."
 ---
-
 ### The Architecture of Your Composition
 In modern fitness, your total weight is a secondary metric. The primary driver of health and performance is your **Body Composition**—the ratio of fat mass to lean tissue (muscle, bone, and water). Tracking your body fat percentage allows you to ensure that your weight loss is actually comes from fat, rather than losing valuable muscle mass.
 

@@ -1,5 +1,7 @@
 ---
 title: "Precision Bio-Fueling: The Complete Guide to Macronutrients"
+category: "health"
+excerpt: "Discover your optimal macronutrient split based on your TDEE and fitness goals (weight loss, maintenance, or muscle gain)."
 calculator: "macro-nutrient-calculator"
 keywords: ["macro calculator", "protein fat carbs ratio", "iifym guide", "flexible dieting math", "muscle building nutrition", "fat loss macros"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Should I cut carbs to lose weight?"
     a: "Calories drive weight loss, but carbs drive performance. We recommend keeping carbs as high as possible while still losing fat to ensure you can train with high intensity."
 ---
-
 ### The Architecture of Your Plate
 While calories (energy) determine the **quantity** of your weight, Macronutrients (Protein, Fats, and Carbohydrates) determine the **quality** of your weight. To build an aesthetic, high-performance physique, you must move beyond "eating less" and start "fueling specifically."
 

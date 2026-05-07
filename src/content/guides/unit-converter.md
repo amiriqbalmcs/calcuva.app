@@ -1,5 +1,7 @@
 ---
 title: "The Universal Translator: Mastering Measurement and Unit Math"
+category: "utility"
+excerpt: "Fast bidirectional conversion across the most common metric and imperial units with 8-digit precision."
 calculator: "unit-converter"
 keywords: ["unit converter", "metric vs imperial", "global units math", "temperature conversion", "engineering math", "measurement systems"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Is the conversion from kg to lb constant?"
     a: "Yes. 1 Kilogram is exactly 2.2046226218 Pounds. This is a physics-based constant that does not change."
 ---
-
 ### The Architecture of a Borderless World
 In a globalized economy, we are constantly "switching" between measurement systems. A scientist in Europe communicates in Celsius, while a contractor in the USA builds in Fahrenheit. Calcuva acts as the **Universal Logic Layer**, bridging the gap between disparate systems of measurement with 100% mathematical fidelity. 
 

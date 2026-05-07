@@ -1,5 +1,7 @@
 ---
 title: "The Editorial Command Center: Mastering Word Counts and Content Density"
+category: "utility"
+excerpt: "A clean, private text analyzer that calculates word count, character count (with/without spaces), and estimated reading time."
 calculator: "word-character-counter-tool"
 keywords: ["word counter tool", "character count guide", "seo content density", "readability scores", "twitter character limit", "writing productivity"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Can this count characters for Meta Descriptions?"
     a: "Yes. For SEO, keep your Meta Titles under 60 characters and Meta Descriptions under 155–160 characters to prevent truncation in Google search results."
 ---
-
 ### The Architecture of Digital Copy
 In the age of information, brevity is a skill, but depth is a strategy. Whether you are an SEO specialist, a student, or a social media manager, the **word and character count** of your text is your primary constraint. Calcuva provides an "Active Monitoring" environment that allows you to sculpt your message to fit the rigorous requirements of modern platforms.
 

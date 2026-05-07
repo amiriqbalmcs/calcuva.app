@@ -1,5 +1,7 @@
 ---
 title: "Global Academic Scaling: The Definitive GPA to Percentage Guide"
+category: "education"
+excerpt: "Add courses with credit hours and grades to compute weighted GPA on the 4.0 scale, with percentage and CGPA conversions."
 calculator: "gpa-to-percentage-calculator"
 keywords: ["gpa to percentage calculator", "cgpa to marks conversion", "academic grading math", "4.0 scale vs 10.0 scale", "university admissions guide", "weighted vs unweighted gpa"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Can I convert ECTS credits to GPA?"
     a: "Yes. ECTS (European Credit Transfer and Accumulation System) can be mapped to a 4.0 or 10.0 scale based on the 'Grade Distribution' of your specific university."
 ---
-
 ### The Architecture of Academic Performance
 In an increasingly globalized world, your academic achievements often need to be "translated" across different borders. A student with a 3.8 GPA in the United States might be applying for a master's program in Germany (using the Bavarian scale) or a job in Singapore (using a percentage baseline). Calcuva acts as a **Global Grading Rosetta Stone**, ensuring your marks are presented with clinical accuracy to admissions committees and HR departments.
 

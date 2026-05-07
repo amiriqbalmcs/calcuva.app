@@ -1,6 +1,9 @@
 ---
 title: "Freelance Tax & Residency Optimizer Guide 2026"
-description: "Master your freelance tax returns and optimize international withdrawal fees in Pakistan."
+keywords: ["freelance tax pakistan 2026", "filer vs non filer tax", "remote work tax optimization", "wise vs payoneer fees 2026", "secp vs sole proprietor tax"]
+category: "business"
+calculator: "freelance-tax-residency-optimizer"
+excerpt: "Master your freelance tax returns and optimize international withdrawal fees in Pakistan."
 date: "2026-05-02"
 faqs:
   - q: "What is the tax rate for IT exports in Pakistan for 2026?"
@@ -10,7 +13,6 @@ faqs:
   - q: "What is withdrawal arbitrage?"
     a: "It is the process of choosing the withdrawal path (e.g., USD -> Wise -> PKR) that offers the lowest conversion spread and hidden fees."
 ---
-
 ## Freelance Tax & ROI Optimizer: User Guide
 
 In the 2026 Pakistani economy, being a freelancer is equivalent to running an export-oriented small business. Your "factory" is your laptop, and your "product" is your digital service. However, unlike traditional businesses, freelancers face unique challenges regarding international money transfers, local bank compliance, and Federal Board of Revenue (FBR) oversight.

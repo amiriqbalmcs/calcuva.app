@@ -1,5 +1,6 @@
 ---
 title: "Plastic-to-Oxygen Map: The 2026 Strategy for Ocean Protection"
+excerpt: "See the real-world impact of your zero-waste journey. Translates saved plastic bottles and bags into oxygen produced by equivalent trees."
 category: "sustainability"
 calculator: "plastic-to-oxygen-impact-map"
 keywords: ["plastic oxygen impact calculator", "marine restoration tool", "ocean plastic diversion", "oxygen production vs plastic", "environmental impact of plastic"]
@@ -17,7 +18,6 @@ faqs:
   - q: "Can 'Ocean-Bound Plastic' programs really help?"
     a: "Yes. Programs that intercept plastic within 50km of a coastline are the most effective. By diverting plastic before it enters the high-salinity, high-UV environment of the open ocean, we prevent the fragmentation process that creates 'Plastic Snow.'"
 ---
-
 ## Plastic-to-Oxygen Map: The 2026 Strategy for Ocean Protection
 
 The math of 2026 is simple: every piece of plastic we keep out of the ocean allows marine ecosystems to breathe, which in turn allows *us* to breathe. For decades, the conversation around plastic was focused on "littering" and "aesthetics." Today, we know that the stakes are much higher. Plastic pollution is a direct threat to the global oxygen supply.

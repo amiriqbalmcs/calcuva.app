@@ -1,5 +1,7 @@
 ---
 title: "The Performance Box in Your Pocket: Mastering 0-60 and Top Speed Testing"
+category: "utility"
+excerpt: "Turn your phone into a high-precision GPS speedometer. Track live speed, measure 0-60 performance, log trip distance, and use HUD (Head-Up Display) mode for windshield projection."
 calculator: "car-performance-speed-test"
 keywords: ["car performance tracker", "0-60 mph timer", "gps car speedometer", "drag strip app", "measure 0-100 kmh", "car acceleration test"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Will this work in my pocket?"
     a: "For performance timing, the phone needs a clear view of the sky. We recommend a secure dashboard mount for both safety and signal precision."
 ---
-
 ## Precision Performance: Turning Your Phone into a Drag Box
 For automotive enthusiasts, numbers are everything. Whether you've just installed a new intake or want to verify your car's factory specs, the **Car GPS Performance Tracker** provides the data you need without the cost of expensive dedicated hardware.
 

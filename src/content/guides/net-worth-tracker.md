@@ -1,5 +1,7 @@
 ---
 title: "Financial Self-Audit: The Personal Net Worth Guide"
+category: "finance"
+excerpt: "Comprehensive net worth calculator with categories for property, savings, investments, and debts for a clear financial snapshot."
 calculator: "net-worth-tracker"
 keywords: ["net worth calculator", "track assets and liabilities", "personal balance sheet", "financial snapshot", "increase net worth", "debt to asset ratio"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Is a house an asset or a liability?"
     a: "The market value of the house is an Asset. The remaining mortgage or home loan on that house is a Liability. Your 'Equity' (Asset - Liability) is what counts toward your net worth."
 ---
-
 ### The Ultimate Financial Scorecard
 Your salary tells you how much money is flowing *through* your life, but your **Net Worth** tells you how much is actually *staying*. Whether you are saving for a business, retirement, or your children's future, tracking your net worth is the first step toward financial freedom. Calcuva provides a **Private Financial Dashboard** to audit your life.
 

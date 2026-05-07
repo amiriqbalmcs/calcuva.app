@@ -10,14 +10,14 @@ import {
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
+import { HowToGuide } from "@/components/HowToGuide";
 import { calculatorBySlug } from "@/lib/calculators";
 import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("word-character-counter-tool");
+const calc = calculatorBySlug("word-character-counter-tool")!;
 
 const WordCounterCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
   const [text, setText] = useState("");
   const [copied, setCopied] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
@@ -64,12 +64,13 @@ const WordCounterCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
     return m > 0 ? `${m}m ${s}s` : `${s}s`;
   };
 
+  if (!calc) return null;
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
         
         {/* Content Matrix */}
-        <div className="lg:col-span-8 space-y-6">
+        <div className="lg:col-span-8 space-y-6 order-1 lg:order-2">
           <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden group shadow-sm">
             <div className="p-6 md:p-8 border-b border-border/40 flex items-center justify-between bg-background relative overflow-hidden">
               <div className="absolute top-0 left-0 w-1 h-full bg-foreground" />
@@ -129,7 +130,7 @@ const WordCounterCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
         </div>
 
         {/* Results & Auditing */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
           
           {/* Executive Summary */}
           <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
@@ -256,6 +257,14 @@ const WordCounterCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml
              </div>
           </div>
 
+          {calc.howTo && (
+            <HowToGuide 
+              id="how-to-use"
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="sidebar" 
+            />
+          )}
         </div>
       </div>
     </CalculatorPage>

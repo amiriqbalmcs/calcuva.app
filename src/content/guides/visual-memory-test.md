@@ -1,5 +1,7 @@
 ---
 title: "Visual Memory Test: Master Spatial Pattern Recognition"
+category: "benchmarks"
+excerpt: "Test your visual memory by remembering where the squares light up on the board. The grid gets bigger and more difficult as you move to higher levels."
 calculator: "visual-memory-test"
 keywords: ["visual memory test", "human benchmark", "spatial memory", "pattern recognition", "brain training grid", "memory matrix", "visual recall", "grid memory game", "humanbenchmark"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Can visual memory be trained?"
     a: "Yes. Like any cognitive skill, 'neuroplasticity' allows your brain to get better at recognizing and storing spatial patterns through consistent practice."
 ---
-
 ## Visual Intelligence: The Matrix of Memory Benchmark
 How well can you see and remember? The Calcuva **Visual Memory Test** is a globally recognized benchmark for your spatial working memory and pattern recognition capabilities. As a core component of the **human benchmark** suite, this test measures how your brain encodes, maintains, and retrieves visual configurations in a dynamic environment.
 

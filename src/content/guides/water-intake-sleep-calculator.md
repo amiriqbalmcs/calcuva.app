@@ -1,5 +1,7 @@
 ---
 title: "The Restoration Engine: Mastering Hydration and Sleep Biomechanics"
+category: "health"
+excerpt: "Recommended water intake based on weight and activity, plus optimal bed/wake times aligned with 90-minute sleep cycles."
 calculator: "water-intake-sleep-calculator"
 keywords: ["water intake calculator", "how much water to drink guide", "sleep cycle math", "circadian rhythm", "hydration for athletes", "optimal sleep hours"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "What is the 'Golden Rule' for waking up?"
     a: "Aim for 5 or 6 full sleep cycles (7.5 or 9 hours). If you only have 6 hours, it is often better to wake up exactly at 6:00 (4 cycles) than at 6:45 (in the middle of a 5th cycle)."
 ---
-
 ### The Architecture of Recovery
 Hydration and Sleep are the two foundational pillars of human performance. While we optimize our [Macros](/calculators/macro-nutrient-calculator) and [TDEE](/calculators/bmi-tdee-calculator), we often ignore the "System Maintenance" required for the brain and organs to function. Calcuva provides a clinical-grade **Restoration Engine** to help you identify your daily requirements for water and the strategic timing for your sleep cycles.
 

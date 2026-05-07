@@ -8,6 +8,7 @@ import {
   Gauge, Ruler, Sparkles, LayoutDashboard, Copy, Settings2,
   TrendingDown, Banknote, Calendar, BarChart as BarChartIcon
 } from "lucide-react";
+import { HowToGuide } from "@/components/HowToGuide";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -77,7 +78,7 @@ const CompoundInterestCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
         <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
 
           {/* Input Panel */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
             <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
               <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
 
@@ -177,10 +178,20 @@ const CompoundInterestCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Results Panel */}
-          <div className="lg:col-span-8 space-y-8">
+            {/* Sidebar Guide */}
+          {calc.howTo && (
+            <HowToGuide 
+              id="how-to-use"
+              steps={calc.howTo!.steps} 
+              proTip={calc.howTo!.proTip} 
+              variant="sidebar" 
+            />
+          )}
+        </div>
+
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
 
             {/* Executive Summary */}
             <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">

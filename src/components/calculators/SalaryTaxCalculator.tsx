@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from "react";
 import {
-   Landmark, Wallet, TrendingDown, ArrowRight,
-   ShieldCheck, Receipt, PieChart, Banknote,
-   Info, Calendar, ArrowUpRight, Calculator, ShieldAlert,
-   Copy, CheckCircle2
+  Landmark, Wallet, TrendingDown, ArrowRight,
+  ShieldCheck, Receipt, PieChart, Banknote, Sparkles,
+  Info, Calendar, ArrowUpRight, Calculator, ShieldAlert,
+  Copy, CheckCircle2, History
 } from "lucide-react";
+import { HowToGuide } from "@/components/HowToGuide";
 import { CalculatorPage } from "@/components/CalculatorPage";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -14,281 +15,279 @@ import { calculatorBySlug } from "@/lib/calculators";
 import { cn } from "@/lib/utils";
 
 const SalaryTaxCalculator = ({ calc: initialCalc, guideHtml, faqs, relatedArticles }: { calc?: any; guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-   const calc = initialCalc || calculatorBySlug("salary-income-tax-calculator-2026");
-   if (!calc) return null;
+  const calc = initialCalc || calculatorBySlug("salary-income-tax-calculator-2026");
+  if (!calc) return null;
 
-   const [monthlySalary, setMonthlySalary] = useState<number>(189000);
-   const [taxYear, setTaxYear] = useState<"2025" | "2024">("2025");
-   const [copied, setCopied] = useState(false);
+  const [monthlySalary, setMonthlySalary] = useState<number>(189000);
+  const [taxYear, setTaxYear] = useState<"2025" | "2024">("2025");
+  const [copied, setCopied] = useState(false);
 
-   const results = useMemo(() => {
-      const annualSalary = monthlySalary * 12;
-      let tax = 0;
+  const results = useMemo(() => {
+    const annualSalary = monthlySalary * 12;
+    let tax = 0;
 
-      if (taxYear === "2025") {
-         // OFFICIAL 2025-26 SLABS
-         if (annualSalary <= 600000) {
-            tax = 0;
-         } else if (annualSalary <= 1200000) {
-            tax = (annualSalary - 600000) * 0.01;
-         } else if (annualSalary <= 2200000) {
-            tax = 6000 + (annualSalary - 1200000) * 0.11;
-         } else if (annualSalary <= 3200000) {
-            tax = 116000 + (annualSalary - 2200000) * 0.23;
-         } else if (annualSalary <= 4100000) {
-            tax = 346000 + (annualSalary - 3200000) * 0.30;
-         } else {
-            tax = 616000 + (annualSalary - 4100000) * 0.35;
-         }
+    if (taxYear === "2025") {
+      // OFFICIAL 2025-26 SLABS
+      if (annualSalary <= 600000) {
+        tax = 0;
+      } else if (annualSalary <= 1200000) {
+        tax = (annualSalary - 600000) * 0.01;
+      } else if (annualSalary <= 2200000) {
+        tax = 6000 + (annualSalary - 1200000) * 0.11;
+      } else if (annualSalary <= 3200000) {
+        tax = 116000 + (annualSalary - 2200000) * 0.23;
+      } else if (annualSalary <= 4100000) {
+        tax = 346000 + (annualSalary - 3200000) * 0.30;
       } else {
-         // PREVIOUS 2024-25 SLABS
-         if (annualSalary <= 600000) {
-            tax = 0;
-         } else if (annualSalary <= 1200000) {
-            tax = (annualSalary - 600000) * 0.025;
-         } else if (annualSalary <= 2400000) {
-            tax = 15000 + (annualSalary - 1200000) * 0.125;
-         } else if (annualSalary <= 3600000) {
-            tax = 165000 + (annualSalary - 2400000) * 0.225;
-         } else if (annualSalary <= 6000000) {
-            tax = 435000 + (annualSalary - 3600000) * 0.275;
-         } else {
-            tax = 1095000 + (annualSalary - 6000000) * 0.35;
-         }
+        tax = 616000 + (annualSalary - 4100000) * 0.35;
       }
+    } else {
+      // PREVIOUS 2024-25 SLABS
+      if (annualSalary <= 600000) {
+        tax = 0;
+      } else if (annualSalary <= 1200000) {
+        tax = (annualSalary - 600000) * 0.025;
+      } else if (annualSalary <= 2400000) {
+        tax = 15000 + (annualSalary - 1200000) * 0.125;
+      } else if (annualSalary <= 3600000) {
+        tax = 165000 + (annualSalary - 2400000) * 0.225;
+      } else if (annualSalary <= 6000000) {
+        tax = 435000 + (annualSalary - 3600000) * 0.275;
+      } else {
+        tax = 1095000 + (annualSalary - 6000000) * 0.35;
+      }
+    }
 
-      const monthlyTax = tax / 12;
-      const monthlyTakeHome = monthlySalary - monthlyTax;
-      const annualTakeHome = annualSalary - tax;
+    const monthlyTax = tax / 12;
+    const monthlyTakeHome = monthlySalary - monthlyTax;
+    const annualTakeHome = annualSalary - tax;
 
 
-      return {
-         annualSalary,
-         annualTax: tax,
-         monthlyTax,
-         monthlyTakeHome,
-         annualTakeHome
-      };
-   }, [monthlySalary, taxYear]);
+    return {
+      annualSalary,
+      annualTax: tax,
+      monthlyTax,
+      monthlyTakeHome,
+      annualTakeHome
+    };
+  }, [monthlySalary, taxYear]);
 
-   const handleCopy = () => {
-      const text = `Salary Tax Analysis (FY ${taxYear === '2025' ? '2025-26' : '2024-25'}): Monthly Salary Rs. ${monthlySalary.toLocaleString()} | Monthly Take-Home Rs. ${Math.round(results.monthlyTakeHome).toLocaleString()} | Monthly Tax Rs. ${Math.round(results.monthlyTax).toLocaleString()}. Calculate at ${window.location.href}`;
-      navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-   };
+  const handleCopy = () => {
+    const text = `Salary Tax Analysis (FY ${taxYear === '2025' ? '2025-26' : '2024-25'}): Monthly Salary Rs. ${monthlySalary.toLocaleString()} | Monthly Take-Home Rs. ${Math.round(results.monthlyTakeHome).toLocaleString()} | Monthly Tax Rs. ${Math.round(results.monthlyTax).toLocaleString()}. Calculate at ${window.location.href}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-   return (
-      <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
-         <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
-            <div className="lg:col-span-8 space-y-6">
-               <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden shadow-sm">
-                  <div className="p-8 border-b border-border/40 bg-background flex items-center justify-between">
-                     <div className="flex items-center gap-4">
-                        <div className="size-12 rounded-2xl bg-secondary flex items-center justify-center">
-                           <Landmark className="size-6 text-foreground" />
-                        </div>
-                        <div className="space-y-0.5">
-                           <h3 className="text-lg font-bold tracking-tight text-foreground uppercase">{calc.title.includes('Pakistan') ? 'Income Tax Configuration' : calc.title}</h3>
-                           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">{calc.title.includes('Pakistan') ? 'FBR Official Salary Slabs (Pakistan)' : 'Salary Tax Analysis'}</p>
-                        </div>
-                     </div>
+  return (
+    <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
+      <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+
+        {/* Results Panel */}
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
+
+          {/* Executive Summary */}
+          <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
+            <div className="absolute top-0 right-0 size-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <TrendingDown className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
+
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 mb-10">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <ShieldCheck className="size-3 text-primary" /> Net Take-Home Pay
                   </div>
-
-                  <div className="p-8 space-y-10">
-                     <div className="space-y-6">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Monthly Income (PKR)</Label>
-                        <div className="relative group">
-                           <Input
-                              type="number"
-                              value={monthlySalary || ""}
-                              onChange={(e) => setMonthlySalary(Number(e.target.value) || 0)}
-                              className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-20 focus:ring-4 ring-primary/5 transition-all"
-                              placeholder="0"
-                           />
-                           <div className="absolute left-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-xl font-bold">Rs.</div>
-                        </div>
-                     </div>
-
-                     <div className="space-y-4 pt-4 border-t border-border/40">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Select Fiscal Year</Label>
-                        <div className="grid grid-cols-2 gap-4">
-                           <button
-                              onClick={() => setTaxYear("2025")}
-                              className={cn("p-6 border rounded-3xl transition-all text-left space-y-2",
-                                 taxYear === "2025" ? "bg-primary/5 border-primary/40 shadow-sm" : "bg-background border-border/60 hover:border-foreground/20")
-                              }
-                           >
-                              <div className="flex items-center gap-2">
-                                 <Calendar className={cn("size-4", taxYear === "2025" ? "text-primary" : "text-muted-foreground")} />
-                                 <span className={cn("text-xs font-bold uppercase tracking-tight", taxYear === "2025" ? "text-foreground" : "text-muted-foreground")}>FY 2025 - 2026</span>
-                              </div>
-                              <p className="text-[10px] text-muted-foreground leading-relaxed">Current Year (Post-Budget June 2025 Rates).</p>
-                           </button>
-                           <button
-                              onClick={() => setTaxYear("2024")}
-                              className={cn("p-6 border rounded-3xl transition-all text-left space-y-2",
-                                 taxYear === "2024" ? "bg-primary/5 border-primary/40 shadow-sm" : "bg-background border-border/60 hover:border-foreground/20")
-                              }
-                           >
-                              <div className="flex items-center gap-2">
-                                 <History className="size-4" />
-                                 <span className={cn("text-xs font-bold uppercase tracking-tight", taxYear === "2024" ? "text-foreground" : "text-muted-foreground")}>FY 2024 - 2025</span>
-                              </div>
-                              <p className="text-[10px] text-muted-foreground leading-relaxed">Previous Year (Old Slabs).</p>
-                           </button>
-                        </div>
-                     </div>
+                  <h2 className="text-sm font-bold tracking-tight">Monthly Salary After Tax</h2>
+                </div>
+                <div className="flex flex-col items-start md:items-end gap-2 overflow-hidden">
+                  <div className="text-4xl sm:text-5xl md:text-6xl font-mono font-bold tracking-tighter text-foreground tabular-nums leading-none break-all">
+                    Rs. {Math.round(results.monthlyTakeHome).toLocaleString()}
                   </div>
-
-                  <div className="p-8 bg-foreground/5 border-t border-border/40 flex items-center gap-6">
-                     <div className="size-12 rounded-2xl bg-background border border-border/40 flex items-center justify-center shrink-0 shadow-sm">
-                        <ShieldCheck className="size-5 text-primary" />
-                     </div>
-                     <div className="space-y-1">
-                        <p className="text-[11px] font-bold text-foreground uppercase tracking-tight">Verified FBR Slabs</p>
-                        <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase">
-                           Calculated using official progressive slabs. Rs. {monthlySalary.toLocaleString()} monthly income generates Rs. {Math.round(results.monthlyTax).toLocaleString()} tax for {taxYear === "2025" ? "2025-26" : "2024-25"}.
-                        </p>
-                     </div>
+                  <div className={cn(
+                    "px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2",
+                    "bg-primary/10 text-primary"
+                  )}>
+                    <Sparkles className="size-3" /> FY {taxYear === "2025" ? "2025-26" : "2024-25"} Rates
                   </div>
-               </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <Banknote className="size-3" /> Yearly Net Income
+                  </div>
+                  <div className="text-2xl font-mono font-bold text-foreground/80 tabular-nums">
+                    Rs. {Math.round(results.annualTakeHome).toLocaleString()}
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                    <ShieldAlert className="size-3 text-destructive" /> Total Tax Liability
+                  </div>
+                  <div className="text-2xl font-mono font-bold text-destructive/80 tabular-nums">
+                    Rs. {Math.round(results.annualTax).toLocaleString()}
+                  </div>
+                </div>
+              </div>
+
+              {/* Tax Burden Visualization */}
+              <div className="mt-10 space-y-4">
+                <div className="flex justify-between items-end">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Tax Burden (% of Gross)</span>
+                  <span className="text-[10px] font-bold font-mono">
+                    {((results.annualTax / results.annualSalary) * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="w-full bg-secondary/30 h-3 rounded-full overflow-hidden border border-border/20">
+                  <div
+                    className="h-full bg-destructive transition-all duration-1000 ease-out shadow-sm"
+                    style={{ width: `${(results.annualTax / results.annualSalary) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Detailed Breakdown Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { l: "Monthly Tax", v: results.monthlyTax, i: Receipt, c: "text-destructive" },
+              { l: "Monthly Gross", v: monthlySalary, i: Wallet, c: "text-muted-foreground" },
+              { l: "Effective Rate", v: `${((results.annualTax / results.annualSalary) * 100).toFixed(1)}%`, i: PieChart, c: "text-primary", isRaw: true }
+            ].map((item, idx) => (
+              <div key={idx} className="surface-card p-6 border-border/30 bg-background hover:border-foreground/20 transition-colors group">
+                <div className="flex items-center gap-2 mb-3">
+                  <item.i className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{item.l}</span>
+                </div>
+                <div className={cn("text-xl font-mono font-medium tabular-nums leading-tight", item.c)}>
+                  {item.isRaw ? item.v : `Rs. ${Math.round(item.v as number).toLocaleString()}`}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Expert Insights & Info */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+              <Info className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+              <div className="flex items-center gap-2 relative z-10 text-[10px] font-bold uppercase tracking-widest text-foreground">
+                <Calculator className="size-3 text-primary" /> Taxable Threshold
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                Income up to Rs. 600,000 per year (Rs. 50,000/month) is tax-exempt under both FY 2024-25 and FY 2025-26 rules.
+              </p>
+            </div>
+            <div className="surface-card p-8 border-border/30 space-y-4 bg-secondary/5 relative overflow-hidden group">
+              <ShieldCheck className="absolute -bottom-4 -right-4 size-20 text-muted-foreground/5 group-hover:scale-110 transition-transform duration-700" />
+              <div className="flex items-center gap-2 relative z-10 text-[10px] font-bold uppercase tracking-widest text-foreground">
+                <History className="size-3 text-primary" /> FY 2025-26 Changes
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">
+                The latest budget has adjusted slabs for high earners, significantly increasing the tax burden for individuals earning above Rs. 2.2 million annually.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Sidebar Panel (Inputs) */}
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-6 md:p-8 space-y-8 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Landmark className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Tax Configuration</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Monthly Income & Period</p>
             </div>
 
-            <div className="lg:col-span-4 space-y-6">
-               <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-28 overflow-hidden">
-                  <div className="absolute top-0 right-0 size-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+            <div className="space-y-6 relative z-10">
+              {/* Main Salary Input */}
+              <div className="space-y-3">
+                <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Monthly Salary (PKR)</Label>
+                <div className="relative group">
+                  <Input
+                    type="number"
+                    value={monthlySalary || ""}
+                    onChange={(e) => setMonthlySalary(Number(e.target.value) || 0)}
+                    className="h-14 bg-background border-border/60 font-mono text-xl font-bold rounded-2xl pl-12 focus:ring-primary/20 transition-all"
+                    placeholder="0"
+                  />
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 font-mono text-sm font-bold">Rs.</div>
+                </div>
+              </div>
 
-                  <div className="space-y-6 relative border-b border-border/40 pb-10">
-                     <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Monthly Take-Home</div>
-                           <div className="flex items-center gap-2">
-                              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-health/10 text-health text-[9px] font-black uppercase tracking-tighter">
-                                 {taxYear === "2025" ? "NEW RATES" : "OLD RATES"}
-                              </div>
-                              <button 
-                                 onClick={handleCopy}
-                                 className={cn(
-                                    "p-2 rounded-lg transition-all border shadow-sm",
-                                    copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
-                                 )}
-                              >
-                                 {copied ? <CheckCircle2 className="size-3.5" /> : <Copy className="size-3.5" />}
-                              </button>
-                           </div>
-                        </div>
-                        <div className={cn(
-                           "font-mono font-bold tracking-tighter text-foreground leading-none",
-                           results.monthlyTakeHome > 999999 ? "text-3xl sm:text-4xl" : "text-4xl sm:text-5xl"
-                        )}>
-                           {Math.round(results?.monthlyTakeHome || 0).toLocaleString()}
-                        </div>
-                     </div>
+              {/* Fiscal Year Selection */}
+              <div className="space-y-4 pt-4 border-t border-border/20">
+                <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Select Fiscal Year</Label>
+                <div className="grid grid-cols-1 gap-3">
+                  {[
+                    { id: "2025", l: "FY 2025 - 2026", d: "Latest Budget Rates" },
+                    { id: "2024", l: "FY 2024 - 2025", d: "Previous Year Slabs" }
+                  ].map((year) => (
+                    <button
+                      key={year.id}
+                      onClick={() => setTaxYear(year.id as any)}
+                      className={cn(
+                        "p-4 rounded-xl border text-left transition-all group/btn relative overflow-hidden",
+                        taxYear === year.id
+                          ? "bg-background border-primary shadow-sm"
+                          : "bg-background border-border/60 hover:border-primary/40"
+                      )}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className={cn("text-xs font-bold uppercase tracking-tight", taxYear === year.id ? "text-primary" : "text-foreground")}>
+                          {year.l}
+                        </span>
+                        {taxYear === year.id && <CheckCircle2 className="size-3 text-primary" />}
+                      </div>
+                      <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase tracking-tighter">
+                        {year.d}
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-                     <div className="space-y-4 pt-4 border-t border-border/40">
-                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Yearly (After Tax)</div>
-                        <div className={cn(
-                           "font-mono font-bold tracking-tighter text-health leading-none",
-                           results.annualTakeHome > 9999999 ? "text-2xl sm:text-3xl" : "text-3xl sm:text-4xl"
-                        )}>
-                           Rs.{Math.round(results?.annualTakeHome || 0).toLocaleString()}
-                        </div>
-                     </div>
-
-                     <div className="text-[11px] text-muted-foreground font-black uppercase tracking-widest flex items-center gap-2">
-                        <Banknote className="size-3" /> Pakistan Rupees (PKR)
-                     </div>
-                  </div>
-
-                  <div className="space-y-4 relative">
-                     <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-4">Tax Analysis</div>
-
-                     <div className="space-y-3 relative">
-                        {/* MONTHLY TAX CARD */}
-                        <div className="surface-card p-4 bg-destructive/5 border-destructive/20 shadow-lg shadow-destructive/5 space-y-1.5 transition-all hover:scale-[1.02] border-2">
-                           <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-black uppercase tracking-widest text-destructive/70">Monthly Tax</span>
-                              <TrendingDown className="size-4 text-destructive" />
-                           </div>
-                           <p className="text-2xl font-mono font-black text-destructive leading-none">
-                              -Rs.{Math.round(results?.monthlyTax || 0).toLocaleString()}
-                           </p>
-                           <p className="text-[9px] text-destructive/60 font-bold uppercase tracking-tight">Deducted from your monthly payout</p>
-                        </div>
-
-                        {/* YEARLY TAX CARD */}
-                        <div className="surface-card p-4 bg-destructive/5 border-destructive/20 shadow-lg shadow-destructive/5 space-y-1.5 transition-all hover:scale-[1.02] border-2">
-                           <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-black uppercase tracking-widest text-destructive/70">Yearly Tax</span>
-                              <ShieldAlert className="size-4 text-destructive" />
-                           </div>
-                           <p className="text-2xl font-mono font-black text-destructive leading-none">
-                              -Rs.{Math.round(results?.annualTax || 0).toLocaleString()}
-                           </p>
-                           <p className="text-[9px] text-destructive/60 font-bold uppercase tracking-tight">Total annual liability to FBR</p>
-                        </div>
-
-                        {/* GROSS ANNUAL CARD */}
-                        <div className="surface-card p-4 bg-secondary/10 border-border/40 shadow-lg space-y-1.5 transition-all hover:scale-[1.02] border-2">
-                           <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Gross Annual</span>
-                              <Wallet className="size-4 text-muted-foreground/40" />
-                           </div>
-                           <p className="text-2xl font-mono font-black text-foreground leading-none">
-                              Rs.{Math.round(results?.annualSalary || 0).toLocaleString()}
-                           </p>
-                           <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-tight">Total compensation before tax</p>
-                        </div>
-                     </div>
-
-                     <div className="p-6 rounded-3xl bg-secondary/30 border border-border/60 space-y-4">
-                        <div className="flex items-center gap-2 text-foreground/60">
-                           <PieChart className="size-4" />
-                           <span className="text-[10px] font-black uppercase tracking-[0.2em]">Summary</span>
-                        </div>
-                        <p className="text-[10px] text-muted-foreground leading-relaxed font-medium">
-                           Your yearly income after tax is <strong>Rs. {Math.round(results.annualTakeHome).toLocaleString()}</strong>.
-                        </p>
-                     </div>
-
-                     <div className="p-6 bg-primary/5 border border-primary/10 rounded-2xl flex gap-4">
-                        <Info className="size-5 text-primary shrink-0" />
-                        <div className="space-y-1">
-                           <p className="text-[10px] text-foreground font-bold uppercase">Official Source</p>
-                           <p className="text-[9px] text-muted-foreground leading-relaxed font-medium">
-                              Calculations based on <strong>Income Tax Ordinance 2001</strong> as amended by the <strong>Finance Act 2025</strong>.
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+              {/* Actions */}
+              <div className="pt-6 border-t border-border/20 space-y-3">
+                <button
+                  onClick={handleCopy}
+                  className={cn(
+                    "w-full h-11 rounded-xl flex items-center justify-center gap-3 font-bold text-[10px] uppercase tracking-[0.2em] transition-all shadow-md active:scale-95",
+                    copied ? "bg-foreground text-background" : "bg-slate-900 hover:bg-slate-800 text-white"
+                  )}
+                >
+                  {copied ? (
+                    <><CheckCircle2 className="size-3" /> Copied Analysis</>
+                  ) : (
+                    <><Copy className="size-3" /> Share Results</>
+                  )}
+                </button>
+                <div className="text-center">
+                  <p className="text-[9px] text-muted-foreground leading-relaxed font-medium uppercase tracking-tight">
+                    FBR Official Calculator for Salary Income Tax
+                  </p>
+                </div>
+              </div>
             </div>
-         </div>
-      </CalculatorPage>
-   );
+          </div>
+        </div>
+      </div>
+
+      {calc.howTo && (
+        <div className="mt-12 pt-12 border-t border-border/40">
+          <HowToGuide
+            id="how-to-use"
+            steps={calc.howTo!.steps}
+            proTip={calc.howTo!.proTip}
+            variant="horizontal"
+          />
+        </div>
+      )}
+    </CalculatorPage>
+  );
 };
 
 export default SalaryTaxCalculator;
-
-// Helper icons
-function History(props: any) {
-   return (
-      <svg
-         {...props}
-         xmlns="http://www.w3.org/2000/svg"
-         width="24"
-         height="24"
-         viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         strokeWidth="2"
-         strokeLinecap="round"
-         strokeLinejoin="round"
-      >
-         <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-         <path d="M3 3v5h5" />
-         <path d="M12 7v5l4 2" />
-      </svg>
-   );
-}

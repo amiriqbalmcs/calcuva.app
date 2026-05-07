@@ -1,5 +1,7 @@
 ---
 title: "Vertical Velocity: The Science of High-Speed Elevator Performance"
+category: "utility"
+excerpt: "Test the vertical velocity of high-speed elevators in skyscrapers. Get real-time data in feet per minute (fpm) or meters per second, perfect for checking world-class lift performance."
 calculator: "high-speed-elevator-test"
 keywords: ["elevator speed test", "how fast is my elevator", "elevator g-force tracker", "vertical velocity app", "measure lift speed", "tallest building elevator stats"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Why do I feel 'heavy' or 'light' in an elevator?"
     a: "That is G-Force. As the lift accelerates upwards, you experience positive Gs (making you feel heavier). As it slows down or moves downwards, you experience negative Gs. Our tool tracks these forces in real-time."
 ---
-
 ## Vertical Telemetry: Measuring the World's Fastest Lifts
 From the Burj Khalifa to the Empire State Building, high-speed elevators are marvels of modern engineering. The Calcuva **High-Speed Elevator & G-Force Tracker** provides a professional-grade telemetry window into the world of vertical transport.
 

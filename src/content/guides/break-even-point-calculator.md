@@ -1,5 +1,7 @@
 ---
 title: "The Breakeven Blueprint: Calculating the Path to Profitability"
+category: "business"
+excerpt: "Calculate the exact number of units you need to sell to reach zero profit/loss based on fixed and variable costs."
 calculator: "break-even-point-calculator"
 keywords: ["break even point calculator", "fixed vs variable costs", "contribution margin guide", "business safety margin", "startup planning", "unit economics math"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "What is a 'Margin of Safety'?"
     a: "It's the gap between your actual sales and your break-even point. A 20% margin of safety means your sales can drop by 20% before you start losing money."
 ---
-
 ### The Architecture of the Zero-Point
 Every business begins in the "Red"—carrying debt and fixed overhead before a single customer arrives. The **Break-Even Point (BEP)** is the most critical milestone in a company's lifecycle. It is the moment a "Project" becomes a "Business." Calcuva's Breakeven Engine provides the unit-economic clarity needed to move from survival to scale.
 

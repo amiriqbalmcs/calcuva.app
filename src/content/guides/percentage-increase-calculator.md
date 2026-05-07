@@ -1,5 +1,7 @@
 ---
 title: "The Logic of Proportion: Mastering Percentage Changes and Increases"
+category: "utility"
+excerpt: "A versatile tool to find the percentage of a number, the percentage difference between two numbers, and percentage growth or decline."
 calculator: "percentage-increase-calculator"
 keywords: ["percentage increase calculator", "percentage change math", "growth rate guide", "percent decrease", "relative change", "business growth math"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Can I use this for tip calculations?"
     a: "Yes. Simply use the 'Percentage of Value' mode to find 15% or 20% of your total bill."
 ---
-
 ### The Architecture of Growth
 Percentages are the universal language of comparison. Whether you are tracking a [Salary Increase](/calculators/hourly-to-salary-calculator), a stock market gain, or a grocery store discount, the "Percent" allows us to understand the **Significance** of a change relative to its starting point. Calcuva provides a high-precision digital environment designed to eliminate the common "Mental Math" errors associated with proportional logic.
 

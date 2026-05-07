@@ -1,5 +1,7 @@
 ---
 title: "Metabolic Safety: The Science of Blood Alcohol Content (BAC)"
+category: "health"
+excerpt: "Calculate your estimated BAC based on your weight, sex, the number of drinks consumed, and the time elapsed since ingestion."
 calculator: "blood-alcohol-content-calculator"
 keywords: ["bac calculator", "widmark formula", "blood alcohol content guide", "alcohol metabolism math", "safety windows for driving", "biological alcohol clearance"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "What defines a 'Standard Drink'?"
     a: "Usually defined as 14 grams of pure alcohol. This is roughly 12oz of beer (5%), 5oz of wine (12%), or 1.5oz of spirits (40%)."
 ---
-
 ### The Architecture of Impairment
 Blood Alcohol Content (BAC) is a measure of the mass of alcohol per unit volume of blood. While it's often discussed in a social context, the physics of alcohol metabolism is a serious clinical matter. Understanding your BAC is not about "gaming the system"; it's about understanding the **Biological Clearance Rate** of your body to make informed safety decisions. Calcuva uses the **Widmark Formula**, the global forensic standard for BAC estimation.
 

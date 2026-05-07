@@ -14,7 +14,6 @@ faqs:
   - q: "Does the order of the names matter?"
     a: "Our love calculator sorts the names alphabetically before processing, so 'Romeo & Juliet' gives the exact same result as 'Juliet & Romeo'."
 ---
-
 Long before algorithms paired people on dating apps, the "Love Calculator" was a staple playground game and early internet phenomenon. By simply scribbling down two names and performing pseudo-mathematical counting rules on the letters, teenagers would figure out their "compatibility score" with their crushes.
 
 ## How it Actually Works

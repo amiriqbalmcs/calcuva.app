@@ -1,5 +1,7 @@
 ---
 title: "The Project Velocity Engine: Mastering Business Day Calculations"
+category: "utility"
+excerpt: "Calculate the number of business days (Mon-Fri) between any two dates, with options to exclude holiday counts."
 calculator: "business-working-days-calculator"
 keywords: ["working days calculator", "business day guide", "net working days math", "project timeline planning", "public holidays impact", "service level agreement sla"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "How do I calculate a 'Friday to Monday' interval?"
     a: "From Friday morning to Monday morning is 3 calendar days, but only 1 business day. Understanding this 'Weekend Gap' is essential for project management."
 ---
-
 ### The Architecture of Corporate Time
 In the world of project management, legal contracts, and logistics, calendar days mean very little. What matters is the **Business Day Interval**. If a contract gives you "10 Days to Respond," knowing if those are calendar or business days can be the difference between compliance and a legal breach. Calcuva provides a high-fidelity **Business Day Engine** to help you map your timelines with professional precision.
 

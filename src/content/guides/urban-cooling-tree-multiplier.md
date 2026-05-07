@@ -1,5 +1,6 @@
 ---
 title: "Urban Cooling & Tree Multiplier: 2026 Guide to Natural Air Conditioning"
+excerpt: "Determine the exact number of indigenous trees needed to reduce heat-island effects around your property and save on AC cooling costs."
 category: "sustainability"
 calculator: "urban-cooling-tree-multiplier"
 keywords: ["urban cooling tree calculator", "best trees for cooling lahore", "amaltas vs neem cooling impact", "natural house cooling pakistan", "tree plantation impact calculator"]
@@ -17,7 +18,6 @@ faqs:
   - q: "What is the best time of year to plant trees in Pakistan?"
     a: "There are two primary planting seasons: Spring (February-March) and Monsoon (July-August). Monsoon is generally preferred for urban areas as the natural humidity and frequent rainfall help the saplings establish their root systems with minimal human intervention."
 ---
-
 ## Urban Cooling & Tree Multiplier: 2026 Guide to Natural Air Conditioning
 
 In 2026, as urban temperatures in cities like Lahore, Karachi, and Islamabad reach record highs, the "Urban Heat Island" effect has become a critical challenge for homeowners. Standard concrete structures absorb heat during the day and radiate it at night, leading to skyrocketing AC bills and physical discomfort. Many urban areas in Pakistan are now experiencing "Nighttime Heat Loading," where the city doesn't cool down until well after midnight because of the massive thermal mass of concrete buildings.

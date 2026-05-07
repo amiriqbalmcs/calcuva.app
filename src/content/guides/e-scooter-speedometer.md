@@ -1,5 +1,7 @@
 ---
 title: "Micro-Mobility Telemetry: The Ultimate E-Scooter Speedometer"
+category: "utility"
+excerpt: "Monitor your electric scooter rides with our dedicated GPS speedometer. Perfect for Segway, Xiaomi, and custom e-scooters to track live speed and battery-saving trip data."
 calculator: "e-scooter-speedometer"
 keywords: ["e-scooter speedometer", "electric scooter speed app", "how fast is my scooter", "scooter gps tracker", "xiaomi scooter speed", "segway ninebot speedometer"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Does it work on all brands (Xiaomi, Segway, Apollo)?"
     a: "Yes. Our tool is independent of the scooter's hardware. It uses your phone's GPS, so it works on any electric or kick scooter."
 ---
-
 ## Scooter Tech: Mastering the Micro-Mobility Velocity
 Electric scooters have revolutionized urban transport, but many budget and mid-range models lack accurate speedometers. The Calcuva **E-Scooter GPS Speedometer** fills that gap, providing a high-fidelity dashboard for your daily commute or weekend joyride.
 

@@ -1,5 +1,7 @@
 ---
 title: "Consumption Tax Masterclass: GST, VAT, and Sales Tax Mechanics"
+category: "finance"
+excerpt: "Quickly find the net price, tax amount, and total price for any product or service across standard and custom tax rates."
 calculator: "gst-vat-tax-calculator"
 keywords: ["gst calculator", "vat calculation math", "sales tax guide", "input tax credit", "inclusive vs exclusive tax", "business tax strategy"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Is Sales Tax the same as VAT?"
     a: "No. US-style Sales Tax is usually a 'Single-Point' tax collected only at the final retail sale. VAT/GST are 'Multi-Point' taxes collected at every stage of production."
 ---
-
 ### The Architecture of Consumption Tax
 Consumption taxes—whether called **GST (Goods and Services Tax)** or **VAT (Value Added Tax)**—are the engines that power modern government budgets. For consumers, it's a "silent tax" on every purchase. For business owners, it's a critical compliance and cash-flow management task.
 

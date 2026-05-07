@@ -1,5 +1,7 @@
 ---
 title: "The Income Translator: Mastering Hourly to Salary Conversions"
+category: "business"
+excerpt: "Instantly convert your hourly rate into annual, monthly, and weekly salary equivalents based on your working hours."
 calculator: "hourly-to-salary-calculator"
 keywords: ["hourly to salary calculator", "annual income guide", "freelance rate math", "net take home pay", "work hour economics", "billable hour calculator"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "What is the 'Living Wage'?"
     a: "A living wage is the hourly rate required for an individual in a specific region to cover their basic needs (housing, food, healthcare) without government assistance."
 ---
-
 ### The Architecture of Your Time Value
 In the modern economy, we often switch between "Salaried" roles and "Gig" opportunities. To make a logical career choice, you must be able to translate these two worlds accurately. A $25/hour job might sound better than a $50,000 salary, but once you account for benefits and paid time off, the math may surprise you. Calcuva provides a high-fidelity **Income Translator** to help you understand your "Real Wage."
 

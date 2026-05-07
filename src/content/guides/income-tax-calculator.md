@@ -1,5 +1,7 @@
 ---
 title: "Global Income Tax Mastery: Optimizing Your Net Take-Home Pay"
+category: "finance"
+excerpt: "Universal income forecaster to see your net salary across tax brackets with deductions and standard allowances."
 calculator: "income-tax-calculator"
 keywords: ["income tax calculator", "net pay guide", "tax bracket math", "take home pay", "tax deductions", "salary optimization"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Does this calculator support international tax rates?"
     a: "While tax laws vary by country, our tool allows you to input custom percentage-based brackets to simulate any jurisdiction worldwide."
 ---
-
 ## The Science of Net Compensation
 Most people only look at their "Gross Salary"—the number on the offer letter. However, in the world of personal finance, the only number that matters is your **Net Take-Home Pay**. Understanding how your income is carved up by tax jurisdictions is critical for budgeting, [home loan planning](/calculators/mortgage-calculator), and retirement forecasting.
 

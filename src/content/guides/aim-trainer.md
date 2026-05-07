@@ -1,5 +1,7 @@
 ---
 title: "Aim Trainer: Master Your Click Test and Mouse Precision"
+category: "benchmarks"
+excerpt: "Test your aim and speed with this interactive aim trainer. Click all 30 targets as fast as you can to see your average click time and accuracy score."
 calculator: "aim-trainer"
 keywords: ["aim trainer", "click test", "click speed test", "mouse click test", "mouse accuracy test", "fps aim test", "reflex trainer online", "gaming aim test", "mouse precision", "aim trainer online"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Should I use a high or low sensitivity for the aim trainer?"
     a: "It's best to use the same sensitivity you use in your main games. Most pros prefer lower sensitivity (measured in DPI and eDPI) for better precision, but consistency is the most important factor."
 ---
-
 ## Precision Performance: The Art of the Mouse Click Test
 In the world of competitive gaming, your aim is your primary interface with the digital world. The Calcuva **Aim Trainer** is a high-performance tool designed to measure and improve your flick precision, **click speed test** results, and hand-eye coordination. Whether you're playing tactical shooters like Valorant or fast-paced battle royales, mastering the **mouse click test** is essential for victory.
 

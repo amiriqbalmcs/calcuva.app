@@ -1,5 +1,7 @@
 ---
 title: "Gravity and Velocity: Mastering the Roller Coaster G-Force Tracker"
+category: "utility"
+excerpt: "Track the thrill of your next roller coaster! Measure peak speeds, record G-force data using your phone's sensors, and log the maximum drop velocity in real-time."
 calculator: "roller-coaster-speed-tracker"
 keywords: ["roller coaster speed tracker", "g-force app", "measure coaster speed", "g-force meter online", "roller coaster stats", "amusement park tracker"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Is it safe to hold my phone on a coaster?"
     a: "Safety first! Never hold your phone in your hand during a ride. Use a secure zipped pocket or a body mount. You can check your 'Peak G-Force' and 'Max Speed' after the ride is over."
 ---
-
 ## Coaster Telemetry: The Ultimate Ride Analysis
 For "Coaster Enthusiasts," a ride isn't just about the thrill—it's about the stats. The Calcuva **Roller Coaster Speed & G-Force Tracker** turns your smartphone into a professional-grade telemetry box, capturing the raw intensity of every drop, loop, and banked turn.
 

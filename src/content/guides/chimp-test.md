@@ -1,5 +1,7 @@
 ---
 title: "The Chimp Test: Can You Outsmart a Chimpanzee?"
+category: "benchmarks"
+excerpt: "Test your memory against a famous chimpanzee experiment. Numbers appear on a grid and hide behind squares—click them in the right order to win."
 calculator: "chimp-test"
 keywords: ["chimp test", "human benchmark", "chimpanzee memory test", "working memory grid", "photographic memory test", "ayumu chimp test", "spatial memory", "human benchmark chimp", "humanbenchmark"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "What does this test measure?"
     a: "It measures 'Spatial Working Memory' and your brain's ability to take a 'snapshot' of information and recall it under pressure."
 ---
-
 ## Primate Intelligence: The Chimp Memory Benchmark
 Are you smarter than a chimpanzee? It sounds like an easy question, but the Calcuva **Chimp Test** might prove you wrong. This fascinating test reveals a deep evolutionary trade-off in the human brain, pitting our logical and linguistic minds against the raw "photographic" power of our primate ancestors. As a premier **human benchmark**, this test is the ultimate challenge for your spatial working memory.
 

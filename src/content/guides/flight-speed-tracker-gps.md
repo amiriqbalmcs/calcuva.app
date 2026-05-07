@@ -1,5 +1,7 @@
 ---
 title: "Aviation Telemetry: Tracking Your Flight's Ground Speed and Altitude"
+category: "utility"
+excerpt: "Monitor your flight's speed and altitude in real-time. Our GPS-based flight tracker works from your window seat, providing live ground speed and height data without needing Wi-Fi."
 calculator: "flight-speed-tracker-gps"
 keywords: ["flight speed tracker", "airplane speedometer", "ground speed vs air speed", "flight altitude gps", "how fast am i flying", "airplane gps speed"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "Does this work in the middle of the ocean?"
     a: "Yes. GPS satellites cover the entire planet. As long as you have a line-of-sight to the sky (via the cabin window), it will work over oceans, mountains, and deserts."
 ---
-
 ## Flight Telemetry: Mastering the View from 35,000 Feet
 When you are cruising at seven miles above the earth, the sense of speed is often lost. The Calcuva **Flight Speed & Altitude Tracker** bridges that gap, providing professional-grade aviation data directly to your seat.
 

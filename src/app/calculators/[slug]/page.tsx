@@ -152,6 +152,7 @@ const VerbalMemoryTest = dynamic(() => import("@/components/calculators/VerbalMe
 const ChimpTest = dynamic(() => import("@/components/calculators/ChimpTest"), { loading });
 const VisualMemoryTest = dynamic(() => import("@/components/calculators/VisualMemoryTest"), { loading });
 const TypingSpeedTest = dynamic(() => import("@/components/calculators/TypingSpeedTest"), { loading });
+const MortgageCalculator = dynamic(() => import("@/components/calculators/MortgageCalculator"), { loading });
 
 const WifiQrCodeGenerator = dynamic(() => import("@/components/calculators/WifiQrCodeGenerator"), { loading });
 const VCardQrCodeGenerator = dynamic(() => import("@/components/calculators/VCardQrCodeGenerator"), { loading });
@@ -175,7 +176,7 @@ const componentMap: Record<string, any> = {
   "discount-calculator": DiscountCalculator,
   // Phase 3 Batch 2
   "calorie-deficit-calculator": CalorieDeficitCalculator,
-  "mortgage-calculator": LoanEmiCalculator, // Alias to LoanEmiCalculator
+  "mortgage-calculator": MortgageCalculator,
   "love-calculator": LoveCalculator,
   // Batch 1
   "gst-vat-tax-calculator": GstVatCalculator,

@@ -14,7 +14,6 @@ faqs:
   - q: "How accurate is the 'Due Date'?"
     a: "A due date is just an estimate. Only about 4% of babies are born on their exact due date. Most are born within a window of two weeks before or after."
 ---
-
 Tracking your pregnancy journey is one of the most exciting experiences in a parent's life. However, the math behind "How many weeks am I?" can be surprisingly confusing. Most healthcare professionals count pregnancy from the first day of your **Last Menstrual Period (LMP)**, even though you aren't actually pregnant for the first two weeks of that cycle.
 
 ## How the Math Works: Naegele’s Rule

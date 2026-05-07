@@ -9,6 +9,7 @@ import {
   ShieldCheck, ChevronRight, Banknote
 } from "lucide-react";
 import { CalculatorPage } from "@/components/CalculatorPage";
+import { HowToGuide } from "@/components/HowToGuide";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -19,10 +20,9 @@ import { useCurrency } from "@/context/CurrencyContext";
 import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const calc = calculatorBySlug("credit-card-payoff-calculator");
+const calc = calculatorBySlug("credit-card-payoff-calculator")!;
 
 const CreditCardPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; faqs?: any[]; relatedArticles?: any[] }) => {
-  if (!calc) return null;
   const { currency } = useCurrency();
   const [balance, setBalance] = useUrlState<number>("b", 5000);
   const [rate, setRate] = useUrlState<number>("r", 18.9);
@@ -66,108 +66,18 @@ const CreditCardPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
     setTimeout(() => setCopied(false), 2000);
   };
 
+  if (!calc) return null;
   return (
     <CalculatorPage calc={calc} guideHtml={guideHtml} faqs={faqs} relatedArticles={relatedArticles}>
       <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
 
-        {/* Input Panel */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
-            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
-
-            <div className="space-y-1 relative z-10">
-              <h3 className="text-sm font-bold tracking-tight">Debt Architecture</h3>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Liability Configuration</p>
-            </div>
-
-            <div className="space-y-8 relative z-10">
-              {/* Balance */}
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Balance</Label>
-                  <span className="text-[10px] font-bold text-finance">{formatCurrency(balance, currency.code)}</span>
-                </div>
-                <div className="relative group">
-                  <Input
-                    type="number"
-                    value={balance}
-                    onChange={(e) => setBalance(Number(e.target.value) || 0)}
-                    className="h-12 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-lg rounded-xl pr-12 shadow-sm"
-                  />
-                  <CreditCard className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
-                </div>
-                <Slider value={[balance]} min={100} max={50000} step={100} onValueChange={([v]) => setBalance(v)} />
-              </div>
-
-              {/* Rate */}
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">APR (%)</Label>
-                  <span className="text-[10px] font-bold text-destructive">{rate}%</span>
-                </div>
-                <div className="relative group">
-                  <Input
-                    type="number"
-                    value={rate}
-                    step="0.1"
-                    onChange={(e) => setRate(Number(e.target.value) || 0)}
-                    className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12"
-                  />
-                  <Percent className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
-                </div>
-                <Slider value={[rate]} min={0} max={40} step={0.1} onValueChange={([v]) => setRate(v)} />
-              </div>
-
-              {/* Monthly Payment */}
-              <div className="space-y-4 pt-2 border-t border-border/40">
-                <div className="flex justify-between items-center">
-                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Monthly Payment</Label>
-                  <span className="text-[10px] font-bold text-finance">{formatCurrency(payment, currency.code)}</span>
-                </div>
-                <div className="relative group">
-                  <Input
-                    type="number"
-                    value={payment}
-                    onChange={(e) => setPayment(Number(e.target.value) || 0)}
-                    className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12"
-                  />
-                  <Wallet className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
-                </div>
-                <Slider value={[payment]} min={50} max={5000} step={10} onValueChange={([v]) => setPayment(v)} />
-              </div>
-            </div>
-          </div>
-
-          <div className={cn(
-            "surface-card p-6 border-border/30 relative overflow-hidden group",
-            results.isDangerous ? "bg-destructive/5 text-destructive" : "bg-health/5 text-health"
-          )}>
-            <ShieldCheck className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
-            <div className="flex gap-4 items-start relative z-10">
-              <div className="mt-1">
-                <Activity className="size-5" />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-[10px] font-bold uppercase tracking-wider">Payoff Strategy</h4>
-                <p className="text-xs opacity-80 leading-relaxed font-medium">
-                  {results.isDangerous
-                    ? "Negative Amortization: Your payment does not cover the interest. This debt will grow indefinitely unless payment is increased."
-                    : results.totalInterest > balance * 0.5
-                      ? "High Interest Burden: Your total interest is over 50% of the balance. Consider increasing payments or consolidating."
-                      : "Aggressive Reduction: Your current payment strategy ensures a rapid and efficient principal liquidation."}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Results Panel */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
 
           {/* Executive Summary */}
           <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-md relative overflow-hidden group">
             <TrendingDown className="absolute -top-12 -right-12 size-64 text-foreground/[0.02] -rotate-12 transition-transform group-hover:-rotate-6 duration-1000" />
-            
+
             <div className="relative z-10">
               <div className="flex justify-between items-start mb-8">
                 <div className="space-y-2">
@@ -179,8 +89,8 @@ const CreditCardPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
                     {results.isDangerous ? "∞" : results.months < 12 ? `${results.months} MTH` : `${years}Y ${remainingMonths}M`}
                   </div>
                 </div>
-                <button 
-                  onClick={handleCopy} 
+                <button
+                  onClick={handleCopy}
                   className={cn(
                     "p-3 rounded-xl transition-all border shadow-sm",
                     copied ? "bg-foreground text-background border-foreground" : "bg-background text-foreground border-border hover:bg-secondary"
@@ -189,7 +99,7 @@ const CreditCardPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
                   {copied ? <CheckCircle2 className="size-5" /> : <Copy className="size-5" />}
                 </button>
               </div>
-              
+
               <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border/40">
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
@@ -301,6 +211,105 @@ const CreditCardPayoffCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
             </div>
           </div>
 
+        </div>
+
+        {/* Input Panel */}
+        <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
+            <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+
+            <div className="space-y-1 relative z-10">
+              <h3 className="text-sm font-bold tracking-tight">Debt Architecture</h3>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Liability Configuration</p>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Balance */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Balance</Label>
+                  <span className="text-[10px] font-bold text-finance">{formatCurrency(balance, currency.code)}</span>
+                </div>
+                <div className="relative group">
+                  <Input
+                    type="number"
+                    value={balance}
+                    onChange={(e) => setBalance(Number(e.target.value) || 0)}
+                    className="h-12 bg-background border-border/60 focus:border-foreground/20 transition-all font-bold text-lg rounded-xl pr-12 shadow-sm"
+                  />
+                  <CreditCard className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
+                </div>
+                <Slider value={[balance]} min={100} max={50000} step={100} onValueChange={([v]) => setBalance(v)} />
+              </div>
+
+              {/* Rate */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">APR (%)</Label>
+                  <span className="text-[10px] font-bold text-destructive">{rate}%</span>
+                </div>
+                <div className="relative group">
+                  <Input
+                    type="number"
+                    value={rate}
+                    step="0.1"
+                    onChange={(e) => setRate(Number(e.target.value) || 0)}
+                    className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12"
+                  />
+                  <Percent className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
+                </div>
+                <Slider value={[rate]} min={0} max={40} step={0.1} onValueChange={([v]) => setRate(v)} />
+              </div>
+
+              {/* Monthly Payment */}
+              <div className="space-y-4 pt-2 border-t border-border/40">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Monthly Payment</Label>
+                  <span className="text-[10px] font-bold text-finance">{formatCurrency(payment, currency.code)}</span>
+                </div>
+                <div className="relative group">
+                  <Input
+                    type="number"
+                    value={payment}
+                    onChange={(e) => setPayment(Number(e.target.value) || 0)}
+                    className="h-11 bg-background border-border/60 font-bold rounded-lg shadow-sm pr-12"
+                  />
+                  <Wallet className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/30" />
+                </div>
+                <Slider value={[payment]} min={50} max={5000} step={10} onValueChange={([v]) => setPayment(v)} />
+              </div>
+            </div>
+          </div>
+
+          <div className={cn(
+            "surface-card p-6 border-border/30 relative overflow-hidden group",
+            results.isDangerous ? "bg-destructive/5 text-destructive" : "bg-health/5 text-health"
+          )}>
+            <ShieldCheck className="absolute -bottom-4 -right-4 size-20 opacity-5 group-hover:rotate-12 transition-transform duration-700" />
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="mt-1">
+                <Activity className="size-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">Payoff Strategy</h4>
+                <p className="text-xs opacity-80 leading-relaxed font-medium">
+                  {results.isDangerous
+                    ? "Negative Amortization: Your payment does not cover the interest. This debt will grow indefinitely unless payment is increased."
+                    : results.totalInterest > balance * 0.5
+                      ? "High Interest Burden: Your total interest is over 50% of the balance. Consider increasing payments or consolidating."
+                      : "Aggressive Reduction: Your current payment strategy ensures a rapid and efficient principal liquidation."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {calc.howTo && (
+            <HowToGuide
+              id='how-to-use'
+              steps={calc.howTo!.steps}
+              proTip={calc.howTo!.proTip}
+            />
+          )}
         </div>
       </div>
     </CalculatorPage>

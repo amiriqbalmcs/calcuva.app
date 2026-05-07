@@ -1,5 +1,7 @@
 ---
 title: "The Compounding Engine: A Systematic Investment Plan (SIP) Masterclass"
+category: "finance"
+excerpt: "Visualise how a recurring investment plan compounds over years with adjustable rate, tenure and step-up options."
 calculator: "sip-investment-calculator"
 keywords: ["sip calculator", "systematic investment plan", "compound interest", "wealth building", "monthly investment math", "dollar cost averaging"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "How do I account for inflation in my returns?"
     a: "Subtract the inflation rate from your expected return. If the market returns 12% and inflation is 6%, your 'Real Payout' should be calculated at 6% to understand its future purchasing power."
 ---
-
 ## The Tenth Wonder of the World
 Albert Einstein famously called compound interest the "Eighth Wonder of the World." In the modern era, a **Systematic Investment Plan (SIP)** is the most accessible way to harness this power. It is a tool that turns small, consistent monthly contributions into substantial multi-generational wealth.
 

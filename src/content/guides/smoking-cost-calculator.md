@@ -1,5 +1,7 @@
 ---
 title: "The Opportunity Cost of Habit: Analyzing the True Cost of Smoking"
+category: "health"
+excerpt: "See how much money you spend on cigarettes over time and estimate the life-expectancy impact of your smoking habits."
 calculator: "smoking-cost-calculator"
 keywords: ["smoking cost calculator", "quit smoking benefits", "smoking savings guide", "opportunity cost of habit", "health economics", "stop smoking finance"]
 faqs:
@@ -16,7 +18,6 @@ faqs:
   - q: "Does switching to vaping save money?"
     a: "Usually, yes, but it often leads to a higher frequency of use. We recommend using the calculator to compare the 'Daily Spend' of both habits."
 ---
-
 ### The Architecture of a Compound Habit
 Smoking is rarely viewed through the lens of **Investment Math**. We see it as a $10 daily expense, but to a financial planner, smoking is a "Reversed Compound Interest Engine." It is a machine that systematically removes cash from your future net worth while simultaneously increasing your future liabilities (medical costs). Calcuva provides a clinical, data-driven perspective on what your habit is *really* costing you.
 

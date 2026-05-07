@@ -15,8 +15,9 @@ import { Switch } from "@/components/ui/switch";
 import { calculatorBySlug } from "@/lib/calculators";
 import { SITE_DOMAIN } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { HowToGuide } from "@/components/HowToGuide";
 
-const calc = calculatorBySlug("password-generator");
+const calc = calculatorBySlug("password-generator")!;
 
 interface PasswordGeneratorProps {
   guideHtml?: string;
@@ -305,6 +306,17 @@ export default function PasswordGenerator({ guideHtml, faqs, relatedArticles }: 
 
         </div>
       </div>
+
+      {calc.howTo && (
+        <div className="mt-12 pt-12 border-t border-border/40">
+          <HowToGuide
+            id="how-to-use"
+            steps={calc.howTo!.steps}
+            proTip={calc.howTo!.proTip}
+            variant="horizontal"
+          />
+        </div>
+      )}
     </CalculatorPage>
   );
 }

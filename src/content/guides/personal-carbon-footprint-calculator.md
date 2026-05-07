@@ -1,5 +1,7 @@
 ---
 title: "Measuring Your Impact: The Personal Carbon Footprint Guide"
+category: "utility"
+excerpt: "Calculate your CO2 emissions from flights, driving, home energy, and diet with reduction tips and impact breakdown."
 calculator: "personal-carbon-footprint-calculator"
 keywords: ["carbon footprint calculator", "co2 emissions tool", "environmental impact calculator", "reduce carbon footprint", "climate change calculator", "eco-friendly living"]
 faqs:
@@ -12,7 +14,6 @@ faqs:
   - q: "What are 'Carbon Offsets'?"
     a: "Offsets are investments in environmental projects (like tree planting or renewable energy) designed to 'cancel out' the emissions you cannot avoid."
 ---
-
 ### Small Steps, Big Impact
 Climate change is the defining challenge of our generation. While large-scale policy changes are essential, individual actions collectively shape the global demand for energy, travel, and food. Calcuva provides a **Personal Emissions Audit** to help you identify the areas where you can make the most significant environmental impact.
 
