@@ -53,7 +53,10 @@ export default function SolarAcCalculator({ guideHtml, faqs, relatedArticles }: 
         requiredKw: requiredKw.toFixed(1),
         panelsNeeded,
         dailyUnits: dailyUnits.toFixed(1),
-        monthlyUnits: (dailyUnits * 30).toFixed(0)
+        monthlyUnits: (dailyUnits * 30).toFixed(0),
+        acCount: "",
+        totalGeneration: "0",
+        reliability: ""
       };
     } else {
       // How many ACs can run on X kW
@@ -62,6 +65,10 @@ export default function SolarAcCalculator({ guideHtml, faqs, relatedArticles }: 
       const count = (availableWatts / inverter15Ton);
       
       return {
+        requiredKw: "0",
+        panelsNeeded: 0,
+        dailyUnits: "0",
+        monthlyUnits: "0",
         acCount: count < 1 ? "0" : Math.floor(count).toString(),
         totalGeneration: (solarKw * peakSunHours).toFixed(1),
         reliability: count > 1.5 ? "High" : "Moderate"
