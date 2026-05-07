@@ -1,14 +1,26 @@
 import type { Metadata } from "next";
+import { Outfit, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { LayoutWrapper } from "@/components/LayoutWrapper";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SITE_URL, GA_ID } from "@/lib/constants";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import Script from "next/script";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -74,8 +86,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased min-h-screen flex flex-col bg-background text-foreground">
+    <html lang="en" className={`${outfit.variable} ${plexMono.variable}`}>
+      <body className="antialiased min-h-screen flex flex-col bg-background text-foreground font-sans">
         <Providers>
           <GoogleAnalytics ga_id={GA_ID} />
           <LayoutWrapper>

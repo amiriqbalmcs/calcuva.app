@@ -125,8 +125,8 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               {/* Dynamic Texture Layer */}
               <div className="absolute inset-0 z-0">
-                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-400/20 dark:bg-blue-900/10 rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-indigo-600/20 dark:bg-indigo-900/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
+                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-400/20 dark:bg-blue-900/10 rounded-full blur-[120px] hidden sm:block animate-pulse" />
+                <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-indigo-600/20 dark:bg-indigo-900/10 rounded-full blur-[120px] hidden sm:block animate-pulse" style={{ animationDelay: "2s" }} />
 
                 {/* Precision Pattern Overlay */}
                 <div
