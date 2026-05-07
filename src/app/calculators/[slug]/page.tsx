@@ -303,8 +303,86 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
     .filter(p => p && p.category && meta.category && p.category === meta.category)
     .slice(0, 2);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": meta.title,
+        "applicationCategory": meta.category === "finance" ? "FinanceApplication" : meta.category === "health" ? "HealthApplication" : "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "description": meta.description,
+        "url": `${SITE_URL}/calculators/${meta.slug}`,
+        "image": `${SITE_URL}/og-image.png`,
+        "author": {
+          "@type": "Person",
+          "name": "Amir Iqbal",
+          "url": `${SITE_URL}/about`
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Calcuva",
+          "url": SITE_URL,
+          "logo": { "@type": "ImageObject", "url": `${SITE_URL}/logo.png` }
+        },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": meta.category.charAt(0).toUpperCase() + meta.category.slice(1),
+            "item": `${SITE_URL}/category/${meta.category}`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": meta.title,
+            "item": `${SITE_URL}/calculators/${meta.slug}`
+          }
+        ]
+      },
+      ...(meta.howTo ? [{
+        "@type": "HowTo",
+        "name": `How to use ${meta.title}`,
+        "step": meta.howTo.steps.map((s, i) => ({
+          "@type": "HowToStep",
+          "position": i + 1,
+          "name": s.title,
+          "itemListElement": [{
+            "@type": "HowToDirection",
+            "text": s.text
+          }]
+        }))
+      }] : []),
+      ...(guideFaqs ? [{
+        "@type": "FAQPage",
+        "mainEntity": guideFaqs.map(f => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f.a
+          }
+        }))
+      }] : [])
+    ]
+  };
+
   return (
     <ErrorBoundary>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Suspense fallback={<CalculatorSkeleton />}>
         <Calculator calc={meta} guideHtml={guideHtml} faqs={guideFaqs} relatedArticles={relatedArticles} />
       </Suspense>

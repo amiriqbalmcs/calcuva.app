@@ -74,6 +74,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             "@type": "Person",
             "name": author.name,
             "jobTitle": author.role,
+            "url": "https://calcuva.app/about"
           },
           "publisher": {
             "@type": "Organization",
@@ -81,8 +82,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             "url": "https://calcuva.app",
             "logo": { "@type": "ImageObject", "url": "https://calcuva.app/logo.png" }
           },
-          "datePublished": post.date,
-          "dateModified": post.date,
+          "datePublished": new Date(post.date).toISOString(),
+          "dateModified": new Date(post.date).toISOString(),
           "keywords": post.keywords?.join(", "),
           "articleSection": post.category,
           "inLanguage": "en-US",
