@@ -71,7 +71,7 @@ const MicroplasticProtection = ({ guideHtml, faqs, relatedArticles }: { guideHtm
 
           {/* Right Column: Results Dashboard */}
           <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-3xl">
+            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-2xl">
               <div className="absolute top-0 right-0 size-32 bg-indigo-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
               <div className="space-y-6 relative border-b border-border/40 pb-10">
@@ -98,7 +98,7 @@ const MicroplasticProtection = ({ guideHtml, faqs, relatedArticles }: { guideHtm
               </div>
 
               <div className="space-y-8 relative">
-                <div className="p-6 rounded-3xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-500/20 space-y-4">
+                <div className="p-6 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-500/20 space-y-4">
                   <div className="flex items-center gap-2 text-indigo-700/60 dark:text-indigo-400/60">
                     <Wind className="size-4" />
                     <span className="text-[10px] font-black uppercase tracking-[0.2em]">Eco Protection</span>
@@ -134,7 +134,7 @@ const MicroplasticProtection = ({ guideHtml, faqs, relatedArticles }: { guideHtm
 
           {/* Left Column: Inputs Panel */}
           <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-            <div className="surface-card bg-indigo-500/5 dark:bg-indigo-500/10 border-indigo-500/20 overflow-hidden shadow-sm rounded-3xl">
+            <div className="surface-card bg-indigo-500/5 dark:bg-indigo-500/10 border-indigo-500/20 overflow-hidden shadow-sm rounded-2xl">
               <div className="p-8 border-b border-indigo-500/10 dark:border-indigo-500/20 bg-background flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="size-12 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center">
@@ -156,7 +156,7 @@ const MicroplasticProtection = ({ guideHtml, faqs, relatedArticles }: { guideHtm
                         type="number"
                         value={loadsPerWeek || ""}
                         onChange={(e) => setLoadsPerWeek(Number(e.target.value) || 0)}
-                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-12 focus:ring-4 ring-indigo-500/5 transition-all"
+                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-2xl pl-12 focus:ring-4 ring-indigo-500/5 transition-all"
                         placeholder="5"
                       />
                       <div className="absolute right-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-xl font-bold">🔄</div>
@@ -236,16 +236,16 @@ const MicroplasticProtection = ({ guideHtml, faqs, relatedArticles }: { guideHtm
               </div>
             </div>
 
-            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-3xl">
+            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-2xl">
               <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                 <Lightbulb className="size-4 text-indigo-600" /> Conservation Insights
               </h4>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-3xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-500/20 space-y-2">
                   <p className="text-[11px] font-black text-indigo-900 dark:text-indigo-400 uppercase">Shedding Baseline</p>
                   <p className="text-[10px] text-orange-800/60 dark:text-orange-400/60 leading-relaxed font-medium">A single synthetic load can release more microplastics than 50 loads of natural fiber clothing.</p>
                 </div>
-                <div className="p-5 rounded-3xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-500/20 space-y-2">
                   <p className="text-[11px] font-black text-indigo-900 dark:text-indigo-400 uppercase">Marine Life</p>
                   <p className="text-[10px] text-orange-800/60 dark:text-orange-400/60 leading-relaxed font-medium">Microfibers are often mistaken for food by plankton, disrupting the entire marine food web.</p>
                 </div>

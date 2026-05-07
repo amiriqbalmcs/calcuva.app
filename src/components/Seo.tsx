@@ -1,91 +1,55 @@
 "use client";
 
-import { useEffect } from "react";
+import Head from "next/head";
+import { usePathname } from "next/navigation";
 import { SITE_URL } from "@/lib/constants";
 
-interface Props {
-  title: string;
-  description: string;
+interface SeoProps {
+  title?: string;
+  description?: string;
   canonicalPath?: string;
-  jsonLd?: Record<string, unknown>;
-  faqs?: { q: string; a: string }[];
+  ogImage?: string;
+  ogType?: "website" | "article";
+  jsonLd?: any;
 }
 
-/**
- * Lightweight SEO head manager — sets title, meta description, canonical and optional JSON-LD.
- */
-export const Seo = ({ title, description, canonicalPath, jsonLd, faqs }: Props) => {
-  useEffect(() => {
-    const setMeta = (name: string, content: string) => {
-      let el = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
-      if (!el) {
-        el = document.createElement("meta");
-        el.setAttribute("name", name);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    };
+export const Seo = ({
+  title,
+  description,
+  canonicalPath,
+  ogImage = "/og-image.png",
+  ogType = "website",
+  jsonLd,
+}: SeoProps) => {
+  const pathname = usePathname();
+  const siteTitle = "Calcuva";
+  const fullTitle = title ? `${title} | ${siteTitle}` : `${siteTitle} — Free Online Calculators`;
+  
+  const canonicalUrl = `${SITE_URL}${canonicalPath || pathname}`;
 
-    const setOg = (property: string, content: string) => {
-      let el = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null;
-      if (!el) {
-        el = document.createElement("meta");
-        el.setAttribute("property", property);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    };
-
-    const safeDescription = (description || "").slice(0, 158);
-    setMeta("description", safeDescription);
-    setOg("og:title", title);
-    setOg("og:description", safeDescription);
-    setOg("og:type", "website");
-
-    // canonical
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    const path = canonicalPath ?? window.location.pathname;
-    canonical.setAttribute("href", `${SITE_URL}${path}`);
-
-    // json-ld
-    const existing = document.getElementById("page-jsonld");
-    if (existing) existing.remove();
-    const existingFaq = document.getElementById("faq-jsonld");
-    if (existingFaq) existingFaq.remove();
-
-    if (jsonLd) {
-      const script = document.createElement("script");
-      script.id = "page-jsonld";
-      script.type = "application/ld+json";
-      script.text = JSON.stringify(jsonLd);
-      document.head.appendChild(script);
-    }
-
-    if (faqs && faqs.length > 0) {
-      const faqLd = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": faqs.map(f => ({
-          "@type": "Question",
-          "name": f.q,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": f.a
-          }
-        }))
-      };
-      const script = document.createElement("script");
-      script.id = "faq-jsonld";
-      script.type = "application/ld+json";
-      script.text = JSON.stringify(faqLd);
-      document.head.appendChild(script);
-    }
-  }, [title, description, canonicalPath, jsonLd, faqs]);
-
-  return null;
+  return (
+    <>
+      <title>{fullTitle}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
+      
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      
+      <meta property="og:title" content={fullTitle} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:type" content={ogType} />
+      <meta property="og:image" content={`${SITE_URL}${ogImage}`} />
+      
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={`${SITE_URL}${ogImage}`} />
+    </>
+  );
 };

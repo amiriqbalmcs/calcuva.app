@@ -178,7 +178,7 @@ const VisualMemoryTest = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
 
           {/* Interaction Card */}
           <div className={cn(
-            "surface-card border-border/40 bg-secondary/5 rounded-3xl shadow-sm min-h-[600px] relative overflow-hidden flex flex-col items-center justify-center p-8 text-center group transition-all duration-500",
+            "surface-card border-border/40 bg-secondary/5 rounded-2xl shadow-sm min-h-[600px] relative overflow-hidden flex flex-col items-center justify-center p-8 text-center group transition-all duration-500",
             shaking && "animate-shake"
           )}>
 

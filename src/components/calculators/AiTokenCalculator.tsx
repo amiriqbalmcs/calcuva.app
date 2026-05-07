@@ -115,7 +115,7 @@ export default function AiTokenCalculator({
         
         {/* Results Panel (Summary) */}
         <div className="lg:col-span-4 space-y-8 order-1 lg:order-2">
-          <div className="surface-card p-8 bg-background border-border/60 shadow-xl space-y-8 sticky top-28 overflow-hidden rounded-3xl">
+          <div className="surface-card p-8 bg-background border-border/60 shadow-xl space-y-8 sticky top-28 overflow-hidden rounded-2xl">
             <div className="space-y-6 border-b border-border/40 pb-10">
                <div className="space-y-2">
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Est. Total Cost</p>
@@ -159,7 +159,7 @@ export default function AiTokenCalculator({
 
         {/* Input Panel (Main) */}
         <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-          <div className="surface-card p-8 bg-background border-border/40 shadow-sm space-y-10 rounded-3xl">
+          <div className="surface-card p-8 bg-background border-border/40 shadow-sm space-y-10 rounded-2xl">
             <div className="flex items-center gap-4 border-b border-border/40 pb-6 mb-6">
                <div className="size-10 rounded-xl bg-secondary flex items-center justify-center">
                   <Sparkles className="size-5 text-foreground" />

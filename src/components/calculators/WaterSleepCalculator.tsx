@@ -350,7 +350,7 @@ const WaterSleepCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
 
             {/* Result Panel */}
             <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
-              <div className="surface-card bg-background border-border/60 shadow-lg relative overflow-hidden rounded-3xl">
+              <div className="surface-card bg-background border-border/60 shadow-lg relative overflow-hidden rounded-2xl">
                 <div className="p-8 border-b border-border/30 bg-secondary/5 flex items-center justify-between relative overflow-hidden">
                   <CloudMoon className="absolute -top-12 -right-12 size-48 text-foreground/[0.03] -rotate-12" />
                   <div className="relative z-10">

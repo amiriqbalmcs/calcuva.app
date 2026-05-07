@@ -64,7 +64,7 @@ const PlasticImpactMap = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
           
           {/* Right Column: Results Dashboard */}
           <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-3xl">
+            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-2xl">
                <div className="absolute top-0 right-0 size-32 bg-cyan-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
                <div className="space-y-6 relative border-b border-border/40 pb-10">
@@ -99,7 +99,7 @@ const PlasticImpactMap = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
                      </div>
                   </div>
 
-                  <div className="p-6 bg-foreground text-background dark:bg-cyan-950 dark:text-cyan-400 rounded-3xl space-y-3 shadow-xl">
+                  <div className="p-6 bg-foreground text-background dark:bg-cyan-950 dark:text-cyan-400 rounded-2xl space-y-3 shadow-xl">
                      <div className="flex items-center gap-2 text-cyan-300">
                         <Globe className="size-4" />
                         <span className="text-[10px] font-black uppercase tracking-[0.2em]">The 2026 Vision</span>
@@ -114,7 +114,7 @@ const PlasticImpactMap = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
 
           {/* Left Column: Inputs Panel */}
           <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-            <div className="surface-card bg-cyan-500/5 dark:bg-cyan-500/10 border-cyan-500/20 overflow-hidden shadow-sm rounded-3xl">
+            <div className="surface-card bg-cyan-500/5 dark:bg-cyan-500/10 border-cyan-500/20 overflow-hidden shadow-sm rounded-2xl">
               <div className="p-8 border-b border-cyan-500/10 dark:border-cyan-500/20 bg-background flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="size-12 rounded-2xl bg-cyan-500/10 dark:bg-cyan-500/20 flex items-center justify-center">
@@ -169,7 +169,7 @@ const PlasticImpactMap = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
               </div>
 
               <div className="p-8 bg-cyan-500/5 dark:bg-cyan-950/20 border-t border-cyan-500/10 dark:border-cyan-500/20 grid sm:grid-cols-2 gap-8">
-                 <div className="p-6 bg-background dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-500/20 rounded-3xl space-y-2 shadow-sm">
+                 <div className="p-6 bg-background dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-500/20 rounded-2xl space-y-2 shadow-sm">
                     <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400">
                       <Trees className="size-4" />
                       <span className="text-[10px] font-black uppercase tracking-widest">Planting Power</span>
@@ -177,7 +177,7 @@ const PlasticImpactMap = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
                     <div className="text-3xl font-mono font-bold text-foreground">{results.treeEquivalent.toFixed(2)}</div>
                     <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-widest">Equivalent Trees Planted</p>
                  </div>
-                 <div className="p-6 bg-background dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-500/20 rounded-3xl space-y-2 shadow-sm">
+                 <div className="p-6 bg-background dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-500/20 rounded-2xl space-y-2 shadow-sm">
                     <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400">
                       <Waves className="size-4" />
                       <span className="text-[10px] font-black uppercase tracking-widest">Ocean Impact</span>
@@ -188,16 +188,16 @@ const PlasticImpactMap = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
               </div>
             </div>
 
-            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-3xl">
+            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-2xl">
               <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                 <Lightbulb className="size-4 text-cyan-600" /> Sustainability Insights
               </h4>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-3xl bg-cyan-50/50 dark:bg-cyan-950/20 border border-cyan-100 dark:border-cyan-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-cyan-50/50 dark:bg-cyan-950/20 border border-cyan-100 dark:border-cyan-500/20 space-y-2">
                   <p className="text-[11px] font-black text-cyan-900 dark:text-cyan-300 uppercase">Plastic Lifecycle</p>
                   <p className="text-[10px] text-cyan-800/60 dark:text-cyan-400/60 leading-relaxed font-medium">Over 90% of a plastic bottle's carbon footprint comes from the energy-intensive production process.</p>
                 </div>
-                <div className="p-5 rounded-3xl bg-cyan-50/50 dark:bg-cyan-950/20 border border-cyan-100 dark:border-cyan-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-cyan-50/50 dark:bg-cyan-950/20 border border-cyan-100 dark:border-cyan-500/20 space-y-2">
                   <p className="text-[11px] font-black text-cyan-900 dark:text-cyan-300 uppercase">Oxygen Correlation</p>
                   <p className="text-[10px] text-cyan-800/60 dark:text-cyan-400/60 leading-relaxed font-medium">Preventing CO2 emissions is functionally equivalent to supporting the metabolic work of mature trees.</p>
                 </div>

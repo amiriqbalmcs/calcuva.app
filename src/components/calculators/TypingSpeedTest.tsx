@@ -226,7 +226,7 @@ const TypingSpeedTest = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
           </div>
 
           {/* Interaction Card */}
-          <div className="surface-card border-border/40 bg-secondary/5 rounded-3xl shadow-sm min-h-[500px] relative overflow-hidden flex flex-col items-center justify-center p-6 md:p-16 text-center group transition-all duration-500">
+          <div className="surface-card border-border/40 bg-secondary/5 rounded-2xl shadow-sm min-h-[500px] relative overflow-hidden flex flex-col items-center justify-center p-6 md:p-16 text-center group transition-all duration-500">
 
             {gameState === "IDLE" && (
               <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500 z-10">

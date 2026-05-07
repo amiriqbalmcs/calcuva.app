@@ -154,7 +154,7 @@ const SequenceMemoryTest = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
 
           {/* Main Interaction Area */}
           <div className={cn(
-            "surface-card p-8 md:p-12 border-border/40 bg-secondary/5 rounded-3xl shadow-sm flex flex-col items-center justify-center min-h-[600px] relative overflow-hidden",
+            "surface-card p-8 md:p-12 border-border/40 bg-secondary/5 rounded-2xl shadow-sm flex flex-col items-center justify-center min-h-[600px] relative overflow-hidden",
             shaking && "animate-shake"
           )}>
 

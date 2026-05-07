@@ -1,6 +1,6 @@
 import { getPostData, getSortedPostsData } from "@/lib/markdown";
 import { SiteHeader } from "@/components/SiteHeader";
-import { Calendar, Clock, ArrowLeft, Calculator, UserRound, ShieldCheck } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Calculator, UserRound, ShieldCheck, Plus, Percent, Divide, Activity as ActivityIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CALCULATORS } from "@/lib/calculators";
@@ -59,7 +59,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     : CALCULATORS.find(c => c.category === post.category);
 
   return (
-    <>
+    <div className="bg-background min-h-screen">
       <Seo 
         title={`${post.title} | Calcuva Research`}
         description={post.excerpt}
@@ -88,92 +88,125 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           "inLanguage": "en-US",
         }}
       />
-      <main className="min-h-screen pt-20 sm:pt-28 pb-32">
-        <div className="container-wide">
-          <Link href="/blog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-all mb-16 group">
-             <ArrowLeft className="size-3.5 group-hover:-translate-x-1 transition-transform" /> Back to Articles
-          </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-16">
-            <article className="max-w-3xl">
-               <header className="mb-16">
-                   <div className="flex flex-wrap items-center gap-x-6 gap-y-4 text-[10px] font-mono font-black text-muted-foreground uppercase tracking-[0.3em] mb-10">
-                      <span className={cn("px-2 py-1 rounded ring-1 ring-inset", 
-                         post.category === 'finance' ? "bg-finance/5 text-finance ring-finance/20" :
-                         post.category === 'health' ? "bg-health/5 text-health ring-health/20" :
-                         post.category === 'business' ? "bg-business/5 text-business ring-business/20" :
-                         "bg-secondary text-primary ring-border"
-                      )}>{post.category}</span>
-                      <span className="flex items-center gap-2 whitespace-nowrap"><Calendar className="size-3.5" /> {new Date(post.date).toLocaleDateString()}</span>
-                      <span className="flex items-center gap-2 whitespace-nowrap"><Clock className="size-3.5" /> {post.readingTime}</span>
-                      <div className="flex-1 min-w-[120px] sm:flex-none flex justify-end sm:justify-start">
-                        <BlogShareAction title={post.title} excerpt={post.excerpt} slug={post.slug} />
-                      </div>
-                   </div>
-                  <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter mb-12 leading-[1.05] break-words">
-                     {post.title}
-                  </h1>
-                  <div className="flex items-center gap-5 py-8 border-y border-border/40">
-                     <div className="size-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-foreground border border-border/40">
-                        <UserRound className="size-6" />
-                     </div>
-                     <div>
-                        <div className="text-sm font-bold text-foreground tracking-tight">{author.name}</div>
-                        <div className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em]">{author.role}</div>
-                     </div>
+      {/* Immersive Header - Elite Style */}
+      <header className="relative min-h-[70vh] lg:min-h-[80vh] flex flex-col items-center justify-start border-b border-border/50 bg-hero overflow-hidden pt-32 sm:pt-48 pb-20">
+         {/* Dynamic Texture Layer */}
+         <div className="absolute inset-0 z-0">
+            <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-400/20 dark:bg-blue-900/10 rounded-full blur-[120px] animate-pulse" />
+            <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-indigo-600/20 dark:bg-indigo-900/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
+
+            {/* Precision Pattern Overlay */}
+            <div 
+               className="absolute inset-0 opacity-[0.08] dark:opacity-[0.03]" 
+               style={{ 
+               backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+               backgroundSize: '40px 40px' 
+               }} 
+            />
+         </div>
+
+         {/* Rich Icon Watermarks */}
+         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04] dark:opacity-[0.02] text-white dark:text-muted-foreground">
+            <div className="absolute top-[10%] left-[10%] rotate-12"><Plus className="size-20" /></div>
+            <div className="absolute top-[15%] right-[15%] -rotate-45"><Percent className="size-16" /></div>
+            <div className="absolute bottom-[20%] left-[15%] -rotate-12"><Divide className="size-20" /></div>
+            <div className="absolute bottom-[10%] right-[10%] rotate-12"><ActivityIcon className="size-24" /></div>
+         </div>
+
+         <div className="container-wide relative z-10 text-hero-text">
+            <Link href="/blog" className="inline-flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-all mb-12 group no-print">
+               <ArrowLeft className="size-3.5 group-hover:-translate-x-1 transition-transform" /> Back to Research
+            </Link>
+
+            <div className="max-w-4xl mx-auto text-center">
+               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 text-[10px] font-mono font-black text-white/40 uppercase tracking-[0.3em] mb-10">
+                  <span className={cn("px-2.5 py-1 rounded-lg border border-white/20 backdrop-blur-md capitalize text-white font-bold", 
+                     post.category === 'finance' ? "bg-finance/40" :
+                     post.category === 'health' ? "bg-health/40" :
+                     post.category === 'business' ? "bg-business/40" :
+                     post.category === 'sustainability' ? "bg-sustainability/40" :
+                     post.category === 'utility' ? "bg-utility/40" :
+                     "bg-white/20"
+                  )}>{post.category}</span>
+                  <span className="flex items-center gap-2 whitespace-nowrap"><Calendar className="size-3.5 opacity-60" /> {new Date(post.date).toLocaleDateString()}</span>
+                  <span className="flex items-center gap-2 whitespace-nowrap"><Clock className="size-3.5 opacity-60" /> {post.readingTime}</span>
+               </div>
+               <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter leading-[0.95] mb-12 break-words">
+                  {post.title}
+               </h1>
+               <div className="flex items-center justify-center gap-5 pt-10 border-t border-white/5 max-w-xl mx-auto">
+                  <div className="size-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white shadow-2xl backdrop-blur-xl">
+                     <UserRound className="size-6 opacity-60" />
                   </div>
-                  {author.bio && (
-                    <div className="mt-6 text-[11px] text-muted-foreground italic leading-relaxed max-w-xl break-words">
-                       "{author.bio}"
-                    </div>
-                  )}
-               </header>
+                  <div className="text-left">
+                     <div className="text-sm font-bold text-white tracking-tight">{author.name}</div>
+                     <div className="text-[10px] text-white/40 font-black uppercase tracking-[0.3em] font-mono">{author.role}</div>
+                  </div>
+                  <div className="ml-auto">
+                     <BlogShareAction title={post.title} excerpt={post.excerpt} slug={post.slug} />
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
 
-               <div 
-                 className="prose dark:prose-invert max-w-none"
-                 dangerouslySetInnerHTML={{ __html: post.contentHtml }} 
-               />
+      <main className="container-wide py-24 animate-fade-up">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 lg:gap-20 items-start">
+          <article className="max-w-3xl mx-auto lg:mx-0">
+             <div 
+               className="prose prose-zinc dark:prose-invert max-w-none prose-lg
+               prose-p:text-muted-foreground prose-p:font-medium prose-p:leading-relaxed
+               prose-h2:text-3xl prose-h2:font-bold prose-h2:tracking-tight prose-h2:mt-16
+               prose-h3:text-xl prose-h3:font-bold prose-h3:tracking-tight prose-h3:mt-12
+               prose-blockquote:border-signal prose-blockquote:bg-surface prose-blockquote:rounded-2xl prose-blockquote:px-8 prose-blockquote:py-1 prose-blockquote:not-italic prose-blockquote:font-medium"
+               dangerouslySetInnerHTML={{ __html: post.contentHtml }} 
+             />
 
-               <footer className="mt-20 pt-10 border-t border-border flex items-center justify-between">
-                <div className="flex flex-wrap items-center gap-2">
-                   {post.keywords?.map(k => (
-                     <span key={k} className="text-[10px] font-mono font-bold bg-secondary/50 px-2.5 py-1 rounded-md text-muted-foreground">#{k.replace(' ', '-')}</span>
-                   ))}
-                </div>
-               </footer>
-            </article>
+             <footer className="mt-24 pt-12 border-t border-border dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-8">
+              <div className="flex flex-wrap items-center gap-3">
+                 {post.keywords?.map(k => (
+                   <span key={k} className="text-[10px] font-mono font-black bg-surface border border-border dark:border-white/5 px-3 py-1.5 rounded-xl text-muted-foreground/60">#{k.replace(' ', '-')}</span>
+                 ))}
+              </div>
+              <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/40 font-mono">
+                 Share Research <BlogShareAction title={post.title} excerpt={post.excerpt} slug={post.slug} />
+              </div>
+             </footer>
+          </article>
 
-             <aside className="no-print">
-                <div className="sticky top-28 space-y-6">
-                   {activeTool && (
-                     <div className="surface-card p-10 bg-secondary/5 border-border/40 relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.02] to-transparent pointer-events-none" />
-                        <div className="relative z-10 space-y-6">
-                           <div className="size-12 rounded-2xl bg-background border border-border/60 flex items-center justify-center shadow-sm">
-                              <Calculator className="size-6 text-muted-foreground" />
-                           </div>
-                           <div className="space-y-2">
-                              <h4 className="text-xl font-bold tracking-tight leading-tight">{activeTool.title}</h4>
-                              <p className="text-xs text-muted-foreground font-medium leading-relaxed">Calculate and analyze results based on the insights in this guide.</p>
-                           </div>
-                           <Link 
-                              href={`/calculators/${activeTool.slug}`}
-                              className="flex items-center justify-center w-full h-12 bg-foreground text-background text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-foreground/90 transition-all shadow-xl shadow-black/10"
-                           >
-                              Open Tool
-                           </Link>
-                        </div>
-                     </div>
-                   )}
-                   
-                   <div className="space-y-4">
-                      <BlogShareAction title={post.title} excerpt={post.excerpt} slug={post.slug} variant="sidebar" />
+           <aside className="no-print sticky top-32 space-y-8">
+              {activeTool && (
+                <div className="bg-surface border border-border dark:border-white/5 rounded-2xl p-10 relative overflow-hidden group shadow-2xl">
+
+                   <div className="relative z-10 space-y-8">
+                      <div className="size-16 rounded-2xl bg-secondary dark:bg-zinc-900 border border-border dark:border-white/10 flex items-center justify-center shadow-xl">
+                         <Calculator className="size-8 text-muted-foreground/40 group-hover:text-signal transition-colors" />
+                      </div>
+                      <div className="space-y-3">
+                         <div className="text-[9px] font-mono font-black text-signal uppercase tracking-[0.3em]">Tool Recommendation</div>
+                         <h4 className="text-2xl font-bold tracking-tight leading-tight group-hover:text-signal transition-colors">{activeTool.title}</h4>
+                         <p className="text-sm text-muted-foreground font-medium leading-relaxed">Implement the findings of this research directly with our precision tool.</p>
+                      </div>
+                      <Link 
+                         href={`/calculators/${activeTool.slug}`}
+                         className="flex items-center justify-center w-full h-14 bg-foreground text-background dark:bg-white dark:text-black text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:scale-105 transition-all shadow-2xl"
+                      >
+                         Open Analytics Tool
+                      </Link>
                    </div>
                 </div>
-             </aside>
-          </div>
+              )}
+              
+              <div className="p-8 bg-secondary/50 dark:bg-zinc-900/50 border border-border dark:border-white/5 rounded-2xl space-y-4">
+                 <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/60 font-mono">Research Disclosure</h5>
+                 <p className="text-xs text-muted-foreground/40 leading-relaxed font-medium">
+                    This editorial analysis is for informational purposes. Consult with a qualified professional before making significant financial or health decisions.
+                 </p>
+              </div>
+           </aside>
         </div>
       </main>
-    </>
+    </div>
   );
 }

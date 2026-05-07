@@ -113,7 +113,7 @@ const SolarRequirementCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
 
                {/* Right Column: Results Dashboard */}
                <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-                  <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-xl relative overflow-hidden group rounded-3xl">
+                  <div className="surface-card p-8 md:p-10 space-y-10 bg-background border-border/60 shadow-xl relative overflow-hidden group rounded-2xl">
                      <Zap className="absolute -top-6 -right-6 size-32 text-foreground/[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
 
                      <div className="space-y-8 relative z-10 text-center">
@@ -171,7 +171,7 @@ const SolarRequirementCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
 
                {/* Main Panel (Inputs) */}
                <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-                  <div className="surface-card p-8 space-y-10 bg-secondary/5 border-border/40 overflow-hidden rounded-3xl">
+                  <div className="surface-card p-8 space-y-10 bg-secondary/5 border-border/40 overflow-hidden rounded-2xl">
                      <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                            <div className="size-12 rounded-2xl bg-foreground/5 flex items-center justify-center">
@@ -279,7 +279,7 @@ const SolarRequirementCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-6">
-                     <div className="surface-card p-8 space-y-6 bg-secondary/5 border-border/40 rounded-3xl">
+                     <div className="surface-card p-8 space-y-6 bg-secondary/5 border-border/40 rounded-2xl">
                         <div className="flex items-center gap-3">
                            <Sun className="size-4 text-signal" />
                            <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Peak Sun Hours</Label>
@@ -290,7 +290,7 @@ const SolarRequirementCalculator = ({ guideHtml, faqs, relatedArticles }: { guid
                         </div>
                         <p className="text-[10px] text-muted-foreground italic">Pakistan Average: 5.5 hours per day</p>
                      </div>
-                     <div className="surface-card p-8 space-y-6 bg-secondary/5 border-border/40 rounded-3xl">
+                     <div className="surface-card p-8 space-y-6 bg-secondary/5 border-border/40 rounded-2xl">
                         <div className="flex items-center gap-3">
                            <Settings2 className="size-4 text-health" />
                            <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Efficiency</Label>

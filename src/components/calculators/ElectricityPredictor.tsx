@@ -424,7 +424,7 @@ const ElectricityPredictor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?
             </div>
           </div>
 
-          <div className="p-6 bg-primary/5 border border-primary/10 rounded-3xl space-y-3">
+          <div className="p-6 bg-primary/5 border border-primary/10 rounded-2xl space-y-3">
             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary">
               <ShieldCheck className="size-3" /> NEPRA Verified
             </div>

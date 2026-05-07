@@ -55,7 +55,7 @@ const AiEfficiencyRoi = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
         
         {/* Sidebar Panel (Summary/Results) */}
         <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-          <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 relative overflow-hidden rounded-3xl">
+          <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 relative overflow-hidden rounded-2xl">
              <div className="absolute top-0 right-0 size-32 bg-health/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
              <div className="space-y-6 relative border-b border-border/40 pb-10">
@@ -107,7 +107,7 @@ const AiEfficiencyRoi = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
              </p>
           </div>
 
-          <div className="surface-card p-6 bg-primary/5 border-primary/20 flex gap-4 items-start rounded-3xl">
+          <div className="surface-card p-6 bg-primary/5 border-primary/20 flex gap-4 items-start rounded-2xl">
             <Lightbulb className="size-5 text-primary shrink-0 mt-1" />
             <div className="space-y-1">
               <p className="text-[11px] font-black uppercase text-primary tracking-widest">Business Tip</p>
@@ -120,7 +120,7 @@ const AiEfficiencyRoi = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
 
         {/* Main Panel (Inputs) */}
         <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-          <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden shadow-sm rounded-3xl">
+          <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden shadow-sm rounded-2xl">
             <div className="p-8 border-b border-border/40 bg-background flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="size-12 rounded-2xl bg-secondary flex items-center justify-center">
@@ -142,7 +142,7 @@ const AiEfficiencyRoi = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
                       type="number"
                       value={laborHourlyRate || ""}
                       onChange={(e) => setLaborHourlyRate(Number(e.target.value) || 0)}
-                      className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-12 focus:ring-4 ring-primary/5 transition-all"
+                      className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-2xl pl-12 focus:ring-4 ring-primary/5 transition-all"
                       placeholder="45"
                     />
                     <div className="absolute right-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-xl font-bold">$</div>
@@ -156,7 +156,7 @@ const AiEfficiencyRoi = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
                       type="number"
                       value={hoursSavedPerWeek || ""}
                       onChange={(e) => setHoursSavedPerWeek(Number(e.target.value) || 0)}
-                      className="h-20 bg-background border-border/60 font-mono text-3xl font-bold rounded-3xl pl-12 focus:ring-4 ring-primary/5 transition-all"
+                      className="h-20 bg-background border-border/60 font-mono text-3xl font-bold rounded-2xl pl-12 focus:ring-4 ring-primary/5 transition-all"
                       placeholder="10"
                     />
                     <div className="absolute right-6 top-1/2 -translate-y-1/2 text-muted-foreground/30 font-mono text-sm font-bold">hrs</div>

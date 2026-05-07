@@ -137,7 +137,7 @@ const AimTrainer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string; 
           {/* Interaction Area (Game Container) */}
           <div
             ref={containerRef}
-            className="surface-card border-border/40 bg-secondary/5 rounded-3xl shadow-sm min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] relative overflow-hidden group select-none flex items-center justify-center cursor-crosshair active:scale-[0.99] transition-transform"
+            className="surface-card border-border/40 bg-secondary/5 rounded-2xl shadow-sm min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] relative overflow-hidden group select-none flex items-center justify-center cursor-crosshair active:scale-[0.99] transition-transform"
             onClick={() => { if (gameState === "PLAYING") playSound(200, "sawtooth", 0.05); }}
           >
             {gameState === "IDLE" && (

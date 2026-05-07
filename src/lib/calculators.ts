@@ -1,4 +1,4 @@
-export type CategoryKey = "finance" | "health" | "education" | "utility" | "business" | "sustainability" | "benchmarks";
+export type CategoryKey = "finance" | "health" | "education" | "utility" | "business" | "sustainability" | "benchmarks" | "tax" | "productivity" | "travel" | "lifestyle";
 
 export interface CalcMeta {
   slug: string;
@@ -17,13 +17,17 @@ export interface CalcMeta {
 }
 
 export const CATEGORIES: Record<CategoryKey, { label: string; code: string; description: string }> = {
-  finance: { label: "Finance", code: "FI", description: "Loans, taxes, savings and investment planning." },
+  finance: { label: "Finance", code: "FI", description: "Loans, savings and investment planning." },
+  tax: { label: "Tax", code: "TX", description: "Regional taxes, FBR, and global income tax." },
   health: { label: "Health", code: "HL", description: "Body composition, nutrition and wellness tracking." },
   education: { label: "Education", code: "ED", description: "Academic performance and grade calculation." },
-  utility: { label: "Utility", code: "UT", description: "Everyday converters and date calculators." },
+  utility: { label: "Utility", code: "UT", description: "Everyday converters and quick calculators." },
+  productivity: { label: "Productivity", code: "PR", description: "Writing, marketing, and professional tools." },
   business: { label: "Business", code: "BS", description: "Profitability, margins, and startup metrics." },
   sustainability: { label: "Sustainability", code: "SS", description: "Environmental impact and green energy tools." },
-  benchmarks: { label: "Benchmarks", code: "BM", description: "Cognitive tests, typing speed, and human performance." },
+  travel: { label: "Travel", code: "TR", description: "Live speed tracking and trip analytics." },
+  lifestyle: { label: "Lifestyle", code: "LS", description: "Personal milestones and life planning." },
+  benchmarks: { label: "Benchmarks", code: "BM", description: "Cognitive tests and human performance." },
 };
 
 export const CALCULATORS: CalcMeta[] = [
@@ -50,7 +54,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Tip Calculator & Bill Splitter",
     short: "Quickly calculate gratuity and split the bill among friends.",
     description: "Find the exact tip amount, total bill, and split per person instantly. Perfect for dining out or service gratuities.",
-    icon: "Coins", category: "finance",
+    icon: "Coins", category: "lifestyle",
     keywords: ["tip", "gratuity", "bill split", "restaurant tip", "split bill"],
     relatedSlugs: ["discount-calculator", "gst-vat-tax-calculator", "percentage-increase-calculator"],
     howTo: {
@@ -119,7 +123,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Love Calculator",
     short: "Calculate the love compatibility percentage between two names.",
     description: "A fun, viral tool to test the compatibility between you and your crush. Enter two names and find out the match percentage!",
-    icon: "Heart", category: "utility",
+    icon: "Heart", category: "lifestyle",
     keywords: ["love-calculator", "compatibility test", "lover match", "name matching"],
     relatedSlugs: ["age-calculator", "percentage-increase-calculator"],
     howTo: {
@@ -153,7 +157,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Global Salary & Net Pay Calculator",
     short: "Estimate take-home pay and income tax across any jurisdiction.",
     description: "Universal income forecaster to see your net salary across tax brackets with deductions and standard allowances.",
-    icon: "Receipt", category: "finance",
+    icon: "Receipt", category: "tax",
     keywords: ["salary calculator", "net pay", "income tax calculator", "take home pay", "tax brackets"],
     relatedSlugs: ["hourly-to-salary-calculator", "retirement-fire-calculator", "gst-vat-tax-calculator"],
     howTo: {
@@ -202,7 +206,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "GST, VAT & Sales Tax Calculator",
     short: "Calculate tax-inclusive and exclusive prices with custom rates.",
     description: "Quickly find the net price, tax amount, and total price for any product or service across standard and custom tax rates.",
-    icon: "ReceiptSwissFranc", category: "finance",
+    icon: "ReceiptSwissFranc", category: "tax",
     keywords: ["gst", "vat", "tax", "sales tax", "billing", "invoice"],
     howTo: {
       steps: [
@@ -491,7 +495,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Exact Age & Time Interval Calculator",
     short: "Calculate your exact age in years, months, days, and seconds.",
     description: "Precision chronological tool to find your exact age and life milestones. Accounts for leap years and different month lengths with down-to-the-second accuracy.",
-    icon: "Clock", category: "utility",
+    icon: "Clock", category: "lifestyle",
     keywords: ["age calculator", "date of birth calculator", "chronological age", "how old am i", "age in days", "age calculator by date of birth", "birthday calculator", "exact age"],
     howTo: {
       steps: [
@@ -523,7 +527,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Date +/- Days Calculator",
     short: "Find a future or past date by adding/subtracting days.",
     description: "Calculate what date it will be after a certain number of days, weeks, or months, or see the gap between two specific dates.",
-    icon: "CalendarPlus", category: "utility",
+    icon: "CalendarPlus", category: "lifestyle",
     keywords: ["date calculator", "add days", "subtract days", "deadline"],
     howTo: {
       steps: [
@@ -571,7 +575,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Scientific Calculator",
     short: "Advanced math with trig, logs and power functions.",
     description: "A clean, high-precision web calculator for logarithms, trigonometry, roots and other complex mathematical operations.",
-    icon: "Calculator", category: "utility",
+    icon: "Calculator", category: "education",
     keywords: ["scientific calculator", "math", "trig", "log", "equations"],
     howTo: {
       steps: [
@@ -603,7 +607,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Word & Character Counter",
     short: "Instant count for words, characters, sentences and reading time.",
     description: "A clean, private text analyzer that calculates word count, character count (with/without spaces), and estimated reading time.",
-    icon: "FileType", category: "utility",
+    icon: "FileType", category: "productivity",
     keywords: ["word count", "character count", "writing", "editor", "seo"],
     howTo: {
       steps: [
@@ -667,7 +671,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "QR Code Generator",
     short: "Generate custom QR codes for URLs and text.",
     description: "Create high-quality, downloadable QR codes for your website, contact info, or any custom text instantly.",
-    icon: "QrCode", category: "utility",
+    icon: "QrCode", category: "productivity",
     keywords: ["qr code", "generator", "marketing", "link", "barcode"],
     relatedSlugs: ["wifi-qr-code-generator", "vcard-qr-code-generator", "whatsapp-qr-code-generator"],
     howTo: {
@@ -684,7 +688,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "WiFi QR Code Generator",
     short: "Generate a 'Scan to Join' QR code for your WiFi network.",
     description: "Instantly share your WiFi network with guests. Generate a secure QR code that automatically connects devices to your SSID without typing a password.",
-    icon: "Wifi", category: "utility",
+    icon: "Wifi", category: "productivity",
     keywords: ["wifi qr code", "share wifi qr", "scan to join wifi", "wifi password qr generator"],
     relatedSlugs: ["qr-code-generator", "password-generator"],
     howTo: {
@@ -701,7 +705,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "vCard QR Code Generator",
     short: "Create a digital business card QR code for contact sharing.",
     description: "Generate a professional vCard QR code containing your name, phone, and email. One scan allows others to save your contact details directly to their phone.",
-    icon: "Contact2", category: "business",
+    icon: "Contact2", category: "productivity",
     keywords: ["vcard qr code", "digital business card qr", "contact share qr", "business card generator"],
     relatedSlugs: ["qr-code-generator", "freelance-rate-calculator"],
     hideCurrencySwitcher: true,
@@ -719,7 +723,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "WhatsApp QR Code Generator",
     short: "Generate a QR code for direct WhatsApp chat.",
     description: "Create a direct link to your WhatsApp chat. Generate a QR code that automatically opens WhatsApp with your number and a pre-filled message.",
-    icon: "MessageSquare", category: "utility",
+    icon: "MessageSquare", category: "productivity",
     keywords: ["whatsapp qr code", "direct whatsapp link qr", "whatsapp business qr", "chat qr generator"],
     relatedSlugs: ["qr-code-generator", "social-share-preview-tool"],
     howTo: {
@@ -736,7 +740,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Crypto Address QR Code Generator",
     short: "Generate QR codes for Bitcoin and Ethereum wallets.",
     description: "Share your cryptocurrency wallet addresses securely. Generate high-fidelity QR codes for BTC, ETH, and other digital assets for fast, error-free payments.",
-    icon: "Coins", category: "finance",
+    icon: "Coins", category: "productivity",
     keywords: ["crypto qr code", "bitcoin address qr", "eth wallet qr", "cryptocurrency payment qr"],
     relatedSlugs: ["qr-code-generator", "crypto-investment-profit-calculator"],
     hideCurrencySwitcher: true,
@@ -786,7 +790,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Tax Bracket Calculator",
     short: "See how your income is taxed across brackets.",
     description: "Visualize how progressive tax brackets apply to your income and find your effective tax rate.",
-    icon: "Percent", category: "finance",
+    icon: "Percent", category: "tax",
     keywords: ["tax", "brackets", "income tax", "effective tax rate", "finance"],
     howTo: {
       steps: [
@@ -986,7 +990,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Solar ROI & Net-Metering Simulator",
     short: "Simulate your solar savings and calculate payback period for your home.",
     description: "Advanced energy simulation for 2026. Calculate monthly savings, export credits, and system ROI based on current Pakistani electricity tariffs and net-metering policies.",
-    icon: "Sun", category: "finance",
+    icon: "Sun", category: "sustainability",
     keywords: ["solar roi calculator pakistan", "net metering simulator", "solar payback period", "electricity bill savings solar", "solar inverter sizing"],
     howTo: {
       steps: [
@@ -1020,7 +1024,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Pakistan Salary Tax Calculator 2026",
     short: "Calculate your monthly and yearly take-home salary after official FBR tax deductions.",
     description: "The most accurate tax calculator for the 2025-26 and 2024-25 fiscal years. Compare yearly tax slabs, calculate monthly deductions, and see your real take-home pay based on latest FBR budget rules.",
-    icon: "Wallet", category: "finance",
+    icon: "Wallet", category: "tax",
     keywords: ["pakistan income tax calculator 2026", "fbr tax slabs 2025-26", "calculate monthly salary tax", "yearly income tax pakistan", "fbr budget 2026 tax rates"],
     howTo: {
       steps: [
@@ -1053,7 +1057,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Solar System Size (kW) Requirement Calculator 2026",
     short: "Calculate the solar kW capacity you need based on appliances.",
     description: "Determine the ideal solar system size for your home. Input your appliance load and usage hours to calculate required PV capacity, inverter size, and 2026 configuration.",
-    icon: "Sun", category: "utility",
+    icon: "Sun", category: "sustainability",
     keywords: ["solar sizing calculator", "how many solar panels for 1.5 ton ac", "calculate solar kw requirement", "solar load calculator pakistan", "solar panel capacity for home"],
     howTo: {
       steps: [
@@ -1070,7 +1074,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Solar Battery Backup & Runtime Calculator (kWh)",
     short: "Calculate how long your batteries will last under different loads.",
     description: "Estimate your solar battery backup time in hours. Supports 5kWh, 10kWh Lithium (LFP) modules and Tubular batteries with Depth of Discharge (DoD) analysis.",
-    icon: "Battery", category: "utility",
+    icon: "Battery", category: "sustainability",
     keywords: ["solar battery backup calculator", "5kwh lithium battery runtime", "10kwh solar battery backup hours", "lithium vs tubular battery backup", "solar storage sizing calculator"],
     howTo: {
       steps: [
@@ -1087,7 +1091,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Solar Panel to kW Converter",
     short: "Convert number of panels and wattage to total system kW capacity.",
     description: "Instantly calculate your total solar system capacity in kW. Enter the number of panels and their wattage (e.g., 550W, 580W) to see your total peak capacity, area required, and generation potential.",
-    icon: "Grid3X3", category: "utility",
+    icon: "Grid3X3", category: "sustainability",
     keywords: ["solar panel to kw converter", "how many kw is 10 solar panels", "calculate solar peak capacity", "solar panel wattage converter", "solar system capacity tool"],
     howTo: {
       steps: [
@@ -1097,14 +1101,31 @@ export const CALCULATORS: CalcMeta[] = [
       ],
       proTip: "Check the 'Peak Power' rating on your panel's datasheet to ensure you enter the correct wattage for accurate sizing."
     },
-    relatedSlugs: ["solar-system-requirement-calculator", "solar-roi-simulator-pakistan"],
+    relatedSlugs: ["solar-system-requirement-calculator", "solar-roi-simulator-pakistan", "solar-ac-requirement-calculator"],
+  },
+  {
+    slug: "solar-ac-requirement-calculator",
+    title: "Solar for AC Calculator",
+    short: "Calculate how many solar panels or kW you need to run your air conditioner.",
+    description: "Determine the exact solar panel requirements for your AC. Calculate kW needed for 1 ton, 1.5 ton, or 2 ton AC units, or find out how many ACs your current solar system can handle based on inverter efficiency and daily usage.",
+    icon: "Sun", category: "sustainability",
+    keywords: ["solar for 1.5 ton ac", "how many solar panels for ac", "solar system for air conditioner", "run ac on solar panels", "ac solar load calculator", "solar kw for ac"],
+    howTo: {
+      steps: [
+        { title: "Select AC Tonnage", text: "Choose your AC size (1.0, 1.5, or 2.0 Ton) and specify if it's an Inverter or Fixed Speed model." },
+        { title: "Daily Usage", text: "Input the number of hours you plan to run the AC on solar power during the day." },
+        { title: "Solar Capacity", text: "Get the required kW system size and the number of high-efficiency solar panels (580W+) needed." }
+      ],
+      proTip: "Inverter ACs are 30-40% more efficient on solar because they avoid high startup surge currents that can trip smaller inverters."
+    },
+    relatedSlugs: ["solar-panel-to-kw-calculator", "solar-system-requirement-calculator"],
   },
   {
     slug: "social-share-preview-tool",
     title: "Social Share Preview & Meta Tag Generator",
     short: "Preview how your website looks on social media and generate meta tags.",
     description: "The ultimate debugger for your website's social media presence. Preview your Open Graph (OG) tags for Facebook, X (Twitter), LinkedIn, and WhatsApp. Generate perfectly optimized meta tags for Next.js, React, and HTML instantly.",
-    icon: "Share", category: "utility",
+    icon: "Share", category: "productivity",
     keywords: ["social share preview", "og tag debugger", "meta tag generator", "facebook link preview", "whatsapp link preview", "twitter card validator", "linkedin post preview"],
     howTo: {
       steps: [
@@ -1139,7 +1160,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Pakistan Mobile (PTA) Tax Calculator 2026",
     short: "Calculate the official PTA tax for mobile phones using 2026 FBR rates.",
     description: "Get the most accurate estimate of PTA/DIRBS taxes for iPhone, Samsung, and other smartphones. Updated with the April 2026 FBR Valuation Ruling No. 2070 for Passport and CNIC registration.",
-    icon: "Smartphone", category: "finance",
+    icon: "Smartphone", category: "tax",
     keywords: ["pta tax calculator 2026", "mobile tax pakistan", "iphone 17 pta tax", "fbr valuation ruling 2070", "pta tax on passport vs cnic", "dirbs tax calculator"],
     howTo: {
       steps: [
@@ -1211,7 +1232,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Solar Net Billing (Buyback) Calculator 2026",
     short: "Calculate your savings under the 2026 Net Billing system.",
     description: "Don't get confused by the new solar rules. Calculate your actual bill reduction using differentiated rates for exported and self-consumed solar units in Pakistan.",
-    icon: "Sun", category: "finance",
+    icon: "Sun", category: "sustainability",
     keywords: ["solar net billing calculator", "solar buyback rate pakistan", "solar savings calculator 2026", "net billing vs net metering", "lesco solar rates", "k-electric solar credit"],
     howTo: {
       steps: [
@@ -1373,7 +1394,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "GPS Speedometer Online",
     short: "A clean, high-precision GPS speedometer for any type of travel.",
     description: "Measure your real-time speed with our high-precision GPS speedometer. Perfect for cars, trains, buses, or walking. Features include max speed tracking, trip distance, and HUD mode.",
-    icon: "Navigation", category: "utility",
+    icon: "Navigation", category: "travel",
     keywords: ["gps speedometer online", "live speed tracker", "accurate speedometer", "mobile gps speedo", "web speedometer"],
     relatedSlugs: ["car-performance-speed-test", "unit-converter"],
     howTo: {
@@ -1390,7 +1411,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Car GPS Speedometer & Performance Tracker",
     short: "Real-time car speed, 0-60 timer, and trip analytics for your vehicle.",
     description: "Turn your phone into a high-precision GPS speedometer. Track live speed, measure 0-60 performance, log trip distance, and use HUD (Head-Up Display) mode for windshield projection.",
-    icon: "Car", category: "utility",
+    icon: "Car", category: "travel",
     keywords: ["gps speedometer", "live car speed", "0-60 timer", "hud speedometer", "trip tracker", "performance box"],
     relatedSlugs: ["car-loan-vs-lease-calculator", "unit-converter"],
     howTo: {
@@ -1407,7 +1428,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Live Train Speed Test (GPS)",
     short: "Track the real-time speed of your train trip using GPS.",
     description: "Curious how fast your train is going? Use our live GPS train speedometer to track real-time rail speed, max velocity, and total trip distance directly from your seat.",
-    icon: "Train", category: "utility",
+    icon: "Train", category: "travel",
     keywords: ["train speed test", "live rail speed", "how fast is my train", "railway speedometer", "gps train tracker"],
     relatedSlugs: ["car-performance-speed-test", "flight-speed-tracker-gps"],
     howTo: {
@@ -1424,7 +1445,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Live Flight Speed & Altitude Tracker",
     short: "Track airplane speed and altitude in real-time via GPS.",
     description: "Monitor your flight's speed and altitude in real-time. Our GPS-based flight tracker works from your window seat, providing live ground speed and height data without needing Wi-Fi.",
-    icon: "Plane", category: "utility",
+    icon: "Plane", category: "travel",
     keywords: ["flight speed tracker", "airplane speed live", "gps altitude tracker", "flight telemetry", "how fast is my plane"],
     relatedSlugs: ["train-speed-test-live", "car-performance-speed-test"],
     howTo: {
@@ -1441,7 +1462,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Roller Coaster Speed & G-Force Tracker",
     short: "Measure max speed and G-force on any roller coaster ride.",
     description: "Track the thrill of your next roller coaster! Measure peak speeds, record G-force data using your phone's sensors, and log the maximum drop velocity in real-time.",
-    icon: "Zap", category: "utility",
+    icon: "Zap", category: "travel",
     keywords: ["roller coaster speed", "coaster speedometer", "track g-force online", "theme park speed test", "drop speed tracker"],
     relatedSlugs: ["high-speed-elevator-test", "car-performance-speed-test"],
     howTo: {
@@ -1458,7 +1479,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Elevator Speed Test (Feet per Minute)",
     short: "Measure the vertical speed of any skyscraper elevator.",
     description: "Test the vertical velocity of high-speed elevators in skyscrapers. Get real-time data in feet per minute (fpm) or meters per second, perfect for checking world-class lift performance.",
-    icon: "ArrowUpCircle", category: "utility",
+    icon: "ArrowUpCircle", category: "travel",
     keywords: ["elevator speed test", "skyscraper lift speed", "fpm calculator", "elevator velocity tracker", "how fast is this lift"],
     relatedSlugs: ["roller-coaster-speed-tracker", "flight-speed-tracker-gps"],
     howTo: {
@@ -1475,7 +1496,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Online Cycling Speedometer (GPS)",
     short: "Professional-grade bike speedometer for your cycling trips.",
     description: "Turn your smartphone into a professional cycling computer. Track live bike speed, average pace, max velocity, and total distance with our high-precision GPS bike speedometer.",
-    icon: "Bike", category: "utility",
+    icon: "Bike", category: "travel",
     keywords: ["cycling speedometer", "online bike tracker", "live bicycle speed", "cycling pace calculator", "gps bike computer"],
     relatedSlugs: ["running-speedometer-test", "car-performance-speed-test"],
     howTo: {
@@ -1492,7 +1513,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "GPS Boat Speed Tracker (Knots)",
     short: "Measure marine speed in knots and nautical miles via GPS.",
     description: "Navigate with precision using our marine GPS speedometer. Track boat speed in knots, calculate nautical miles, and monitor your heading and coordinates live on the water.",
-    icon: "Anchor", category: "utility",
+    icon: "Anchor", category: "travel",
     keywords: ["boat speed tracker", "knots speedometer", "marine gps tracker", "how fast is my boat", "nautical miles calculator"],
     relatedSlugs: ["car-performance-speed-test", "cycling-speedometer-online"],
     howTo: {
@@ -1509,7 +1530,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Electric Scooter Speedometer",
     short: "Track your e-scooter's real-time speed and trip stats.",
     description: "Monitor your electric scooter rides with our dedicated GPS speedometer. Perfect for Segway, Xiaomi, and custom e-scooters to track live speed and battery-saving trip data.",
-    icon: "Zap", category: "utility",
+    icon: "Zap", category: "travel",
     keywords: ["e-scooter speedometer", "electric scooter speed", "scooter tracker gps", "segway speed test", "xiaomi scooter speed"],
     relatedSlugs: ["cycling-speedometer-online", "car-performance-speed-test"],
     howTo: {
@@ -1526,7 +1547,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Ski & Snowboard Speed Tracker",
     short: "Track your maximum downhill speed on the slopes.",
     description: "Measure your peak velocity on the ski slopes. Our GPS tracker records your maximum downhill speed, average pace, and total run distance for skiing and snowboarding.",
-    icon: "Snowflake", category: "utility",
+    icon: "Snowflake", category: "travel",
     keywords: ["ski speed tracker", "snowboard speedometer", "downhill speed test", "winter sports gps", "how fast am i skiing"],
     relatedSlugs: ["roller-coaster-speed-tracker", "running-speedometer-test"],
     howTo: {
@@ -1543,7 +1564,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Running Speedometer & Pace Test",
     short: "Track your running speed and sprinting pace live.",
     description: "Optimize your training with our live running speedometer. Track your current sprinting speed, average running pace, and total distance using high-precision mobile GPS.",
-    icon: "Footprints", category: "utility",
+    icon: "Footprints", category: "travel",
     keywords: ["running speed test", "sprint speedometer", "live running pace", "how fast am i running", "jogging speed tracker"],
     relatedSlugs: ["cycling-speedometer-online", "car-performance-speed-test"],
     howTo: {
@@ -1560,7 +1581,7 @@ export const CALCULATORS: CalcMeta[] = [
     title: "Horse Riding Speed Tracker (GPS)",
     short: "Monitor your horse's trot, canter, and gallop speeds.",
     description: "Track your equestrian performance with our GPS horse speedometer. Measure speeds during trot, canter, and gallop, and log your total trail distance in real-time.",
-    icon: "Dna", category: "utility",
+    icon: "Dna", category: "travel",
     keywords: ["horse riding speed", "equestrian tracker", "gallop speed test", "canter speedometer", "gps horse tracker"],
     relatedSlugs: ["running-speedometer-test", "boat-speed-tracker-knots"],
     howTo: {

@@ -102,7 +102,7 @@ const SkiSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
 
         {/* Results Panel (Speedometer & Stats) */}
         <div className={cn("lg:col-span-8 space-y-8 order-1 lg:order-2", hudMode && "rotate-x-180 scale-x-[-1] opacity-90 brightness-150")}>
-          <div className="surface-card p-6 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden shadow-sm flex flex-col items-center justify-between min-h-[500px] md:min-h-[600px] rounded-3xl">
+          <div className="surface-card p-6 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden shadow-sm flex flex-col items-center justify-between min-h-[500px] md:min-h-[600px] rounded-2xl">
             <TrendingUp className="absolute inset-0 size-96 text-muted-foreground opacity-[0.03] -rotate-12 m-auto" />
             <div className="relative z-10 flex flex-col items-center gap-2">
               <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">

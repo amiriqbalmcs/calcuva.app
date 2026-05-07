@@ -1,8 +1,9 @@
 import { getSortedPostsData } from "@/lib/markdown";
 import Link from "next/link";
-import { ArrowRight, Calendar, Clock, BookOpen } from "lucide-react";
+import { ArrowRight, Calendar, Clock, BookOpen, Plus, Percent, Divide, Activity as ActivityIcon } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { cn } from "@/lib/utils";
+import { Seo } from "@/components/Seo";
 import type { Metadata } from "next";
 
 import { SITE_URL } from "@/lib/constants";
@@ -21,88 +22,94 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", images: [`${SITE_URL}/og-image.png`] },
 };
 
-
-
-const categoryColors: Record<string, string> = {
-   finance: "bg-finance-soft text-finance",
-   health: "bg-health-soft text-health",
-   business: "bg-business-soft text-business",
-   utility: "bg-utility-soft text-utility",
-};
-
 export default async function BlogPage() {
    const posts = await getSortedPostsData("blog");
 
    return (
-      <>
-         <main className="min-h-screen pt-28 pb-32">
-            {/* Hero */}
-            <section className="container-wide mb-24 text-center">
-               <div className="flex items-center justify-center gap-3 mb-10 font-mono text-[10px] uppercase font-black tracking-[0.4em] text-muted-foreground animate-fade-up">
-                  <BookOpen className="size-4 text-foreground" />
-                  <span>Calcuva Blog · Expert Guides</span>
+      <div className="bg-background min-h-screen">
+         <Seo 
+            title="Research & Editorial — Expert Insights"
+            description="In-depth research and data-driven strategies for better decisions."
+            canonicalPath="/blog"
+         />
+
+         {/* Immersive Header - Elite Style */}
+         <header className="relative min-h-[70vh] lg:min-h-[80vh] flex flex-col items-center justify-start border-b border-border/50 bg-hero overflow-hidden pt-32 sm:pt-48 pb-20">
+            {/* Dynamic Texture Layer */}
+            <div className="absolute inset-0 z-0">
+               <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-400/20 dark:bg-blue-900/10 rounded-full blur-[120px] animate-pulse" />
+               <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-indigo-600/20 dark:bg-indigo-900/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
+
+               {/* Precision Pattern Overlay */}
+               <div 
+                  className="absolute inset-0 opacity-[0.08] dark:opacity-[0.03]" 
+                  style={{ 
+                  backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                  backgroundSize: '40px 40px' 
+                  }} 
+               />
+            </div>
+
+            {/* Rich Icon Watermarks */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04] dark:opacity-[0.02] text-white dark:text-muted-foreground">
+               <div className="absolute top-[10%] left-[10%] rotate-12"><Plus className="size-20 sm:size-32" /></div>
+               <div className="absolute top-[15%] right-[15%] -rotate-45"><Percent className="size-16 sm:size-24" /></div>
+               <div className="absolute bottom-[20%] left-[15%] -rotate-12"><Divide className="size-20 sm:size-28" /></div>
+               <div className="absolute bottom-[10%] right-[10%] rotate-12"><ActivityIcon className="size-24 sm:size-36" /></div>
+            </div>
+
+            <div className="container-wide max-w-5xl relative z-10 text-hero-text text-center">
+               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 text-[10px] font-black uppercase tracking-[0.2em] mb-8 animate-fade-up">
+                  Calcuva Research
                </div>
-               <h1 className="text-6xl sm:text-8xl font-bold tracking-tighter mb-10 animate-fade-up">
-                  The Science of <br />
-                  <span className="text-foreground/40 italic">Better Decisions.</span>
+               <h1 className="text-6xl sm:text-9xl font-bold tracking-tighter mb-8 animate-fade-up leading-[0.9]">
+                  Expert Research <br />
+                  <span className="opacity-40 italic font-medium">& Editorial.</span>
                </h1>
-               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium animate-fade-up" style={{ animationDelay: "100ms" }}>
-                  In-depth research, professional guides, and data-driven strategies
-                  to help you master your finances, health, and business metrics.
+               <p className="text-lg sm:text-2xl font-medium text-white/70 dark:text-muted-foreground max-w-2xl mx-auto animate-fade-up leading-relaxed">
+                  In-depth analysis, professional guides, and data-driven strategies to help you master your finances, health, and business metrics.
                </p>
-            </section>
+            </div>
+         </header>
 
-            {/* Post Grid */}
-            <section className="container-wide max-w-6xl">
-               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {posts.map((post, i) => (
-                     <Link
-                        key={post.slug}
-                        href={`/blog/${post.slug}`}
-                        className="group flex flex-col surface-card p-0 overflow-hidden bg-secondary/5 border-border/40 hover:border-foreground/20 transition-all duration-500 animate-fade-up"
-                        style={{ animationDelay: `${200 + i * 100}ms` }}
-                      >
-                        <div className="aspect-[16/10] bg-background flex items-center justify-center relative overflow-hidden border-b border-border/40">
-                           <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.03] to-transparent group-hover:scale-110 transition-transform duration-700" />
-                           <BookOpen className="size-10 text-muted-foreground/10" />
+         <main className="container-wide py-32 animate-fade-up">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+               {posts.map((post) => (
+                  <Link 
+                     key={post.slug} 
+                     href={`/blog/${post.slug}`}
+                     className="group flex flex-col bg-surface border border-border dark:border-white/5 rounded-2xl p-10 hover:border-signal/50 hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
+                  >
+                     <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.02] to-transparent pointer-events-none" />
+                     <div className="flex items-center justify-between mb-8 relative z-10">
+                        <div className={cn("px-2.5 py-1 rounded-lg border text-[9px] font-bold uppercase tracking-widest capitalize",
+                           post.category === 'finance' ? "bg-finance/10 text-finance border-finance/20" :
+                           post.category === 'health' ? "bg-health/10 text-health border-health/20" :
+                           post.category === 'business' ? "bg-business/10 text-business border-business/20" :
+                           post.category === 'sustainability' ? "bg-sustainability/10 text-sustainability border-sustainability/20" :
+                           post.category === 'utility' ? "bg-utility/10 text-utility border-utility/20" :
+                           "bg-secondary text-primary border-border"
+                        )}>
+                           {post.category}
                         </div>
-
-                        <div className="p-8 flex flex-col flex-1">
-                           <div className="flex items-center justify-between mb-6">
-                              <span className={cn("px-2.5 py-1 rounded text-[9px] font-black uppercase tracking-[0.2em] ring-1 ring-inset", 
-                                post.category === 'finance' ? "bg-finance/5 text-finance ring-finance/20" :
-                                post.category === 'health' ? "bg-health/5 text-health ring-health/20" :
-                                post.category === 'business' ? "bg-business/5 text-business ring-business/20" :
-                                "bg-secondary text-muted-foreground ring-border"
-                              )}>
-                                 {post.category}
-                              </span>
-                              <div className="flex items-center gap-4 text-muted-foreground text-[9px] font-black uppercase tracking-widest">
-                                 <span className="flex items-center gap-1.5"><Calendar className="size-3" /> {new Date(post.date).toLocaleDateString()}</span>
-                              </div>
-                           </div>
-
-                           <h3 className="text-xl font-bold mb-4 leading-tight group-hover:text-foreground transition-colors line-clamp-2">
-                              {post.title}
-                           </h3>
-                           <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 mb-8 font-medium">
-                              {post.excerpt}
-                           </p>
-
-                           <div className="mt-auto flex items-center justify-between pt-6 border-t border-border/40">
-                              <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">
-                                 <Clock className="size-3" /> {post.readingTime}
-                              </div>
-                              <div className="flex items-center text-[9px] font-black uppercase tracking-[0.2em] text-foreground group-hover:translate-x-1 transition-transform">
-                                 Analysis <ArrowRight className="size-3 ml-1.5" />
-                              </div>
-                           </div>
+                        <div className="flex items-center gap-2 text-[9px] font-mono font-bold text-muted-foreground/50">
+                           <Calendar className="size-3" /> {new Date(post.date).toLocaleDateString()}
                         </div>
-                     </Link>
-                  ))}
-               </div>
-            </section>
+                     </div>
+                     <h3 className="text-2xl font-bold group-hover:text-signal transition-colors leading-tight mb-4 relative z-10">{post.title}</h3>
+                     <p className="text-muted-foreground line-clamp-3 leading-relaxed mb-10 font-medium relative z-10">{post.excerpt}</p>
+                     <div className="mt-auto flex items-center justify-between pt-8 border-t border-border/10 relative z-10">
+                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40 group-hover:text-signal transition-all">
+                           Read Analysis <ArrowRight className="size-3 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                        <div className="flex items-center gap-2 text-[9px] font-mono text-muted-foreground/30">
+                           <Clock className="size-3" /> {post.readingTime}
+                        </div>
+                     </div>
+                  </Link>
+               ))}
+            </div>
          </main>
-      </>
+      </div>
    );
 }

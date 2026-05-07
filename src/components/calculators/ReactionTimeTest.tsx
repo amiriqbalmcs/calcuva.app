@@ -169,7 +169,7 @@ const ReactionTimeTest = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
           <div
             onClick={handleClick}
             className={cn(
-              "p-8 md:p-12 rounded-3xl shadow-sm flex flex-col items-center justify-center min-h-[600px] relative overflow-hidden group cursor-pointer select-none border transition-all",
+              "p-8 md:p-12 rounded-2xl shadow-sm flex flex-col items-center justify-center min-h-[600px] relative overflow-hidden group cursor-pointer select-none border transition-all",
               state === "IDLE" && "bg-secondary/5 border-border/40 hover:bg-secondary/10 duration-300",
               state === "WAITING" && "bg-red-500/10 border-red-500/30 cursor-wait duration-300",
               state === "READY" && "bg-signal border-signal shadow-[0_0_50px_hsl(var(--signal)/0.4)] duration-0",

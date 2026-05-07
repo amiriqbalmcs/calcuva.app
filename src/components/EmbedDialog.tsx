@@ -22,7 +22,7 @@ export function EmbedDialog({ isOpen, onClose, slug, title, isWholeSite }: Embed
   const mainUrl = `${SITE_URL}${path}`;
   const displayTitle = title || "Calcuva Toolkit";
 
-  const embedCode = `<iframe src="${embedUrl}" width="100%" height="700" frameborder="0" loading="lazy"></iframe>\n<p style="text-align:center;font-size:12px;font-family:sans-serif;color:#666;">Powered by <a href="${mainUrl}" target="_blank" style="color:#000;font-weight:bold;text-decoration:none;">${displayTitle}</a></p>`;
+  const embedCode = `<iframe src="${embedUrl}" width="100%" height="700" frameborder="0" loading="lazy"></iframe>\n<p style="text-align:center;font-size:12px;font-family:sans-serif;color:#666;">Powered by <a href="${mainUrl}" target="_blank" rel="noopener noreferrer" style="color:#000;font-weight:bold;text-decoration:none;">${displayTitle}</a></p>`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(embedCode);
@@ -32,7 +32,7 @@ export function EmbedDialog({ isOpen, onClose, slug, title, isWholeSite }: Embed
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-background border border-border w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+      <div className="bg-background border border-border w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 text-foreground">
         <div className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div className="space-y-1">

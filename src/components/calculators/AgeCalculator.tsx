@@ -227,7 +227,7 @@ const AgeCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
               </div>
             </div>
           ) : (
-            <div className="surface-card p-24 flex flex-col items-center justify-center text-center bg-secondary/5 border-dashed border-2 border-border/40 rounded-3xl">
+            <div className="surface-card p-24 flex flex-col items-center justify-center text-center bg-secondary/5 border-dashed border-2 border-border/40 rounded-2xl">
               <Hourglass className="size-16 text-muted-foreground/20 mb-6 animate-pulse" />
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/40">Enter a valid birth date to see your results</p>
             </div>

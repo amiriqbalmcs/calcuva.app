@@ -177,7 +177,7 @@ const VerbalMemoryTest = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
 
           {/* Interaction Card */}
           <div className={cn(
-            "surface-card border-border/40 bg-secondary/5 rounded-3xl shadow-sm min-h-[600px] relative overflow-hidden flex flex-col items-center justify-center p-8 text-center group transition-all duration-500",
+            "surface-card border-border/40 bg-secondary/5 rounded-2xl shadow-sm min-h-[600px] relative overflow-hidden flex flex-col items-center justify-center p-8 text-center group transition-all duration-500",
             shaking && "animate-shake"
           )}>
 
@@ -209,13 +209,13 @@ const VerbalMemoryTest = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                   <button
                     onClick={() => handleChoice("SEEN")}
-                    className="h-20 px-12 rounded-3xl bg-secondary border-2 border-border/40 font-black uppercase tracking-widest text-lg hover:bg-secondary/80 hover:border-signal/40 transition-all w-full sm:w-64 active:scale-95"
+                    className="h-20 px-12 rounded-2xl bg-secondary border-2 border-border/40 font-black uppercase tracking-widest text-lg hover:bg-secondary/80 hover:border-signal/40 transition-all w-full sm:w-64 active:scale-95"
                   >
                     Seen
                   </button>
                   <button
                     onClick={() => handleChoice("NEW")}
-                    className="h-20 px-12 rounded-3xl bg-signal text-white font-black uppercase tracking-widest text-lg hover:scale-105 transition-all shadow-xl shadow-signal/20 w-full sm:w-64 active:scale-95"
+                    className="h-20 px-12 rounded-2xl bg-signal text-white font-black uppercase tracking-widest text-lg hover:scale-105 transition-all shadow-xl shadow-signal/20 w-full sm:w-64 active:scale-95"
                   >
                     New
                   </button>

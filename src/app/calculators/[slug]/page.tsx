@@ -117,6 +117,7 @@ const ElectricityPredictor = dynamic(() => import("@/components/calculators/Elec
 const SolarRequirementCalculator = dynamic(() => import("@/components/calculators/SolarRequirementCalculator"), { loading });
 const SolarBatteryCalculator = dynamic(() => import("@/components/calculators/SolarBatteryCalculator"), { loading });
 const SolarPanelToKwCalculator = dynamic(() => import("@/components/calculators/SolarPanelToKwCalculator"), { loading });
+const SolarAcCalculator = dynamic(() => import("@/components/calculators/SolarAcCalculator"), { loading });
 const SocialSharePreviewCalculator = dynamic(() => import("@/components/calculators/SocialSharePreviewCalculator"), { loading });
 const UniversityMeritCalculator = dynamic(() => import("@/components/calculators/UniversityMeritCalculator"), { loading });
 const PtaTaxCalculator = dynamic(() => import("@/components/calculators/PtaTaxCalculator"), { loading });
@@ -228,6 +229,7 @@ const componentMap: Record<string, any> = {
   "solar-system-requirement-calculator": SolarRequirementCalculator,
   "solar-battery-backup-calculator": SolarBatteryCalculator,
   "solar-panel-to-kw-calculator": SolarPanelToKwCalculator,
+  "solar-ac-requirement-calculator": SolarAcCalculator,
   "social-share-preview-tool": SocialSharePreviewCalculator,
   "university-merit-aggregate-calculator": UniversityMeritCalculator,
   "pakistan-mobile-pta-tax-calculator": PtaTaxCalculator,
@@ -304,37 +306,6 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
   return (
     <ErrorBoundary>
       <Suspense fallback={<CalculatorSkeleton />}>
-        <script
-          id="calculator-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "WebApplication",
-                  "name": meta.title,
-                  "applicationCategory": meta.category === "finance" ? "FinanceApplication" : meta.category === "health" ? "HealthApplication" : "UtilitiesApplication",
-                  "operatingSystem": "Any",
-                  "description": meta.description,
-                  "url": `${BASE_URL}/calculators/${meta.slug}`,
-                  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-                },
-                ...(guideFaqs ? [{
-                  "@type": "FAQPage",
-                  "mainEntity": guideFaqs.map(f => ({
-                    "@type": "Question",
-                    "name": f.q,
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": f.a
-                    }
-                  }))
-                }] : [])
-              ]
-            })
-          }}
-        />
         <Calculator calc={meta} guideHtml={guideHtml} faqs={guideFaqs} relatedArticles={relatedArticles} />
       </Suspense>
     </ErrorBoundary>

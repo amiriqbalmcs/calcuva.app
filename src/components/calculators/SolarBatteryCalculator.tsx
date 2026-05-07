@@ -76,7 +76,7 @@ const SolarBatteryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
 
                {/* Right Column: Results Dashboard */}
                <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-                  <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 overflow-hidden rounded-3xl">
+                  <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 overflow-hidden rounded-2xl">
                      <Timer className="absolute -top-6 -right-6 size-32 text-foreground/[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
 
                      <div className="space-y-8 relative z-10">
@@ -131,7 +131,7 @@ const SolarBatteryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
 
                {/* Main Panel (Inputs) */}
                <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-                  <div className="surface-card p-8 bg-secondary/5 border-border/40 overflow-hidden shadow-sm rounded-3xl">
+                  <div className="surface-card p-8 bg-secondary/5 border-border/40 overflow-hidden shadow-sm rounded-2xl">
                      <div className="flex items-center gap-4 mb-8">
                         <div className="size-12 rounded-2xl bg-foreground/5 flex items-center justify-center">
                            <Battery className="size-6 text-foreground/60" />
@@ -218,7 +218,7 @@ const SolarBatteryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
-                     <div className="surface-card p-8 border-border/30 bg-secondary/5 space-y-4 rounded-3xl">
+                     <div className="surface-card p-8 border-border/30 bg-secondary/5 space-y-4 rounded-2xl">
                         <div className="flex items-center gap-2 text-foreground font-bold text-sm">
                            <Gauge className="size-4 text-signal" /> Load Impact
                         </div>
@@ -226,7 +226,7 @@ const SolarBatteryCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtm
                            At a constant load of {loadWatts}W, your battery bank is discharging at {((loadWatts / (results.totalEnergyKWh * 1000)) * 100).toFixed(1)}% of its total capacity per hour.
                         </p>
                      </div>
-                     <div className="surface-card p-8 border-border/30 bg-secondary/5 space-y-4 rounded-3xl">
+                     <div className="surface-card p-8 border-border/30 bg-secondary/5 space-y-4 rounded-2xl">
                         <div className="flex items-center gap-2 text-foreground font-bold text-sm">
                            <ShieldCheck className="size-4 text-health" /> System Safety
                         </div>

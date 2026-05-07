@@ -65,7 +65,7 @@ const DiscountCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
 
         {/* Results Panel (Right on Desktop, Top on Mobile) */}
         <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
-          <div className="surface-card p-8 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden shadow-sm flex flex-col rounded-3xl min-h-[400px]">
+          <div className="surface-card p-8 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden shadow-sm flex flex-col rounded-2xl min-h-[400px]">
             <Percent className="absolute inset-0 size-96 text-muted-foreground opacity-[0.03] -rotate-12 m-auto" />
             
             <div className="relative z-10 space-y-8">
@@ -156,7 +156,7 @@ const DiscountCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
 
         {/* Input Panel (Left on Desktop, Bottom on Mobile) */}
         <div className="lg:col-span-4 space-y-6 order-2 lg:order-1">
-          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm rounded-3xl">
+          <div className="surface-card p-6 md:p-8 space-y-10 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm rounded-2xl">
             <Settings2 className="absolute -bottom-6 -left-6 size-32 text-muted-foreground/5 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
             
             <div className="space-y-1 relative z-20">

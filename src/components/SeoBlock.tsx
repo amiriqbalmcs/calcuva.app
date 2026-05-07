@@ -80,7 +80,7 @@ export const SeoBlock = ({
 
       {/* FAQ Section */}
       {faqs && faqs.length > 0 && (
-        <section className="bg-secondary/20 rounded-3xl p-6 sm:p-10 border border-border/50">
+        <section className="bg-secondary/20 rounded-2xl p-6 sm:p-10 border border-border/50">
           <div className="flex items-center gap-3 mb-10">
             <div className="size-10 rounded-xl bg-background flex items-center justify-center text-signal shadow-inner">
               <HelpCircle className="size-5" />

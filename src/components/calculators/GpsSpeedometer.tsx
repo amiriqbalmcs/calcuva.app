@@ -231,7 +231,7 @@ const GpsSpeedometer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: stri
         {/* Results Panel (Speedometer & Stats) */}
         <div className="lg:col-span-8 space-y-8 order-1 lg:order-2">
           {/* Universal Speed Display */}
-          <div className="surface-card p-6 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm flex flex-col items-center justify-between min-h-[500px] md:min-h-[600px] rounded-3xl">
+          <div className="surface-card p-6 md:p-12 bg-secondary/5 border-border/40 relative overflow-hidden group shadow-sm flex flex-col items-center justify-between min-h-[500px] md:min-h-[600px] rounded-2xl">
 
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
               <context.icon className="size-96 text-muted-foreground -rotate-12" />

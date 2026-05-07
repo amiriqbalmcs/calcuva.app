@@ -68,7 +68,7 @@ const EvGridAuditor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
           
           {/* Right Column: Results Dashboard */}
           <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-3xl">
+            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-2xl">
                <div className="absolute top-0 right-0 size-32 bg-orange-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
                <div className="space-y-6 relative border-b border-border/40 pb-10">
@@ -95,7 +95,7 @@ const EvGridAuditor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
                </div>
 
                 <div className="space-y-8 relative">
-                  <div className="p-6 rounded-3xl bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-500/20 space-y-4">
+                  <div className="p-6 rounded-2xl bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-500/20 space-y-4">
                      <div className="flex items-center gap-2 text-orange-700/60 dark:text-orange-400/60">
                         <Cloud className="size-4" />
                         <span className="text-[10px] font-black uppercase tracking-[0.2em]">Carbon Reduction</span>
@@ -131,7 +131,7 @@ const EvGridAuditor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
 
           {/* Left Column: Inputs Panel */}
           <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-            <div className="surface-card bg-orange-500/5 dark:bg-orange-500/10 border-orange-500/20 overflow-hidden shadow-sm rounded-3xl">
+            <div className="surface-card bg-orange-500/5 dark:bg-orange-500/10 border-orange-500/20 overflow-hidden shadow-sm rounded-2xl">
               <div className="p-8 border-b border-orange-500/10 dark:border-orange-500/20 bg-background flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="size-12 rounded-2xl bg-orange-500/10 dark:bg-orange-500/20 flex items-center justify-center">
@@ -153,7 +153,7 @@ const EvGridAuditor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
                         type="number"
                         value={monthlyMileage || ""}
                         onChange={(e) => setMonthlyMileage(Number(e.target.value) || 0)}
-                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-12 focus:ring-4 ring-orange-500/5 transition-all"
+                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-2xl pl-12 focus:ring-4 ring-orange-500/5 transition-all"
                         placeholder="1000"
                       />
                       <div className="absolute right-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-xl font-bold">KM</div>
@@ -167,7 +167,7 @@ const EvGridAuditor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
                         type="number"
                         value={evEfficiency || ""}
                         onChange={(e) => setEvEfficiency(Number(e.target.value) || 0)}
-                        className="h-20 bg-background border-border/60 font-mono text-3xl font-bold rounded-3xl pl-12 focus:ring-4 ring-orange-500/5 transition-all"
+                        className="h-20 bg-background border-border/60 font-mono text-3xl font-bold rounded-2xl pl-12 focus:ring-4 ring-orange-500/5 transition-all"
                         placeholder="6"
                       />
                       <div className="absolute right-6 top-1/2 -translate-y-1/2 text-muted-foreground/30 font-mono text-sm font-bold">⚡</div>
@@ -216,16 +216,16 @@ const EvGridAuditor = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: strin
               </div>
             </div>
 
-            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-3xl">
+            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-2xl">
               <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                 <Lightbulb className="size-4 text-orange-600" /> Auditor Insights
               </h4>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-3xl bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-500/20 space-y-2">
                   <p className="text-[11px] font-black text-orange-900 dark:text-orange-400 uppercase">Efficiency Matters</p>
                   <p className="text-[10px] text-orange-800/60 dark:text-orange-400/60 leading-relaxed font-medium">For every 1 km/kWh improvement in efficiency, you reduce your grid dependency by ~15%.</p>
                 </div>
-                <div className="p-5 rounded-3xl bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-500/20 space-y-2">
                   <p className="text-[11px] font-black text-orange-900 dark:text-orange-400 uppercase">Solar Impact</p>
                   <p className="text-[10px] text-orange-800/60 dark:text-orange-400/60 leading-relaxed font-medium">Charging directly from solar bypasses grid losses and eliminates tailpipe emissions entirely.</p>
                 </div>

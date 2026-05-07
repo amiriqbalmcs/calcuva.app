@@ -64,7 +64,7 @@ const UrbanCooling = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string
 
           {/* Right Column: Results Dashboard */}
           <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-3xl">
+            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-2xl">
               <div className="absolute top-0 right-0 size-32 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
               <div className="space-y-6 relative border-b border-border/40 pb-10">
@@ -127,7 +127,7 @@ const UrbanCooling = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string
 
           {/* Left Column: Inputs Panel */}
           <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-            <div className="surface-card bg-emerald-500/5 dark:bg-emerald-500/10 border-emerald-500/20 overflow-hidden shadow-sm rounded-3xl">
+            <div className="surface-card bg-emerald-500/5 dark:bg-emerald-500/10 border-emerald-500/20 overflow-hidden shadow-sm rounded-2xl">
               <div className="p-8 border-b border-emerald-500/10 dark:border-emerald-500/20 bg-background flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="size-12 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center">
@@ -149,7 +149,7 @@ const UrbanCooling = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string
                         type="number"
                         value={plotSize || ""}
                         onChange={(e) => setPlotSize(Number(e.target.value) || 0)}
-                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-12 focus:ring-4 ring-emerald-500/5 transition-all text-foreground"
+                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-2xl pl-12 focus:ring-4 ring-emerald-500/5 transition-all text-foreground"
                         placeholder="10"
                       />
                       <div className="absolute right-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-xl font-bold">M</div>
@@ -163,7 +163,7 @@ const UrbanCooling = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string
                         type="number"
                         value={currentTreeCount || ""}
                         onChange={(e) => setCurrentTreeCount(Number(e.target.value) || 0)}
-                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-12 focus:ring-4 ring-emerald-500/5 transition-all text-foreground"
+                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-2xl pl-12 focus:ring-4 ring-emerald-500/5 transition-all text-foreground"
                         placeholder="0"
                       />
                       <div className="absolute right-8 top-1/2 -translate-y-1/2 text-muted-foreground/30 font-mono text-2xl font-bold">🌳</div>
@@ -223,7 +223,7 @@ const UrbanCooling = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: string
               </div>
             </div>
 
-            <div className="surface-card p-10 bg-background border-border/60 shadow-sm space-y-8 rounded-3xl text-foreground">
+            <div className="surface-card p-10 bg-background border-border/60 shadow-sm space-y-8 rounded-2xl text-foreground">
               <div className="flex items-center justify-between">
                 <h4 className="text-sm font-bold uppercase tracking-wider flex items-center gap-3">
                   <Lightbulb className="size-5 text-emerald-600" /> Species Recommendations

@@ -40,30 +40,36 @@ export const SiteHeader = () => {
   }, []);
 
 
+  const isHomePage = pathname === "/";
+
   return (
     <header 
       className={cn(
-        "sticky z-50 transition-all duration-500 ease-in-out",
-        scrolled ? "top-0 px-0" : "top-6 px-4 sm:px-6"
+        "z-50 transition-all duration-500 ease-in-out w-full left-0 right-0",
+        !scrolled ? "fixed top-6" : "sticky top-0",
+        scrolled ? "px-0" : "px-4 sm:px-6"
       )}
     >
       <div 
         className={cn(
           "container-wide mx-auto backdrop-blur-2xl transition-all duration-500 ease-in-out flex items-center",
           scrolled 
-            ? "max-w-full rounded-none border-b border-border bg-background/70 h-14 px-8 shadow-sm" 
-            : "max-w-7xl border border-border/40 rounded-2xl bg-background/40 h-16 px-6 shadow-xl shadow-black/5"
+            ? "max-w-full rounded-none border-b border-border bg-background/90 h-14 px-6 shadow-md" 
+            : "max-w-7xl border border-white/10 dark:border-white/5 bg-hero text-white rounded-2xl h-16 px-6 shadow-2xl shadow-signal/20 dark:shadow-black/40"
         )}
       >
         {/* Left: Logo */}
-        <div className="flex-[1] flex items-center">
+        <div className="flex-[1] flex items-center gap-3">
           <Link href="/" className="flex items-center group shrink-0" onClick={() => setOpen(false)}>
-            <div className="relative h-9 w-36 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className={cn(
+              "relative h-10 w-40 flex items-center justify-center group-hover:scale-105 transition-transform",
+              (!scrolled || theme === 'dark') && "brightness-0 invert"
+            )}>
               <Image 
                 src="/logo.png" 
                 alt="Calcuva" 
                 fill
-                className="object-contain logo-dark-mode"
+                className="object-contain"
                 priority
               />
             </div>
@@ -78,38 +84,47 @@ export const SiteHeader = () => {
         {/* Right: Actions */}
         <div className="flex-[1] flex items-center justify-end gap-3 lg:gap-6">
           <div className="hidden md:flex items-center gap-2 lg:gap-4">
-             <GlobalSearch />
+             <GlobalSearch variant={!scrolled ? "glass" : "default"} />
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="size-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
+                className={cn(
+                  "size-10 rounded-full flex items-center justify-center transition-all",
+                  !scrolled ? "text-white hover:bg-white/10" : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                )}
                 aria-label="Toggle dark mode"
               >
-                {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+                {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
               </button>
             )}
           </div>
 
           <div className="flex items-center gap-1 md:hidden">
-            <GlobalSearch />
+            <GlobalSearch variant={!scrolled ? "glass" : "default"} />
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="size-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
+                className={cn(
+                  "size-9 rounded-full flex items-center justify-center transition-all",
+                  !scrolled ? "text-white hover:bg-white/10" : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                )}
                 aria-label="Toggle dark mode"
               >
                 {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
               </button>
             )}
             <button
-              className="inline-flex size-9 items-center justify-center rounded-md hover:bg-secondary"
+              className={cn(
+                "inline-flex size-10 items-center justify-center rounded-xl transition-all",
+                !scrolled ? "text-white hover:bg-white/10" : "hover:bg-secondary"
+              )}
               onClick={() => setOpen((v) => !v)}
               aria-label="Toggle menu"
             >
-              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+              {open ? <X className="size-6" /> : <Menu className="size-6" />}
             </button>
           </div>
         </div>

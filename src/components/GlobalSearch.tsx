@@ -64,10 +64,14 @@ const categoryStyles: Record<CategoryKey, string> = {
   utility: "bg-utility-soft text-utility dark:bg-utility/20 dark:text-utility",
   business: "bg-business-soft text-business dark:bg-business/20 dark:text-business",
   sustainability: "bg-sustainability-soft text-sustainability dark:bg-sustainability/20 dark:text-sustainability",
-  benchmarks: "bg-benchmarks-soft text-benchmarks dark:bg-benchmarks/20 dark:text-benchmarks",
+    benchmarks: "bg-benchmarks-soft text-benchmarks dark:bg-benchmarks/20 dark:text-benchmarks",
+  tax: "bg-tax-soft text-tax dark:bg-tax/20 dark:text-tax",
+  productivity: "bg-productivity-soft text-productivity dark:bg-productivity/20 dark:text-productivity",
+  travel: "bg-travel-soft text-travel dark:bg-travel/20 dark:text-travel",
+  lifestyle: "bg-lifestyle-soft text-lifestyle dark:bg-lifestyle/20 dark:text-lifestyle",
 };
 
-export function GlobalSearch() {
+export function GlobalSearch({ variant = "default" }: { variant?: "default" | "glass" }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -93,11 +97,19 @@ export function GlobalSearch() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="group flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-secondary/40 text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-all ring-1 ring-border/20 md:w-28 lg:w-40"
+        className={cn(
+          "group flex items-center gap-2 px-2.5 py-1.5 rounded-lg transition-all ring-1 md:w-28 lg:w-40",
+          variant === "glass" 
+            ? "bg-white/10 text-white hover:bg-white/20 ring-white/20" 
+            : "bg-secondary/40 text-muted-foreground hover:text-foreground hover:bg-secondary/60 ring-border/20"
+        )}
       >
         <Search className="size-3" />
         <span className="text-[10px] font-bold uppercase tracking-wider hidden lg:inline-block">Search...</span>
-        <kbd className="pointer-events-none ml-auto hidden h-4 select-none items-center gap-1 rounded bg-background px-1 font-mono text-[9px] font-medium opacity-100 lg:flex">
+        <kbd className={cn(
+          "pointer-events-none ml-auto hidden h-4 select-none items-center gap-1 rounded px-1 font-mono text-[9px] font-medium lg:flex",
+          variant === "glass" ? "bg-white/20 text-white" : "bg-background text-muted-foreground"
+        )}>
           K
         </kbd>
       </button>

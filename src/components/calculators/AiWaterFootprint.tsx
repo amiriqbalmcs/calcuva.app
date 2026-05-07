@@ -64,7 +64,7 @@ const AiWaterFootprint = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
           
           {/* Right Column: Results Dashboard */}
           <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-3xl">
+            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-2xl">
                <div className="absolute top-0 right-0 size-32 bg-blue-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
                <div className="space-y-6 relative border-b border-border/40 pb-10">
@@ -91,7 +91,7 @@ const AiWaterFootprint = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
                </div>
 
                 <div className="space-y-8 relative">
-                  <div className="p-6 rounded-3xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-500/20 space-y-4">
+                  <div className="p-6 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-500/20 space-y-4">
                      <div className="flex items-center gap-2 text-blue-700/60 dark:text-blue-400/60">
                         <Droplets className="size-4" />
                         <span className="text-[10px] font-black uppercase tracking-[0.2em]">Sustainability Score</span>
@@ -127,7 +127,7 @@ const AiWaterFootprint = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
 
           {/* Left Column: Inputs Panel */}
           <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-            <div className="surface-card bg-blue-500/5 dark:bg-blue-500/10 border-blue-500/20 overflow-hidden shadow-sm rounded-3xl">
+            <div className="surface-card bg-blue-500/5 dark:bg-blue-500/10 border-blue-500/20 overflow-hidden shadow-sm rounded-2xl">
               <div className="p-8 border-b border-blue-500/10 dark:border-blue-500/20 bg-background flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="size-12 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center">
@@ -149,7 +149,7 @@ const AiWaterFootprint = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
                         type="number"
                         value={promptsPerDay || ""}
                         onChange={(e) => setPromptsPerDay(Number(e.target.value) || 0)}
-                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-12 focus:ring-4 ring-blue-500/5 transition-all"
+                        className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-2xl pl-12 focus:ring-4 ring-blue-500/5 transition-all"
                         placeholder="25"
                       />
                       <div className="absolute right-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-xl font-bold">💬</div>
@@ -167,7 +167,7 @@ const AiWaterFootprint = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
                           key={model.id}
                           onClick={() => setModelType(model.id as any)}
                           className={cn(
-                            "flex-1 px-4 rounded-3xl text-left border transition-all flex flex-col justify-center gap-1",
+                            "flex-1 px-4 rounded-2xl text-left border transition-all flex flex-col justify-center gap-1",
                             modelType === model.id ? "bg-blue-600 dark:bg-blue-600 text-white border-blue-700 dark:border-blue-700 shadow-lg shadow-blue-500/20" : "bg-background text-muted-foreground border-border hover:bg-secondary"
                           )}
                         >
@@ -224,16 +224,16 @@ const AiWaterFootprint = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: st
               </div>
             </div>
 
-            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-3xl">
+            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-2xl">
               <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                 <Lightbulb className="size-4 text-blue-600" /> How to Reduce Your Digital Water Footprint
               </h4>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-3xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-500/20 space-y-2">
                   <p className="text-[11px] font-black text-blue-900 dark:text-blue-400 uppercase">Use 'Flash' Models</p>
                   <p className="text-[10px] text-blue-800/60 dark:text-blue-400/60 leading-relaxed font-medium">For simple tasks, switch to efficient models like <strong>Gemini 1.5 Flash</strong>. They use 5x less water for cooling than flagship models.</p>
                 </div>
-                <div className="p-5 rounded-3xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-500/20 space-y-2">
                   <p className="text-[11px] font-black text-blue-900 dark:text-blue-400 uppercase">Prompt Caching</p>
                   <p className="text-[10px] text-blue-800/60 dark:text-blue-400/60 leading-relaxed font-medium">Enable caching for repetitive tasks to avoid re-running compute-heavy context windows, saving both tokens and water.</p>
                 </div>

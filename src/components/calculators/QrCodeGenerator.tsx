@@ -586,12 +586,12 @@ const QrCodeGenerator = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: str
                 frame === 'badge' && "p-8 pb-32 rounded-[4rem] shadow-[0_35px_80px_-15px_rgba(0,0,0,0.15)] bg-gradient-to-b from-white to-slate-50",
                 frame === 'minimal' && "p-4 rounded-[2.5rem] ring-1 ring-black/5 shadow-2xl shadow-black/5",
                 frame === 'phone' && "p-6 pt-16 pb-20 rounded-[3.5rem] border-[10px] border-slate-900 shadow-2xl bg-slate-950",
-                frame === 'ribbon' && "p-8 pb-24 rounded-3xl shadow-2xl border-t-[12px]",
+                frame === 'ribbon' && "p-8 pb-24 rounded-2xl shadow-2xl border-t-[12px]",
                 frame === 'industrial' && "p-8 pb-14 rounded-lg border-2 border-slate-400 bg-slate-100 shadow-[inset_0_2px_10px_rgba(0,0,0,0.1)]",
-                frame === 'glass' && "p-8 rounded-3xl bg-white/20 backdrop-blur-md border border-white/30 shadow-2xl",
+                frame === 'glass' && "p-8 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 shadow-2xl",
                 frame === 'polaroid' && "p-6 pb-24 rounded-sm bg-white shadow-xl border border-black/5",
-                frame === 'neon' && "p-8 rounded-3xl bg-slate-950 border-2 border-primary/20 shadow-[0_0_50px_-12px_rgba(var(--primary-rgb),0.5)]",
-                frame === 'ticket' && "p-8 pb-28 rounded-3xl border-2 border-dashed bg-white shadow-xl",
+                frame === 'neon' && "p-8 rounded-2xl bg-slate-950 border-2 border-primary/20 shadow-[0_0_50px_-12px_rgba(var(--primary-rgb),0.5)]",
+                frame === 'ticket' && "p-8 pb-28 rounded-2xl border-2 border-dashed bg-white shadow-xl",
                 frame === 'label' && "p-8 pt-16 pb-16 rounded-xl border bg-white shadow-lg"
               )}
               style={

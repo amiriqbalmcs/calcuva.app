@@ -1,13 +1,16 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import { Suspense } from "react";
+import { cn } from "@/lib/utils";
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const isEmbed = searchParams.get("embed") === "true";
+  const isHomePage = pathname === "/";
 
   if (isEmbed) {
     return (

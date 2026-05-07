@@ -63,7 +63,7 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
           
           {/* Right Column: Results Dashboard */}
           <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-            <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden group shadow-xl rounded-3xl sticky top-32">
+            <div className="surface-card bg-secondary/5 border-border/40 overflow-hidden group shadow-xl rounded-2xl sticky top-32">
               <div className="p-6 md:p-8 border-b border-border/40 flex items-center justify-between bg-background relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-health dark:bg-emerald-500" />
                 <div className="flex items-center gap-3 relative z-10">
@@ -134,7 +134,7 @@ const CarbonFootprintCalculator = ({ guideHtml, faqs, relatedArticles }: { guide
 
           {/* Left Column: Inputs Panel */}
           <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-            <div className="surface-card p-6 md:p-10 space-y-12 bg-secondary/5 border-border/40 relative overflow-hidden group rounded-3xl">
+            <div className="surface-card p-6 md:p-10 space-y-12 bg-secondary/5 border-border/40 relative overflow-hidden group rounded-2xl">
               <div className="flex items-center gap-4 border-b border-border/40 pb-8">
                 <div className="size-12 rounded-2xl bg-secondary flex items-center justify-center">
                   <Activity className="size-6 text-foreground" />

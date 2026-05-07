@@ -111,7 +111,7 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
                      </div>
                   </div>
 
-                  <div className="bg-secondary/5 border border-border/40 rounded-[2.5rem] p-8 space-y-8">
+                  <div className="bg-secondary/5 border border-border/40 rounded-2xl p-8 space-y-8">
                      <div className="flex items-center justify-between">
                         <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Exchange Rate</span>
                         <span className="text-xs font-mono font-bold">{exchangeRate} PKR/$</span>
@@ -218,7 +218,7 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
                         </div>
 
                         <div className="grid sm:grid-cols-2 gap-6">
-                           <div className="p-6 rounded-3xl bg-secondary/5 border border-border/40 space-y-2">
+                           <div className="p-6 rounded-2xl bg-secondary/5 border border-border/40 space-y-2">
                               <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-muted-foreground">
                                  <Activity className="size-3" /> Payout Efficiency
                               </div>
@@ -227,7 +227,7 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
                                  <div className="h-full bg-health transition-all duration-1000" style={{ width: `${100 - results.totalLostPercent}%` }} />
                               </div>
                            </div>
-                           <div className="p-6 rounded-3xl bg-destructive/5 border-destructive/10 space-y-2">
+                           <div className="p-6 rounded-2xl bg-destructive/5 border-destructive/10 space-y-2">
                               <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-destructive">
                                  <TrendingDown className="size-3" /> Total Fee Leakage
                               </div>
@@ -264,7 +264,7 @@ const FreelanceOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml?: 
                            </div>
                         </div>
 
-                        <div className="p-6 bg-finance/5 border border-finance/20 rounded-3xl space-y-3">
+                        <div className="p-6 bg-finance/5 border border-finance/20 rounded-2xl space-y-3">
                            <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-finance">
                               <Info className="size-4" /> Pro Optimization Tip
                            </div>

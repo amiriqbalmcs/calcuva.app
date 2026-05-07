@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 
 @theme {
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Outfit', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
   --color-background: hsl(var(--background));
@@ -51,6 +51,18 @@
   --color-sustainability-soft: hsl(var(--sustainability-soft));
   --color-benchmarks: hsl(var(--benchmarks));
   --color-benchmarks-soft: hsl(var(--benchmarks-soft));
+  --color-tax: hsl(var(--tax));
+  --color-tax-soft: hsl(var(--tax-soft));
+  --color-productivity: hsl(var(--productivity));
+  --color-productivity-soft: hsl(var(--productivity-soft));
+  --color-travel: hsl(var(--travel));
+  --color-travel-soft: hsl(var(--travel-soft));
+  --color-lifestyle: hsl(var(--lifestyle));
+  --color-lifestyle-soft: hsl(var(--lifestyle-soft));
+
+  --color-hero: hsl(var(--hero-bg));
+  --color-surface: hsl(var(--surface-bg));
+  --color-hero-text: hsl(var(--hero-text));
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -92,6 +104,12 @@
     }
   }
 
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-8px); }
@@ -99,65 +117,80 @@
   }
 
   --animate-shake: shake 0.15s ease-in-out 0s 2;
+  --animate-shimmer: shimmer 2.5s infinite;
 }
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
+    --background: 0 0% 100%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
     --primary: 222 47% 11%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 214 32% 94%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 98%;
     --secondary-foreground: 222 47% 11%;
-    --muted: 214 32% 94%;
+    --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
-    --accent: 217 91% 50%;
+    --accent: 221 83% 53%;
     --accent-foreground: 0 0% 100%;
-    --signal: 217 91% 50%;
-    --signal-soft: 217 91% 95%;
-    --finance: 217 91% 50%;
-    --finance-soft: 217 91% 95%;
-    --health: 152 69% 38%;
-    --health-soft: 152 69% 94%;
+    --signal: 221 83% 53%;
+    --signal-soft: 221 83% 96%;
+    --finance: 221 83% 53%;
+    --finance-soft: 221 83% 96%;
+    --health: 142 71% 45%;
+    --health-soft: 142 71% 95%;
     --education: 38 92% 50%;
     --education-soft: 38 92% 94%;
-    --utility: 262 73% 57%;
-    --utility-soft: 262 73% 95%;
+    --utility: 262 83% 58%;
+    --utility-soft: 262 83% 96%;
     --business: 239 84% 60%;
     --business-soft: 239 84% 96%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 217 91% 50%;
+    --ring: 221 83% 53%;
     --sustainability: 158 64% 42%;
     --sustainability-soft: 158 64% 95%;
     --benchmarks: 271 81% 56%;
     --benchmarks-soft: 271 81% 96%;
+    --tax: 14 88% 50%;
+    --tax-soft: 14 88% 95%;
+    --productivity: 199 89% 48%;
+    --productivity-soft: 199 89% 95%;
+    --travel: 181 84% 45%;
+    --travel-soft: 181 84% 95%;
+    --lifestyle: 330 81% 60%;
+    --lifestyle-soft: 330 81% 96%;
     --radius: 0.875rem;
+    --hero-bg: 221 83% 44%;
+    --surface-bg: 0 0% 100%;
+    --hero-text: 210 40% 98%;
     --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.04);
     --shadow-md: 0 4px 12px -2px hsl(222 47% 11% / 0.06);
     --shadow-lg: 0 10px 30px -8px hsl(222 47% 11% / 0.10);
   }
 
   .dark {
-    --background: 222 47% 6%;
+    --background: 222 47% 4%;
     --foreground: 210 40% 98%;
-    --card: 222 47% 9%;
+    --card: 222 47% 7%;
+    --hero-bg: 222 47% 4%;
+    --surface-bg: 222 47% 7%;
+    --hero-text: 210 40% 98%;
     --card-foreground: 210 40% 98%;
-    --popover: 222 47% 9%;
+    --popover: 222 47% 7%;
     --popover-foreground: 210 40% 98%;
     --primary: 210 40% 98%;
     --primary-foreground: 222 47% 11%;
-    --secondary: 217 33% 17%;
+    --secondary: 222 47% 12%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
+    --muted: 222 47% 12%;
     --muted-foreground: 215 20% 65%;
-    --accent: 217 91% 60%;
+    --accent: 221 83% 60%;
     --accent-foreground: 0 0% 100%;
 
     /* Signal / Finance (blue) */
@@ -193,6 +226,14 @@
     --sustainability-soft: 158 50% 14%;
     --benchmarks: 271 81% 68%;
     --benchmarks-soft: 271 50% 15%;
+    --tax: 14 88% 60%;
+    --tax-soft: 14 50% 14%;
+    --productivity: 199 89% 60%;
+    --productivity-soft: 199 50% 14%;
+    --travel: 181 84% 55%;
+    --travel-soft: 181 50% 14%;
+    --lifestyle: 330 81% 65%;
+    --lifestyle-soft: 330 50% 14%;
   }
 }
 

@@ -84,7 +84,7 @@ const FreelanceTaxOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml
                       type="number"
                       value={monthlyIncome || ""}
                       onChange={(e) => setMonthlyIncome(Number(e.target.value) || 0)}
-                      className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-3xl pl-12 focus:ring-4 ring-primary/5 transition-all"
+                      className="h-20 bg-background border-border/60 font-mono text-4xl font-bold rounded-2xl pl-12 focus:ring-4 ring-primary/5 transition-all"
                       placeholder="3000"
                     />
                     <div className="absolute right-8 top-1/2 -translate-y-1/2 text-muted-foreground/20 font-mono text-xl font-bold">$</div>
@@ -98,7 +98,7 @@ const FreelanceTaxOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml
                       type="number"
                       value={exchangeRate || ""}
                       onChange={(e) => setExchangeRate(Number(e.target.value) || 0)}
-                      className="h-20 bg-background border-border/60 font-mono text-3xl font-bold rounded-3xl pl-16 opacity-80 focus:opacity-100 transition-opacity"
+                      className="h-20 bg-background border-border/60 font-mono text-3xl font-bold rounded-2xl pl-16 opacity-80 focus:opacity-100 transition-opacity"
                       placeholder="285"
                     />
                     <div className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground/30 font-mono text-sm font-bold">Rs.</div>
@@ -217,7 +217,7 @@ const FreelanceTaxOptimizer = ({ guideHtml, faqs, relatedArticles }: { guideHtml
              </div>
 
              <div className="space-y-8 relative">
-                <div className="p-6 rounded-3xl bg-secondary/30 border border-border/60 space-y-4">
+                <div className="p-6 rounded-2xl bg-secondary/30 border border-border/60 space-y-4">
                    <div className="flex items-center gap-2 text-foreground/60">
                       <Banknote className="size-4" />
                       <span className="text-[10px] font-black uppercase tracking-[0.2em]">Loss Breakdown</span>

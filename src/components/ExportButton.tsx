@@ -50,7 +50,7 @@ export const ExportButton = ({ title, onEmbedClick }: Props) => {
           }
         }
         iframeDoc.head.appendChild(clone);
-      } catch (e) {}
+      } catch (e) { }
     });
 
     iframeDoc.documentElement.className = document.documentElement.className;
@@ -110,7 +110,7 @@ export const ExportButton = ({ title, onEmbedClick }: Props) => {
     clone.style.width = '1000px';
     const stickies = clone.querySelectorAll('.sticky, .lg\\:sticky');
     stickies.forEach((s: any) => s.style.position = 'relative');
-    
+
     frame.appendChild(clone);
     wrapper.appendChild(frame);
 
@@ -146,7 +146,7 @@ export const ExportButton = ({ title, onEmbedClick }: Props) => {
 
     try {
       await new Promise(r => setTimeout(r, 1500));
-      
+
       // Capture as high-quality image first
       // Temporarily disable cross-origin stylesheets to avoid SecurityError
       const taintedSheets = Array.from(document.styleSheets).filter(s => {
@@ -219,12 +219,12 @@ export const ExportButton = ({ title, onEmbedClick }: Props) => {
       });
       taintedSheets.forEach(s => s.disabled = true);
 
-      const dataUrl = format === 'png' 
-        ? await toPng(env.wrapper, options) 
+      const dataUrl = format === 'png'
+        ? await toPng(env.wrapper, options)
         : await toJpeg(env.wrapper, options);
-      
+
       taintedSheets.forEach(s => s.disabled = false);
-      
+
       document.body.removeChild(env.iframe);
 
       const blob = await (await fetch(dataUrl)).blob();
@@ -259,24 +259,24 @@ export const ExportButton = ({ title, onEmbedClick }: Props) => {
     <div className="no-print">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button 
+          <button
             disabled={loading}
-            aria-label="Share Analysis"
+            aria-label="Share"
             className={cn(
-              "flex items-center gap-2 px-6 h-11 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95",
-              loading 
-                ? "bg-secondary text-muted-foreground border-border cursor-wait" 
+              "flex items-center gap-2 px-6 h-12 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95",
+              loading
+                ? "bg-secondary text-muted-foreground border-border cursor-wait"
                 : "bg-foreground text-background hover:bg-foreground/90 hover:shadow-black/10"
             )}
           >
             {loading ? <CheckCircle2 className="size-4 animate-spin" /> : <div className="size-4 flex items-center justify-center"><svg className="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg></div>}
-            {loading ? "Exporting..." : "Share Analysis"}
+            {loading ? "Exporting..." : "Share"}
             <ChevronDown className="size-3 opacity-50 ml-1" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl shadow-2xl border-border/50 backdrop-blur-xl">
-          <div className="px-2 py-1.5 mb-1 text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Select Format</div>
-          
+        <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl shadow-2xl border-border/50 backdrop-blur-xl z-50">
+          <div className="px-2 py-1.5 mb-1 text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] ">Select Format</div>
+
           {onEmbedClick && (
             <DropdownMenuItem onClick={onEmbedClick} className="gap-3 py-3 cursor-pointer rounded-xl hover:bg-signal/10 hover:text-signal focus:bg-signal/10 focus:text-signal transition-colors">
               <div className="size-8 rounded-lg bg-secondary flex items-center justify-center shrink-0">

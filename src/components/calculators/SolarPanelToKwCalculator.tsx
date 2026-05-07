@@ -45,18 +45,20 @@ export const SolarPanelToKwCalculator = ({
 }) => {
   const [panelQty, setPanelQty] = useState(10);
   const [panelWattage, setPanelWattage] = useState(550);
+  const [peakSunHours, setPeakSunHours] = useState(4.5);
   const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => {
     const totalWatts = panelQty * panelWattage;
     const totalKW = totalWatts / 1000;
     
-    // Pakistani average: 4.2 peak sun hours per day
-    const dailyKWh = totalKW * 4.2;
+    // Calculated based on adjustable Peak Sun Hours (Default 4.5)
+    const dailyKWh = totalKW * peakSunHours;
     const monthlyKWh = dailyKWh * 30;
     
-    // Space: ~25 sq ft per panel
+    // Space: ~2.3m² per panel (Standard 2026 size)
     const areaSqFt = panelQty * 24;
+    const areaM2 = panelQty * 2.3;
     
     let systemClass = "Micro System";
     if (totalKW >= 15) systemClass = "Industrial/Commercial";
@@ -69,12 +71,13 @@ export const SolarPanelToKwCalculator = ({
       dailyKWh,
       monthlyKWh,
       areaSqFt,
+      areaM2,
       systemClass
     };
-  }, [panelQty, panelWattage]);
+  }, [panelQty, panelWattage, peakSunHours]);
 
   const handleCopy = () => {
-    const text = `Solar Array: ${results.totalKW.toFixed(2)}kW (${panelQty} panels x ${panelWattage}W) | Monthly Gen: ${results.monthlyKWh.toFixed(0)}kWh | Area: ${results.areaSqFt}sqft. Calculate yours at ${window.location.href}`;
+    const text = `Solar Array: ${results.totalKW.toFixed(2)}kW (${panelQty} panels x ${panelWattage}W) | Monthly Gen: ${results.monthlyKWh.toFixed(0)}kWh | Area: ${results.areaSqFt}ft² / ${results.areaM2.toFixed(1)}m². Calculate yours at ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -92,7 +95,7 @@ export const SolarPanelToKwCalculator = ({
             <div className="space-y-6 sticky top-32">
               
               {/* Main Capacity Card */}
-              <div className="surface-card p-10 space-y-8 bg-background border-border/60 shadow-xl relative overflow-hidden group rounded-3xl">
+              <div className="surface-card p-10 space-y-8 bg-background border-border/60 shadow-xl relative overflow-hidden group rounded-2xl">
                 <Zap className="absolute -top-6 -right-6 size-32 text-foreground/[0.03] -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
                 
                 <div className="space-y-6 relative z-10">
@@ -164,7 +167,7 @@ export const SolarPanelToKwCalculator = ({
 
         {/* Main Panel (Inputs) */}
         <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-          <div className="surface-card p-8 space-y-10 bg-secondary/5 border-border/40 overflow-hidden rounded-3xl">
+          <div className="surface-card p-8 space-y-10 bg-secondary/5 border-border/40 overflow-hidden rounded-2xl">
             <div className="flex items-center gap-4">
                <div className="size-12 rounded-2xl bg-foreground/5 flex items-center justify-center">
                   <Layers className="size-6 text-foreground/60" />
@@ -256,12 +259,39 @@ export const SolarPanelToKwCalculator = ({
                 ))}
               </div>
             </div>
+
+            <div className="h-px bg-border/20" />
+
+            {/* Peak Sun Hours Slider */}
+            <div className="space-y-8">
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <Label className="text-sm font-bold tracking-tight uppercase tracking-wider">Peak Sun Hours (PSH)</Label>
+                  <p className="text-[10px] text-muted-foreground font-medium">Daily solar intensity based on region</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-2xl font-black text-primary">{peakSunHours}h</span>
+                </div>
+              </div>
+
+              <Slider 
+                value={[peakSunHours]} 
+                onValueChange={([val]) => setPeakSunHours(val)}
+                max={7}
+                min={3}
+                step={0.1}
+                className="py-4"
+              />
+              <p className="text-[10px] text-muted-foreground italic font-medium">
+                Average in Pakistan: 4.5h (Conservative) to 5.5h (Summer/Sindh)
+              </p>
+            </div>
           </div>
 
-          <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-3xl">
+          <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-2xl">
              <div className="flex items-center gap-3 mb-4">
                 <div className="size-10 rounded-xl bg-secondary/50 flex items-center justify-center">
-                  <Ruler className="size-5 text-foreground/60" />
+                   <Ruler className="size-5 text-foreground/60" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-wider">Installation Space Guide</h4>
@@ -272,8 +302,12 @@ export const SolarPanelToKwCalculator = ({
              <div className="grid sm:grid-cols-2 gap-8">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between text-xs">
-                     <span className="text-muted-foreground font-medium">Standard Square Feet</span>
+                     <span className="text-muted-foreground font-medium">Square Feet</span>
                      <span className="font-bold">{results.areaSqFt} ft²</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                     <span className="text-muted-foreground font-medium">Square Meters</span>
+                     <span className="font-bold">{results.areaM2.toFixed(1)} m²</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
                      <span className="text-muted-foreground font-medium">Approx. Marla (Residential)</span>

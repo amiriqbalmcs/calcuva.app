@@ -52,7 +52,7 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
           
           {/* Right Column: Results Dashboard */}
           <div className="lg:col-span-4 space-y-6 order-1 lg:order-2">
-            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-3xl">
+            <div className="surface-card p-10 bg-background border-border/60 shadow-xl space-y-10 sticky top-32 overflow-hidden rounded-2xl">
                <div className="absolute top-0 right-0 size-32 bg-red-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
                <div className="space-y-6 relative border-b border-border/40 pb-10">
@@ -81,7 +81,7 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                </div>
 
                 <div className="space-y-8 relative">
-                  <div className="p-6 rounded-3xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-4">
+                  <div className="p-6 rounded-2xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-4">
                      <div className="flex items-center gap-2 text-red-700/60 dark:text-red-400/60">
                         <TrendingUp className="size-4" />
                         <span className="text-[10px] font-black uppercase tracking-[0.2em]">Clinical Indicators</span>
@@ -118,7 +118,7 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
 
           {/* Left Column: Inputs Panel */}
           <div className="lg:col-span-8 space-y-6 order-2 lg:order-1">
-            <div className="surface-card bg-red-500/5 dark:bg-red-500/10 border-red-500/20 overflow-hidden shadow-sm rounded-3xl">
+            <div className="surface-card bg-red-500/5 dark:bg-red-500/10 border-red-500/20 overflow-hidden shadow-sm rounded-2xl">
               <div className="p-8 border-b border-red-500/10 dark:border-red-500/20 bg-background flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
                   <div className="size-12 rounded-2xl bg-red-500/10 dark:bg-red-500/20 flex items-center justify-center">
@@ -148,7 +148,7 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
                        type="number"
                        value={glucose || ""}
                        onChange={(e) => setGlucose(Number(e.target.value) || 0)}
-                       className="h-32 bg-background border-border/60 font-mono text-6xl font-bold rounded-[40px] shadow-sm text-center tabular-nums focus:ring-4 ring-red-500/5 transition-all"
+                       className="h-32 bg-background border-border/60 font-mono text-6xl font-bold rounded-2xl shadow-sm text-center tabular-nums focus:ring-4 ring-red-500/5 transition-all"
                     />
                     <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[10px] font-black text-red-600/40 uppercase tracking-[0.3em]">
                        Average Level
@@ -178,16 +178,16 @@ const BloodSugarConverter = ({ guideHtml, faqs, relatedArticles }: { guideHtml?:
               </div>
             </div>
 
-            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-3xl">
+            <div className="surface-card p-8 bg-background border-border/60 shadow-sm space-y-6 rounded-2xl">
               <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                 <Sparkles className="size-4 text-red-600" /> Scientific Insights
               </h4>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-3xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-2">
                   <p className="text-[11px] font-black text-red-900 dark:text-red-400 uppercase">HbA1c Logic</p>
                   <p className="text-[10px] text-red-800/60 dark:text-red-400/60 leading-relaxed font-medium">HbA1c measures the percentage of hemoglobin coated with sugar, reflecting your average levels over 90 days.</p>
                 </div>
-                <div className="p-5 rounded-3xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-2">
+                <div className="p-5 rounded-2xl bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-500/20 space-y-2">
                   <p className="text-[11px] font-black text-red-900 dark:text-red-400 uppercase">Metabolic Health</p>
                   <p className="text-[10px] text-red-800/60 dark:text-red-400/60 leading-relaxed font-medium">Consistent average glucose is a key indicator of long-term cardiovascular and metabolic wellness.</p>
                 </div>

@@ -220,7 +220,7 @@ const DatePlusMinusCalculator = ({ guideHtml, faqs, relatedArticles }: { guideHt
               </div>
             </div>
           ) : (
-            <div className="surface-card p-24 flex flex-col items-center justify-center text-center bg-secondary/5 border-dashed border-2 border-border/40 rounded-3xl">
+            <div className="surface-card p-24 flex flex-col items-center justify-center text-center bg-secondary/5 border-dashed border-2 border-border/40 rounded-2xl">
                <RefreshCcw className="size-16 text-muted-foreground/20 mb-6 animate-spin-slow" />
                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/40">Pick a starting date to begin</p>
             </div>
