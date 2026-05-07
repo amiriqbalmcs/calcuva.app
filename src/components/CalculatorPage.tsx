@@ -214,12 +214,12 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
             </div>
 
             <div className="container-wide relative z-10 text-hero-text">
-              <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[10px] text-white/40 font-mono uppercase font-black tracking-[0.3em] mb-12 no-print">
-                <Link href="/" className="hover:text-white transition-colors">Home</Link>
-                <ChevronRight className="size-3 opacity-30" />
-                <Link href={`/category/${calc.category}`} className="hover:text-white transition-colors">{cat.label}</Link>
-                <ChevronRight className="size-3 opacity-30" />
-                <span className="text-white truncate">{calc.title.replace(/ Calculator$/, "")}</span>
+              <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-[10px] text-white/40 font-mono uppercase font-black tracking-widest sm:tracking-[0.3em] mb-12 no-print">
+                <Link href="/" className="hover:text-white transition-colors shrink-0">Home</Link>
+                <ChevronRight className="size-3 opacity-30 shrink-0" />
+                <Link href={`/category/${calc.category}`} className="hover:text-white transition-colors shrink-0">{cat.label}</Link>
+                <ChevronRight className="size-3 opacity-30 shrink-0" />
+                <span className="text-white break-words">{calc.title.replace(/ Calculator$/, "")}</span>
               </nav>
 
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
