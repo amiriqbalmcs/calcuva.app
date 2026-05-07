@@ -1,5 +1,5 @@
 "use client";
-
+import { useEffect } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
@@ -11,6 +11,11 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isEmbed = searchParams.get("embed") === "true";
   const isHomePage = pathname === "/";
+
+  // Force scroll to top on navigation
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   if (isEmbed) {
     return (
