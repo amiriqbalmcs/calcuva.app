@@ -166,6 +166,16 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
                 </div>
               </div>
               <div className="no-print flex items-center justify-center md:justify-end gap-3 w-full md:w-auto">
+                {calc.howTo && (
+                  <button 
+                    onClick={() => document.getElementById('how-to-use')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="h-11 px-4 sm:px-5 rounded-xl bg-background hover:bg-secondary border border-border/60 hover:border-foreground/10 transition-all flex items-center gap-2 group active:scale-95 shadow-sm"
+                  >
+                    <HelpCircle className="size-4 text-muted-foreground group-hover:text-signal transition-colors" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors hidden sm:inline">How to use?</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors sm:hidden">Help</span>
+                  </button>
+                )}
                 {hasCurrency && !hideHeaderCurrency && <CurrencySwitcher />}
                 <ExportButton title={calc.title} onEmbedClick={() => setIsEmbedDialogOpen(true)} />
               </div>
@@ -232,9 +242,9 @@ export const CalculatorPage = ({ calc, children, seoContent, faqs, guideHtml, re
                   </div>
                 </aside>
 
-                <div className="flex-1">
+                <div className="flex-1 min-w-0 w-full">
                   <div
-                    className="prose prose-slate dark:prose-invert max-w-none 
+                    className="prose prose-slate dark:prose-invert max-w-none w-full overflow-hidden 
                     prose-h2:text-3xl prose-h2:font-bold prose-h2:tracking-tight prose-h2:mt-0 prose-h2:mb-8
                     prose-h3:text-xl prose-h3:font-bold prose-h3:tracking-tight prose-h3:mt-12
                     prose-p:text-lg prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-8"

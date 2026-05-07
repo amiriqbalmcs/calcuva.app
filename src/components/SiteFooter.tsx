@@ -4,6 +4,7 @@ import { Calculator, Shield, Cpu, BookOpen, Mail, FileCode } from "lucide-react"
 import { SITE_NAME, SITE_DOMAIN } from "@/lib/constants";
 import { useState } from "react";
 import { EmbedDialog } from "./EmbedDialog";
+import Image from "next/image";
 
 export const SiteFooter = () => {
   const [isEmbedOpen, setIsEmbedOpen] = useState(false);
@@ -26,8 +27,13 @@ export const SiteFooter = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
           {/* Brand Identity */}
           <div className="lg:col-span-4 max-w-sm">
-            <Link href="/" className="inline-block h-8 w-auto mb-6 group">
-              <img src="/logo.png" alt={SITE_NAME} className="h-full w-auto object-contain group-hover:scale-105 transition-transform logo-dark-mode" />
+            <Link href="/" className="inline-block relative h-8 w-32 mb-6 group">
+              <Image 
+                src="/logo.png" 
+                alt={SITE_NAME} 
+                fill
+                className="object-contain group-hover:scale-105 transition-transform logo-dark-mode" 
+              />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-8 font-medium">
               {SITE_NAME} is your smart toolkit for everyday decisions.

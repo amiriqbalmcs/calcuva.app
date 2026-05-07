@@ -12,7 +12,7 @@ import {
   Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer,
   FileCode, Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History,
   Bike, Snowflake, Footprints, Anchor, ArrowUpCircle, Navigation, Train,
-  Hash, BookOpen, LayoutGrid, Keyboard
+  Hash, BookOpen, LayoutGrid, Keyboard, Wifi, Contact2, MessageSquare
 } from "lucide-react";
 
 import { CALCULATORS, CategoryKey, CATEGORIES } from "@/lib/calculators";
@@ -54,7 +54,7 @@ const ICONS: Record<string, any> = {
   FileText, Moon, Beef, Stethoscope, Microscope, Brain, Plane, Shield, MapPin,
   Search, Plus, Minus, X, Check, CheckCircle2, Share2, Download, Printer,
   FileCode, Dna, Waves, HeartPulse, LineChart, BarChart3, Gauge, Clock, History, Globe, Smartphone,
-  Navigation, Train, Bike, Snowflake, Footprints, Anchor, ArrowUpCircle, Hash, BookOpen, LayoutGrid, Keyboard
+  Navigation, Train, Bike, Snowflake, Footprints, Anchor, ArrowUpCircle, Hash, BookOpen, LayoutGrid, Keyboard, Wifi, Contact2, MessageSquare
 };
 
 const categoryStyles: Record<CategoryKey, string> = {

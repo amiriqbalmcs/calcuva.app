@@ -450,7 +450,10 @@
   }
 
   .prose table {
+    display: block;
     width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border-collapse: collapse;
     margin: 2.5rem 0;
     font-size: 0.95rem;

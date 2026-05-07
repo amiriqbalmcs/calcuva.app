@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { GlobalSearch } from "./GlobalSearch";
 
+import Image from "next/image";
+
 import { MegaMenu } from "./MegaMenu";
 
 const navItems: { label: string; href: string }[] = [
@@ -56,8 +58,14 @@ export const SiteHeader = () => {
         {/* Left: Logo */}
         <div className="flex-[1] flex items-center">
           <Link href="/" className="flex items-center group shrink-0" onClick={() => setOpen(false)}>
-            <div className="relative h-9 w-auto flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
-              <img src="/logo.png" alt="Calcuva" className="h-full w-auto object-contain logo-dark-mode" />
+            <div className="relative h-9 w-36 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Image 
+                src="/logo.png" 
+                alt="Calcuva" 
+                fill
+                className="object-contain logo-dark-mode"
+                priority
+              />
             </div>
           </Link>
         </div>
