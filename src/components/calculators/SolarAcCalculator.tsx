@@ -269,7 +269,7 @@ export default function SolarAcCalculator({ guideHtml, faqs, relatedArticles }: 
                         <p className="text-[11px] text-muted-foreground leading-relaxed font-medium">
                           {acType === "fixed" 
                             ? "Non-inverter ACs require a 3kW+ surge buffer. Ensure your inverter is rated for at least 5kW to avoid tripping."
-                            : results.requiredKw > 6
+                            : Number(results.requiredKw) > 6
                               ? "A system this size is ideal for 3-phase meters and can comfortably run your entire home including ACs."
                               : "This inverter-ready setup is highly stable and will maximize your daily solar savings."}
                         </p>
